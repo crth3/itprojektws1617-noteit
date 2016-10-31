@@ -1,11 +1,7 @@
 package de.hdm.itprojekt.noteit.server;
 
-public class NotesAdministrationImpl extends RemoteServiceServlet implements
-NotesAdministration {
+public class NotesAdministrationImpl extends RemoteServiceServlet implements NotesAdministration {
 
-	/**
-	* 
-	*/
 	private static final long serialVersionUID = 1L;
 	
 	/**
