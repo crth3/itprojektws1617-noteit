@@ -19,17 +19,16 @@ public class BusinessObjects implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id 
+	 * the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
 
-	
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -44,16 +43,17 @@ public class BusinessObjects implements Serializable {
 				if (bo.getId() == this.id)
 					return true;
 			} catch (IllegalArgumentException e) {
-			
+
 				return false;
 			}
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * Aktuelles datum bekommen
+	 * 
 	 * @return
 	 */
 	public Timestamp getCreationDate() {
@@ -62,13 +62,16 @@ public class BusinessObjects implements Serializable {
 
 	/**
 	 * Aktuelles Datum setzen
+	 * 
 	 * @param creationDate
 	 */
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -77,7 +80,9 @@ public class BusinessObjects implements Serializable {
 		return super.hashCode();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -85,7 +90,5 @@ public class BusinessObjects implements Serializable {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
-	
-	
 
 }
