@@ -35,6 +35,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private NotePermissionMapper npMapper = null;
 	private NotebookPermissionMapper nbpMapper = null;
 	
+	public void init(){
+		
+	};
+	
 	@Override
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
