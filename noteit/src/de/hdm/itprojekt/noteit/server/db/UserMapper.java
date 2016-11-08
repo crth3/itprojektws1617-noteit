@@ -59,7 +59,7 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * @param id - Primärschlüssel von Nutzer
 		 * @return Nutzer Objekt, das die gesuchte ID enthält
 		 */
-		public User findByKey(int id) {
+		public User findByID(int id) {
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
 			
