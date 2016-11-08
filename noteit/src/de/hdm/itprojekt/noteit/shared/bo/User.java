@@ -24,7 +24,7 @@ public class User extends BusinessObjects {
 	/**
 	 * Email Adresse des Nutzers
 	 */
-	private String email = "";
+	private String mail = "";
 
 	/**
 	 * Ausgabe des Vornamens des Nutzers
@@ -57,14 +57,14 @@ public class User extends BusinessObjects {
 	/**
 	 * Ausgabe der Email Adresse des Nutzers
 	 */
-	public String getEmail() {
-		return email;
+	public String getMail() {
+		return mail;
 	}
 
 	/**
 	 * Setzen der Email Adresse des Nutzers
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 }
