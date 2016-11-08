@@ -36,12 +36,13 @@ public interface NotesAdministration extends RemoteService{
 	
 	/**
 	 * 
+	 * @param userID
 	 * @param mail
 	 * @param firstName
 	 * @param lastName
 	 * @throws IllegalArgumentException
 	 */
-	public void updateUser(String mail,String firstName,String lastName) throws IllegalArgumentException;
+	public void updateUser(int userID, String mail,String firstName,String lastName) throws IllegalArgumentException;
 	
 	/**
 	 * 
@@ -148,14 +149,11 @@ public interface NotesAdministration extends RemoteService{
 	 */
 	public ArrayList<Note> findNoteByKeyword(int userID, String keyword, int notebookID) throws IllegalArgumentException;
 	
-	public User findByMail(String mail) throws IllegalArgumentException;
-	
-
-	
-	
-	
-	
-	
-	
-
+	/**
+	 * 
+	 * @param mail
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public User findUserByMail(String mail) throws IllegalArgumentException;
 }
