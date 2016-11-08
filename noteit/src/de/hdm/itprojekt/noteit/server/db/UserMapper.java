@@ -77,7 +77,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					u.setEmail(rs.getString("emailAddress"));
+					u.setMail(rs.getString("emailAddress"));
 					// Objekt zurückgeben
 					return u;
 				}
@@ -121,7 +121,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					u.setEmail(rs.getString("emailAddress"));
+					u.setMail(rs.getString("emailAddress"));
 					// ... Objekt dem Ergebnisvektor hinzufügen
 					result.addElement(u);
 				}
@@ -158,7 +158,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					u.setEmail(rs.getString("emailAddress"));
+					u.setMail(rs.getString("emailAddress"));
 					
 					return u;
 				}
@@ -193,7 +193,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					u.setEmail(rs.getString("emailAddress"));
+					u.setMail(rs.getString("emailAddress"));
 					// User dem Ergebnisvektor hinzufügen
 					result.addElement(u);
 				}
@@ -228,7 +228,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					// SQL Query ausführen um Datensatz in DB zu schreiben
 					stmt.executeUpdate("INSERT INTO User (userId, firstName, lastName, emailAddress) " +
 							"VALUES ('" + u.getId() + "', '" + u.getFirstName() + "', '" +
-							u.getLastName() + "', '" + u.getEmail() + "')");
+							u.getLastName() + "', '" + u.getMail() + "')");
 				}
 			}
 			// Error Handling
@@ -252,7 +252,7 @@ package de.hdm.itprojekt.noteit.server.db;
 				Statement stmt = con.createStatement();
 				// SQL Query ausführen
 				stmt.executeUpdate("UPDATE User SET firstName = \"" + u.getFirstName() + "\", lastName = \"" +
-						u.getLastName() + "\", emailAddress = \"" + u.getEmail() + "\" WHERE userId = " + u.getId());
+						u.getLastName() + "\", emailAddress = \"" + u.getMail() + "\" WHERE userId = " + u.getId());
 			}
 			// Error Handling
 			catch (SQLException e) {
