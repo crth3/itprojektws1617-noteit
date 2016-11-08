@@ -1,7 +1,13 @@
 package de.hdm.itprojekt.noteit.server.db;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import com.google.appengine.api.rdbms.AppEngineDriver;
+
+public class DBConnection {
 	
-	public class DBConnection {
-			
 		
 		/**
 		 * This class enables the connection to the mySQL database
@@ -25,7 +31,7 @@ package de.hdm.itprojekt.noteit.server.db;
 			//private static final String googleURL = "jdbc:google:rdbms://projektname-groupfive:dbname/projektname?user=root&password=hdmgroupfive";
 			
 			// Local Dev URL
-		private static final String googleURL = "jdbc:mysql://ip-adresse/projekt-name?user=root&password=dbname";
+		private static final String googleURL = "jdbc:mysql://104.154.134.231:3306/projekt-tidy-cortex-148515?user=root&password=noteit";
 			
 			
 			
