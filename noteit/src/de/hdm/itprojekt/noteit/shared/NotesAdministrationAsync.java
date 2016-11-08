@@ -13,7 +13,7 @@ public interface NotesAdministrationAsync {
 
 	void createUser(String email, String firstName, String lastName, AsyncCallback<User> callback);
 
-	void updateUser(String email, String firstName, String lastName, AsyncCallback<Void> callback);
+	void updateUser(int userID, String mail, String firstName, String lastName, AsyncCallback<Void> callback);
 
 	void createNote(String title, String subtitle, String text, Timestamp maturity, int creatorID, String source,
 			AsyncCallback<Note> callback);
@@ -42,6 +42,5 @@ public interface NotesAdministrationAsync {
 	void updateNotebook(String title, int notebookID, int editorID, ArrayList<String> userEmail,
 			ArrayList<Integer> permission, AsyncCallback<Void> callback);
 
-	void findByMail(String mail, AsyncCallback<User> callback);
-
+	void findUserByMail(String mail, AsyncCallback<User> callback);
 }
