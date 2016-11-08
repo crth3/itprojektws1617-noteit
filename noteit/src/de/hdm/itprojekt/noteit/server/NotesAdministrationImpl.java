@@ -7,13 +7,12 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookPermissionMapper;
-import de.hdm.itprojekt.noteit.server.db.PermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.SourceMapper;
 import de.hdm.itprojekt.noteit.server.db.UserMapper;
-import de.hdm.itprojekt.noteit.server.db.UserPermissionMapper;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -26,11 +25,9 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private User user = null;
 	
 	private UserMapper uMapper = null;
-	//private NoteMapper nMapper = null;
+	private NoteMapper nMapper = null;
 	private NotebookMapper nbMapper = null;
 	private SourceMapper sMapper = null;
-	private PermissionMapper pMapper = null;
-	private UserPermissionMapper upMapper = null;
 	private NotePermissionMapper npMapper = null;
 	private NotebookPermissionMapper nbpMapper = null;
 	
@@ -41,7 +38,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	};
 	
 	/**
-	 *  Standard Kontruktor
+	 *  Standard Konstruktor
 	 * @throws IllegalArgumentException
 	 */
 	public NotesAdministrationImpl() throws IllegalArgumentException {
@@ -60,7 +57,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				user.setMail(mail);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
-//				this.uMapper.insert(user);
+				this.uMapper.insert(user);
 			} catch (Exception e) {
 				log.log(Level.SEVERE, "create user", e);
 			}
@@ -73,13 +70,13 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateUser(int userID, String mail, String firstName, String lastName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		if(userID != null){
+		if(userID != 0){
 			User user = findUserByID(userID);
 			try {
 				user.setMail(mail);
 				user.setFirstName(firstName);
 				user.setLastName(lastName);
-//				this.uMapper.update(user);
+				this.uMapper.update(user);
 			} catch (Exception e) {
 				log.log(Level.SEVERE, "update user", e);
 			}

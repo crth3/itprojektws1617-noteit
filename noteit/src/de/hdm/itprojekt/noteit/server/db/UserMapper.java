@@ -267,9 +267,9 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * 
 		 * @param u der zu löschende Nutzer
 		 */
-//		public void delete(User u) {
-//			// Datenbankverbindung öffnen
-//			Connection con = DBConnection.connection();
+		public void delete(int userID) {
+			// Datenbankverbindung öffnen
+			Connection con = DBConnection.connection();
 //			
 //			try {
 //				
@@ -281,7 +281,7 @@ package de.hdm.itprojekt.noteit.server.db;
 //			catch (SQLException e) {
 //				e.printStackTrace();
 //			}
-//		}
-//		
+		}
+		
 	}
 		
