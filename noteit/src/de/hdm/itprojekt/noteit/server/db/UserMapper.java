@@ -212,6 +212,7 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * @param u Nutzer Objekt, das in die Datenbank eingefügt werden soll
 		 */
 		public User insert(User u) {
+			
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
 			

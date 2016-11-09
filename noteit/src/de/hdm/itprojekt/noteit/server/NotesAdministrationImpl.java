@@ -36,8 +36,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private static final Logger log = Logger.getLogger( NotesAdministrationImpl.class.getName() );
 	
 	public void init(){
-		//Logger logger = Logger.getLogger("NameOfYourLogger");
-		//logger.log(Level.SEVERE, "this message should get logged");
+		this.uMapper = UserMapper.userMapper();
 
 	};
 	
@@ -60,21 +59,28 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
 
 		User user;
+		User u = null;
 
 		if (mail != null && firstName != null && lastName != null) {
 			user = new User();
-			try {
-				user.setMail(mail);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
-				this.uMapper.insert(user);
-			} catch (Exception e) {
-				log.log(Level.SEVERE, "create user", e);
-			}
+			
+			user.setMail(mail);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			u=this.uMapper.insert(user);
+			return u; 
+//			try {
+//				user.setMail(mail);
+//				user.setFirstName(firstName);
+//				user.setLastName(lastName);
+//			u = this.uMapper.insert(user);				
+//			} catch (Exception e) {
+//				log.log(Level.SEVERE, "create user error", e);
+//			}
 		} else {
 			return null;
 		}
-		return user;
+	
 	}
 	
 	@Override
