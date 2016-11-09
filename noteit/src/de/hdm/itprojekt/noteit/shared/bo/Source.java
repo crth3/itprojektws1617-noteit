@@ -9,6 +9,8 @@ public class Source extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
 	private int sourceID = 0;
+	private String source;
+	private int noteId;
 
 	public Source() {
 
@@ -27,6 +29,22 @@ public class Source extends BusinessObjects {
 	 */
 	public void setSourceID(int sourceID) {
 		this.sourceID = sourceID;
+	}
+
+	public int getNoteId() {
+		return noteId;
+	}
+
+	public void setNoteId(int noteId) {
+		this.noteId = noteId;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }
