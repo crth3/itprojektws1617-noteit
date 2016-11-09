@@ -215,6 +215,8 @@ package de.hdm.itprojekt.noteit.server.db;
 			
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
+			System.out.println("dbconnection: " + con);
+			System.out.println("user: " + u.getFirstName() + u.getLastName());
 			
 			try {
 				// neues SQL Statement anlegen
@@ -268,20 +270,20 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * 
 		 * @param u der zu löschende Nutzer
 		 */
-		public void delete(int userID) {
+		public void delete(User u) {
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
-//			
-//			try {
-//				
-//				//Code für Nutzer löschen einfügen
-//				//Was passiert mit Note, Notebooks & Permissions, wenn User gelöscht wird?
-//				
-//			}
-//			// Error Handling
-//			catch (SQLException e) {
-//				e.printStackTrace();
-//			}
+		
+			try {
+			// neues SQL Statement anlegen
+			Statement stmt = con.createStatement();
+			// SQL Query ausführen
+			stmt.executeUpdate("DELETE FROM User WHERE userId = " + u.getId());
+		}
+			// Error Handling
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
