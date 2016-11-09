@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,24 +99,44 @@ public class Noteit implements EntryPoint {
 			 */
 			public void onClick(ClickEvent event) {
 				//sendNameToServer();
+				notesAdministrationService.createUser("mail@mail.de", "hans", "nachname", new AsyncCallback<User>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, "ERROR");
+						
+					}
+
+					@Override
+					public void onSuccess(User result) {
+						// TODO Auto-generated method stub
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, result.getFirstName());
+					}
+				});
 				
 				notesAdministrationService.deleteUser(0, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
 						// TODO Auto-generated method stub
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, "Läuft");
 						
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, "ERROR");
 						
 					}
 				});
 			
-				Logger logger = Logger.getLogger("NameOfYourLogger");
-				logger.log(Level.SEVERE, "this message should get logged");
+				
 			}
 			
 
