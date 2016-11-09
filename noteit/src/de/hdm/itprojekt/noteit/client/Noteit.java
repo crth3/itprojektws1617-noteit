@@ -1,6 +1,12 @@
 package de.hdm.itprojekt.noteit.client;
 
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
+import de.hdm.itprojekt.noteit.shared.NotesAdministration;
+import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,8 +38,8 @@ public class Noteit implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final NotesAdministrationAsync notesAdministrationService = GWT
+			.create(NotesAdministration.class);
 
 	/**
 	 * This is the entry point method.
@@ -91,8 +97,27 @@ public class Noteit implements EntryPoint {
 			 * Fired when the user clicks on the sendButton.
 			 */
 			public void onClick(ClickEvent event) {
-				sendNameToServer();
+				//sendNameToServer();
+				
+				notesAdministrationService.deleteUser(0, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			
+				Logger logger = Logger.getLogger("NameOfYourLogger");
+				logger.log(Level.SEVERE, "this message should get logged");
 			}
+			
 
 			/**
 			 * Fired when the user types in the nameField.
@@ -119,28 +144,28 @@ public class Noteit implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
-						new AsyncCallback<String>() {
-							public void onFailure(Throwable caught) {
-								// Show the RPC error message to the user
-								dialogBox
-										.setText("Remote Procedure Call - Failure");
-								serverResponseLabel
-										.addStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(SERVER_ERROR);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-
-							public void onSuccess(String result) {
-								dialogBox.setText("Remote Procedure Call");
-								serverResponseLabel
-										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
-								dialogBox.center();
-								closeButton.setFocus(true);
-							}
-						});
+//				greetingService.greetServer(textToServer,
+//						new AsyncCallback<String>() {
+//							public void onFailure(Throwable caught) {
+//								// Show the RPC error message to the user
+//								dialogBox
+//										.setText("Remote Procedure Call - Failure");
+//								serverResponseLabel
+//										.addStyleName("serverResponseLabelError");
+//								serverResponseLabel.setHTML(SERVER_ERROR);
+//								dialogBox.center();
+//								closeButton.setFocus(true);
+//							}
+//
+//							public void onSuccess(String result) {
+//								dialogBox.setText("Remote Procedure Call");
+//								serverResponseLabel
+//										.removeStyleName("serverResponseLabelError");
+//								serverResponseLabel.setHTML(result);
+//								dialogBox.center();
+//								closeButton.setFocus(true);
+//							}
+//						});
 			}
 		}
 
