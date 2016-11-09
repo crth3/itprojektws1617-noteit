@@ -7,19 +7,21 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.itprojekt.noteit.client.GreetingService;
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookPermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.SourceMapper;
 import de.hdm.itprojekt.noteit.server.db.UserMapper;
+import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class NotesAdministrationImpl extends RemoteServiceServlet implements NotesAdministration{
-
+	
 	private static final long serialVersionUID = 1L; 
 	
 	private User user = null;
@@ -34,8 +36,16 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private static final Logger log = Logger.getLogger( NotesAdministrationImpl.class.getName() );
 	
 	public void init(){
-		
+		//Logger logger = Logger.getLogger("NameOfYourLogger");
+		//logger.log(Level.SEVERE, "this message should get logged");
+
 	};
+	
+	public String greetServer(String input) throws IllegalArgumentException {
+
+
+		return "Hello, ";
+	}
 	
 	/**
 	 *  Standard Konstruktor
@@ -87,7 +97,9 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void deleteUser(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		this.uMapper.delete(userID);
+		Logger logger = Logger.getLogger("NameOfYourLogger");
+		logger.log(Level.SEVERE, "DRIN");
+		//this.uMapper.delete(userID);
 		
 	}
 	

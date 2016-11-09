@@ -5,16 +5,18 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.hdm.itprojekt.noteit.server.GreetingServiceImpl</servlet-class>
-  </servlet>
+<!-- Servlets -->
+ 
+    <servlet>
+    <servlet-name>NotesAdministrationImpl</servlet-name>
+    <servlet-class>de.hdm.itprojekt.noteit.server.NotesAdministrationImpl</servlet-class>
+  </servlet> 
   
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/noteit/greet</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>NotesAdministrationImpl</servlet-name>
+    <url-pattern>/noteit/notesadministration</url-pattern>
+  </servlet-mapping> 
+ 
   
   <!-- Default page to serve -->
   <welcome-file-list>
