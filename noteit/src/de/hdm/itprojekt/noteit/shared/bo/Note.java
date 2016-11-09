@@ -15,9 +15,21 @@ public class Note extends BusinessObjects {
 	private String subTitle = "";
 	private String text = "";
 	private Timestamp creationDate;
+	private Timestamp modificationDate;
 	private Timestamp maturityDate;
 	private boolean visible = false;
-	private User creator;
+	public User creator;
+	
+	
+	/**
+	 * Fremschlüsselbeziehung zu User
+	 */
+	private int userId;
+	
+	/**
+	 * Fremdchlüsselbeziehung zu Notebook
+	 */
+	private int notebookId;
 
 	/**
 	 * @return the noteID
@@ -124,16 +136,58 @@ public class Note extends BusinessObjects {
 		this.visible = visible;
 	}
 
+	
+
 	/**
-	 * @return the creator
+	 * 
+	 * @return notebookId
+	 */
+	public int getNotebookId() {
+		return notebookId;
+	}
+
+	/**
+	 * 
+	 * @param notebookId
+	 */
+	public void setNotebookId(int notebookId) {
+		this.notebookId = notebookId;
+	}
+	
+	/**
+	 * 
+	 * @return modificationDate
+	 */
+	public Timestamp getModificationDate() {
+		return modificationDate;
+	}
+	
+	/**
+	 * 
+	 * @param modificationDate
+	 */
+	public void setModificationDate(Timestamp modificationDate) {
+		this.modificationDate = modificationDate;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	/**
+	 * Ausgabe des Creator
+	 * @return
 	 */
 	public User getCreator() {
 		return creator;
 	}
-
 	/**
+	 * Setzen des Creator
 	 * @param creator
-	 *            the creator to set
 	 */
 	public void setCreator(User creator) {
 		this.creator = creator;
