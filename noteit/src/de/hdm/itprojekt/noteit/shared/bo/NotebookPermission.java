@@ -8,9 +8,11 @@ package de.hdm.itprojekt.noteit.shared.bo;
 public class NotebookPermission extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
-	private int permissionID = 0;
-	private int notebookID = 0;
-
+	private int notebookPermissionId = 0;
+	private int permission;
+	private int notebookId = 0;
+	private int userId;
+	
 	public NotebookPermission() {
 
 	}
@@ -18,31 +20,63 @@ public class NotebookPermission extends BusinessObjects {
 	/**
 	 * @return the permissionID
 	 */
-	public int getPermissionID() {
-		return permissionID;
+	public int getnotebookPermisisonId() {
+		return notebookPermissionId;
 	}
 
 	/**
 	 * @param permissionID
 	 *            the permissionID to set
 	 */
-	public void setPermissionID(int permissionID) {
-		this.permissionID = permissionID;
+	public void setNotebookPermissionId (int notebookPermissionId) {
+		this.notebookPermissionId = notebookPermissionId;
 	}
 
 	/**
 	 * @return the notebookID
 	 */
-	public int getNotebookID() {
-		return notebookID;
+	public int getNotebookId() {
+		return notebookId;
 	}
 
 	/**
 	 * @param notebookID
 	 *            the notebookID to set
 	 */
-	public void setNotebookID(int notebookID) {
-		this.notebookID = notebookID;
+	public void setNotebookId(int notebookId) {
+		this.notebookId = notebookId;
+	}
+	
+	/**
+	 * 
+	 * @return permission
+	 */
+	public int getPermission() {
+		return permission;
+	}
+	
+	/**
+	 * 
+	 * @param permission
+	 */
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
+	
+	/**
+	 * 
+	 * @return userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+	
+	/**
+	 * 
+	 * @param userId
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
 	};
 
 }
