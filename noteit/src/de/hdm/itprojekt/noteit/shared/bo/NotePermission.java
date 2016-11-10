@@ -7,7 +7,11 @@ public class NotePermission extends BusinessObjects {
 	private int permission;
 	private int noteId = 0;
 	private int userId;
+	public Note note;
+	public User user;
 
+	
+	
 	public NotePermission() {
 
 	}
@@ -66,4 +70,35 @@ public class NotePermission extends BusinessObjects {
 		this.permission = permission;
 	};
 
+	/**
+	 * Ausgabe der NotePermission
+	 * @return
+	 */
+	public Note getNote() {
+		return note;
+	}
+	/**
+	 * Setzen der NotePermission
+	 * @param creator
+	 */
+	public void setNote(Note note) {
+		this.note = note;
+	}
+	
+	/**
+	 * Ausgabe des Users
+	 * @return User
+	 */
+	public User getUser() {
+		return user;
+	}
+	
+	/**
+	 * Setzen des Users
+	 * @param user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

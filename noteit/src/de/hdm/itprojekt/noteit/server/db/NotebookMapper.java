@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
@@ -18,6 +19,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
  * <p>
  * Es werden Methoden zum Erstellen, Ändern, Löschen und Ausgeben von Notebooks
  * bereitgestellt.
+ * @author Christian Roth
  */
 public class NotebookMapper {
 	
@@ -66,9 +68,7 @@ public class NotebookMapper {
 				// Id und Konversation mit den Daten aus der DB füllen
 				nb.setId(rs.getInt("notebookId"));
 				nb.setTitle(rs.getString("title"));
-//				nb.setCreationDate(rs.getDate("creationDate"));
 				nb.setCreationDate(rs.getTimestamp("creationDate"));
-//				nb.setLastUpdate(rs.getTimestamp("lastUpdate"));
 			
 				// Objekt zurückgeben
 				return nb;
@@ -83,6 +83,72 @@ public class NotebookMapper {
 		return null;
 	}
 	
+	
+	/**
+	 * Diese Methode gibt alle Notebooks, die zu einem User gehören
+	 * anhand der userId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator des Notebook in der Datenbank
+	 * @return Liste der Notebooks
+	 */
+	public Vector<Notebook> findNotebooksByUser(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<Notebook> notebookList = new Vector<Notebook>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Notebook "
+							+ "INNER JOIN Note ON Note.Notebook_notebookId = Notebook.notebookId "
+							+ "INNER JOIN User ON Notebook.User_userId = User.userId "
+							+ "WHERE "
+							+ "Notebook.User_userId = "
+							+ id
+							+ "ORDER BY notebookId ASC");
+
+			while (rs.next()) {
+				Notebook nb = new Notebook();
+				Note n = new Note();
+				User creator = new User();
+				
+				nb.setId(rs.getInt("notebookId"));
+				nb.setTitle(rs.getString("title"));
+				nb.setCreationDate(rs.getTimestamp("creationDate"));
+
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("creationDate"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+				
+				creator.setId(rs.getInt("idUser"));
+				creator.setFirstName(rs.getString("firstName"));
+				creator.setLastName(rs.getString("lastName"));
+				
+				nb.setNote(n);
+				nb.setCreator(creator);
+				
+		
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				notebookList.add(nb);
+			}
+			// Objekt zurückgeben
+			return notebookList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notebookList;
+	}
 	
 	/**
 	 * Neues Notebook in der Datenbank anlegen.
