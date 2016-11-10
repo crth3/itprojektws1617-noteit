@@ -21,7 +21,7 @@ package de.hdm.itprojekt.noteit.server.db;
 	 * Es werden Methoden zum Erstellen, Ändern, Löschen und Ausgeben von Nutzern
 	 * bereitgestellt.
 	 * </p>
-	 * 
+	 * @author Christian Roth
 	 * 
 	 */
 
@@ -230,8 +230,16 @@ package de.hdm.itprojekt.noteit.server.db;
 					stmt = con.createStatement();
 					// SQL Query ausführen um Datensatz in DB zu schreiben
 					stmt.executeUpdate("INSERT INTO User (userId, firstName, lastName, emailAddress) " +
-							"VALUES ('" + u.getId() + "', '" + u.getFirstName() + "', '" +
-							u.getLastName() + "', '" + u.getMail() + "')");
+							"VALUES "
+							+ "('" 
+							+ u.getId() 
+							+ "', '" 
+							+ u.getFirstName() 
+							+ "', '" 
+							+ u.getLastName() 
+							+ "', '" 
+							+ u.getMail() 
+							+ "')");
 				}
 			}
 			// Error Handling
@@ -254,8 +262,15 @@ package de.hdm.itprojekt.noteit.server.db;
 				// neues SQL Statement anlegen
 				Statement stmt = con.createStatement();
 				// SQL Query ausführen
-				stmt.executeUpdate("UPDATE User SET firstName = \"" + u.getFirstName() + "\", lastName = \"" +
-						u.getLastName() + "\", emailAddress = \"" + u.getMail() + "\" WHERE userId = " + u.getId());
+				stmt.executeUpdate("UPDATE User "
+						+ "SET firstName = '" 
+						+ u.getFirstName() 
+						+ "', lastName = '" +
+						u.getLastName() 
+						+ "', emailAddress = '" 
+						+ u.getMail() 
+						+ "', WHERE userId = " 
+						+ u.getId());
 			}
 			// Error Handling
 			catch (SQLException e) {

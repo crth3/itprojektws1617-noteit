@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
+import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.NotePermission;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
+import de.hdm.itprojekt.noteit.shared.bo.NotebookPermission;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class NotePermissionMapper {
 	
@@ -57,7 +62,6 @@ private static NotePermissionMapper notePermissionMapper = null;
 				np.setId(rs.getInt("notePermissionId"));
 				np.setPermission(rs.getInt("permission"));
 				np.setNoteId(rs.getInt("Note_noteId"));
-				np.setNoteId(rs.getInt("Note_noteId"));
 				np.setUserId(rs.getInt("User_userId"));
 
 			
@@ -72,6 +76,120 @@ private static NotePermissionMapper notePermissionMapper = null;
 		}
 		// Falls nichts gefunden wurde null zurückgeben
 		return null;
+	}
+	
+	/**
+	 * Diese Methode gibt alle NotePermission einer Note
+	 * anhand der NoteId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der NotePermission in der Datenbank
+	 * @return Liste der NotePermission einer Note
+	 * 	 
+	 * */
+	public Vector<NotePermission> findNotePermissionByNoteId(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<NotePermission> notePermissionList = new Vector<NotePermission>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM NotePermission "
+							+ "INNER JOIN Note "
+							+ "ON NotePermission.Note_noteId = Note.noteId "
+							+ "WHERE Note_noteId = "
+							+ id
+							+ "ORDER BY Note_noteId ASC");
+
+			while (rs.next()) {
+				NotePermission np = new NotePermission();
+				Note n = new Note();
+				
+				np.setId(rs.getInt("notePermissionId"));
+				np.setPermission(rs.getInt("permission"));
+				np.setNoteId(rs.getInt("Note_noteId"));
+				np.setUserId(rs.getInt("User_userId"));
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("maturityDate"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+				
+				np.setNote(n);
+							
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				notePermissionList.add(np);
+			}
+			// Objekt zurückgeben
+			return notePermissionList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notePermissionList;
+	}
+	
+	/**
+	 * Diese Methode gibt alle NotePermission einer Note
+	 * anhand der userId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der NotePermission in der Datenbank
+	 * @return Liste der NotePermission einer Note aus
+	 * 	 
+	 * */
+	public Vector<NotePermission> findNotePermissionByUserId(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<NotePermission> notePermissionList = new Vector<NotePermission>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM NotePermission "
+							+ "INNER JOIN User "
+							+ "ON NotePermission.User_userId = User.userId "
+							+ "WHERE User_userId = "
+							+ id
+							+ "ORDER BY User_userId ASC");
+
+			while (rs.next()) {
+				NotePermission np = new NotePermission();
+				User u = new User();
+				
+				np.setId(rs.getInt("notePermissionId"));
+				np.setPermission(rs.getInt("permission"));
+				np.setNoteId(rs.getInt("Note_noteId"));
+				np.setUserId(rs.getInt("User_userId"));
+				
+				u.setId(rs.getInt("userId"));
+				u.setFirstName(rs.getString("firstName"));
+				u.setLastName(rs.getString("lastName"));
+				
+				np.setUser(u);
+							
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				notePermissionList.add(np);
+			}
+			// Objekt zurückgeben
+			return notePermissionList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notePermissionList;
 	}
 	
 	

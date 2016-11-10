@@ -12,7 +12,11 @@ public class NotebookPermission extends BusinessObjects {
 	private int permission;
 	private int notebookId = 0;
 	private int userId;
+	public Notebook notebook;
+	public User user;
 	
+
+
 	public NotebookPermission() {
 
 	}
@@ -78,5 +82,37 @@ public class NotebookPermission extends BusinessObjects {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	};
+	
+	/**
+	 * Ausgabe der NotebookPermission
+	 * @return
+	 */
+	public Notebook getNotebook() {
+		return notebook;
+	}
+	/**
+	 * Setzen der NotebookPermission
+	 * @param creator
+	 */
+	public void setNotebook(Notebook notebook) {
+		this.notebook = notebook;
+	}
+	
+	/**
+	 * Ausgabe des Users
+	 * @return User
+	 */
+	public User getUser() {
+		return user;
+	}
+	
+	/**
+	 * Setzen des Users
+	 * @param user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 
 }

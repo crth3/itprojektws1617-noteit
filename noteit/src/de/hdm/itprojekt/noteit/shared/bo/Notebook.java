@@ -16,6 +16,8 @@ public class Notebook extends BusinessObjects {
 	private String text = "";
 	private Timestamp creationDate;
 	private boolean visible = false;
+	public User creator;
+	public Note note;
 	
 	/**
 	 * Fremdschlüsselbeziehung zu userId
@@ -126,6 +128,36 @@ public class Notebook extends BusinessObjects {
 	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	
+	/**
+	 * Ausgabe des Creator
+	 * @return
+	 */
+	public User getCreator() {
+		return creator;
+	}
+	/**
+	 * Setzen des Creator
+	 * @param creator
+	 */
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+	
+	/**
+	 * Ausgabe der Note
+	 * @return
+	 */
+	public Note getNote() {
+		return note;
+	}
+	/**
+	 * Setzen des Note
+	 * @param creator
+	 */
+	public void setNote(Note note) {
+		this.note = note;
 	}
 
 }

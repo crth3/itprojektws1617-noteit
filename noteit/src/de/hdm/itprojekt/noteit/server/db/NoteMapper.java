@@ -17,10 +17,10 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
  * Datenbank geschrieben, als auch von der Datenbank ausgelesen werden.
  * </p>
  * <p>
- * Es werden Methoden zum Erstellen, Löschen und Ausgeben von Messages
+ * Es werden Methoden zum Erstellen, Löschen und Ausgeben von Notes
  * bereitgestellt.
  * </p>
- * 
+ * @author ChristianRoth 
  */
 
 public class NoteMapper {
@@ -67,20 +67,20 @@ public class NoteMapper {
 					.executeQuery("SELECT * FROM NOTE INNER JOIN User ON Note.User_idUser = User.idUser WHERE Note.noteId= " + id);
 			// Bei Treffer
 			if (rs.next()) {
-				// Neues Message-Objekt erzeugen
+				// Neues Note-Objekt erzeugen
 				Note n = new Note();
 				User creator = new User();
 				creator.setId(rs.getInt("userId"));
 				creator.setFirstName(rs.getString("firstName"));
 				creator.setLastName(rs.getString("lastName"));
-				// sender.setCreationDate(rs.getTimestamp("creationDate"));
 				creator.setMail(rs.getString("emailAddress"));
+				
 				n.setId(rs.getInt("noteId"));
 				n.setText(rs.getString("content"));
 				n.setMaturityDate(rs.getTimestamp("maturity"));
 				n.setCreationDate(rs.getTimestamp("creationDate"));
-				//last update fehlt
-				//n.set(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("creationDate"));
+			
 				n.setId(rs.getInt("User_userId"));
 				n.setCreator(creator);
 				// Objekt zurückgeben
@@ -95,6 +95,113 @@ public class NoteMapper {
 		// Falls nichts gefunden wurde null zurückgeben
 		return null;
 	}
+	
+	/**
+	 * Diese Methode gibt alle Notes, die zu einer NotebookId gehören
+	 * anhand der notebookId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der Notebook in der Datenbank
+	 * @return Liste der Notes in einem Notebook
+	 */
+	public Vector<Note> findNotesByNotebookId(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<Note> noteList = new Vector<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note WHERE "
+							+ "Notebook_notebookId = "
+							+ id
+							+ "ORDER BY noteId ASC");
+
+			while (rs.next()) {
+				Note n = new Note();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("creationDate"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+		
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			// Objekt zurückgeben
+			return noteList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
+	
+	/**
+	 * Diese Methode gibt alle Notes, die zu einem bestimmten User gehören
+	 * anhand der der user_userId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der Note in der Datenbank
+	 * @return Liste der Notes eines bestimmten users
+	 */
+	public Vector<Note> findNotesByUser(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<Note> noteList = new Vector<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note INNER JOIN User ON Note.User_userId = User.userId WHERE "
+							+ "User_userId = "
+							+ id
+							+ "ORDER BY noteId ASC");
+
+			while (rs.next()) {
+				Note n = new Note();
+				User creator = new User();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("maturityDate"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+				
+				creator.setId(rs.getInt("idUser"));
+				creator.setFirstName(rs.getString("firstName"));
+				creator.setLastName(rs.getString("lastName"));
+				
+				n.setCreator(creator);
+							
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			// Objekt zurückgeben
+			return noteList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
+	
+	
 
 	/**
 	 * Neue Note in der Datenbank anlegen.
@@ -112,7 +219,7 @@ public class NoteMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen um die höchste id zu erhalten
 			ResultSet rs = stmt
-					.executeQuery("SELECT MAX(idMessage) AS maxId FROM Note");
+					.executeQuery("SELECT MAX(noteId) AS maxId FROM Note");
 			if (rs.next()) {
 				// id um 1 erhöhen, damit ein neuer Eintrag erzeugt wird
 				n.setId(rs.getInt("maxId") + 1);
@@ -133,7 +240,6 @@ public class NoteMapper {
 								+ "', '"
 								+ n.getCreationDate()
 								+ "', '"
-								//TODO vielleicht nur user id
 								+ n.getUserId()
 								+ "', '"
 								+ n.getNotebookId()
@@ -152,7 +258,6 @@ public class NoteMapper {
 						+ "', '"
 						+ n.getCreationDate()
 						+ "', '"
-						//TODO vielleicht nur user id
 						+ n.getUserId()
 						+ "', '"
 						+ n.getNotebookId()
@@ -260,7 +365,7 @@ public class NoteMapper {
 				stmt.executeUpdate("DELETE FROM Note WHERE "
 						+ "Note_noteId = '" 
 						+ n.getId() 
-						+"';");
+						+"';");  
 			}
 			
 			// Prüfen ob Verbindung zu NotePermission besteht, löschen wenn bestehend
@@ -286,7 +391,7 @@ public class NoteMapper {
 									+"';");
 						}
 					
-			// Message löschen - SQL Query ausführen
+			// Note löschen - SQL Query ausführen
 			
 						System.out.println("DELETE FROM Note WHERE "
 								+ "noteId = "

@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
+import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.NotebookPermission;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class NotebookPermissionMapper {
 	
@@ -71,6 +75,114 @@ private static NotebookPermissionMapper notebookPermissionMapper = null;
 		// Falls nichts gefunden wurde null zurückgeben
 		return null;
 	}
+	
+	/**
+	 * Diese Methode gibt alle NotebookPermission eines Notebooks 
+	 * anhand der NotebookId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der NotebookPermission in der Datenbank
+	 * @return Liste der NotebookPermission eines Notebooks
+	 * 	 
+	 * */
+	public Vector<NotebookPermission> findNotebookPermissionByNotebookId(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<NotebookPermission> notebookPermissionList = new Vector<NotebookPermission>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM NotebookPermission "
+							+ "INNER JOIN Notebook "
+							+ "ON NotebookPermission.Notebook_notebookId = Notebook.notebookId "
+							+ "WHERE Notebook_notebookId = "
+							+ id
+							+ "ORDER BY Notebook_notebookId ASC");
+
+			while (rs.next()) {
+				NotebookPermission nbp = new NotebookPermission();
+				Notebook nb = new Notebook();
+				
+				nbp.setId(rs.getInt("notebookPermissionId"));
+				nbp.setPermission(rs.getInt("permission"));
+				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
+				nbp.setUserId(rs.getInt("User_userId"));
+				
+				nb.setId(rs.getInt("notebookId"));
+				nb.setTitle(rs.getString("title"));
+				
+				nbp.setNotebook(nb);
+							
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				notebookPermissionList.add(nbp);
+			}
+			// Objekt zurückgeben
+			return notebookPermissionList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notebookPermissionList;
+	}
+	
+	/**
+	 * Diese Methode gibt alle NotebookPermission eines Notebooks 
+	 * anhand der userId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator der NotebookPermission in der Datenbank
+	 * @return Liste der NotebookPermission eines Notebooks
+	 * 	 
+	 * */
+	public Vector<NotebookPermission> findNotebookPermissionByUserId(int id) {
+
+		Connection con = DBConnection.connection();
+		Vector<NotebookPermission> notebookPermissionList = new Vector<NotebookPermission>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM NotebookPermission "
+							+ "INNER JOIN User "
+							+ "ON NotebookPermission.User_userId = User.userId "
+							+ "WHERE User_userId = "
+							+ id
+							+ "ORDER BY User_userId ASC");
+
+			while (rs.next()) {
+				NotebookPermission nbp = new NotebookPermission();
+				User u = new User();
+				
+				nbp.setId(rs.getInt("notebookPermissionId"));
+				nbp.setPermission(rs.getInt("permission"));
+				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
+				nbp.setUserId(rs.getInt("User_userId"));
+				
+				u.setId(rs.getInt("userId"));
+				u.setFirstName(rs.getString("firstName"));
+				u.setLastName(rs.getString("lastName"));
+				
+				nbp.setUser(u);
+							
+				System.out.println(rs);
+				// Conversation Objekt der Liste hinzufügen
+				notebookPermissionList.add(nbp);
+			}
+			// Objekt zurückgeben
+			return notebookPermissionList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notebookPermissionList;
+	}
+	
 	
 	
 	/**
