@@ -101,11 +101,11 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}	
 	
 	@Override
-	public void deleteUser(int userID) throws IllegalArgumentException {
+	public void deleteUser(User userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "DRIN");
-		//this.uMapper.delete(userID);
+		this.uMapper.delete(userID);
 		
 	}
 	

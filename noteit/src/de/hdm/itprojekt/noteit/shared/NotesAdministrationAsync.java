@@ -24,7 +24,7 @@ public interface NotesAdministrationAsync {
 
 	void deleteNotebook(int notebookID, int userID, AsyncCallback<Void> callback);
 
-	void deleteUser(int UserID, AsyncCallback<Void> callback);
+	void deleteUser(User userID, AsyncCallback<Void> callback);
 
 	void findNotebooksByKeyword(int userID, String keyword, AsyncCallback<ArrayList<Notebook>> callback);
 
