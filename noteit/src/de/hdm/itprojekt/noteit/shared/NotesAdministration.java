@@ -49,7 +49,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @param UserID
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteUser(int UserID) throws IllegalArgumentException;
+	public void deleteUser(User UserID) throws IllegalArgumentException;
 	
 	/**
 	 * 
@@ -156,4 +156,6 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public User findUserByMail(String mail) throws IllegalArgumentException;
+
+	void deleteUser(User userID) throws IllegalArgumentException;
 }

@@ -105,7 +105,7 @@ public class Noteit implements EntryPoint {
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "ERROR");
+						logger.log(Level.SEVERE, "ERROR CreateUser"+caught);
 						
 					}
 
@@ -113,17 +113,17 @@ public class Noteit implements EntryPoint {
 					public void onSuccess(User result) {
 						// TODO Auto-generated method stub
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, result.getFirstName());
+						logger.log(Level.SEVERE, "on success" + result.getFirstName());
 					}
 				});
 				
-				notesAdministrationService.deleteUser(0, new AsyncCallback<Void>() {
+				notesAdministrationService.deleteUser(2, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
 						// TODO Auto-generated method stub
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "Läuft");
+						logger.log(Level.SEVERE, "User gelöscht");
 						
 					}
 					
@@ -131,7 +131,7 @@ public class Noteit implements EntryPoint {
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "ERROR");
+						logger.log(Level.SEVERE, "ERROR Delete");
 						
 					}
 				});
