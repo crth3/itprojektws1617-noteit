@@ -32,3 +32,38 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+div#header {
+	
+}
+
+.welcomeLabel {
+	
+}
+
+.headlineLabel {
+	font-size: 30pt;
+	color: red;
+}
+
+.logOutButton {
+	
+}
+
+.welcomePanel {
+	padding-left:0%;
+	vertical-align: bottom;
+	line-height: 50px;
+}
+
+.headlinePanel {
+	padding-left: 50%;
+	vertical-align: middle;
+	line-height: 50px;
+}
+
+.logoutPanel {
+	padding-left:100%;
+	vertical-align: middle;
+	line-height: 50px;
+}

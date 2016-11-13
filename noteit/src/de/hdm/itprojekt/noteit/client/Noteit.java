@@ -19,6 +19,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -46,6 +47,49 @@ public class Noteit implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
+		HorizontalPanel headerPanel = new HorizontalPanel();
+		HorizontalPanel welcomePanel = new HorizontalPanel();
+		HorizontalPanel headlinePanel = new HorizontalPanel();
+		HorizontalPanel logoutPanel = new HorizontalPanel();
+		
+		Label welcomeLabel = new Label("Wilkommen Chris");
+		Label headlineLabel = new Label("NoteIt");
+		
+		Button btnLogOut = new Button("Logout");
+		
+		welcomeLabel.setStylePrimaryName("welcomeLabel");
+		headlineLabel.setStylePrimaryName("headlineLabel");
+		
+		btnLogOut.setStylePrimaryName("logOutButton");
+		
+		welcomePanel.setStylePrimaryName("welcomePanel");
+		logoutPanel.setStylePrimaryName("logoutPanel");
+		headlinePanel.setStylePrimaryName("headlinePanel");
+		
+		welcomePanel.add(welcomeLabel);
+		headlinePanel.add(headlineLabel);
+		logoutPanel.add(btnLogOut);
+		
+		
+		headerPanel.add(welcomePanel);
+		headerPanel.add(headlinePanel);
+		headerPanel.add(logoutPanel);
+		
+		RootPanel.get("header").add(headerPanel);
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
@@ -123,7 +167,7 @@ public class Noteit implements EntryPoint {
 					public void onSuccess(Void result) {
 						// TODO Auto-generated method stub
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "Läuft");
+						logger.log(Level.SEVERE, "Lï¿½uft");
 						
 					}
 					
