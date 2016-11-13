@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -18,10 +19,13 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -49,23 +53,65 @@ public class Noteit implements EntryPoint {
 	public void onModuleLoad() {
 		
 		HorizontalPanel headerPanel = new HorizontalPanel();
-		HorizontalPanel welcomePanel = new HorizontalPanel();
-		HorizontalPanel headlinePanel = new HorizontalPanel();
-		HorizontalPanel logoutPanel = new HorizontalPanel();
-		
+			HorizontalPanel welcomePanel = new HorizontalPanel();
+			HorizontalPanel headlinePanel = new HorizontalPanel();
+			HorizontalPanel logoutPanel = new HorizontalPanel();
+		HorizontalPanel navPanel = new HorizontalPanel();
+			HorizontalPanel navNotebookPanel = new HorizontalPanel();
+			HorizontalPanel navNotesPanel = new HorizontalPanel();
+		HorizontalPanel contentPanel = new HorizontalPanel();
+			HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+			HorizontalPanel contentNotesPanel = new HorizontalPanel();
+			
+			
 		Label welcomeLabel = new Label("Wilkommen Chris");
 		Label headlineLabel = new Label("NoteIt");
+		Label headlineNotebookLabel = new Label ("Notizbücher");
+		Label headlineNotesLabel = new Label ("Notizen");
+
 		
 		Button btnLogOut = new Button("Logout");
 		
 		welcomeLabel.setStylePrimaryName("welcomeLabel");
 		headlineLabel.setStylePrimaryName("headlineLabel");
+		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
+		headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
+		
 		
 		btnLogOut.setStylePrimaryName("logOutButton");
 		
+		headerPanel.setStylePrimaryName("headerPanel");
 		welcomePanel.setStylePrimaryName("welcomePanel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
+		navNotebookPanel.setStylePrimaryName("navNotebookPanel");
+		navNotesPanel.setStylePrimaryName("navNotesPanel");
+		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
+		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
+		
+		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+	
+		
+		headerPanel.setWidth("1000px");
+		navPanel.setWidth("1000px");
+		contentPanel.setWidth("1000px");
+		navNotebookPanel.setWidth("500px");
+		navNotesPanel.setWidth("500px");
+		contentNotebookPanel.setWidth("500px");
+		contentNotesPanel.setWidth("500px");
+		
+		contentNotebookPanel.setHeight("300px");
+		contentNotesPanel.setHeight("300px");
+
+		navNotebookPanel.add(headlineNotebookLabel);
+		navNotesPanel.add(headlineNotesLabel);
+
 		
 		welcomePanel.add(welcomeLabel);
 		headlinePanel.add(headlineLabel);
@@ -75,18 +121,21 @@ public class Noteit implements EntryPoint {
 		headerPanel.add(welcomePanel);
 		headerPanel.add(headlinePanel);
 		headerPanel.add(logoutPanel);
-		
-		RootPanel.get("header").add(headerPanel);
+		navPanel.add(navNotebookPanel);
+		navPanel.add(navNotesPanel);
+		contentPanel.add(contentNotebookPanel);
+		contentPanel.add(contentNotesPanel);
 
+
+		RootPanel.get("header").add(headerPanel);
+		RootPanel.get("nav").add(navPanel);
+		RootPanel.get("content").add(contentPanel);
 		
 		
 		
-		
-		
-		
-		
-		
-		
+//      neu
+//-------------------------------------------------------		
+//      alt		
 		
 		
 		
