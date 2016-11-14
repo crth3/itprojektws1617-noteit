@@ -11,6 +11,7 @@ public class Notebook extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
 	private int notebookID = 0;
+	public int creatorID = 0;
 	private String title = "";
 	private String subTitle = "";
 	private String text = "";
@@ -130,20 +131,21 @@ public class Notebook extends BusinessObjects {
 		this.userId = userId;
 	}
 	
-	/**
-	 * Ausgabe des Creator
-	 * @return
-	 */
-	public User getCreator() {
-		return creator;
-	}
-	/**
-	 * Setzen des Creator
-	 * @param creator
-	 */
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
+//	/**
+//	 * Ausgabe des Creator
+//	 * @return
+//	 */
+//	public int getCreatorID() {
+//		return creatorID;
+//	}
+//	
+//	/**
+//	 * 
+//	 * @param creatorID
+//	 */
+//	public void setCreatorID(int creatorID) {
+//		this.creatorID = creatorID;
+//	}
 	
 	/**
 	 * Ausgabe der Note

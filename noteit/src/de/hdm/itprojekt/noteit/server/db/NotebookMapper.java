@@ -92,7 +92,7 @@ public class NotebookMapper {
 	 *            Eindeutiger Identifikator des Notebook in der Datenbank
 	 * @return Liste der Notebooks
 	 */
-	public Vector<Notebook> findNotebooksByUser(int id) {
+	public Vector<Notebook> findNotebooksByUserID(int id) {
 
 		Connection con = DBConnection.connection();
 		Vector<Notebook> notebookList = new Vector<Notebook>();
@@ -111,7 +111,6 @@ public class NotebookMapper {
 			while (rs.next()) {
 				Notebook nb = new Notebook();
 				Note n = new Note();
-				User creator = new User();
 				
 				nb.setId(rs.getInt("notebookId"));
 				nb.setTitle(rs.getString("title"));
@@ -127,12 +126,8 @@ public class NotebookMapper {
 				n.setNotebookId(rs.getInt("Notebook_notebookId"));
 				n.setUserId(rs.getInt("User_UserId"));
 				
-				creator.setId(rs.getInt("idUser"));
-				creator.setFirstName(rs.getString("firstName"));
-				creator.setLastName(rs.getString("lastName"));
-				
 				nb.setNote(n);
-				nb.setCreator(creator);
+				nb.setUserId(rs.getInt("idUser"));
 				
 		
 				System.out.println(rs);
