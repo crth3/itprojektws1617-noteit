@@ -7,14 +7,12 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.itprojekt.noteit.client.GreetingService;
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookPermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.SourceMapper;
 import de.hdm.itprojekt.noteit.server.db.UserMapper;
-import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -35,8 +33,15 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	
 	private static final Logger log = Logger.getLogger( NotesAdministrationImpl.class.getName() );
 	
+	private Timestamp ts = new Timestamp(System.currentTimeMillis());
+	
 	public void init(){
 		this.uMapper = UserMapper.userMapper();
+		this.nMapper = NoteMapper.noteMapper();
+		this.nbMapper = NotebookMapper.notebookMapper();
+		this.sMapper = SourceMapper.sourceMapper();
+		this.npMapper = NotePermissionMapper.notePermissionMapper();
+		this.nbpMapper = NotebookPermissionMapper.notebookPermissionMapper();
 
 	};
 	
@@ -101,30 +106,35 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}	
 	
 	@Override
-	public void deleteUser(User userID) throws IllegalArgumentException {
+	public void deleteUser(User user) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "DRIN");
-		this.uMapper.delete(userID);
+		this.uMapper.delete(user);
 		
 	}
 	
-	//TODO methode noch in shard nodesAdministration hinzufügen
+	//TODO methode noch in shared nodesAdministration hinzufügen?
 	public User findUserByID(int userID){
 		return this.uMapper.findByID(userID);
 	}
 	
 	@Override
 	public User findUserByMail(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.uMapper.findByEmail(mail);
 	}
 	
 	@Override
-	public Notebook createNotebook(String title, int creatorID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException {
+		
+		ts.getTime();
+		Notebook nb = new Notebook();
+		nb.setUserId(creator.getId());
+		nb.setTitle(title);
+		nb.setCreationDate(ts);
+		return this.nbMapper.insert(nb);
 	}
+	
 	@Override
 	public void updateNotebook(String title, int notebookID, int editorID, ArrayList<String> userMail,
 			ArrayList<Integer> permission) throws IllegalArgumentException {

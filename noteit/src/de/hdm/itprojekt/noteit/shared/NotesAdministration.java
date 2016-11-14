@@ -54,11 +54,11 @@ public interface NotesAdministration extends RemoteService{
 	/**
 	 * 
 	 * @param title
-	 * @param creatorID
+	 * @param creator
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Notebook createNotebook(String title, int creatorID) throws IllegalArgumentException;
+	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException;
 	
 	//TODO Übergabeparmater für Berechtigungen überarbeiten evtl ein Objekt -> auch bei update Note hinzufügen
 	/**
@@ -156,6 +156,4 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public User findUserByMail(String mail) throws IllegalArgumentException;
-
-	void deleteUser(User userID) throws IllegalArgumentException;
 }
