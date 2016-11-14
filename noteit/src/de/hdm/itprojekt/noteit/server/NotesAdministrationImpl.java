@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.apphosting.client.serviceapp.AuthService.UserPermissions;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
@@ -16,6 +17,7 @@ import de.hdm.itprojekt.noteit.server.db.UserMapper;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
+import de.hdm.itprojekt.noteit.shared.bo.NotebookPermission;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class NotesAdministrationImpl extends RemoteServiceServlet implements NotesAdministration{
@@ -30,6 +32,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private SourceMapper sMapper = null;
 	private NotePermissionMapper npMapper = null;
 	private NotebookPermissionMapper nbpMapper = null;
+	
+	Notebook nb;
 	
 	private static final Logger log = Logger.getLogger( NotesAdministrationImpl.class.getName() );
 	
@@ -128,7 +132,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException {
 		
 		ts.getTime();
-		Notebook nb = new Notebook();
+		nb = new Notebook();
 		nb.setUserId(creator.getId());
 		nb.setTitle(title);
 		nb.setCreationDate(ts);
@@ -138,7 +142,21 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateNotebook(String title, int notebookID, int editorID, ArrayList<String> userMail,
 			ArrayList<Integer> permission) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		nb = new Notebook();
+		nb.setId(notebookID);
+		nb.setTitle(title);
+		
+		if(permission != null){
+			for (int i = 0; i != permission.size(); i++) {
+				NotebookPermission nbp = new NotebookPermission();
+				nbp.setNotebookId(notebookID);
+				nbp.setUserId(findUserByMail(userMail.get(i)).getId());
+				nbp.setPermission(permission.get(i)); //TODO hier wird permssion immer 0 gesetzt! überprüfen
+				
+				this.nbpMapper.insert(nbp);
+			}
+		}
+		this.nbMapper.edit(nb);
 		
 	}
 	@Override

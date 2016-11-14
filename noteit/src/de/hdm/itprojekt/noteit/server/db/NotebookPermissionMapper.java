@@ -207,7 +207,7 @@ private static NotebookPermissionMapper notebookPermissionMapper = null;
 				stmt = con.createStatement();
 				// SQL Query ausführen um Datensatz in DB zu schreiben
 				
-				System.out.println("INSERT INTO NotebookPermission (notebookPermissionId, permission, Note_noteId, User_userId) " +
+				System.out.println("INSERT INTO NotebookPermission (notebookPermissionId, permission, Notebook_notebookId, User_userId) " +
 						"VALUES (" 
 						+ nbp.getId() 
 						+ ", '" 
@@ -218,7 +218,7 @@ private static NotebookPermissionMapper notebookPermissionMapper = null;
 						+ nbp.getUserId()
 						+"')");
 				
-				stmt.executeUpdate("INSERT INTO NotebookPermission (notebookPermissionId, permission, Note_noteId, User_userId) " +
+				stmt.executeUpdate("INSERT INTO NotebookPermission (notebookPermissionId, permission, Notebook_notebookId, User_userId) " +
 						"VALUES (" 
 						+ nbp.getId() 
 						+ ", '" 
