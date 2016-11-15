@@ -59,7 +59,7 @@ public class NotebookMapper {
 			// Neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-			ResultSet rs = stmt.executeQuery("SELECT notebookId, title, creationDate FROM Notebook " +
+			ResultSet rs = stmt.executeQuery("SELECT notebookId, title, creationDate, User_userId FROM Notebook " +
 					"WHERE notebookId = " + id);
 			// Bei Treffer 
 			if(rs.next()) {
@@ -69,6 +69,7 @@ public class NotebookMapper {
 				nb.setId(rs.getInt("notebookId"));
 				nb.setTitle(rs.getString("title"));
 				nb.setCreationDate(rs.getTimestamp("creationDate"));
+				nb.setUserId(rs.getInt("User_userId"));
 			
 				// Objekt zurückgeben
 				return nb;

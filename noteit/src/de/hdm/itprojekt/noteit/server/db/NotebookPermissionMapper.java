@@ -97,8 +97,7 @@ private static NotebookPermissionMapper notebookPermissionMapper = null;
 							+ "INNER JOIN Notebook "
 							+ "ON NotebookPermission.Notebook_notebookId = Notebook.notebookId "
 							+ "WHERE Notebook_notebookId = "
-							+ id
-							+ "ORDER BY Notebook_notebookId ASC");
+							+ id);
 
 			while (rs.next()) {
 				NotebookPermission nbp = new NotebookPermission();

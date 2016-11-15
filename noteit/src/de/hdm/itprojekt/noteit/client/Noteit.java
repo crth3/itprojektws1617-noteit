@@ -123,23 +123,38 @@ public class Noteit implements EntryPoint {
 //						logger.log(Level.SEVERE, "on success" + result.getFirstName());
 //					}
 //				});
-				Logger logger = Logger.getLogger("NameOfYourLogger");
-				logger.log(Level.SEVERE, "Start Update notebook methode");
-				notesAdministrationService.updateNotebook("update Notebook", 1, 13, mailArray, intArray, new AsyncCallback<Void>() {
+//				Logger logger = Logger.getLogger("NameOfYourLogger");
+//				logger.log(Level.SEVERE, "Start Update notebook methode");
+//				notesAdministrationService.updateNotebook("update Notebook", 1, 13, mailArray, intArray, new AsyncCallback<Void>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "ERROR CreateUser"+caught);
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(Void result) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "on success Update Notebook");
+//					}
+//				});
+				
+				notesAdministrationService.deleteNotebook(3, 4, new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
-						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "ERROR CreateUser"+caught);
 						
 					}
 
 					@Override
 					public void onSuccess(Void result) {
 						// TODO Auto-generated method stub
-						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "on success Update Notebook");
+						
 					}
 				});
 			

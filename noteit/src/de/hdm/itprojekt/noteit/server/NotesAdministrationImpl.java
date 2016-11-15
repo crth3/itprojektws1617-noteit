@@ -2,6 +2,7 @@ package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -151,7 +152,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				NotebookPermission nbp = new NotebookPermission();
 				nbp.setNotebookId(notebookID);
 				nbp.setUserId(findUserByMail(userMail.get(i)).getId());
-				nbp.setPermission(permission.get(i)); //TODO hier wird permssion immer 0 gesetzt! überprüfen
+				nbp.setPermission(permission.get(i));
 				
 				this.nbpMapper.insert(nbp);
 			}
@@ -159,11 +160,33 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		this.nbMapper.edit(nb);
 		
 	}
+	
 	@Override
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		
+		Vector<NotebookPermission> notebookPermissions = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		Notebook currentNotebook = this.nbMapper.findById(notebookID);
+		
+		try {
+			if(currentNotebook.getUserId() == userID){
+				this.nbMapper.delete(currentNotebook);
+			}else if (notebookPermissions != null) {
+				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
+					if (userID == foundedNotebookPermission.getUserId()) {
+						if (foundedNotebookPermission.getPermission() == 3) {
+							this.nbpMapper.delete(foundedNotebookPermission);
+							this.nbMapper.delete(currentNotebook);
+							break;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "delete Notebook", e);
+		}
 		
 	}
+	
 	@Override
 	public Note createNote(String title, String subtitle, String text, Timestamp maturity, int creatorID, String source)
 			throws IllegalArgumentException {
