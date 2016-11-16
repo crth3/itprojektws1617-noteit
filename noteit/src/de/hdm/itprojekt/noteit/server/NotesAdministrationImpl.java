@@ -17,6 +17,7 @@ import de.hdm.itprojekt.noteit.server.db.SourceMapper;
 import de.hdm.itprojekt.noteit.server.db.UserMapper;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.NotePermission;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.NotebookPermission;
 import de.hdm.itprojekt.noteit.shared.bo.User;
@@ -202,20 +203,61 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 	
 	@Override
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, int creatorID, String source)
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ts.getTime();
+		Note note = new Note();
+		note.setTitle(title);
+		note.setSubTitle(subtitle);
+		note.setText(text);
+		note.setMaturityDate(maturity);
+		//note.setsource //Methode fehlt noch
+		//note.setUserId(creator.getId());
+		note.setCreationDate(ts);
+	
+		return this.nMapper.insert(note);
+		
 	}
 	@Override
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		ts.getTime();
+		Note note = new Note();
+		//note.setCreator(creatorID); //Int oder Objekt?
+		note.setTitle(title);
+		note.setSubTitle(subtitle);
+		note.setText(text);
+		note.setMaturityDate(maturity);
+		//note.setsource //Methode fehlt noch
+		//note.setUserId(creator.getId());
+		note.setCreationDate(ts);
+	
+		this.nMapper.update(note);
 		
 	}
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Vector<NotePermission> VecNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
+		Note note = this.nMapper.findById(noteID);
+		
+		try {
+			if(note.getUserId() == userID){
+				this.nMapper.delete(note);
+			}else if (VecNotePermission != null) {
+				for (NotePermission foundNotePermission : VecNotePermission) {
+					if (userID == foundNotePermission.getUserId()) {
+						if (foundNotePermission.getPermission() == 3) {
+							this.npMapper.delete(foundNotePermission);
+							this.nMapper.delete(note);
+							break;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "delete Note", e);
+		}
 		
 	}
 	@Override
