@@ -295,9 +295,10 @@ private static NotebookPermissionMapper notebookPermissionMapper = null;
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-			stmt.executeUpdate("DELETE FROM NotebookPermisison "
+			stmt.executeUpdate("DELETE FROM NotebookPermission "
 					+ "WHERE notebookPermissionId = " 
-					+ nbp.getnotebookPermisisonId());
+					+ nbp.getId());
+			System.out.println("Notebook mit der ID " + nbp.getNotebookId() + " Permission mit id " + nbp.getId() +  " wurde gelöscht");
 		}
 		// Error Handling
 		catch (SQLException e) {

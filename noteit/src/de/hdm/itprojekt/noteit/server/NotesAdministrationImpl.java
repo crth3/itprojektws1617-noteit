@@ -168,16 +168,30 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		Notebook currentNotebook = this.nbMapper.findById(notebookID);
 		
 		try {
-			if(currentNotebook.getUserId() == userID){
-				this.nbMapper.delete(currentNotebook);
+			if(currentNotebook.getUserId() == userID){ // Wenn der selbe der das Notebook erstellt hat, es löschen möchte
+				if(notebookPermissions != null){ // wenn es Permissions gibt
+					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
+							this.nbpMapper.delete(foundedNotebookPermission); // lösche zuerst alle Permissions
+					}
+					this.nbMapper.delete(currentNotebook); // lösche das Notebook
+				}else{
+					this.nbMapper.delete(currentNotebook); // wenn es keine permission gibt, lösche das notebook
+				}
 			}else if (notebookPermissions != null) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-					if (userID == foundedNotebookPermission.getUserId()) {
-						if (foundedNotebookPermission.getPermission() == 3) {
+					if (userID == foundedNotebookPermission.getUserId()) { // Wenn UserID der der übegeben ist...
+						if (foundedNotebookPermission.getPermission() == 3) { //wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
+							for (NotebookPermission foundedNotebookPermissions : notebookPermissions) {
+								if(userID != foundedNotebookPermissions.getUserId()){ // Wenn UserID nicht der des übergeben ist lösche seine Breichtigung
+									this.nbpMapper.delete(foundedNotebookPermissions);
+								}
+							}
+							System.out.println("Lösche eigene Notebook Permission");
 							this.nbpMapper.delete(foundedNotebookPermission);
+							System.out.println("Lösche Notebook");
 							this.nbMapper.delete(currentNotebook);
-							break;
 						}
+						System.out.println("Notebook Permission kann aufgrund der Berechtigung nicht gelöscht werden ");
 					}
 				}
 			}

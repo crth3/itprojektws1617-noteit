@@ -22,21 +22,6 @@ public class NotebookPermission extends BusinessObjects {
 	}
 
 	/**
-	 * @return the permissionID
-	 */
-	public int getnotebookPermisisonId() {
-		return notebookPermissionId;
-	}
-
-	/**
-	 * @param permissionID
-	 *            the permissionID to set
-	 */
-	public void setNotebookPermissionId (int notebookPermissionId) {
-		this.notebookPermissionId = notebookPermissionId;
-	}
-
-	/**
 	 * @return the notebookID
 	 */
 	public int getNotebookId() {

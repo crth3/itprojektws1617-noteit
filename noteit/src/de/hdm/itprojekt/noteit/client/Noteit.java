@@ -143,7 +143,7 @@ public class Noteit implements EntryPoint {
 //					}
 //				});
 				
-				notesAdministrationService.deleteNotebook(3, 4, new AsyncCallback<Void>() {
+				notesAdministrationService.deleteNotebook(2,6, new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
