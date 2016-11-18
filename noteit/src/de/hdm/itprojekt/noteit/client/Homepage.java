@@ -25,7 +25,7 @@ public class Homepage extends VerticalPanel{
 		Label headlineNotesLabel = new Label ("Notizen");
 		
 		Button addNoteButton = new Button ("Add Note");
-		Button impressumButton = new Button ("Impressum");
+		
 		
 		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -56,7 +56,6 @@ public class Homepage extends VerticalPanel{
 		navNotebookPanel.add(headlineNotebookLabel);
 		navNotesPanel.add(headlineNotesLabel);
 		navNotesPanel.add(addNoteButton);
-		navNotesPanel.add(impressumButton);
 		
 		
 		navPanel.add(navNotebookPanel);
@@ -73,15 +72,7 @@ public class Homepage extends VerticalPanel{
 		        RootPanel.get("content").add(editNotes);
 		      }
 		    });
-		
-		impressumButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel impressum = new Impressum();
-				
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(impressum);
-			}
-		});
+
 		
 		
 		this.add(navPanel);
