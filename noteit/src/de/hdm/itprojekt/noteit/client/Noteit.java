@@ -139,6 +139,15 @@ public class Noteit implements EntryPoint {
 	RootPanel.get("content").add(homepage);
 //	RootPanel.get("content").add(editNotes);
 	
+	//ClickHandler für Impressum Button
+	impressumButton.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event) {
+			VerticalPanel impressum = new Impressum();
+			
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(impressum);
+		}
+	});
 	
 //  neu
 //-------------------------------------------------------		
@@ -195,15 +204,6 @@ public class Noteit implements EntryPoint {
 			}
 		});
 		
-		//CklickHandler für Impressum Button
-		impressumButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel impressum = new Impressum();
-				
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(impressum);
-			}
-		});
 
 		// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {
