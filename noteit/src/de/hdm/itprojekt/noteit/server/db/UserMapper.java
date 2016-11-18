@@ -4,7 +4,7 @@ package de.hdm.itprojekt.noteit.server.db;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
 	import java.sql.Statement;
-	import java.util.Vector;
+	import java.util.ArrayList;
 	import java.util.logging.Level;
 	import java.util.logging.Logger;
 
@@ -101,11 +101,11 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * @param lastName Nachname des gesuchten Nutzers
 		 * @return Vektor mit allen zu den Suchparametern gefundenen Nutzern
 		 */
-		public Vector<User> findByName(String firstName, String lastName) {
+		public ArrayList<User> findByName(String firstName, String lastName) {
 			// Datenbankverbindung 
 			Connection con = DBConnection.connection();
 			// Ergebnisvektor anlegen
-			Vector<User> result = new Vector<User>();
+			ArrayList<User> result = new ArrayList<User>();
 			
 			try {
 				// neues SQL Statement anlegen
@@ -123,7 +123,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setLastName(rs.getString("lastName"));
 					u.setMail(rs.getString("emailAddress"));
 					// ... Objekt dem Ergebnisvektor hinzufügen
-					result.addElement(u);
+					result.add(u);
 				}
 			}
 			// Error Handling
@@ -174,11 +174,11 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * 
 		 * @return Vektor mit allen registrierten Nutzern
 		 */
-		public Vector<User> findAll() {
+		public ArrayList<User> findAll() {
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
 			// Ergebnisvektor anlegen
-			Vector<User> result = new Vector<User>();
+			ArrayList<User> result = new ArrayList<User>();
 			
 			try {
 				// neues SQL Statement anlegen
@@ -195,7 +195,7 @@ package de.hdm.itprojekt.noteit.server.db;
 					u.setLastName(rs.getString("lastName"));
 					u.setMail(rs.getString("emailAddress"));
 					// User dem Ergebnisvektor hinzufügen
-					result.addElement(u);
+					result.add(u);
 				}
 			}
 			// Error Handling

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.NotePermission;
@@ -87,10 +87,10 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * @return Liste der NotePermission einer Note
 	 * 	 
 	 * */
-	public Vector<NotePermission> findNotePermissionByNoteId(int id) {
+	public ArrayList<NotePermission> findNotePermissionByNoteId(int id) {
 
 		Connection con = DBConnection.connection();
-		Vector<NotePermission> notePermissionList = new Vector<NotePermission>();
+		ArrayList<NotePermission> notePermissionList = new ArrayList<NotePermission>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -147,10 +147,10 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * @return Liste der NotePermission einer Note aus
 	 * 	 
 	 * */
-	public Vector<NotePermission> findNotePermissionByUserId(int id) {
+	public ArrayList<NotePermission> findNotePermissionByUserId(int id) {
 
 		Connection con = DBConnection.connection();
-		Vector<NotePermission> notePermissionList = new Vector<NotePermission>();
+		ArrayList<NotePermission> notePermissionList = new ArrayList<NotePermission>();
 
 		try {
 			Statement stmt = con.createStatement();
