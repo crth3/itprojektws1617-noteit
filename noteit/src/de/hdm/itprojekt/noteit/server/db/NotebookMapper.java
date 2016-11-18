@@ -194,7 +194,7 @@ public class NotebookMapper {
 	 * @param nb das zu bearbeitende Notebook
 	 * @return nb
 	 */
-	public Notebook edit(Notebook nb) {
+	public Notebook update(Notebook nb) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 		
@@ -220,7 +220,7 @@ public class NotebookMapper {
 	 * 
 	 * @param nb das zu löschende Notebook
 	 */
-	public void delete(Notebook nb) {
+	public boolean delete(Notebook nb) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 		
@@ -233,7 +233,9 @@ public class NotebookMapper {
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 	
 	
