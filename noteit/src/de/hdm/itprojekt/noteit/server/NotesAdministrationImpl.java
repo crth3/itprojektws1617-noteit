@@ -278,17 +278,35 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> getAllNotebooksByUserID(int UserID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return this.nbMapper.findNotebooksByUserID(UserID);
 	}
 	@Override
 	public ArrayList<Note> getAllNotesByNotebookID(int notebookID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		return this.nMapper.findNotesByNotebookId(notebookID);
 	}
+	
 	@Override
 	public ArrayList<Notebook> findNotebooksByKeyword(int userID, String keyword) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Notebook> allNotebooksFromThisUser = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<Notebook> notebooksWithKeyword = new ArrayList<Notebook>();
+		
+		if (allNotebooksFromThisUser != null) {
+
+			for (Notebook foundedNotebook : allNotebooksFromThisUser) {
+				String title = foundedNotebook.getTitle().toLowerCase();
+				if (title.contains(keyword)) {
+					notebooksWithKeyword.add(foundedNotebook);
+				}
+
+			}
+		}else{
+			//TODO funktioniert das?
+			notebooksWithKeyword = null;
+		}
+		return notebooksWithKeyword;
 	}
 	@Override
 	public ArrayList<Note> findNoteByKeyword(int userID, String keyword, int notebookID)

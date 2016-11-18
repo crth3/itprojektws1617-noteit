@@ -3,7 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
-import de.hdm.itprojekt.noteit.shared.bo.User;
+import de.hdm.itprojekt.noteit.shared.bo.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -251,7 +251,54 @@ public class Noteit implements EntryPoint {
 //					}
 //				});
 				
-				notesAdministrationService.deleteNotebook(2,6, new AsyncCallback<Void>() {
+//				notesAdministrationService.deleteNotebook(2,6, new AsyncCallback<Void>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(Void result) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//				});
+				
+//				notesAdministrationService.getAllNotebooksByUserID(1, new AsyncCallback<ArrayList<Notebook>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					public void onSuccess(ArrayList<Notebook> result) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "on success Update Notebook" + result.get(0).getTitle());
+//					
+//					}
+//				});
+				
+//				notesAdministrationService.getAllNotesByNotebookID(1, new AsyncCallback<ArrayList<Note>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(ArrayList<Note> result) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "getAllNotesByNotebookID " + result.get(0).getText());
+//					}
+//				});
+				
+				notesAdministrationService.findNotebooksByKeyword(1, "notebook", new AsyncCallback<ArrayList<Notebook>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -260,11 +307,16 @@ public class Noteit implements EntryPoint {
 					}
 
 					@Override
-					public void onSuccess(Void result) {
+					public void onSuccess(ArrayList<Notebook> result) {
 						// TODO Auto-generated method stub
+						
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, "on success Update Notebook " + result.get(0).getTitle() + " 2 " + result.get(1).getTitle());
 						
 					}
 				});
+				
+				
 			
 				
 			}
