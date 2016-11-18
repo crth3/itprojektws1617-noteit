@@ -22,6 +22,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -49,6 +51,111 @@ public class Noteit implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
+		
+		HorizontalPanel headerPanel = new HorizontalPanel();
+		HorizontalPanel welcomePanel = new HorizontalPanel();
+		HorizontalPanel headlinePanel = new HorizontalPanel();
+		HorizontalPanel logoutPanel = new HorizontalPanel();
+//	HorizontalPanel navPanel = new HorizontalPanel();
+//		HorizontalPanel navNotebookPanel = new HorizontalPanel();
+//		HorizontalPanel navNotesPanel = new HorizontalPanel();
+//	HorizontalPanel contentPanel = new HorizontalPanel();
+//		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+//		HorizontalPanel contentNotesPanel = new HorizontalPanel();
+		VerticalPanel homepage = new Homepage();
+//		VerticalPanel editNotes = new EditNotes();
+		
+		
+	Label welcomeLabel = new Label("Wilkommen Chris");
+	Label headlineLabel = new Label("NoteIt");
+//	Label headlineNotebookLabel = new Label ("Notizbücher");
+//	Label headlineNotesLabel = new Label ("Notizen");
+
+	
+	Button btnLogOut = new Button("Logout");
+	Button impressumButton = new Button ("Impressum");
+	
+	welcomeLabel.setStylePrimaryName("welcomeLabel");
+	headlineLabel.setStylePrimaryName("headlineLabel");
+//	headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
+//	headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
+	
+	
+	btnLogOut.setStylePrimaryName("logOutButton");
+	
+	headerPanel.setStylePrimaryName("headerPanel");
+	welcomePanel.setStylePrimaryName("welcomePanel");
+	logoutPanel.setStylePrimaryName("logoutPanel");
+	headlinePanel.setStylePrimaryName("headlinePanel");
+//	navNotebookPanel.setStylePrimaryName("navNotebookPanel");
+//	navNotesPanel.setStylePrimaryName("navNotesPanel");
+//	contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
+//	contentNotesPanel.setStylePrimaryName("contentNotesPanel");
+	
+	welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+	headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+	logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+//	navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+//	navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+//	contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+//	contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+
+	
+	headerPanel.setWidth("1000px");
+//	navPanel.setWidth("1000px");
+//	contentPanel.setWidth("1000px");
+//	navNotebookPanel.setWidth("500px");
+//	navNotesPanel.setWidth("500px");
+//	contentNotebookPanel.setWidth("500px");
+//	contentNotesPanel.setWidth("500px");
+//	
+//	contentNotebookPanel.setHeight("300px");
+//	contentNotesPanel.setHeight("300px");
+//
+//	navNotebookPanel.add(headlineNotebookLabel);
+//	navNotesPanel.add(headlineNotesLabel);
+
+	
+	welcomePanel.add(welcomeLabel);
+	headlinePanel.add(headlineLabel);
+	logoutPanel.add(btnLogOut);
+	logoutPanel.add(impressumButton);
+	
+	
+	headerPanel.add(welcomePanel);
+	headerPanel.add(headlinePanel);
+	headerPanel.add(logoutPanel);
+//	navPanel.add(navNotebookPanel);
+//	navPanel.add(navNotesPanel);
+//	contentPanel.add(contentNotebookPanel);
+//	contentPanel.add(contentNotesPanel);
+
+
+	RootPanel.get("header").add(headerPanel);
+//	RootPanel.get("nav").add(navPanel);
+//	RootPanel.get("content").add(contentPanel);
+	
+	RootPanel.get("content").add(homepage);
+//	RootPanel.get("content").add(editNotes);
+	
+	//ClickHandler für Impressum Button
+	impressumButton.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event) {
+			VerticalPanel impressum = new Impressum();
+			
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(impressum);
+		}
+	});
+	
+//  neu
+//-------------------------------------------------------		
+//  alt		
+
+		
+		
+		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
@@ -96,6 +203,7 @@ public class Noteit implements EntryPoint {
 				sendButton.setFocus(true);
 			}
 		});
+		
 
 		// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {

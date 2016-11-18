@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.User;
@@ -64,7 +64,7 @@ public class NoteMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM NOTE INNER JOIN User ON Note.User_idUser = User.idUser WHERE Note.noteId= " + id);
+					.executeQuery("SELECT * FROM NOTE INNER JOIN User ON Note.User_userId = User.userId WHERE Note.noteId= " + id);
 			// Bei Treffer
 			if (rs.next()) {
 				// Neues Note-Objekt erzeugen
@@ -104,10 +104,10 @@ public class NoteMapper {
 	 *            Eindeutiger Identifikator der Notebook in der Datenbank
 	 * @return Liste der Notes in einem Notebook
 	 */
-	public Vector<Note> findNotesByNotebookId(int id) {
+	public ArrayList<Note> findNotesByNotebookId(int id) {
 
 		Connection con = DBConnection.connection();
-		Vector<Note> noteList = new Vector<Note>();
+		ArrayList<Note> noteList = new ArrayList<Note>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -153,10 +153,10 @@ public class NoteMapper {
 	 *            Eindeutiger Identifikator der Note in der Datenbank
 	 * @return Liste der Notes eines bestimmten users
 	 */
-	public Vector<Note> findNotesByUser(int id) {
+	public ArrayList<Note> findNotesByUser(int id) {
 
 		Connection con = DBConnection.connection();
-		Vector<Note> noteList = new Vector<Note>();
+		ArrayList<Note> noteList = new ArrayList<Note>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -180,7 +180,7 @@ public class NoteMapper {
 				n.setNotebookId(rs.getInt("Notebook_notebookId"));
 				n.setUserId(rs.getInt("User_UserId"));
 				
-				creator.setId(rs.getInt("idUser"));
+				creator.setId(rs.getInt("userId"));
 				creator.setFirstName(rs.getString("firstName"));
 				creator.setLastName(rs.getString("lastName"));
 				

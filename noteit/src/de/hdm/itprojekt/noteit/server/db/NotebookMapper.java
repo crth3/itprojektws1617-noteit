@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
+
 
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -93,10 +94,10 @@ public class NotebookMapper {
 	 *            Eindeutiger Identifikator des Notebook in der Datenbank
 	 * @return Liste der Notebooks
 	 */
-	public Vector<Notebook> findNotebooksByUserID(int id) {
+	public ArrayList<Notebook> findNotebooksByUserID(int id) {
 
 		Connection con = DBConnection.connection();
-		Vector<Notebook> notebookList = new Vector<Notebook>();
+		ArrayList<Notebook> notebookList = new ArrayList<Notebook>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -201,7 +202,10 @@ public class NotebookMapper {
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-			stmt.executeUpdate("UPDATE Notebook SET title=" + nb.getTitle() +" WHERE notebookId="+nb.getId());
+			System.out.println("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
+
+			
+			stmt.executeUpdate("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
 		}
 		// Error Handling
 		catch (SQLException e) {

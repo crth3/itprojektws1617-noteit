@@ -16,7 +16,12 @@
     <servlet-name>NotesAdministrationImpl</servlet-name>
     <url-pattern>/noteit/notesadministration</url-pattern>
   </servlet-mapping> 
- 
+  
+   <servlet>
+    <servlet-name>reportAdmin</servlet-name>
+    <servlet-class>de.hdm.itprojekt.noteit.server.ReportAdminImpl</servlet-class>
+  </servlet>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

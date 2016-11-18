@@ -2,7 +2,6 @@ package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -142,30 +141,46 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 	
 	@Override
-	public void updateNotebook(String title, int notebookID, int editorID, ArrayList<String> userMail,
-			ArrayList<Integer> permission) throws IllegalArgumentException {
+	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException {
 		nb = new Notebook();
 		nb.setId(notebookID);
 		nb.setTitle(title);
 		
-		if(permission != null){
-			for (int i = 0; i != permission.size(); i++) {
-				NotebookPermission nbp = new NotebookPermission();
-				nbp.setNotebookId(notebookID);
-				nbp.setUserId(findUserByMail(userMail.get(i)).getId());
-				nbp.setPermission(permission.get(i));
-				
-				this.nbpMapper.insert(nbp);
-			}
+		Notebook notebook = this.nbMapper.findById(notebookID);
+		
+		Logger logger = Logger.getLogger("NameOfYourLogger");
+		logger.log(Level.SEVERE, "in updateNotebook  " + notebook.getTitle());
+		
+		
+		if(notebook.getUserId() == userId) {
+			this.nbMapper.edit(nb);
+			logger.log(Level.SEVERE, "SUCCESS");
 		}
-		this.nbMapper.edit(nb);
+		else {
+		ArrayList<NotebookPermission> notebookPermissionList = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		for (NotebookPermission findResult : notebookPermissionList) {
+			if (findResult.getUserId() == userId) {
+				if (findResult.getPermission() > 1) {
+					this.nbMapper.edit(nb);
+					logger.log(Level.SEVERE, "SUCCESS");
+				}
+				else {
+					logger.log(Level.SEVERE, "ERROR: keine Berechtigung");
+				}
+			}
+			
+		}
 		
 	}
+}
 	
 	@Override
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException {
 		
-		Vector<NotebookPermission> notebookPermissions = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		Logger logger = Logger.getLogger("NameOfYourLogger");
+		logger.log(Level.SEVERE, "in deleteNotebook");
+		
+		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
 		Notebook currentNotebook = this.nbMapper.findById(notebookID);
 		
 		try {
@@ -238,14 +253,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
-		Vector<NotePermission> VecNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
+		ArrayList<NotePermission> ArrayListNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
 		Note note = this.nMapper.findById(noteID);
 		
 		try {
 			if(note.getUserId() == userID){
 				this.nMapper.delete(note);
-			}else if (VecNotePermission != null) {
-				for (NotePermission foundNotePermission : VecNotePermission) {
+			}else if (ArrayListNotePermission != null) {
+				for (NotePermission foundNotePermission : ArrayListNotePermission) {
 					if (userID == foundNotePermission.getUserId()) {
 						if (foundNotePermission.getPermission() == 3) {
 							this.npMapper.delete(foundNotePermission);
