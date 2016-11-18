@@ -74,6 +74,7 @@ public class Noteit implements EntryPoint {
 
 	
 	Button btnLogOut = new Button("Logout");
+	Button impressumButton = new Button ("Impressum");
 	
 	welcomeLabel.setStylePrimaryName("welcomeLabel");
 	headlineLabel.setStylePrimaryName("headlineLabel");
@@ -119,6 +120,7 @@ public class Noteit implements EntryPoint {
 	welcomePanel.add(welcomeLabel);
 	headlinePanel.add(headlineLabel);
 	logoutPanel.add(btnLogOut);
+	logoutPanel.add(impressumButton);
 	
 	
 	headerPanel.add(welcomePanel);
@@ -137,6 +139,15 @@ public class Noteit implements EntryPoint {
 	RootPanel.get("content").add(homepage);
 //	RootPanel.get("content").add(editNotes);
 	
+	//ClickHandler für Impressum Button
+	impressumButton.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event) {
+			VerticalPanel impressum = new Impressum();
+			
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(impressum);
+		}
+	});
 	
 //  neu
 //-------------------------------------------------------		
@@ -192,6 +203,7 @@ public class Noteit implements EntryPoint {
 				sendButton.setFocus(true);
 			}
 		});
+		
 
 		// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {

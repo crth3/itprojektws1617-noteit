@@ -65,12 +65,11 @@ public interface NotesAdministration extends RemoteService{
 	 * 
 	 * @param title
 	 * @param notebookID
-	 * @param editorID
-	 * @param userMail
+	 * @param userId
 	 * @param permission
 	 * @throws IllegalArgumentException
 	 */
-	public void updateNotebook(String title, int notebookID, int editorID, ArrayList<String> userMail, ArrayList<Integer> permission) throws IllegalArgumentException;
+	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException;
 	
 	/**
 	 * 
@@ -156,6 +155,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public User findUserByMail(String mail) throws IllegalArgumentException;
+
 
 
 }

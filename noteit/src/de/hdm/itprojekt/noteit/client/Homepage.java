@@ -1,9 +1,14 @@
 package de.hdm.itprojekt.noteit.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 
 public class Homepage extends VerticalPanel{
 	public void onLoad() {
@@ -18,6 +23,8 @@ public class Homepage extends VerticalPanel{
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
 		Label headlineNotesLabel = new Label ("Notizen");
+		
+		Button addNoteButton = new Button ("Add Note");
 		
 		
 		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -48,12 +55,25 @@ public class Homepage extends VerticalPanel{
 
 		navNotebookPanel.add(headlineNotebookLabel);
 		navNotesPanel.add(headlineNotesLabel);
+		navNotesPanel.add(addNoteButton);
 		
 		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
+		
+		
+		addNoteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanel editNotes = new EditNotes();
+		        
+		        RootPanel.get("content").clear();
+		        RootPanel.get("content").add(editNotes);
+		      }
+		    });
+
+		
 		
 		this.add(navPanel);
 		this.add(contentPanel);

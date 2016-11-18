@@ -100,17 +100,17 @@ public class NotebookPermissionMapper {
 
 			while (rs.next()) {
 				NotebookPermission nbp = new NotebookPermission();
-				Notebook nb = new Notebook();
+//				Notebook nb = new Notebook();
 
-				nbp.setId(rs.getInt("notebookPermissionId"));
+//				nbp.setId(rs.getInt("notebookPermissionId"));
 				nbp.setPermission(rs.getInt("permission"));
-				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
+//				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
 				nbp.setUserId(rs.getInt("User_userId"));
 
-				nb.setId(rs.getInt("notebookId"));
-				nb.setTitle(rs.getString("title"));
+//				nb.setId(rs.getInt("notebookId"));
+//				nb.setTitle(rs.getString("title"));
 
-				nbp.setNotebook(nb);
+//				nbp.setNotebook(nb);
 
 				System.out.println(rs);
 				// Conversation Objekt der Liste hinzufügen
