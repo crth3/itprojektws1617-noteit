@@ -25,6 +25,7 @@ public class Homepage extends VerticalPanel{
 		Label headlineNotesLabel = new Label ("Notizen");
 		
 		Button addNoteButton = new Button ("Add Note");
+		Button addNotebookButton = new Button ("Add Notebook");
 		
 		
 		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -56,7 +57,8 @@ public class Homepage extends VerticalPanel{
 		navNotebookPanel.add(headlineNotebookLabel);
 		navNotesPanel.add(headlineNotesLabel);
 		navNotesPanel.add(addNoteButton);
-		
+		navNotesPanel.add(addNotebookButton);
+
 		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
@@ -73,7 +75,14 @@ public class Homepage extends VerticalPanel{
 		      }
 		    });
 
-		
+		addNotebookButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanel editNotebook = new EditNotebook();
+		        
+		        RootPanel.get("content").clear();
+		        RootPanel.get("content").add(editNotebook);
+		      }
+		    });
 		
 		this.add(navPanel);
 		this.add(contentPanel);
