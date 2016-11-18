@@ -76,6 +76,15 @@ public class EditNotes extends VerticalPanel {
 										buttonPanel.add(loeschen);
 										buttonPanel.add(abbrechen);
 										buttonPanel.add(sichern);
+										
+			this.add(titelPanel);
+			this.add(subTitelPanel);
+			this.add(teilenPanel);
+			this.add(berechtigungsPanel);
+			this.add(hinzufuegenPanel);
+			this.add(faelligkeitsPanel);
+			this.add(textPanel);
+			this.add(buttonPanel);
 	    
 	}
 	
