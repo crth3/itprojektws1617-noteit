@@ -258,7 +258,7 @@ public class NotebookPermissionMapper {
 	 * @param nbp
 	 *            die zu löschende NotebookPermission
 	 */
-	public void delete(NotebookPermission nbp) {
+	public boolean delete(NotebookPermission nbp) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 
@@ -273,7 +273,9 @@ public class NotebookPermissionMapper {
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 }

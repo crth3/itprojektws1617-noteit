@@ -283,7 +283,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * 
 	 * @param nbp die zu löschende Source
 	 */
-	public void delete(NotePermission np) {
+	public boolean delete(NotePermission np) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 		
@@ -298,7 +298,9 @@ private static NotePermissionMapper notePermissionMapper = null;
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 	
 

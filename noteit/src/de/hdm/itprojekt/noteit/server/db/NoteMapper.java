@@ -344,7 +344,7 @@ public class NoteMapper {
 	 * @param n
 	 *            die zu löschenende Note
 	 */
-	public void delete(Note n) {
+	public boolean delete(Note n) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 
@@ -404,7 +404,9 @@ public class NoteMapper {
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 }
