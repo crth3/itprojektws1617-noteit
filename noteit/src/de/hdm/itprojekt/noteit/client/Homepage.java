@@ -57,7 +57,7 @@ public class Homepage extends VerticalPanel{
 		navNotebookPanel.add(headlineNotebookLabel);
 		navNotesPanel.add(headlineNotesLabel);
 		navNotesPanel.add(addNoteButton);
-		navNotesPanel.add(addNotebookButton);
+		navNotebookPanel.add(addNotebookButton);
 
 		
 		navPanel.add(navNotebookPanel);
