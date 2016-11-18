@@ -153,7 +153,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		
 		
 		if(notebook.getUserId() == userId) {
-			this.nbMapper.update(nb);
+			this.nbMapper.edit(nb);
 			logger.log(Level.SEVERE, "SUCCESS");
 		}
 		else {
@@ -161,7 +161,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		for (NotebookPermission findResult : notebookPermissionList) {
 			if (findResult.getUserId() == userId) {
 				if (findResult.getPermission() > 1) {
-					this.nbMapper.update(nb);
+					this.nbMapper.edit(nb);
 					logger.log(Level.SEVERE, "SUCCESS");
 				}
 				else {

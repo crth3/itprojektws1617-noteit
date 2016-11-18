@@ -143,7 +143,7 @@ private static SourceMapper sourceMapper = null;
 	 * 
 	 * @param s die zu löschende Source
 	 */
-	public boolean delete(int id) {
+	public void delete(int id) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
 		
@@ -158,9 +158,7 @@ private static SourceMapper sourceMapper = null;
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
-		return true;
 	}
 	
 
