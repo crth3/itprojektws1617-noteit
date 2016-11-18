@@ -32,3 +32,63 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+div#header {
+	width: 500px;
+}
+
+.welcomeLabel {
+	
+}
+
+.headlineLabel {
+	font-size: 30pt;
+	color: red;
+}
+
+.logOutButton {
+}
+
+.welcomePanel {
+	vertical-align: bottom;
+	line-height: 50px;
+}
+
+.headlinePanel {
+	vertical-align: middle;
+	line-height: 50px;
+	text-align: center;
+}
+
+.logoutPanel {
+	vertical-align: middle;
+	line-height: 50px;
+}
+
+.headerPanel {
+	background-color: yellow;
+}
+
+.headlineNotebookLabel {
+	text-align: center;
+}
+
+.headlineNotesLabel {
+	text-align: center;
+}
+
+.navNotebookPanel {
+	background-color: green;
+}
+
+.navNotesPanel {
+	background-color: blue;
+}
+
+.contentNotebookPanel {
+	background-color: red;
+}
+
+.contentNotesPanel {
+	background-color: orange;
+}
