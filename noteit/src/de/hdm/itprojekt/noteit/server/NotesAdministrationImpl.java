@@ -2,7 +2,6 @@ package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,7 +164,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException {
 		
-		Vector<NotebookPermission> notebookPermissions = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
 		Notebook currentNotebook = this.nbMapper.findById(notebookID);
 		
 		try {
@@ -238,14 +237,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
-		Vector<NotePermission> VecNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
+		ArrayList<NotePermission> ArrayListNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
 		Note note = this.nMapper.findById(noteID);
 		
 		try {
 			if(note.getUserId() == userID){
 				this.nMapper.delete(note);
-			}else if (VecNotePermission != null) {
-				for (NotePermission foundNotePermission : VecNotePermission) {
+			}else if (ArrayListNotePermission != null) {
+				for (NotePermission foundNotePermission : ArrayListNotePermission) {
 					if (userID == foundNotePermission.getUserId()) {
 						if (foundNotePermission.getPermission() == 3) {
 							this.npMapper.delete(foundNotePermission);
