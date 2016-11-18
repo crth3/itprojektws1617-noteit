@@ -57,26 +57,28 @@ public class Noteit implements EntryPoint {
 		HorizontalPanel welcomePanel = new HorizontalPanel();
 		HorizontalPanel headlinePanel = new HorizontalPanel();
 		HorizontalPanel logoutPanel = new HorizontalPanel();
-	HorizontalPanel navPanel = new HorizontalPanel();
-		HorizontalPanel navNotebookPanel = new HorizontalPanel();
-		HorizontalPanel navNotesPanel = new HorizontalPanel();
-	HorizontalPanel contentPanel = new HorizontalPanel();
-		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-		HorizontalPanel contentNotesPanel = new HorizontalPanel();
+//	HorizontalPanel navPanel = new HorizontalPanel();
+//		HorizontalPanel navNotebookPanel = new HorizontalPanel();
+//		HorizontalPanel navNotesPanel = new HorizontalPanel();
+//	HorizontalPanel contentPanel = new HorizontalPanel();
+//		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+//		HorizontalPanel contentNotesPanel = new HorizontalPanel();
+		VerticalPanel homepage = new Homepage();
+//		VerticalPanel editNotes = new EditNotes();
 		
 		
 	Label welcomeLabel = new Label("Wilkommen Chris");
 	Label headlineLabel = new Label("NoteIt");
-	Label headlineNotebookLabel = new Label ("Notizbücher");
-	Label headlineNotesLabel = new Label ("Notizen");
+//	Label headlineNotebookLabel = new Label ("Notizbücher");
+//	Label headlineNotesLabel = new Label ("Notizen");
 
 	
 	Button btnLogOut = new Button("Logout");
 	
 	welcomeLabel.setStylePrimaryName("welcomeLabel");
 	headlineLabel.setStylePrimaryName("headlineLabel");
-	headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
-	headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
+//	headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
+//	headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
 	
 	
 	btnLogOut.setStylePrimaryName("logOutButton");
@@ -85,33 +87,33 @@ public class Noteit implements EntryPoint {
 	welcomePanel.setStylePrimaryName("welcomePanel");
 	logoutPanel.setStylePrimaryName("logoutPanel");
 	headlinePanel.setStylePrimaryName("headlinePanel");
-	navNotebookPanel.setStylePrimaryName("navNotebookPanel");
-	navNotesPanel.setStylePrimaryName("navNotesPanel");
-	contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
-	contentNotesPanel.setStylePrimaryName("contentNotesPanel");
+//	navNotebookPanel.setStylePrimaryName("navNotebookPanel");
+//	navNotesPanel.setStylePrimaryName("navNotesPanel");
+//	contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
+//	contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 	
 	welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 	headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 	logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-	navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-	navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-	contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-	contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+//	navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+//	navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+//	contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+//	contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 	
 	headerPanel.setWidth("1000px");
-	navPanel.setWidth("1000px");
-	contentPanel.setWidth("1000px");
-	navNotebookPanel.setWidth("500px");
-	navNotesPanel.setWidth("500px");
-	contentNotebookPanel.setWidth("500px");
-	contentNotesPanel.setWidth("500px");
-	
-	contentNotebookPanel.setHeight("300px");
-	contentNotesPanel.setHeight("300px");
-
-	navNotebookPanel.add(headlineNotebookLabel);
-	navNotesPanel.add(headlineNotesLabel);
+//	navPanel.setWidth("1000px");
+//	contentPanel.setWidth("1000px");
+//	navNotebookPanel.setWidth("500px");
+//	navNotesPanel.setWidth("500px");
+//	contentNotebookPanel.setWidth("500px");
+//	contentNotesPanel.setWidth("500px");
+//	
+//	contentNotebookPanel.setHeight("300px");
+//	contentNotesPanel.setHeight("300px");
+//
+//	navNotebookPanel.add(headlineNotebookLabel);
+//	navNotesPanel.add(headlineNotesLabel);
 
 	
 	welcomePanel.add(welcomeLabel);
@@ -122,16 +124,18 @@ public class Noteit implements EntryPoint {
 	headerPanel.add(welcomePanel);
 	headerPanel.add(headlinePanel);
 	headerPanel.add(logoutPanel);
-	navPanel.add(navNotebookPanel);
-	navPanel.add(navNotesPanel);
-	contentPanel.add(contentNotebookPanel);
-	contentPanel.add(contentNotesPanel);
+//	navPanel.add(navNotebookPanel);
+//	navPanel.add(navNotesPanel);
+//	contentPanel.add(contentNotebookPanel);
+//	contentPanel.add(contentNotesPanel);
 
 
 	RootPanel.get("header").add(headerPanel);
-	RootPanel.get("nav").add(navPanel);
-	RootPanel.get("content").add(contentPanel);
+//	RootPanel.get("nav").add(navPanel);
+//	RootPanel.get("content").add(contentPanel);
 	
+	RootPanel.get("content").add(homepage);
+//	RootPanel.get("content").add(editNotes);
 	
 	
 //  neu
