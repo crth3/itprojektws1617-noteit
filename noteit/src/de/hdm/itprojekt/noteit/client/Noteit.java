@@ -298,7 +298,25 @@ public class Noteit implements EntryPoint {
 //					}
 //				});
 				
-				notesAdministrationService.findNotebooksByKeyword(1, "notebook", new AsyncCallback<ArrayList<Notebook>>() {
+//				notesAdministrationService.findNotebooksByKeyword(1, "notebook", new AsyncCallback<ArrayList<Notebook>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(ArrayList<Notebook> result) {
+//						// TODO Auto-generated method stub
+//						
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "on success Update Notebook " + result.get(0).getTitle() + " 2 " + result.get(1).getTitle());
+//						
+//					}
+//				});
+				
+				notesAdministrationService.findNoteByKeyword(1, "mugge", 1, new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -307,11 +325,9 @@ public class Noteit implements EntryPoint {
 					}
 
 					@Override
-					public void onSuccess(ArrayList<Notebook> result) {
-						// TODO Auto-generated method stub
-						
+					public void onSuccess(ArrayList<Note> result) {
 						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE, "on success Update Notebook " + result.get(0).getTitle() + " 2 " + result.get(1).getTitle());
+						logger.log(Level.SEVERE, "on success Note by Keyword " + result.size());
 						
 					}
 				});

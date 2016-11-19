@@ -312,7 +312,29 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public ArrayList<Note> findNoteByKeyword(int userID, String keyword, int notebookID)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Note> allNotesFromThisNotebook = this.nMapper.findNotesByNotebookId(notebookID);
+		ArrayList<Note> notesWithKeyword = new ArrayList<Note>();
+		
+		if (allNotesFromThisNotebook != null) {
+
+			for (Note foundedNotes : allNotesFromThisNotebook) {
+				String title = foundedNotes.getTitle().toLowerCase();
+				String subTitle = foundedNotes.getSubTitle().toLowerCase();
+				String text = foundedNotes.getText().toLowerCase();
+				if (title.contains(keyword)) {
+					notesWithKeyword.add(foundedNotes);
+				}else if (subTitle.contains(keyword)) {
+					notesWithKeyword.add(foundedNotes);
+				}else if (text.contains(keyword)) {
+					notesWithKeyword.add(foundedNotes);
+				}
+
+			}
+		}else{
+			//TODO funktioniert das?
+			notesWithKeyword = null;
+		}
+		return notesWithKeyword;
 	}
 
 }
