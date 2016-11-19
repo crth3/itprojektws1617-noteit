@@ -316,7 +316,7 @@ public class Noteit implements EntryPoint {
 //					}
 //				});
 				
-				notesAdministrationService.findNoteByKeyword(1, "mugge", 1, new AsyncCallback<ArrayList<Note>>() {
+				notesAdministrationService.findNoteByKeyword(1, "title", 1, new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
