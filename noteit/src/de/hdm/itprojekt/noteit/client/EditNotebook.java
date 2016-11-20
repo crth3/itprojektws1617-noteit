@@ -26,10 +26,11 @@ public class EditNotebook extends VerticalPanel{
 		teilenPanel.add(hinzufuegenButton);
 		
 		HorizontalPanel berechtigungsPanel = new HorizontalPanel();
-		Label darf = new Label("darf:");
+		Label darf = new Label("Darf:");
 		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
 		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
 		//RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
+		berechtigungsPanel.add(darf);
 		berechtigungsPanel.add(rbBerechtigungen1);
 		berechtigungsPanel.add(rbBerechtigungen2);
 		
