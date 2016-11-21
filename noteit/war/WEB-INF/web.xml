@@ -6,6 +6,17 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
 <!-- Servlets -->
+
+ <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>de.hdm.itprojekt.noteit.server.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/noteit/login</url-pattern>
+  </servlet-mapping>
+
  
     <servlet>
     <servlet-name>NotesAdministrationImpl</servlet-name>
