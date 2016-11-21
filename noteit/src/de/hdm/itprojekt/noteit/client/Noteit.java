@@ -3,8 +3,6 @@ package de.hdm.itprojekt.noteit.client;
 
 import de.hdm.itprojekt.noteit.client.Impressum;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
-import de.hdm.itprojekt.noteit.shared.LoginService;
-import de.hdm.itprojekt.noteit.shared.LoginServiceAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
@@ -17,6 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.Anchor;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Noteit implements EntryPoint {
+	
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -65,18 +66,12 @@ public class Noteit implements EntryPoint {
 	      "Please sign in to your Google Account to access the StockWatcher application.");
 	  private Anchor signInLink = new Anchor("Sign In");	
 			
-	  private void loadLogin() {
-		    // Assemble login panel.
-		    signInLink.setHref(loginInfo.getLoginUrl());
-		    loginPanel.add(loginLabel);
-		    loginPanel.add(signInLink);
-		    RootPanel.get("stockList").add(loginPanel);
-		  }
+		
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		
+				
 		/**
 		 *  Login Status mit Login service �berpr�fen.
 		 *  Client-side proxy erstellen.
@@ -441,4 +436,11 @@ public class Noteit implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
-}
+
+private void loadLogin() {
+    // Assemble login panel.
+    signInLink.setHref(loginInfo.getLoginUrl());
+    loginPanel.add(loginLabel);
+    loginPanel.add(signInLink);
+    RootPanel.get("stockList").add(loginPanel);
+  }}

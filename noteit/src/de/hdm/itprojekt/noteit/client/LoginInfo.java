@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 public class LoginInfo implements Serializable {
 
-  private boolean loggedIn = false;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private boolean loggedIn = false;
   private String loginUrl;
   private String logoutUrl;
   private String emailAddress;
