@@ -1,5 +1,11 @@
 package de.hdm.itprojekt.noteit.client;
 
+
+import de.hdm.itprojekt.noteit.client.Impressum;
+import de.hdm.itprojekt.noteit.client.LoginInfo;
+import de.hdm.itprojekt.noteit.shared.LoginService;
+import de.hdm.itprojekt.noteit.shared.LoginServiceAsync;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
@@ -28,6 +34,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Anchor;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -47,10 +54,51 @@ public class Noteit implements EntryPoint {
 	private final NotesAdministrationAsync notesAdministrationService = GWT
 			.create(NotesAdministration.class);
 
+
+
+			/**
+			 *  Login-Widgets
+			 */
+	 private LoginInfo loginInfo = null;
+	  private VerticalPanel loginPanel = new VerticalPanel();
+	  private Label loginLabel = new Label(
+	      "Please sign in to your Google Account to access the StockWatcher application.");
+	  private Anchor signInLink = new Anchor("Sign In");	
+			
+	  private void loadLogin() {
+		    // Assemble login panel.
+		    signInLink.setHref(loginInfo.getLoginUrl());
+		    loginPanel.add(loginLabel);
+		    loginPanel.add(signInLink);
+		    RootPanel.get("stockList").add(loginPanel);
+		  }
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
+		/**
+		 *  Login Status mit Login service �berpr�fen.
+		 *  Client-side proxy erstellen.
+		 */
+		 // Check login status using login service.
+	    LoginServiceAsync loginService = GWT.create(LoginService.class);
+	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+	      public void onFailure(Throwable error) {
+	      }
+
+	      public void onSuccess(LoginInfo result) {
+	        loginInfo = result;
+	        if(loginInfo.isLoggedIn()) {
+	          //loadStockWatcher();
+	        } else {
+	          loadLogin();
+	        }
+	      }
+	    });
+	  
+
+
 		
 		
 		HorizontalPanel headerPanel = new HorizontalPanel();

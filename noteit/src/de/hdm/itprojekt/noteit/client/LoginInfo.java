@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class LoginInfo implements Serializable {
 
-private static final long serialVersionUID = 1L;
-private boolean loggedIn = false;
+  private boolean loggedIn = false;
   private String loginUrl;
   private String logoutUrl;
   private String emailAddress;
@@ -50,6 +49,4 @@ private boolean loggedIn = false;
   public void setNickname(String nickname) {
     this.nickname = nickname;
   }
-  
-  
 }
