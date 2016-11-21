@@ -65,7 +65,9 @@ public class Noteit implements EntryPoint {
 	  private Label loginLabel = new Label(
 	      "Please sign in to your Google Account to access the StockWatcher application.");
 	  private Anchor signInLink = new Anchor("Sign In");	
-			
+		
+	  
+	  Logger logger = Logger.getLogger("NameOfYourLogger");
 		
 	/**
 	 * This is the entry point method.
@@ -80,13 +82,16 @@ public class Noteit implements EntryPoint {
 	    LoginServiceAsync loginService = GWT.create(LoginService.class);
 	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 	      public void onFailure(Throwable error) {
+	    	  logger.log(Level.SEVERE, "ERROR Login"+error);
 	      }
 
 	      public void onSuccess(LoginInfo result) {
+	    	  
 	        loginInfo = result;
 	        if(loginInfo.isLoggedIn()) {
 	          //loadStockWatcher();
 	        } else {
+	        	logger.log(Level.SEVERE, "DONE Login"+result);
 	          loadLogin();
 	        }
 	      }
@@ -108,8 +113,7 @@ public class Noteit implements EntryPoint {
 //		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		VerticalPanel homepage = new Homepage();
 //		VerticalPanel editNotes = new EditNotes();
-		
-		
+	
 	Label welcomeLabel = new Label("Wilkommen Chris");
 	Label headlineLabel = new Label("NoteIt");
 //	Label headlineNotebookLabel = new Label ("Notizbücher");
