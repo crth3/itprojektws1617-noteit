@@ -44,10 +44,11 @@ public class EditNotes extends VerticalPanel {
 						 * Anlegen des RadioButton
 						 */
 						HorizontalPanel berechtigungsPanel = new HorizontalPanel();
-						Label darf = new Label("darf:");
+						Label darf = new Label("Darf:");
 						RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
 						RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
 						//RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
+						berechtigungsPanel.add(darf);
 						berechtigungsPanel.add(rbBerechtigungen1);
 						berechtigungsPanel.add(rbBerechtigungen2);
 		
