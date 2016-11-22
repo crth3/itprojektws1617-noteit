@@ -114,8 +114,7 @@ public class NoteMapper {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Note WHERE "
 							+ "Notebook_notebookId = "
-							+ id
-							+ "ORDER BY noteId ASC");
+							+ id);
 
 			while (rs.next()) {
 				Note n = new Note();
@@ -163,8 +162,7 @@ public class NoteMapper {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Note INNER JOIN User ON Note.User_userId = User.userId WHERE "
 							+ "User_userId = "
-							+ id
-							+ "ORDER BY noteId ASC");
+							+ id);
 
 			while (rs.next()) {
 				Note n = new Note();

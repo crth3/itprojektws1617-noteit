@@ -145,8 +145,7 @@ public class NotebookPermissionMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM NotebookPermission " + "INNER JOIN User "
-					+ "ON NotebookPermission.User_userId = User.userId " + "WHERE User_userId = " + id
-					+ "ORDER BY User_userId ASC");
+					+ "ON NotebookPermission.User_userId = User.userId " + "WHERE User_userId = " + id);
 
 			while (rs.next()) {
 				NotebookPermission nbp = new NotebookPermission();

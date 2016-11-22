@@ -156,6 +156,8 @@ public interface NotesAdministration extends RemoteService{
 	 */
 	public User findUserByMail(String mail) throws IllegalArgumentException;
 
+	void deleteAllNotesByNotebookID(int userID, int notebookID) throws IllegalArgumentException;
+
 
 
 }
