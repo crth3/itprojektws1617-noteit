@@ -3,6 +3,8 @@ package de.hdm.itprojekt.noteit.client;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SearchNotebooks extends VerticalPanel {
@@ -12,9 +14,24 @@ public class SearchNotebooks extends VerticalPanel {
 		HorizontalPanel searchPanel = new HorizontalPanel();
 		Label searchNotizbuch = new Label("Notizbuch suchen");
 		Label suchen = new Label("Suche nach Titel:");
-		Button abbrechen = new Button("abbrechen");
 		searchPanel.add(searchNotizbuch);
 		searchPanel.add(suchen);
+		
+		/**
+		 * Oracle, dass die vorzuschlagenden Wörter der SuggestBox enthält
+		 */
+		MultiWordSuggestOracle searchNotebookOracle = new MultiWordSuggestOracle();
+		searchNotebookOracle.add("Test");
+		searchNotebookOracle.add("Meier");
+		searchNotebookOracle.add("Meler");
+		
+		/**
+		 * SuggestBox, die anschließend dem erstellten Panel hinzugefügt wird
+		 */
+		final SuggestBox suggestBoxsearch = new SuggestBox(searchNotebookOracle);
+		searchPanel.add(suggestBoxsearch);
+		
+		Button abbrechen = new Button("abbrechen");
 		searchPanel.add(abbrechen);
 		
 		this.add(searchPanel);
