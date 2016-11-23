@@ -26,6 +26,9 @@ public class Homepage extends VerticalPanel{
 		
 		Button addNoteButton = new Button ("Add Note");
 		Button addNotebookButton = new Button ("Add Notebook");
+		Button searchNoteButton = new Button("Search Note");
+		Button searchNotebookButton = new Button("Search Notebook");
+		
 		
 		
 		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -58,12 +61,15 @@ public class Homepage extends VerticalPanel{
 		navNotesPanel.add(headlineNotesLabel);
 		navNotesPanel.add(addNoteButton);
 		navNotebookPanel.add(addNotebookButton);
+		navNotesPanel.add(searchNoteButton);
+		navNotebookPanel.add(searchNotebookButton);
 
 		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
+		
 		
 		
 		addNoteButton.addClickHandler(new ClickHandler() {
@@ -84,8 +90,19 @@ public class Homepage extends VerticalPanel{
 		      }
 		    });
 		
+		searchNoteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanel searchNotes = new SearchNotes();
+		        
+		        //RootPanel.get("content").clear();
+		        RootPanel.get("content").add(searchNotes);
+		      }
+		    });
+
+		
 		this.add(navPanel);
 		this.add(contentPanel);
+		
 		
 	}
 }

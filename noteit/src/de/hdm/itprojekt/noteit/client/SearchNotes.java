@@ -14,6 +14,8 @@ public class SearchNotes extends VerticalPanel {
 		Label suchen = new Label("Suche nach Titel:");
 		Label inhalt = new Label("Suche nach Inhalt:");
 		Button abbrechen = new Button("abbrechen");
+		
+	
 		searchPanel.add(searchNotiz);
 		searchPanel.add(suchen);
 		searchPanel.add(inhalt);
