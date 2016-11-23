@@ -17,6 +17,8 @@ public class SearchNotebooks extends VerticalPanel {
 		searchPanel.add(suchen);
 		searchPanel.add(abbrechen);
 		
+		this.add(searchPanel);
+		
 		
 	}
 	

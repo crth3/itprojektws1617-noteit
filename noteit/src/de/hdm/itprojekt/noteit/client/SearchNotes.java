@@ -21,6 +21,9 @@ public class SearchNotes extends VerticalPanel {
 		searchPanel.add(inhalt);
 		searchPanel.add(abbrechen);
 		
+		this.add(searchPanel);
+
+		
 	}
 	
 }

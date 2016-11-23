@@ -72,6 +72,8 @@ public class Homepage extends VerticalPanel{
 		
 		
 		
+		
+		
 		addNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel editNotes = new EditNotes();
@@ -94,14 +96,24 @@ public class Homepage extends VerticalPanel{
 			public void onClick(ClickEvent event) {
 				VerticalPanel searchNotes = new SearchNotes();
 		        
-		        //RootPanel.get("content").clear();
+		        RootPanel.get("content").clear();
 		        RootPanel.get("content").add(searchNotes);
+		      }
+		    });
+		
+		searchNotebookButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanel searchNoteBook = new SearchNotebooks();
+		        
+		        RootPanel.get("content").clear();
+		        RootPanel.get("content").add(searchNoteBook);
 		      }
 		    });
 
 		
 		this.add(navPanel);
 		this.add(contentPanel);
+		
 		
 		
 	}
