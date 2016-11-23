@@ -199,9 +199,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper
 				.findNotebookPermissionByNotebookId(notebookID);
 		Notebook currentNotebook = this.nbMapper.findById(notebookID);
+		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
 
 		try {
 			if (currentNotebook.getUserId() == userID) { // Wenn der selbe der das Notebook erstellt hat, es löschen möchte
+				if(allNotesByNotebookID != null){ // Wenn das Notizbuch noch Notizen enthält
+					deleteAllNotesByNotebookID(userID, notebookID);
+				}
+				
 				if (notebookPermissions != null) { // wenn es Permissions gibt
 					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 						this.nbpMapper.delete(foundedNotebookPermission); // lösche zuerst alle Permissions
@@ -210,11 +215,15 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				} else {
 					this.nbMapper.delete(currentNotebook); // wenn es keine permission gibt, lösche das notebook
 				}
+				
+				
 			} else if (notebookPermissions != null) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 					if (userID == foundedNotebookPermission.getUserId()) { // Wenn UserID der der übegeben ist...
 						if (foundedNotebookPermission.getPermission() == 3) { // wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
-																		
+							if(allNotesByNotebookID != null){ // Wenn das Notizbuch noch Notizen enthält
+								deleteAllNotesByNotebookID(userID, notebookID);
+							}											
 							for (NotebookPermission foundedNotebookPermissions : notebookPermissions) {
 								if (userID != foundedNotebookPermissions.getUserId()) { // Wenn UserID nicht der des übergebenen sit, lösche seien Berechtigung
 																						
@@ -296,6 +305,15 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		}
 
 	}
+	
+	@Override
+	public void deleteAllNotesByNotebookID(int userID, int notebookID) throws IllegalArgumentException {
+		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
+		
+		for (Note foundedNote : allNotesByNotebookID) {
+			deleteNote(foundedNote.getId(), userID);
+		}
+	}
 
 	/**
 	 * Gibt alle Notizbücher eines Nutzers zurück
@@ -374,5 +392,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		}
 		return notesWithKeyword;
 	}
+
+	
 
 }

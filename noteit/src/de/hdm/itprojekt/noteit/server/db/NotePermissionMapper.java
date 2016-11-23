@@ -99,8 +99,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 							+ "INNER JOIN Note "
 							+ "ON NotePermission.Note_noteId = Note.noteId "
 							+ "WHERE Note_noteId = "
-							+ id
-							+ "ORDER BY Note_noteId ASC");
+							+ id);
 
 			while (rs.next()) {
 				NotePermission np = new NotePermission();
@@ -159,8 +158,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 							+ "INNER JOIN User "
 							+ "ON NotePermission.User_userId = User.userId "
 							+ "WHERE User_userId = "
-							+ id
-							+ "ORDER BY User_userId ASC");
+							+ id);
 
 			while (rs.next()) {
 				NotePermission np = new NotePermission();
