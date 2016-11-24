@@ -11,10 +11,18 @@ public class SearchNotebooks extends VerticalPanel {
 	
 	public void onLoad() {
 		
+		/**
+		 * create the Panel with the label
+		 */
+		HorizontalPanel headlinePanel = new HorizontalPanel();
+		Label headlineNotizbuch = new Label("Notizbuch suchen");
+		headlinePanel.add(headlineNotizbuch);
+		
+		/**
+		 * create the Panel with the label
+		 */
 		HorizontalPanel searchPanel = new HorizontalPanel();
-		Label searchNotizbuch = new Label("Notizbuch suchen");
 		Label suchen = new Label("Suche nach Titel:");
-		searchPanel.add(searchNotizbuch);
 		searchPanel.add(suchen);
 		
 		/**
@@ -31,11 +39,16 @@ public class SearchNotebooks extends VerticalPanel {
 		final SuggestBox suggestBoxsearch = new SuggestBox(searchNotebookOracle);
 		searchPanel.add(suggestBoxsearch);
 		
+		/**
+		 * create the Panel with the label
+		 */
+		HorizontalPanel abbrechPanel = new HorizontalPanel();
 		Button abbrechen = new Button("abbrechen");
-		searchPanel.add(abbrechen);
+		abbrechPanel.add(abbrechen);
 		
+		this.add(headlinePanel);
 		this.add(searchPanel);
-		
+		this.add(abbrechPanel);
 		
 	}
 	

@@ -11,21 +11,30 @@ public class SearchNotes extends VerticalPanel {
 
 	public void onLoad() {
 		
+		/**
+		 * create the Panel with the label
+		 */
+		HorizontalPanel headlinePanel = new HorizontalPanel();
+		Label headlineNotiz = new Label("Notiz suchen");
+		headlinePanel.add(headlineNotiz);
+		
+		/**
+		 * create the Panel with the label
+		 */
 		HorizontalPanel searchPanel = new HorizontalPanel();
-		Label searchNotiz = new Label("Notiz suchen");
 		Label suchen = new Label("Suche nach Titel:");
-		Label inhalt = new Label("Suche nach Inhalt:");
-		searchPanel.add(searchNotiz);
 		searchPanel.add(suchen);
-		searchPanel.add(inhalt);
 		
 		/**
 		 * create the Oracle, which the words for the SuggestBox
 		 */
 		MultiWordSuggestOracle searchNoteOracle = new MultiWordSuggestOracle();
-		searchNoteOracle.add("Test");
+		searchNoteOracle.add("Dahms");
+		searchNoteOracle.add("Roht");
+		searchNoteOracle.add("Reichardt");
 		searchNoteOracle.add("Meier");
-		searchNoteOracle.add("Meler");
+		searchNoteOracle.add("Zimmerman");
+		searchNoteOracle.add("Ishola");
 		
 		/**
 		 * create the SuggestBox, and included to the Panel
@@ -33,10 +42,41 @@ public class SearchNotes extends VerticalPanel {
 		final SuggestBox suggestBoxsearch = new SuggestBox(searchNoteOracle);
 		searchPanel.add(suggestBoxsearch);
 		
-		Button abbrechen = new Button("abbrechen");
-		searchPanel.add(abbrechen);
+		/**
+		 * create the Panel with the label
+		 */
+		HorizontalPanel searchInhaltPanel = new HorizontalPanel();
+		Label inhalt = new Label("Suche nach Inhalt:");
+		searchInhaltPanel.add(inhalt);
 		
+		/**
+		 * create the Oracle, which the words for the SuggestBox
+		 */
+		MultiWordSuggestOracle searchInhaltNoteOracle = new MultiWordSuggestOracle();
+		searchInhaltNoteOracle.add("Tobi");
+		searchInhaltNoteOracle.add("Chris");
+		searchInhaltNoteOracle.add("Christian");
+		searchInhaltNoteOracle.add("Daniel");
+		searchInhaltNoteOracle.add("Maik");
+		searchInhaltNoteOracle.add("Kim");
+		
+		/**
+		 * create the SuggestBox, and included to the Panel
+		 */
+		final SuggestBox suggestBoxsearchInhalt = new SuggestBox(searchInhaltNoteOracle);
+		searchInhaltPanel.add(suggestBoxsearchInhalt);
+		
+		/**
+		 * create the Panel with the label
+		 */
+		HorizontalPanel abbrechPanel = new HorizontalPanel();
+		Button abbrechen = new Button("abbrechen");
+		abbrechPanel.add(abbrechen);
+		
+		this.add(headlineNotiz);
 		this.add(searchPanel);
+		this.add(searchInhaltPanel);
+		this.add(abbrechPanel);
 		
 	}
 	
