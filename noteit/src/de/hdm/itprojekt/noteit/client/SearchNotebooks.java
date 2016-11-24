@@ -18,7 +18,7 @@ public class SearchNotebooks extends VerticalPanel {
 		searchPanel.add(suchen);
 		
 		/**
-		 * Oracle, dass die vorzuschlagenden Wörter der SuggestBox enthält
+		 * create the Oracle, which the words for the SuggestBox
 		 */
 		MultiWordSuggestOracle searchNotebookOracle = new MultiWordSuggestOracle();
 		searchNotebookOracle.add("Test");
@@ -26,7 +26,7 @@ public class SearchNotebooks extends VerticalPanel {
 		searchNotebookOracle.add("Meler");
 		
 		/**
-		 * SuggestBox, die anschließend dem erstellten Panel hinzugefügt wird
+		 * create the SuggestBox, and included to the  Panel
 		 */
 		final SuggestBox suggestBoxsearch = new SuggestBox(searchNotebookOracle);
 		searchPanel.add(suggestBoxsearch);
