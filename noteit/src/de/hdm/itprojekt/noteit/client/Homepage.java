@@ -21,7 +21,10 @@ public class Homepage extends VerticalPanel{
 		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		
-		contentNotebookPanel = 
+		final Notebooks NotebookPanel = new Notebooks();
+		NotebookPanel.getAllNotebooks(1);
+		contentNotebookPanel.add(NotebookPanel.getAllNotebooks(1));
+		
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
 		Label headlineNotesLabel = new Label ("Notizen");
@@ -72,7 +75,7 @@ public class Homepage extends VerticalPanel{
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
-		
+		contentNotebookPanel.add(NotebookPanel);
 		
 		/**
 		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 

@@ -113,7 +113,7 @@ public class NotebookMapper {
 				nb.setId(rs.getInt("notebookId"));
 				nb.setTitle(rs.getString("title"));
 				nb.setCreationDate(rs.getTimestamp("creationDate"));
-				nb.setUserId(rs.getInt("Notebook_userId"));
+				nb.setUserId(rs.getInt("User_userId"));
 				
 		
 				System.out.println(rs);

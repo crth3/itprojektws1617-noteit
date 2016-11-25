@@ -24,7 +24,7 @@ public class NotebookCell extends AbstractCell<Notebook>{
 	
 
 		  sb.appendHtmlConstant("<div>");
-	      sb.appendEscaped(value.getTitle() + " " + value.getSubTitle());
+	      sb.appendEscaped(value.getTitle() + " ");
 		  sb.appendHtmlConstant("</div>");
 		  sb.appendHtmlConstant("<div style=\"border-bottom: 4px solid #dddddd;\">");
 		//  sb.appendHtmlConstant("<email style='font-size:80%; padding-left: 10px;'>");
