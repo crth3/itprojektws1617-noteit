@@ -198,12 +198,21 @@ public class Noteit implements EntryPoint {
 		}
 	});
 	
+	//ClickHandler für Zurück Button
 	zurueckButton.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event){
 			VerticalPanel homepage = new Homepage();
 			
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(homepage);
+		}
+	});
+	
+	//ClickHandler für LogOut Button
+	btnLogOut.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event){
+			
+
 		}
 	});
 	
