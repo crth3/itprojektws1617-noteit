@@ -122,6 +122,7 @@ public class Noteit implements EntryPoint {
 	
 	Button btnLogOut = new Button("Logout");
 	Button impressumButton = new Button ("Impressum");
+	Button zurueckButton = new Button ("Zurück");
 	
 	welcomeLabel.setStylePrimaryName("welcomeLabel");
 	headlineLabel.setStylePrimaryName("headlineLabel");
@@ -168,6 +169,7 @@ public class Noteit implements EntryPoint {
 	headlinePanel.add(headlineLabel);
 	logoutPanel.add(btnLogOut);
 	logoutPanel.add(impressumButton);
+	logoutPanel.add(zurueckButton);
 	
 	
 	headerPanel.add(welcomePanel);
@@ -193,6 +195,15 @@ public class Noteit implements EntryPoint {
 			
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(impressum);
+		}
+	});
+	
+	zurueckButton.addClickHandler(new ClickHandler() {
+		public void onClick(ClickEvent event){
+			VerticalPanel homepage = new Homepage();
+			
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(homepage);
 		}
 	});
 	
