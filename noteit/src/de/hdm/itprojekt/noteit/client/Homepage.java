@@ -21,6 +21,7 @@ public class Homepage extends VerticalPanel{
 		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		
+		contentNotebookPanel = 
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
 		Label headlineNotesLabel = new Label ("Notizen");
