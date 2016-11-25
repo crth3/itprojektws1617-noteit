@@ -73,9 +73,33 @@ public class Homepage extends VerticalPanel{
 		contentPanel.add(contentNotesPanel);
 		
 		
+		/**
+		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
+		 */
+		final DialogBox notizBuchDialogBox = new DialogBox();
+		notizBuchDialogBox.setGlassEnabled(true);
+		notizBuchDialogBox.setAnimationEnabled(true);
+		notizBuchDialogBox.setText("Notizbuch bearbeiten?");
 		
-		
-		
+		VerticalPanel editNotebook = new EditNotebook();
+		editNotebook.setSpacing(40);
+		notizBuchDialogBox.setWidget(editNotebook);
+
+		/**
+		 * Create the Button and the ClickHandler
+		 */
+		addNotebookButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {		
+//				VerticalPanel editNotebook = new EditNotebook();
+		        
+				notizBuchDialogBox.center();
+				notizBuchDialogBox.show();
+				
+//		        RootPanel.get("content").clear();
+//		        RootPanel.get("content").add(editNotebook);
+		      }
+		    });
+
 		addNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel editNotes = new EditNotes();
@@ -85,24 +109,6 @@ public class Homepage extends VerticalPanel{
 		      }
 		    });
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		addNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {		
-				VerticalPanel editNotebook = new EditNotebook();
-		        
-		        RootPanel.get("content").clear();
-		        RootPanel.get("content").add(editNotebook);
-		      }
-		    });
 		
 		searchNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -126,69 +132,6 @@ public class Homepage extends VerticalPanel{
 		this.add(navPanel);
 		this.add(contentPanel);
 		
-		
-		
-		
-	}
 }
-
-
-
-//
-///**
-// * Anlegen einer DialoxBox für eine Bestätigung zum löschen eines Nutzerabos
-// */
-//final DialogBox notizBuchDialogBox = new DialogBox();
-//notizBuchDialogBox.setGlassEnabled(true);
-//notizBuchDialogBox.setAnimationEnabled(true);
-//notizBuchDialogBox.setText("Notizbuch bearbeiten?");
-//
-///**
-// * Anlegen eines Horizontales Panel, dem anschließend die Dialogbox hinzugefügt wird
-// */
-//HorizontalPanel notizBuchDialogContents = new HorizontalPanel();
-//notizBuchDialogContents.setSpacing(40);
-//notizBuchDialogBox.setWidget(notizBuchDialogContents);
-//
-///**
-// * Button, zum bestätigen des löschens des nutzerAbo
-// */
-//Button loeschenButton = new Button("löschen",
-//		new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//
-//				notizBuchDialogBox.hide();
-//
-//				// Hier Applikationslogik für löschen der aktiven
-//				// nutzerAbo !!!
-//			}
-//		});
-//
-///**
-// * Button, zum abbrechen des läschens des nutzerAbo
-// */
-//Button abbrechenButton = new Button("abbrechen",
-//		new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				notizBuchDialogBox.hide();
-//			}
-//		});
-//
-//
-///**
-// * Button, zum abbrechen des läschens des nutzerAbo
-// */
-//Button sichernButton = new Button("sichern",
-//		new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				notizBuchDialogBox.hide();
-//			}
-//		});
-//
-///**
-// * Hinzufügen der Buttons zum nutzerAboLoeschenDialogContents Panel
-// */
-//notizBuchDialogContents.add(loeschenButton);
-//notizBuchDialogContents.add(abbrechenButton);
-//notizBuchDialogContents.add(sichernButton);
+}
 
