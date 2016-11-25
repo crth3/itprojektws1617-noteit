@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -23,6 +24,7 @@ public class Homepage extends VerticalPanel{
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
 		Label headlineNotesLabel = new Label ("Notizen");
+		
 		
 		Button addNoteButton = new Button ("Add Note");
 		Button addNotebookButton = new Button ("Add Notebook");
@@ -82,9 +84,19 @@ public class Homepage extends VerticalPanel{
 		        RootPanel.get("content").add(editNotes);
 		      }
 		    });
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		addNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event) {		
 				VerticalPanel editNotebook = new EditNotebook();
 		        
 		        RootPanel.get("content").clear();
@@ -116,5 +128,67 @@ public class Homepage extends VerticalPanel{
 		
 		
 		
+		
 	}
 }
+
+
+
+//
+///**
+// * Anlegen einer DialoxBox für eine Bestätigung zum löschen eines Nutzerabos
+// */
+//final DialogBox notizBuchDialogBox = new DialogBox();
+//notizBuchDialogBox.setGlassEnabled(true);
+//notizBuchDialogBox.setAnimationEnabled(true);
+//notizBuchDialogBox.setText("Notizbuch bearbeiten?");
+//
+///**
+// * Anlegen eines Horizontales Panel, dem anschließend die Dialogbox hinzugefügt wird
+// */
+//HorizontalPanel notizBuchDialogContents = new HorizontalPanel();
+//notizBuchDialogContents.setSpacing(40);
+//notizBuchDialogBox.setWidget(notizBuchDialogContents);
+//
+///**
+// * Button, zum bestätigen des löschens des nutzerAbo
+// */
+//Button loeschenButton = new Button("löschen",
+//		new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//
+//				notizBuchDialogBox.hide();
+//
+//				// Hier Applikationslogik für löschen der aktiven
+//				// nutzerAbo !!!
+//			}
+//		});
+//
+///**
+// * Button, zum abbrechen des läschens des nutzerAbo
+// */
+//Button abbrechenButton = new Button("abbrechen",
+//		new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				notizBuchDialogBox.hide();
+//			}
+//		});
+//
+//
+///**
+// * Button, zum abbrechen des läschens des nutzerAbo
+// */
+//Button sichernButton = new Button("sichern",
+//		new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				notizBuchDialogBox.hide();
+//			}
+//		});
+//
+///**
+// * Hinzufügen der Buttons zum nutzerAboLoeschenDialogContents Panel
+// */
+//notizBuchDialogContents.add(loeschenButton);
+//notizBuchDialogContents.add(abbrechenButton);
+//notizBuchDialogContents.add(sichernButton);
+
