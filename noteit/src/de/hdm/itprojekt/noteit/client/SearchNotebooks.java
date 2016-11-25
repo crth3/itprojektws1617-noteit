@@ -1,5 +1,7 @@
 package de.hdm.itprojekt.noteit.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -45,6 +47,14 @@ public class SearchNotebooks extends VerticalPanel {
 		HorizontalPanel abbrechPanel = new HorizontalPanel();
 		Button abbrechen = new Button("abbrechen");
 		abbrechPanel.add(abbrechen);
+		
+		//ClickHandler für Abbrechen Button
+		abbrechen.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event){
+				
+
+			}
+		});
 		
 		this.add(headlinePanel);
 		this.add(searchPanel);

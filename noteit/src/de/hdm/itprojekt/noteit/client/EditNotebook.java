@@ -1,9 +1,12 @@
 package de.hdm.itprojekt.noteit.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -57,6 +60,30 @@ public class EditNotebook extends VerticalPanel{
 						buttonPanel.add(loeschen);
 						buttonPanel.add(abbrechen);
 						buttonPanel.add(sichern);
+						
+						//ClickHandler für Löschen Button
+						loeschen.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event){
+								
+
+							}
+						});
+						
+						//ClickHandler für Abbrechen Button
+						abbrechen.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event){
+								
+
+							}
+						});
+						
+						//ClickHandler für Sichern Button
+						sichern.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event){
+								
+
+							}
+						});
 						
 		this.add(titelPanel);
 		this.add(teilenPanel);
