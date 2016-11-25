@@ -1,9 +1,13 @@
 package de.hdm.itprojekt.noteit.client;
 
+
+import de.hdm.itprojekt.noteit.client.Impressum;
+import de.hdm.itprojekt.noteit.client.LoginInfo;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
-import de.hdm.itprojekt.noteit.shared.bo.User;
+import de.hdm.itprojekt.noteit.shared.bo.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -28,11 +34,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Anchor;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Noteit implements EntryPoint {
+	
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -47,10 +55,50 @@ public class Noteit implements EntryPoint {
 	private final NotesAdministrationAsync notesAdministrationService = GWT
 			.create(NotesAdministration.class);
 
+
+
+			/**
+			 *  Login-Widgets
+			 */
+	 private LoginInfo loginInfo = null;
+	  private VerticalPanel loginPanel = new VerticalPanel();
+	  private Label loginLabel = new Label(
+	      "Please sign in to your Google Account to access the StockWatcher application.");
+	  private Anchor signInLink = new Anchor("Sign In");	
+		
+	  
+	  Logger logger = Logger.getLogger("NameOfYourLogger");
+		
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+				
+		/**
+		 *  Login Status mit Login service �berpr�fen.
+		 *  Client-side proxy erstellen.
+		 */
+		 // Check login status using login service.
+	    LoginServiceAsync loginService = GWT.create(LoginService.class);
+	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+	      public void onFailure(Throwable error) {
+	    	  logger.log(Level.SEVERE, "ERROR Login"+error);
+	      }
+
+	      public void onSuccess(LoginInfo result) {
+	    	  
+	        loginInfo = result;
+	        if(loginInfo.isLoggedIn()) {
+	          //loadStockWatcher();
+	        } else {
+	        	logger.log(Level.SEVERE, "DONE Login"+result);
+	          loadLogin();
+	        }
+	      }
+	    });
+	  
+
+
 		
 		
 		HorizontalPanel headerPanel = new HorizontalPanel();
@@ -65,8 +113,7 @@ public class Noteit implements EntryPoint {
 //		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		VerticalPanel homepage = new Homepage();
 //		VerticalPanel editNotes = new EditNotes();
-		
-		
+	
 	Label welcomeLabel = new Label("Wilkommen Chris");
 	Label headlineLabel = new Label("NoteIt");
 //	Label headlineNotebookLabel = new Label ("Notizbücher");
@@ -262,7 +309,72 @@ public class Noteit implements EntryPoint {
 //					}
 //				});
 				
-				notesAdministrationService.deleteNotebook(2,6, new AsyncCallback<Void>() {
+//				notesAdministrationService.deleteNotebook(2,6, new AsyncCallback<Void>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(Void result) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//				});
+				
+//				notesAdministrationService.getAllNotebooksByUserID(1, new AsyncCallback<ArrayList<Notebook>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					public void onSuccess(ArrayList<Notebook> result) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "on success Update Notebook" + result.get(0).getTitle());
+//					
+//					}
+//				});
+				
+//				notesAdministrationService.getAllNotesByNotebookID(1, new AsyncCallback<ArrayList<Note>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(ArrayList<Note> result) {
+//						// TODO Auto-generated method stub
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "getAllNotesByNotebookID " + result.get(0).getText());
+//					}
+//				});
+				
+//				notesAdministrationService.findNotebooksByKeyword(1, "notebook", new AsyncCallback<ArrayList<Notebook>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(ArrayList<Notebook> result) {
+//						// TODO Auto-generated method stub
+//						
+//						Logger logger = Logger.getLogger("NameOfYourLogger");
+//						logger.log(Level.SEVERE, "on success Update Notebook " + result.get(0).getTitle() + " 2 " + result.get(1).getTitle());
+//						
+//					}
+//				});
+				
+				notesAdministrationService.findNoteByKeyword(1, "title", 1, new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -271,11 +383,14 @@ public class Noteit implements EntryPoint {
 					}
 
 					@Override
-					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
+					public void onSuccess(ArrayList<Note> result) {
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE, "on success Note by Keyword " + result.size());
 						
 					}
 				});
+				
+				
 			
 				
 			}
@@ -336,4 +451,11 @@ public class Noteit implements EntryPoint {
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
 	}
-}
+
+private void loadLogin() {
+    // Assemble login panel.
+    signInLink.setHref(loginInfo.getLoginUrl());
+    loginPanel.add(loginLabel);
+    loginPanel.add(signInLink);
+    RootPanel.get("stockList").add(loginPanel);
+  }}

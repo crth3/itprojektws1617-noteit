@@ -16,22 +16,27 @@ public class EditNotes extends VerticalPanel {
 	 */
 	public void onLoad() {
 		
-		/**
-		 * Anlegen der Labels mit den Texboxen. Jeweils in ein HotizontalPanel
-		 */
-		
+			/**
+			 * Create the Panel, Label and TextBox
+			 */
 			HorizontalPanel titelPanel = new HorizontalPanel();
 			Label titel = new Label("Titel");
 			TextBox titelTextBox = new TextBox();
 			titelPanel.add(titel);
 			titelPanel.add(titelTextBox);
-		
+				
+				/**
+				 * Create the Panel, Label and TextBox
+				 */
 				HorizontalPanel subTitelPanel = new HorizontalPanel();
 				Label subTitel = new Label("Subtitel");
 				TextBox subTitelTextBox = new TextBox();
 				subTitelPanel.add(subTitel);
 				subTitelPanel.add(subTitelTextBox);
 		
+					/**
+					 * Create the Panel, Label and TextBox
+					 */
 					HorizontalPanel teilenPanel = new HorizontalPanel();
 					Label teilen = new Label("Teilen mit");
 					TextBox teilenTextBox = new TextBox();
@@ -41,41 +46,58 @@ public class EditNotes extends VerticalPanel {
 					teilenPanel.add(hinzufuegenButton);
 		
 						/**
-						 * Anlegen des RadioButton
+						 * Create the Panel and Label
 						 */
 						HorizontalPanel berechtigungsPanel = new HorizontalPanel();
-						Label darf = new Label("darf:");
-						RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
-						RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
-						//RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
-						berechtigungsPanel.add(rbBerechtigungen1);
-						berechtigungsPanel.add(rbBerechtigungen2);
+						Label darf = new Label("Darf:");
+						
+							/**
+							 * Create the RadioButton
+							 */
+							RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+							RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
+							//RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
+							berechtigungsPanel.add(darf);
+							berechtigungsPanel.add(rbBerechtigungen1);
+							berechtigungsPanel.add(rbBerechtigungen2);
+							
+								/**
+								 * Create the Panel, Label and TextBox
+								 */
+								HorizontalPanel hinzufuegenPanel = new HorizontalPanel();
+								Label hinzufuegen = new Label("Hinzufügen zu");
+								TextBox hinzufuegenTextBox = new TextBox();
+								hinzufuegenPanel.add(hinzufuegen);
+								hinzufuegenPanel.add(hinzufuegenTextBox);
 		
-							HorizontalPanel hinzufuegenPanel = new HorizontalPanel();
-							Label hinzufuegen = new Label("Hinzufügen zu");
-							TextBox hinzufuegenTextBox = new TextBox();
-							hinzufuegenPanel.add(hinzufuegen);
-							hinzufuegenPanel.add(hinzufuegenTextBox);
+									/**
+									 * Create the Panel, Label and DatePicker
+									 */
+									HorizontalPanel faelligkeitsPanel = new HorizontalPanel();
+									Label faelligkeitsdatum = new Label("Fälligkeitsdatum");
+									DatePicker datePicker = new DatePicker();
+									faelligkeitsPanel.add(faelligkeitsdatum);
+									faelligkeitsPanel.add(datePicker);
+									
+										/**
+										 * Create the Panel, Label and TextArea
+										 */
+										HorizontalPanel textPanel = new HorizontalPanel();
+										Label text = new Label("Text");
+										TextArea textArea = new TextArea();
+										textPanel.add(text);
+										textPanel.add(textArea);
 		
-								HorizontalPanel faelligkeitsPanel = new HorizontalPanel();
-								Label faelligkeitsdatum = new Label("Fälligkeitsdatum");
-								DatePicker datePicker = new DatePicker();
-								faelligkeitsPanel.add(faelligkeitsdatum);
-								faelligkeitsPanel.add(datePicker);
-		
-									HorizontalPanel textPanel = new HorizontalPanel();
-									Label text = new Label("Text");
-									TextArea textArea = new TextArea();
-									textPanel.add(text);
-									textPanel.add(textArea);
-		
-										HorizontalPanel buttonPanel = new HorizontalPanel();
-										Button loeschen = new Button("Löschen");
-										Button abbrechen = new Button("Abbrechen");
-										Button sichern = new Button("Sichern");
-										buttonPanel.add(loeschen);
-										buttonPanel.add(abbrechen);
-										buttonPanel.add(sichern);
+											/**
+											 * Create the Panel and the Buttons
+											 */
+											HorizontalPanel buttonPanel = new HorizontalPanel();
+											Button loeschen = new Button("Löschen");
+											Button abbrechen = new Button("Abbrechen");
+											Button sichern = new Button("Sichern");
+											buttonPanel.add(loeschen);
+											buttonPanel.add(abbrechen);
+											buttonPanel.add(sichern);
 										
 			this.add(titelPanel);
 			this.add(subTitelPanel);

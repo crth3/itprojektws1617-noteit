@@ -103,33 +103,17 @@ public class NotebookMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Notebook "
-							+ "INNER JOIN Note ON Note.Notebook_notebookId = Notebook.notebookId "
-							+ "INNER JOIN User ON Notebook.User_userId = User.userId "
 							+ "WHERE "
 							+ "Notebook.User_userId = "
-							+ id
-							+ "ORDER BY notebookId ASC");
+							+ id);
 
 			while (rs.next()) {
 				Notebook nb = new Notebook();
-				Note n = new Note();
 				
 				nb.setId(rs.getInt("notebookId"));
 				nb.setTitle(rs.getString("title"));
 				nb.setCreationDate(rs.getTimestamp("creationDate"));
-
-				n.setId(rs.getInt("noteId"));
-				n.setTitle(rs.getString("title"));
-				n.setSubTitle(rs.getString("subtitle"));
-				n.setText(rs.getString("content"));
-				n.setMaturityDate(rs.getTimestamp("creationDate"));
-				n.setCreationDate(rs.getTimestamp("creationDate"));
-				n.setModificationDate(rs.getTimestamp("modificationDate"));
-				n.setNotebookId(rs.getInt("Notebook_notebookId"));
-				n.setUserId(rs.getInt("User_UserId"));
-				
-				nb.setNote(n);
-				nb.setUserId(rs.getInt("idUser"));
+				nb.setUserId(rs.getInt("Notebook_userId"));
 				
 		
 				System.out.println(rs);
@@ -203,8 +187,7 @@ public class NotebookMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 			System.out.println("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
-
-			
+	
 			stmt.executeUpdate("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
 		}
 		// Error Handling
