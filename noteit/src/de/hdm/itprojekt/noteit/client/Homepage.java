@@ -93,7 +93,7 @@ public class Homepage extends VerticalPanel{
 		/**
 		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
 		 */
-		DialogBox notizBuchDialogBox = new DialogBox();
+		final DialogBox notizBuchDialogBox = new DialogBox();
 		notizBuchDialogBox.setGlassEnabled(true);
 		notizBuchDialogBox.setAnimationEnabled(true);
 		notizBuchDialogBox.setText("Notizbuch hinzufügen");
