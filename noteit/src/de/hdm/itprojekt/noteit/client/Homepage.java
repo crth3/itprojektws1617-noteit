@@ -1,13 +1,18 @@
 package de.hdm.itprojekt.noteit.client;
 
+import java.rmi.NotBoundException;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
@@ -18,12 +23,12 @@ public class Homepage extends VerticalPanel{
 		HorizontalPanel navNotebookPanel = new HorizontalPanel();
 		HorizontalPanel navNotesPanel = new HorizontalPanel();
 		HorizontalPanel contentPanel = new HorizontalPanel();
-		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+		final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		
-		final Notebooks NotebookPanel = new Notebooks();
-		NotebookPanel.getAllNotebooks(1);
-		contentNotebookPanel.add(NotebookPanel.getAllNotebooks(1));
+		final Notebooks Notebooks = new Notebooks();
+		Notebooks.getAllNotebooks(1);
+		contentNotebookPanel.add(Notebooks.getAllNotebooks(1));
 		
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
@@ -33,7 +38,6 @@ public class Homepage extends VerticalPanel{
 		Button addNoteButton = new Button ("Add Note");
 		Button addNotebookButton = new Button ("Add Notebook");
 		Button searchNoteButton = new Button("Search Note");
-		Button searchNotebookButton = new Button("Search Notebook");
 		
 		
 		
@@ -68,22 +72,31 @@ public class Homepage extends VerticalPanel{
 		navNotesPanel.add(addNoteButton);
 		navNotebookPanel.add(addNotebookButton);
 		navNotesPanel.add(searchNoteButton);
-		navNotebookPanel.add(searchNotebookButton);
-
 		
+		
+		
+		/**
+		 * create the TextBox, and included to the  Panel
+		 */
+		final TextBox tbSearchNotebook = new TextBox();
+		navNotebookPanel.add(tbSearchNotebook);
+
+		/**
+		 * add to the Panels
+		 */
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
-		contentNotebookPanel.add(NotebookPanel);
+		contentNotebookPanel.add(Notebooks);
 		
 		/**
 		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
 		 */
-		final DialogBox notizBuchDialogBox = new DialogBox();
+		DialogBox notizBuchDialogBox = new DialogBox();
 		notizBuchDialogBox.setGlassEnabled(true);
 		notizBuchDialogBox.setAnimationEnabled(true);
-		notizBuchDialogBox.setText("Notizbuch bearbeiten?");
+		notizBuchDialogBox.setText("Notizbuch hinzufügen");
 		
 		VerticalPanel editNotebook = new EditNotebook();
 		editNotebook.setSpacing(40);
@@ -113,6 +126,18 @@ public class Homepage extends VerticalPanel{
 		      }
 		    });
 		
+		/**
+		 * Create the TextBox with ChangeHandler for Search Notebook Function.
+		 */
+		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				
+				contentNotebookPanel.add(Notebooks.getAllNotebooksByKeyword(1, event.getValue()));
+			}
+		});
+
 		
 		searchNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -122,16 +147,7 @@ public class Homepage extends VerticalPanel{
 		        RootPanel.get("content").add(searchNotes);
 		      }
 		    });
-		
-		searchNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel searchNoteBook = new SearchNotebooks();
-		        
-		        RootPanel.get("content").clear();
-		        RootPanel.get("content").add(searchNoteBook);
-		      }
-		    });
-
+				
 		
 		this.add(navPanel);
 		this.add(contentPanel);

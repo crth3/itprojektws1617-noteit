@@ -40,9 +40,29 @@ public class Notebooks extends HorizontalPanel{
 		
 		return NotebookCellList;
 		
-
 	}
 
-	
+	public CellList<Notebook> getAllNotebooksByKeyword(int userID, String keyword){
+		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				System.out.println("Error" + caught);
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				// TODO Auto-generated method stub
+				System.out.println("result" + result);
+			
+				NotebookCellList.setRowData(result);
+				//NotebookCellList.setValueUpdater(valueUpdater);(result);
+
+			}
+		});
+		
+		return NotebookCellList;
+	}
 	
 }
