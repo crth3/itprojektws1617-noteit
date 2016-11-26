@@ -3,20 +3,15 @@ package de.hdm.itprojekt.noteit.client;
 
 import de.hdm.itprojekt.noteit.client.Impressum;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
-import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -228,8 +223,6 @@ public class Noteit implements EntryPoint {
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
 		
-		final ArrayList<String> mailArray = new ArrayList<String>(Arrays.asList("1@array.de", "2@array.de", "3@array.de"));
-		final ArrayList<Integer> intArray = new ArrayList<Integer>(Arrays.asList(1,2,3));
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 

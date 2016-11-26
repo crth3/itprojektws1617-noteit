@@ -16,8 +16,8 @@ public class Notebooks extends HorizontalPanel{
 	private final NotesAdministrationAsync notesAdmin = GWT
 			.create(NotesAdministration.class);
 	
-	final CellList<Notebook> NotebookCellList = new NotebookCellList().createNotebookCellList();
-	Notebook Notebook = new Notebook();
+	final CellList<Notebook> notebookCellList = new NotebookCellList().createNotebookCellList();
+	Notebook notebook = new Notebook();
 	
 
 	public CellList<Notebook> getAllNotebooks(int userID) {
@@ -27,7 +27,7 @@ public class Notebooks extends HorizontalPanel{
 			public void onSuccess(ArrayList<Notebook> result) {
 				System.out.println("result" + result);
 				
-				NotebookCellList.setRowData(result);
+				notebookCellList.setRowData(result);
 			
 			}
 			
@@ -38,7 +38,7 @@ public class Notebooks extends HorizontalPanel{
 			}
 		});
 		
-		return NotebookCellList;
+		return notebookCellList;
 		
 	}
 
@@ -54,13 +54,13 @@ public class Notebooks extends HorizontalPanel{
 			public void onSuccess(ArrayList<Notebook> result) {
 				System.out.println("result" + result);
 			
-				NotebookCellList.setRowData(result);
+				notebookCellList.setRowData(result);
 				//NotebookCellList.setValueUpdater(valueUpdater);(result);
 
 			}
 		});
 		
-		return NotebookCellList;
+		return notebookCellList;
 	}
 	
 	public Notebook createNotebooks(String title, final User creator) {
@@ -69,7 +69,7 @@ public class Notebooks extends HorizontalPanel{
 			
 			@Override
 			public void onSuccess(Notebook result) {
-				Notebook = result; 
+				notebook = result; 
 				getAllNotebooks(creator.getId());
 				System.out.println("Notebook created");
 				System.out.println(result);
@@ -82,6 +82,6 @@ public class Notebooks extends HorizontalPanel{
 			}
 		});
 		
-		return Notebook;
+		return notebook;
 	}
 }
