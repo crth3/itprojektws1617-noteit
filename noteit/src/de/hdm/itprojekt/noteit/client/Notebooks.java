@@ -2,8 +2,6 @@ package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
 
-import org.apache.bcel.generic.NEWARRAY;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -11,7 +9,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
-import de.hdm.itprojekt.noteit.shared.bo.Notebook;
+import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class Notebooks extends HorizontalPanel{
 	
@@ -19,6 +17,8 @@ public class Notebooks extends HorizontalPanel{
 			.create(NotesAdministration.class);
 	
 	final CellList<Notebook> NotebookCellList = new NotebookCellList().createNotebookCellList();
+	Notebook Notebook = new Notebook();
+	
 
 	public CellList<Notebook> getAllNotebooks(int userID) {
 		notesAdmin.getAllNotebooksByUserID(userID, new AsyncCallback<ArrayList<Notebook>>() {
@@ -47,13 +47,11 @@ public class Notebooks extends HorizontalPanel{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				System.out.println("Error" + caught);
 			}
 
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
-				// TODO Auto-generated method stub
 				System.out.println("result" + result);
 			
 				NotebookCellList.setRowData(result);
@@ -65,4 +63,25 @@ public class Notebooks extends HorizontalPanel{
 		return NotebookCellList;
 	}
 	
+	public Notebook createNotebooks(String title, final User creator) {
+		
+		notesAdmin.createNotebook(title, creator, new AsyncCallback<Notebook>() {
+			
+			@Override
+			public void onSuccess(Notebook result) {
+				Notebook = result; 
+				getAllNotebooks(creator.getId());
+				System.out.println("Notebook created");
+				System.out.println(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error" + caught);
+				
+			}
+		});
+		
+		return Notebook;
+	}
 }

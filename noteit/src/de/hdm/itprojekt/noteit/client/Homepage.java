@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -15,9 +16,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.itprojekt.noteit.shared.NotesAdministration;
+import de.hdm.itprojekt.noteit.shared.bo.User;
+
 
 public class Homepage extends VerticalPanel{
 	public void onLoad() {
+		
+		final User user = new User(); 
+		user.setId(1);
 		
 		HorizontalPanel navPanel = new HorizontalPanel();
 		HorizontalPanel navNotebookPanel = new HorizontalPanel();
@@ -26,6 +33,7 @@ public class Homepage extends VerticalPanel{
 		final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		HorizontalPanel contentNotesPanel = new HorizontalPanel();
 		
+		
 		final Notebooks Notebooks = new Notebooks();
 		Notebooks.getAllNotebooks(1);
 		contentNotebookPanel.add(Notebooks.getAllNotebooks(1));
@@ -33,11 +41,14 @@ public class Homepage extends VerticalPanel{
 		
 		Label headlineNotebookLabel = new Label ("Notizbücher");
 		Label headlineNotesLabel = new Label ("Notizen");
+		Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 		
+	
 		
-		Button addNoteButton = new Button ("Add Note");
-		Button addNotebookButton = new Button ("Add Notebook");
-		Button searchNoteButton = new Button("Search Note");
+		Button addNoteButton = new Button ("+");
+		Button addNotebookButton = new Button ("+");
+		Button searchNoteButton = new Button("Notiz suchen");
+		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
 		
 		
 		
@@ -81,6 +92,8 @@ public class Homepage extends VerticalPanel{
 		final TextBox tbSearchNotebook = new TextBox();
 		navNotebookPanel.add(tbSearchNotebook);
 
+		final TextBox tbAddNewNotebook = new TextBox();
+		
 		/**
 		 * add to the Panels
 		 */
@@ -90,18 +103,58 @@ public class Homepage extends VerticalPanel{
 		contentPanel.add(contentNotesPanel);
 		contentNotebookPanel.add(Notebooks);
 		
-		/**
-		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
-		 */
-		final DialogBox notizBuchDialogBox = new DialogBox();
-		notizBuchDialogBox.setGlassEnabled(true);
-		notizBuchDialogBox.setAnimationEnabled(true);
-		notizBuchDialogBox.setText("Notizbuch hinzufügen");
-		
-		VerticalPanel editNotebook = new EditNotebook();
-		editNotebook.setSpacing(40);
-		notizBuchDialogBox.setWidget(editNotebook);
+//		/**
+//		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
+//		 */
+//		final DialogBox notizBuchDialogBox = new DialogBox();
+//		notizBuchDialogBox.setGlassEnabled(true);
+//		notizBuchDialogBox.setAnimationEnabled(true);
+//		notizBuchDialogBox.setText("Notizbuch bearbeiten?");
+//		
+//		VerticalPanel editNotebook = new EditNotebook();
+//		editNotebook.setSpacing(40);
+//		notizBuchDialogBox.setWidget(editNotebook);
 
+		
+		/**
+		 * create the DialogBox
+		 */
+		final DialogBox dbAddNotebook = new DialogBox(); 
+		dbAddNotebook.setGlassEnabled(true);
+		dbAddNotebook.setAnimationEnabled(true);
+		dbAddNotebook.setText("Notizbuch hinzufügen");
+		VerticalPanel vpAddNewNotebookPanel = new VerticalPanel();
+		
+		vpAddNewNotebookPanel.add(lblTitleAddNotebook);
+		vpAddNewNotebookPanel.add(tbAddNewNotebook);
+		vpAddNewNotebookPanel.add(btnAddNewNotebook);
+		
+		vpAddNewNotebookPanel.setSpacing(40);
+		dbAddNotebook.setWidget(vpAddNewNotebookPanel);
+
+		
+		
+		btnAddNewNotebook.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				/**
+				 * create new Notebook
+				 */
+				Notebooks.createNotebooks(tbAddNewNotebook.getText(), user);
+				
+				tbAddNewNotebook.setText("");
+				
+				/**
+				 * close the Popup
+				 */
+				dbAddNotebook.hide();
+				
+			}
+		});
+		
 		/**
 		 * Create the Button and the ClickHandler
 		 */
@@ -109,13 +162,18 @@ public class Homepage extends VerticalPanel{
 			public void onClick(ClickEvent event) {		
 //				VerticalPanel editNotebook = new EditNotebook();
 		        
-				notizBuchDialogBox.center();
-				notizBuchDialogBox.show();
+				dbAddNotebook.center();
+				dbAddNotebook.show();
 				
 //		        RootPanel.get("content").clear();
 //		        RootPanel.get("content").add(editNotebook);
 		      }
 		    });
+		
+	
+		
+		
+		
 
 		addNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
