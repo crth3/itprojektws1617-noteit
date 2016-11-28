@@ -145,6 +145,49 @@ public class NoteMapper {
 	}
 	
 	/**
+	 * Diese Methode gibt alle Notizen in einer Liste aus
+	 * 
+	 * @return Liste aller Notizen
+	 */
+	public ArrayList<Note> findAllNotes() {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Note> noteList = new ArrayList<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note");
+
+			while (rs.next()) {
+				Note n = new Note();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("creationDate"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+		
+				
+				// Conversation Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			System.out.println("Report: Anzal aller Notizen: " + noteList.size());
+			
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
+	
+	/**
 	 * Diese Methode gibt alle Notes, die zu einem bestimmten User gehören
 	 * anhand der der user_userId in einer Liste aus
 	 * 

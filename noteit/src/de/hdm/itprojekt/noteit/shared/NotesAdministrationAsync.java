@@ -44,4 +44,6 @@ public interface NotesAdministrationAsync {
 	void findUserByMail(String mail, AsyncCallback<User> callback);
 
 	void deleteAllNotesByNotebookID(int userID, int notebookID, AsyncCallback<Void> callback);
+
+	void getAllNotes(AsyncCallback<ArrayList<Note>> callback);
 }
