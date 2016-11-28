@@ -43,11 +43,12 @@ public class Homepage extends VerticalPanel {
 		Label lbheadlineNotesLabel = new Label("Notizen");
 		Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 
-		Button btnaddNoteButton = new Button("+");
-		Button btnaddNotebookButton = new Button("+");
+		Button btnaddNoteButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
+		Button btnaddNotebookButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
 //		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
-		Button btnEditNotebook = new Button("<img src='Images/Search-48.png'/>");
+		Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+		Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -75,6 +76,7 @@ public class Homepage extends VerticalPanel {
 		navNotebookPanel.add(lbheadlineNotebookLabel);
 		navNotesPanel.add(lbheadlineNotesLabel);
 		navNotesPanel.add(btnaddNoteButton);
+		navNotesPanel.add(btnEditNote);
 		navNotebookPanel.add(btnaddNotebookButton);
 		navNotebookPanel.add(btnEditNotebook);
 //		navNotesPanel.add(btnsearchNoteButton);
@@ -190,6 +192,15 @@ public class Homepage extends VerticalPanel {
 
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(createNote);
+			}
+		});
+		
+		btnEditNote.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanel editNotes = new EditNotes();
+
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(editNotes);
 			}
 		});
 
