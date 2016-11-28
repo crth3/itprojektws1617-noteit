@@ -45,7 +45,7 @@ public class Homepage extends VerticalPanel {
 
 		Button btnaddNoteButton = new Button("+");
 		Button btnaddNotebookButton = new Button("+");
-		Button btnsearchNoteButton = new Button("Notiz suchen");
+//		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
 		Button btnEditNotebook = new Button("<img src='Images/Search-48.png'/>");
 
@@ -77,7 +77,7 @@ public class Homepage extends VerticalPanel {
 		navNotesPanel.add(btnaddNoteButton);
 		navNotebookPanel.add(btnaddNotebookButton);
 		navNotebookPanel.add(btnEditNotebook);
-		navNotesPanel.add(btnsearchNoteButton);
+//		navNotesPanel.add(btnsearchNoteButton);
 
 		/**
 		 * create the TextBox for Notebook Search, and include it to the Panel
