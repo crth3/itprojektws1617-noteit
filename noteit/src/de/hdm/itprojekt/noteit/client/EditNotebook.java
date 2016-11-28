@@ -72,6 +72,7 @@ public class EditNotebook extends VerticalPanel{
 						//ClickHandler für Abbrechen Button
 						abbrechen.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event){
+								Homepage.close_db();
 								
 
 							}

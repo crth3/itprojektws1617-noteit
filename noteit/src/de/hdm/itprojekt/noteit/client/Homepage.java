@@ -1,5 +1,6 @@
 package de.hdm.itprojekt.noteit.client;
 
+import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class Homepage extends VerticalPanel {
+	final static DialogBox dbeditNotebookDialogBox = new DialogBox();
 	public void onLoad() {
 
 		// local User
@@ -41,7 +43,7 @@ public class Homepage extends VerticalPanel {
 		Button btnaddNotebookButton = new Button("+");
 		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
-		Button btnEditNotebook = new Button ("<img src='Images/Search-48.png'/>");
+		Button btnEditNotebook = new Button("<img src='Images/Search-48.png'/>");
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -90,18 +92,18 @@ public class Homepage extends VerticalPanel {
 		contentPanel.add(contentNotesPanel);
 		contentNotebookPanel.add(notebooks);
 
-		 /**
+		/**
 		 * Create the DialoBox and Panel, this is the Popup for the
-		 editNotebookButton
+		 * editNotebookButton
 		 */
-		 final DialogBox dbeditNotebookDialogBox = new DialogBox();
-		 dbeditNotebookDialogBox.setGlassEnabled(true);
-		 dbeditNotebookDialogBox.setAnimationEnabled(true);
-		 dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
 		
-		 VerticalPanel editNotebook = new EditNotebook();
-		 editNotebook.setSpacing(40);
-		 dbeditNotebookDialogBox.setWidget(editNotebook);
+		dbeditNotebookDialogBox.setGlassEnabled(true);
+		dbeditNotebookDialogBox.setAnimationEnabled(true);
+		dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
+
+		VerticalPanel editNotebook = new EditNotebook();
+		editNotebook.setSpacing(40);
+		dbeditNotebookDialogBox.setWidget(editNotebook);
 
 		/**
 		 * create the DialogBox
@@ -111,14 +113,26 @@ public class Homepage extends VerticalPanel {
 		dbAddNotebook.setAnimationEnabled(true);
 		dbAddNotebook.setText("Notizbuch hinzufügen");
 		VerticalPanel vpAddNewNotebookPanel = new VerticalPanel();
-
+		Button btnNotebookClose = new Button("abbrechen");
 		vpAddNewNotebookPanel.add(lblTitleAddNotebook);
 		vpAddNewNotebookPanel.add(tbAddNewNotebook);
 		vpAddNewNotebookPanel.add(btnAddNewNotebook);
+		vpAddNewNotebookPanel.add(btnNotebookClose);
 
 		vpAddNewNotebookPanel.setSpacing(40);
 		dbAddNotebook.setWidget(vpAddNewNotebookPanel);
 
+		
+		btnNotebookClose.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				dbAddNotebook.hide();
+				
+			}
+		});
+		
+		
 		btnAddNewNotebook.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -162,16 +176,21 @@ public class Homepage extends VerticalPanel {
 				RootPanel.get("content").add(editNotes);
 			}
 		});
-		
-		
+
 		btnEditNotebook.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				
+				dbeditNotebookDialogBox.setGlassEnabled(true);
+				dbeditNotebookDialogBox.setAnimationEnabled(true);
+				dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
+
+				VerticalPanel editNotebook = new EditNotebook();
+				editNotebook.setSpacing(40);
+				dbeditNotebookDialogBox.setWidget(editNotebook);
 				dbeditNotebookDialogBox.center();
 				dbeditNotebookDialogBox.show();
-				
+
 			}
 		});
 
@@ -200,4 +219,9 @@ public class Homepage extends VerticalPanel {
 		this.add(contentPanel);
 
 	}
+public static void close_db(){
+
+	dbeditNotebookDialogBox.hide();
+	
+}
 }
