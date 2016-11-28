@@ -29,7 +29,7 @@ public class Homepage extends VerticalPanel {
 		HorizontalPanel navNotesPanel = new HorizontalPanel();
 		HorizontalPanel contentPanel = new HorizontalPanel();
 		final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-		HorizontalPanel contentNotesPanel = new HorizontalPanel();
+		final HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
 		final Notebooks notebooks = new Notebooks();
 		notebooks.getAllNotebooks(1);
@@ -80,10 +80,19 @@ public class Homepage extends VerticalPanel {
 		navNotesPanel.add(btnsearchNoteButton);
 
 		/**
-		 * create the TextBox, and included to the Panel
+		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 		final TextBox tbSearchNotebook = new TextBox();
 		navNotebookPanel.add(tbSearchNotebook);
+		
+		
+		/**
+		 * create the TextBox for Notebook Search, and include it to the Panel
+		 */
+		final TextBox tbSearchNote = new TextBox();
+		navNotesPanel.add(tbSearchNote);
+		
+		
 
 		final TextBox tbAddNewNotebook = new TextBox();
 
@@ -200,25 +209,42 @@ public class Homepage extends VerticalPanel {
 		});
 
 		/**
-		 * Create the TextBox with ChangeHandler for Search Notebook Function.
+		 * Create the ChangeHandler for TextBox for Search Notebook Function.
 		 */
 		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 
+				contentNotebookPanel.clear();
 				contentNotebookPanel.add(notebooks.getAllNotebooksByKeyword(1, event.getValue()));
 			}
 		});
 
-		btnsearchNoteButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel searchNotes = new SearchNotes();
+//		btnsearchNoteButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				VerticalPanel searchNotes = new SearchNotes();
+//
+//				RootPanel.get("content").clear();
+//				RootPanel.get("content").add(searchNotes);
+//			}
+//		});
+		
+		/**
+		 * Create the ChangeHandler for TextBox for Search Note Function.
+		 */
+		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(searchNotes);
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				
+				contentNotesPanel.clear();
+				contentNotesPanel.add(notes.getAllNotesByKeyword(1, event.getValue(), 1));
+				
 			}
 		});
+		
+		
 
 		this.add(navPanel);
 		this.add(contentPanel);
