@@ -70,17 +70,17 @@ public class Noteit implements EntryPoint {
 		 * create new Panels
 		 */
 		final VerticalPanel vpBasisPanel = new VerticalPanel();
-		HorizontalPanel headerPanel = new HorizontalPanel();
-		HorizontalPanel welcomePanel = new HorizontalPanel();
-		HorizontalPanel headlinePanel = new HorizontalPanel();
-		HorizontalPanel logoutPanel = new HorizontalPanel();
+		final HorizontalPanel headerPanel = new HorizontalPanel();
+		final HorizontalPanel welcomePanel = new HorizontalPanel();
+		final HorizontalPanel headlinePanel = new HorizontalPanel();
+		final HorizontalPanel logoutPanel = new HorizontalPanel();
+		final VerticalPanel homepage = new Homepage();
 		// HorizontalPanel navPanel = new HorizontalPanel();
 		// HorizontalPanel navNotebookPanel = new HorizontalPanel();
 		// HorizontalPanel navNotesPanel = new HorizontalPanel();
 		// HorizontalPanel contentPanel = new HorizontalPanel();
 		// HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		// HorizontalPanel contentNotesPanel = new HorizontalPanel();
-		VerticalPanel homepage = new Homepage();
 		// VerticalPanel editNotes = new EditNotes();
 
 		/**
