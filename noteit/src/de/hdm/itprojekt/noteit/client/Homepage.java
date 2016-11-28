@@ -2,64 +2,66 @@ package de.hdm.itprojekt.noteit.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.itprojekt.noteit.shared.bo.User;
 
-public class Homepage extends VerticalPanel{
+public class Homepage extends VerticalPanel {
 	public void onLoad() {
-		
+
+		// local User
+		final User user = new User();
+		user.setId(1);
+
 		HorizontalPanel navPanel = new HorizontalPanel();
 		HorizontalPanel navNotebookPanel = new HorizontalPanel();
 		HorizontalPanel navNotesPanel = new HorizontalPanel();
 		HorizontalPanel contentPanel = new HorizontalPanel();
-		HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+		final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 		HorizontalPanel contentNotesPanel = new HorizontalPanel();
-		
-		final Notebooks NotebookPanel = new Notebooks();
-		NotebookPanel.getAllNotebooks(1);
-		contentNotebookPanel.add(NotebookPanel.getAllNotebooks(1));
-		
-		
-		Label headlineNotebookLabel = new Label ("Notizbücher");
-		Label headlineNotesLabel = new Label ("Notizen");
-		
-		
-		Button addNoteButton = new Button ("Add Note");
-		Button addNotebookButton = new Button ("Add Notebook");
-		Button searchNoteButton = new Button("Search Note");
-		Button searchNotebookButton = new Button("Search Notebook");
-		
-		
-		
+
+		final Notebooks notebooks = new Notebooks();
+		notebooks.getAllNotebooks(1);
+		contentNotebookPanel.add(notebooks.getAllNotebooks(1));
+
+		Label headlineNotebookLabel = new Label("Notizbücher");
+		Label headlineNotesLabel = new Label("Notizen");
+		Label lblTitleAddNotebook = new Label("Name des Notizbuches");
+
+		Button addNoteButton = new Button("+");
+		Button addNotebookButton = new Button("+");
+		Button searchNoteButton = new Button("Notiz suchen");
+		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
+
 		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
-		
-		
+
 		navNotebookPanel.setStylePrimaryName("navNotebookPanel");
 		navNotesPanel.setStylePrimaryName("navNotesPanel");
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
-		
-		
+
 		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		
-		
+
 		navPanel.setWidth("1000px");
 		contentPanel.setWidth("1000px");
 		navNotebookPanel.setWidth("500px");
 		navNotesPanel.setWidth("500px");
 		contentNotebookPanel.setWidth("500px");
 		contentNotesPanel.setWidth("500px");
-		
+
 		contentNotebookPanel.setHeight("300px");
 		contentNotesPanel.setHeight("300px");
 
@@ -68,74 +70,120 @@ public class Homepage extends VerticalPanel{
 		navNotesPanel.add(addNoteButton);
 		navNotebookPanel.add(addNotebookButton);
 		navNotesPanel.add(searchNoteButton);
-		navNotebookPanel.add(searchNotebookButton);
 
-		
+		/**
+		 * create the TextBox, and included to the Panel
+		 */
+		final TextBox tbSearchNotebook = new TextBox();
+		navNotebookPanel.add(tbSearchNotebook);
+
+		final TextBox tbAddNewNotebook = new TextBox();
+
+		/**
+		 * add to the Panels
+		 */
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
-		contentNotebookPanel.add(NotebookPanel);
-		
+		contentNotebookPanel.add(notebooks);
+
+		// /**
+		// * Create the DialoBox and Panel, this is the Popup for the
+		// addNotesButton
+		// */
+		// final DialogBox notizBuchDialogBox = new DialogBox();
+		// notizBuchDialogBox.setGlassEnabled(true);
+		// notizBuchDialogBox.setAnimationEnabled(true);
+		// notizBuchDialogBox.setText("Notizbuch bearbeiten?");
+		//
+		// VerticalPanel editNotebook = new EditNotebook();
+		// editNotebook.setSpacing(40);
+		// notizBuchDialogBox.setWidget(editNotebook);
+
 		/**
-		 * Create the DialoBox and Panel, this is the Popup for the addNotesButton 
+		 * create the DialogBox
 		 */
-		final DialogBox notizBuchDialogBox = new DialogBox();
-		notizBuchDialogBox.setGlassEnabled(true);
-		notizBuchDialogBox.setAnimationEnabled(true);
-		notizBuchDialogBox.setText("Notizbuch bearbeiten?");
-		
-		VerticalPanel editNotebook = new EditNotebook();
-		editNotebook.setSpacing(40);
-		notizBuchDialogBox.setWidget(editNotebook);
+		final DialogBox dbAddNotebook = new DialogBox();
+		dbAddNotebook.setGlassEnabled(true);
+		dbAddNotebook.setAnimationEnabled(true);
+		dbAddNotebook.setText("Notizbuch hinzufügen");
+		VerticalPanel vpAddNewNotebookPanel = new VerticalPanel();
+
+		vpAddNewNotebookPanel.add(lblTitleAddNotebook);
+		vpAddNewNotebookPanel.add(tbAddNewNotebook);
+		vpAddNewNotebookPanel.add(btnAddNewNotebook);
+
+		vpAddNewNotebookPanel.setSpacing(40);
+		dbAddNotebook.setWidget(vpAddNewNotebookPanel);
+
+		btnAddNewNotebook.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+
+				/**
+				 * create new Notebook
+				 */
+				notebooks.createNotebooks(tbAddNewNotebook.getText(), user);
+
+				tbAddNewNotebook.setText("");
+
+				/**
+				 * close the Popup
+				 */
+				dbAddNotebook.hide();
+
+			}
+		});
 
 		/**
 		 * Create the Button and the ClickHandler
 		 */
 		addNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {		
-//				VerticalPanel editNotebook = new EditNotebook();
-		        
-				notizBuchDialogBox.center();
-				notizBuchDialogBox.show();
-				
-//		        RootPanel.get("content").clear();
-//		        RootPanel.get("content").add(editNotebook);
-		      }
-		    });
+			public void onClick(ClickEvent event) {
+				// VerticalPanel editNotebook = new EditNotebook();
+
+				dbAddNotebook.center();
+				dbAddNotebook.show();
+
+				// RootPanel.get("content").clear();
+				// RootPanel.get("content").add(editNotebook);
+			}
+		});
 
 		addNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel editNotes = new EditNotes();
-		        
-		        RootPanel.get("content").clear();
-		        RootPanel.get("content").add(editNotes);
-		      }
-		    });
-		
-		
+
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(editNotes);
+			}
+		});
+
+		/**
+		 * Create the TextBox with ChangeHandler for Search Notebook Function.
+		 */
+		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+
+				contentNotebookPanel.add(notebooks.getAllNotebooksByKeyword(1, event.getValue()));
+			}
+		});
+
 		searchNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel searchNotes = new SearchNotes();
-		        
-		        RootPanel.get("content").clear();
-		        RootPanel.get("content").add(searchNotes);
-		      }
-		    });
-		
-		searchNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel searchNoteBook = new SearchNotebooks();
-		        
-		        RootPanel.get("content").clear();
-		        RootPanel.get("content").add(searchNoteBook);
-		      }
-		    });
 
-		
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(searchNotes);
+			}
+		});
+
 		this.add(navPanel);
 		this.add(contentPanel);
-		
-}
-}
 
+	}
+}
