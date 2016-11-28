@@ -50,8 +50,11 @@ public class Noteit implements EntryPoint {
 	private final NotesAdministrationAsync notesAdministrationService = GWT
 			.create(NotesAdministration.class);
 
-
-
+	/**
+	 * create a new VerticalPanel 
+	 */
+	private VerticalPanel vpBasisPanel = new VerticalPanel();
+	
 			/**
 			 *  Login-Widgets
 			 */
@@ -69,6 +72,13 @@ public class Noteit implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 				
+		/**
+		 * add the Panels
+		 */
+		RootPanel.get("content").add(vpBasisPanel);
+		vpBasisPanel.add(loginPanel);
+		
+		
 		/**
 		 *  Login Status mit Login service �berpr�fen.
 		 *  Client-side proxy erstellen.
