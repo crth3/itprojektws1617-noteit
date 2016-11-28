@@ -33,17 +33,18 @@ public class Homepage extends VerticalPanel {
 		notebooks.getAllNotebooks(1);
 		contentNotebookPanel.add(notebooks.getAllNotebooks(1));
 
-		Label headlineNotebookLabel = new Label("Notizbücher");
-		Label headlineNotesLabel = new Label("Notizen");
+		Label lbheadlineNotebookLabel = new Label("Notizbücher");
+		Label lbheadlineNotesLabel = new Label("Notizen");
 		Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 
-		Button addNoteButton = new Button("+");
-		Button addNotebookButton = new Button("+");
-		Button searchNoteButton = new Button("Notiz suchen");
+		Button btnaddNoteButton = new Button("+");
+		Button btnaddNotebookButton = new Button("+");
+		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
+		Button btnEditNotebook = new Button ("<img src='war/Images/Search-48.png'/>");
 
-		headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
-		headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
+		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
+		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
 
 		navNotebookPanel.setStylePrimaryName("navNotebookPanel");
 		navNotesPanel.setStylePrimaryName("navNotesPanel");
@@ -65,11 +66,12 @@ public class Homepage extends VerticalPanel {
 		contentNotebookPanel.setHeight("300px");
 		contentNotesPanel.setHeight("300px");
 
-		navNotebookPanel.add(headlineNotebookLabel);
-		navNotesPanel.add(headlineNotesLabel);
-		navNotesPanel.add(addNoteButton);
-		navNotebookPanel.add(addNotebookButton);
-		navNotesPanel.add(searchNoteButton);
+		navNotebookPanel.add(lbheadlineNotebookLabel);
+		navNotesPanel.add(lbheadlineNotesLabel);
+		navNotesPanel.add(btnaddNoteButton);
+		navNotebookPanel.add(btnaddNotebookButton);
+		navNotebookPanel.add(btnEditNotebook);
+		navNotesPanel.add(btnsearchNoteButton);
 
 		/**
 		 * create the TextBox, and included to the Panel
@@ -140,7 +142,7 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * Create the Button and the ClickHandler
 		 */
-		addNotebookButton.addClickHandler(new ClickHandler() {
+		btnaddNotebookButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				// VerticalPanel editNotebook = new EditNotebook();
 
@@ -152,7 +154,7 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 
-		addNoteButton.addClickHandler(new ClickHandler() {
+		btnaddNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel editNotes = new EditNotes();
 
@@ -173,7 +175,7 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 
-		searchNoteButton.addClickHandler(new ClickHandler() {
+		btnsearchNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel searchNotes = new SearchNotes();
 
