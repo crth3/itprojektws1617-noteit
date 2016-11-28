@@ -83,6 +83,7 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 		final TextBox tbSearchNotebook = new TextBox();
+		tbSearchNotebook.setText("Notizbücher suchen...");
 		navNotebookPanel.add(tbSearchNotebook);
 		
 		
@@ -90,6 +91,7 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 		final TextBox tbSearchNote = new TextBox();
+		tbSearchNote.setText("Notizen suchen...");
 		navNotesPanel.add(tbSearchNote);
 		
 		
