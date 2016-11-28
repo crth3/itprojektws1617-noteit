@@ -175,10 +175,10 @@ public class Homepage extends VerticalPanel {
 
 		btnaddNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanel editNotes = new EditNotes();
+				VerticalPanel createNote = new CreateNote();
 
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(editNotes);
+				RootPanel.get("content").add(createNote);
 			}
 		});
 
