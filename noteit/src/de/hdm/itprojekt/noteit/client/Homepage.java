@@ -90,18 +90,18 @@ public class Homepage extends VerticalPanel {
 		contentPanel.add(contentNotesPanel);
 		contentNotebookPanel.add(notebooks);
 
-		// /**
-		// * Create the DialoBox and Panel, this is the Popup for the
-		// addNotesButton
-		// */
-		// final DialogBox notizBuchDialogBox = new DialogBox();
-		// notizBuchDialogBox.setGlassEnabled(true);
-		// notizBuchDialogBox.setAnimationEnabled(true);
-		// notizBuchDialogBox.setText("Notizbuch bearbeiten?");
-		//
-		// VerticalPanel editNotebook = new EditNotebook();
-		// editNotebook.setSpacing(40);
-		// notizBuchDialogBox.setWidget(editNotebook);
+		 /**
+		 * Create the DialoBox and Panel, this is the Popup for the
+		 editNotebookButton
+		 */
+		 final DialogBox dbeditNotebookDialogBox = new DialogBox();
+		 dbeditNotebookDialogBox.setGlassEnabled(true);
+		 dbeditNotebookDialogBox.setAnimationEnabled(true);
+		 dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
+		
+		 VerticalPanel editNotebook = new EditNotebook();
+		 editNotebook.setSpacing(40);
+		 dbeditNotebookDialogBox.setWidget(editNotebook);
 
 		/**
 		 * create the DialogBox
@@ -160,6 +160,18 @@ public class Homepage extends VerticalPanel {
 
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(editNotes);
+			}
+		});
+		
+		
+		btnEditNotebook.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				dbeditNotebookDialogBox.center();
+				dbeditNotebookDialogBox.show();
+				
 			}
 		});
 
