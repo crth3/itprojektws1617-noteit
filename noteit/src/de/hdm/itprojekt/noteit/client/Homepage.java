@@ -41,7 +41,7 @@ public class Homepage extends VerticalPanel {
 		Button btnaddNotebookButton = new Button("+");
 		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
-		Button btnEditNotebook = new Button ("<img src='war/Images/Search-48.png'/>");
+		Button btnEditNotebook = new Button ("<img src='Images/Search-48.png'/>");
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
