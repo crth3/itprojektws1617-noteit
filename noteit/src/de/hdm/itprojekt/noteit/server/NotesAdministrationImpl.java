@@ -393,6 +393,11 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		return notesWithKeyword;
 	}
 
+	@Override
+	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
+		return nMapper.findAllNotes();
+	}
+
 	
 
 }
