@@ -19,6 +19,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -63,7 +64,7 @@ public class Noteit implements EntryPoint {
 	  private Label loginLabel = new Label(
 	      "Please sign in to your Google Account to access the StockWatcher application.");
 	  private Anchor signInLink = new Anchor("Sign In");	
-		
+	  private Anchor signOutLink = new Anchor("Sign Out");
 	  
 	  Logger logger = Logger.getLogger("NameOfYourLogger");
 		
@@ -94,7 +95,9 @@ public class Noteit implements EntryPoint {
 	    	  
 	        loginInfo = result;
 	        if(loginInfo.isLoggedIn()) {
-	          //loadStockWatcher();
+	        
+	        	// Hier muss auf die Hompage-Steie verwiesen werden
+	        	
 	        } else {
 	        	logger.log(Level.SEVERE, "DONE Login"+result);
 	          loadLogin();
@@ -102,10 +105,6 @@ public class Noteit implements EntryPoint {
 	      }
 	    });
 	  
-
-
-		
-		
 		HorizontalPanel headerPanel = new HorizontalPanel();
 		HorizontalPanel welcomePanel = new HorizontalPanel();
 		HorizontalPanel headlinePanel = new HorizontalPanel();
@@ -216,6 +215,10 @@ public class Noteit implements EntryPoint {
 	//ClickHandler für LogOut Button
 	btnLogOut.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event){
+			loginInfo.getLogoutUrl();
+			Window.open(loginInfo.getLogoutUrl(), "_self", "");
+
+
 			
 
 		}
