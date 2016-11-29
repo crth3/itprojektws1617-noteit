@@ -29,21 +29,26 @@ public class Homepage extends VerticalPanel {
 		HorizontalPanel navNotesPanel = new HorizontalPanel();
 		HorizontalPanel contentPanel = new HorizontalPanel();
 		final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-		HorizontalPanel contentNotesPanel = new HorizontalPanel();
+		final HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
 		final Notebooks notebooks = new Notebooks();
 		notebooks.getAllNotebooks(1);
 		contentNotebookPanel.add(notebooks.getAllNotebooks(1));
+		
+		final Notes notes = new Notes();
+		notes.getAllNotes(1);
+		contentNotesPanel.add(notes.getAllNotes(1));
 
 		Label lbheadlineNotebookLabel = new Label("Notizbücher");
 		Label lbheadlineNotesLabel = new Label("Notizen");
 		Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 
-		Button btnaddNoteButton = new Button("+");
-		Button btnaddNotebookButton = new Button("+");
-		Button btnsearchNoteButton = new Button("Notiz suchen");
+		Button btnaddNoteButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
+		Button btnaddNotebookButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
+//		Button btnsearchNoteButton = new Button("Notiz suchen");
 		Button btnAddNewNotebook = new Button("Notizbuch erstellen");
-		Button btnEditNotebook = new Button("<img src='Images/Search-48.png'/>");
+		Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+		Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -71,15 +76,27 @@ public class Homepage extends VerticalPanel {
 		navNotebookPanel.add(lbheadlineNotebookLabel);
 		navNotesPanel.add(lbheadlineNotesLabel);
 		navNotesPanel.add(btnaddNoteButton);
+		navNotesPanel.add(btnEditNote);
 		navNotebookPanel.add(btnaddNotebookButton);
 		navNotebookPanel.add(btnEditNotebook);
-		navNotesPanel.add(btnsearchNoteButton);
+//		navNotesPanel.add(btnsearchNoteButton);
 
 		/**
-		 * create the TextBox, and included to the Panel
+		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 		final TextBox tbSearchNotebook = new TextBox();
+		tbSearchNotebook.setText("Notizbücher suchen...");
 		navNotebookPanel.add(tbSearchNotebook);
+		
+		
+		/**
+		 * create the TextBox for Notebook Search, and include it to the Panel
+		 */
+		final TextBox tbSearchNote = new TextBox();
+		tbSearchNote.setText("Notizen suchen...");
+		navNotesPanel.add(tbSearchNote);
+		
+		
 
 		final TextBox tbAddNewNotebook = new TextBox();
 
@@ -91,7 +108,8 @@ public class Homepage extends VerticalPanel {
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
 		contentNotebookPanel.add(notebooks);
-
+		contentNotesPanel.add(notes);
+		
 		/**
 		 * Create the DialoBox and Panel, this is the Popup for the
 		 * editNotebookButton
@@ -170,6 +188,15 @@ public class Homepage extends VerticalPanel {
 
 		btnaddNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				VerticalPanel createNote = new CreateNote();
+
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(createNote);
+			}
+		});
+		
+		btnEditNote.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
 				VerticalPanel editNotes = new EditNotes();
 
 				RootPanel.get("content").clear();
@@ -195,25 +222,42 @@ public class Homepage extends VerticalPanel {
 		});
 
 		/**
-		 * Create the TextBox with ChangeHandler for Search Notebook Function.
+		 * Create the ChangeHandler for TextBox for Search Notebook Function.
 		 */
 		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 
+				contentNotebookPanel.clear();
 				contentNotebookPanel.add(notebooks.getAllNotebooksByKeyword(1, event.getValue()));
 			}
 		});
 
-		btnsearchNoteButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel searchNotes = new SearchNotes();
+//		btnsearchNoteButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				VerticalPanel searchNotes = new SearchNotes();
+//
+//				RootPanel.get("content").clear();
+//				RootPanel.get("content").add(searchNotes);
+//			}
+//		});
+		
+		/**
+		 * Create the ChangeHandler for TextBox for Search Note Function.
+		 */
+		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(searchNotes);
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				
+				contentNotesPanel.clear();
+				contentNotesPanel.add(notes.getAllNotesByKeyword(1, event.getValue(), 1));
+				
 			}
 		});
+		
+		
 
 		this.add(navPanel);
 		this.add(contentPanel);
