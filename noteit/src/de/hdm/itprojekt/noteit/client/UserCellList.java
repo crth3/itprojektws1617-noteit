@@ -20,14 +20,14 @@ public class UserCellList extends Widget {
 	public CellList<User> createUserCellList() {
 
 		// Create a KeyProvider.
-		ProvidesKey<User> noteKeyProvider = new ProvidesKey<User>() {
+		ProvidesKey<User> userKeyProvider = new ProvidesKey<User>() {
 			public Object getKey(User item) {
 				return (item == null) ? null : item.getFirstName() + item.getLastName() + item.getMail();
 			}
 		};
 
 		// Create a cell to render each value.
-		UserCell noteCell = new UserCell();
+		UserCell userCell = new UserCell();
 
 		// Use the cell in a CellList.
 		userCellList = new CellList<User>(userCell, userKeyProvider);
@@ -48,7 +48,7 @@ public class UserCellList extends Widget {
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<User> userSelectionModel = new SingleSelectionModel<User>(
-				noteKeyProvider);
+				userKeyProvider);
 		userCellList.setSelectionModel(userSelectionModel);
 		userSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
