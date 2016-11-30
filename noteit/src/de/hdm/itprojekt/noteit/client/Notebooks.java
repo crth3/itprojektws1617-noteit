@@ -41,4 +41,5 @@ public class Notebooks extends HorizontalPanel {
 
 		return notebook;
 	}
+	
 }

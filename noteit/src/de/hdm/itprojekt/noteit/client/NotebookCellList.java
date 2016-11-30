@@ -64,6 +64,7 @@ public class NotebookCellList extends Widget {
 										.getSelectedObject().getId());
 						SelectedNotebook = notebookSelectionModel
 								.getSelectedObject();
+//						Homepage.setSelectedNotebook(SelectedNotebook);
 						Homepage.setNotesWhenNotebookSelected(
 								notebookSelectionModel.getSelectedObject());
 					}
@@ -78,5 +79,6 @@ public class NotebookCellList extends Widget {
 		return SelectedNotebook;
 
 	}
+	
 
 }
