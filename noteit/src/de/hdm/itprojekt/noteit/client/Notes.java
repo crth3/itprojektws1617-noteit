@@ -20,50 +20,6 @@ public class Notes extends HorizontalPanel{
 	final CellList<Note> noteCellList = new NoteCellList().createNoteCellList();
 	Note note = new Note();
 	
-
-	public CellList<Note> getAllNotes(int notebookID) {
-		notesAdmin.getAllNotesByNotebookID(notebookID, new AsyncCallback<ArrayList<Note>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				System.out.println("result" + result);
-				
-				noteCellList.setRowData(result);
-			
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				System.out.println("Error" + caught);
-			}
-		});
-		
-		return noteCellList;
-		
-	}
-
-	public CellList<Note> getAllNotesByKeyword(int userID, String keyword, int notebookID){
-		notesAdmin.findNoteByKeyword(userID, keyword, notebookID, new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println("Error" + caught);
-			}
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				System.out.println("result" + result);
-			
-				noteCellList.setRowData(result);
-				//NoteCellList.setValueUpdater(valueUpdater);(result);
-
-			}
-		});
-		
-		return noteCellList;
-	}
-	
 	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source) {
 		
 		notesAdmin.createNote(title, subtitle, text, maturity, u, source, new AsyncCallback<Note>() {

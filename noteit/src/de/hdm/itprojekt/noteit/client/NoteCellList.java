@@ -55,6 +55,7 @@ public class NoteCellList extends Widget {
 				// contactForm.setContact(selectionModel.getSelectedObject());
 				Window.alert("Du hast gewählt: " + noteSelectionModel.getSelectedObject().getTitle());
 				SelectedNote = noteSelectionModel.getSelectedObject();
+				
 			}
 		});
 
