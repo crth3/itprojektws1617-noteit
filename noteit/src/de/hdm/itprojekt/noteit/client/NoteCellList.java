@@ -43,21 +43,25 @@ public class NoteCellList extends Widget {
 		// used to identify contacts when fields (such as the name and address)
 		// change.
 		noteCellList.setPageSize(30);
-		noteCellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		noteCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		noteCellList
+				.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		noteCellList.setKeyboardSelectionPolicy(
+				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<Note> noteSelectionModel = new SingleSelectionModel<Note>(
 				noteKeyProvider);
 		noteCellList.setSelectionModel(noteSelectionModel);
-		noteSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-			public void onSelectionChange(SelectionChangeEvent event) {
-				// contactForm.setContact(selectionModel.getSelectedObject());
-				Window.alert("Du hast gewählt: " + noteSelectionModel.getSelectedObject().getTitle());
-				SelectedNote = noteSelectionModel.getSelectedObject();
-				
-			}
-		});
+		noteSelectionModel
+				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+					public void onSelectionChange(SelectionChangeEvent event) {
+						// contactForm.setContact(selectionModel.getSelectedObject());
+						Window.alert("Du hast gewählt: " + noteSelectionModel
+								.getSelectedObject().getTitle());
+						SelectedNote = noteSelectionModel.getSelectedObject();
+
+					}
+				});
 
 		return noteCellList;
 

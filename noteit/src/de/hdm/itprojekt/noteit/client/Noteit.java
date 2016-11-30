@@ -41,13 +41,15 @@ public class Noteit implements EntryPoint {
 	 * returns an error.
 	 */
 	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network " + "connection and try again.";
+			+ "attempting to contact the server. Please check your network "
+			+ "connection and try again.";
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final NotesAdministrationAsync notesAdministrationService = GWT.create(NotesAdministration.class);
+	private final NotesAdministrationAsync notesAdministrationService = GWT
+			.create(NotesAdministration.class);
 
 	/**
 	 * Login-Widgets
@@ -115,7 +117,8 @@ public class Noteit implements EntryPoint {
 		// contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		// contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		headlinePanel
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		// navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
@@ -164,26 +167,27 @@ public class Noteit implements EntryPoint {
 		 */
 		// Check login status using login service.
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-			public void onFailure(Throwable error) {
-				logger.log(Level.SEVERE, "ERROR Login" + error);
-			}
+		loginService.login(GWT.getHostPageBaseURL(),
+				new AsyncCallback<LoginInfo>() {
+					public void onFailure(Throwable error) {
+						logger.log(Level.SEVERE, "ERROR Login" + error);
+					}
 
-			public void onSuccess(LoginInfo result) {
+					public void onSuccess(LoginInfo result) {
 
-				loginInfo = result;
-				if (loginInfo.isLoggedIn()) {
-					RootPanel.get("content").add(vpBasisPanel);
-					RootPanel.get("content").add(homepage);
-					RootPanel.get("header").add(headerPanel);
-					// Hier muss auf die Hompage-Steie verwiesen werden
+						loginInfo = result;
+						if (loginInfo.isLoggedIn()) {
+							RootPanel.get("content").add(vpBasisPanel);
+							RootPanel.get("content").add(homepage);
+							RootPanel.get("header").add(headerPanel);
+							// Hier muss auf die Hompage-Steie verwiesen werden
 
-				} else {
-					logger.log(Level.SEVERE, "DONE Login" + result);
-					loadLogin();
-				}
-			}
-		});
+						} else {
+							logger.log(Level.SEVERE, "DONE Login" + result);
+							loadLogin();
+						}
+					}
+				});
 
 		// ClickHandler für Impressum Button
 		impressumButton.addClickHandler(new ClickHandler() {
@@ -238,21 +242,23 @@ public class Noteit implements EntryPoint {
 		/**
 		 * 
 		 */
-		notesAdministrationService.findNoteByKeyword(1, "title", 1, new AsyncCallback<ArrayList<Note>>() {
+		notesAdministrationService.findNoteByKeyword(1, "title", 1,
+				new AsyncCallback<ArrayList<Note>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
 
-			}
+					}
 
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				Logger logger = Logger.getLogger("NameOfYourLogger");
-				logger.log(Level.SEVERE, "on success Note by Keyword " + result.size());
+					@Override
+					public void onSuccess(ArrayList<Note> result) {
+						Logger logger = Logger.getLogger("NameOfYourLogger");
+						logger.log(Level.SEVERE,
+								"on success Note by Keyword " + result.size());
 
-			}
-		});
+					}
+				});
 
 	}
 

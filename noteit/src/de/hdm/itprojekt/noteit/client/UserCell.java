@@ -15,9 +15,11 @@ public class UserCell extends AbstractCell<User> {
 		}
 
 		sb.appendHtmlConstant("<div>");
-		sb.appendEscaped(value.getFirstName() + value.getLastName() + value.getMail() + " ");
+		sb.appendEscaped(value.getFirstName() + value.getLastName()
+				+ value.getMail() + " ");
 		sb.appendHtmlConstant("</div>");
-		sb.appendHtmlConstant("<div style=\"border-bottom: 4px solid #dddddd;\">");
+		sb.appendHtmlConstant(
+				"<div style=\"border-bottom: 4px solid #dddddd;\">");
 		// sb.appendHtmlConstant("<email style='font-size:80%; padding-left:
 		// 10px;'>");
 		// sb.appendEscaped(value.getEmail());

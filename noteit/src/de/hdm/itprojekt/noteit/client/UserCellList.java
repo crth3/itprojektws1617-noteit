@@ -22,7 +22,9 @@ public class UserCellList extends Widget {
 		// Create a KeyProvider.
 		ProvidesKey<User> userKeyProvider = new ProvidesKey<User>() {
 			public Object getKey(User item) {
-				return (item == null) ? null : item.getFirstName() + item.getLastName() + item.getMail();
+				return (item == null) ? null
+						: item.getFirstName() + item.getLastName()
+								+ item.getMail();
 			}
 		};
 
@@ -43,20 +45,29 @@ public class UserCellList extends Widget {
 		// used to identify contacts when fields (such as the name and address)
 		// change.
 		userCellList.setPageSize(30);
-		userCellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		userCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		userCellList
+				.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		userCellList.setKeyboardSelectionPolicy(
+				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<User> userSelectionModel = new SingleSelectionModel<User>(
 				userKeyProvider);
 		userCellList.setSelectionModel(userSelectionModel);
-		userSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-			public void onSelectionChange(SelectionChangeEvent event) {
-				// contactForm.setContact(selectionModel.getSelectedObject());
-				Window.alert("Du hast gewählt: " + userSelectionModel.getSelectedObject().getFirstName() + userSelectionModel.getSelectedObject().getLastName() + userSelectionModel.getSelectedObject().getMail());
-				SelectedUser = userSelectionModel.getSelectedObject();
-			}
-		});
+		userSelectionModel
+				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+					public void onSelectionChange(SelectionChangeEvent event) {
+						// contactForm.setContact(selectionModel.getSelectedObject());
+						Window.alert("Du hast gewählt: "
+								+ userSelectionModel.getSelectedObject()
+										.getFirstName()
+								+ userSelectionModel.getSelectedObject()
+										.getLastName()
+								+ userSelectionModel.getSelectedObject()
+										.getMail());
+						SelectedUser = userSelectionModel.getSelectedObject();
+					}
+				});
 
 		return userCellList;
 
@@ -68,5 +79,4 @@ public class UserCellList extends Widget {
 
 	}
 
-	
 }
