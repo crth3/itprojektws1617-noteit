@@ -22,19 +22,17 @@ public class EditNotebook extends VerticalPanel {
 		Notebook nb = new Notebook();
 		nb = Homepage.selectedNotebook;
 		nb.getTitle();
-		
-		
-		
+
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 		HorizontalPanel titelPanel = new HorizontalPanel();
 		Label titel = new Label("Titel");
 		TextBox titelTextBox = new TextBox();
-		//titelTextBox.setText();
+		// titelTextBox.setText();
 		titelPanel.add(titel);
 		titelPanel.add(titelTextBox);
-		
+
 		/**
 		 * Hinzufügen des Titels zur Textbox
 		 */
@@ -60,10 +58,8 @@ public class EditNotebook extends VerticalPanel {
 		/**
 		 * Create the RadioButton
 		 */
-		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup",
-				"anzeigen + bearbeiten");
-		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup",
-				"anzeigen");
+		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
 		// RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
 		berechtigungsPanel.add(darf);
 		berechtigungsPanel.add(rbBerechtigungen1);
