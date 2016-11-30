@@ -1,6 +1,8 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -28,6 +30,8 @@ public class Homepage extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT
 			.create(NotesAdministration.class);
+	
+	private static Logger rootLogger = Logger.getLogger("");
 
 	// --------- Horizontal Panel -----------//
 	HorizontalPanel navPanel = new HorizontalPanel();
@@ -76,7 +80,7 @@ public class Homepage extends VerticalPanel {
 	final static CellList<Note> clNote = new NoteCellList()
 			.createNoteCellList();
 
-	static Notebook selectedNotebook;
+	static Notebook selectedNotebook= new Notebook();
 
 	public void onLoad() {
 
@@ -203,6 +207,8 @@ public class Homepage extends VerticalPanel {
 
 										clNote.setRowData(result);
 										contentNotesPanel.add(clNote);
+//										selectedNotebook = new Notebook();
+										selectedNotebook.setId(1);
 									}
 
 									@Override
@@ -297,102 +303,44 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 
-//		/**
-//		 * Create the ChangeHandler for TextBox for Search Notebook Function.
-//		 */
-//		tbSearchNotebook
-//				.addValueChangeHandler(new ValueChangeHandler<String>() {
-//
-//					@Override
-//					public void onValueChange(ValueChangeEvent<String> event) {
-//
-//						notesAdmin.findNotebooksByKeyword(user.getId(),
-//								event.getValue(),
-//								new AsyncCallback<ArrayList<Notebook>>() {
-//
-//									@Override
-//									public void onSuccess(
-//											ArrayList<Notebook> result) {
-//										clNotebook.setRowData(result);
-//
-//									}
-//
-//									@Override
-//									public void onFailure(Throwable caught) {
-//										System.out
-//												.println("Error find notebook "
-//														+ caught);
-//
-//									}
-//								});
-//					}
-//				});
-//		
-//		
-//		/**
-//		 * Create the ChangeHandler for TextBox for Search Note Function.
-//		 */
-//		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
-//
-//			@Override
-//			public void onValueChange(ValueChangeEvent<String> event) {
-//
-//				notesAdmin.findNoteByKeyword(user.getId(), event.getValue(),
-//						selectedNotebook.getId(),
-//						new AsyncCallback<ArrayList<Note>>() {
-//
-//							@Override
-//							public void onSuccess(ArrayList<Note> result) {
-//								clNote.setRowData(result);
-//
-//							}
-//
-//							@Override
-//							public void onFailure(Throwable caught) {
-//								System.out.println("Error find note " + caught);
-//
-//							}
-//						});
-//
-//			}
-//		});
+		/**
+		 * Create the ChangeHandler for TextBox for Search Notebook Function.
+		 */
+		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-		
-		
-		
-		
-		
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+
+				searchNotebookByKeyword(user.getId(), event.getValue());
+
+			}
+		});
+
+		/**
+		 * Create the ChangeHandler for TextBox for Search Note Function.
+		 */
+		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+
+				searchNoteByKeyword(user.getId(), event.getValue(), selectedNotebook.getId());
+
+			}
+		});
 		
 		/**
 		 * Create the ClickHandler for Button for Search Notebook Function.
 		 */
-		btnSearchNotebook
-				.addClickHandler(new ClickHandler() {
+		btnSearchNotebook.addClickHandler(new ClickHandler() {
 
-					@Override
-					public void onClick(ClickEvent event) {
+			@Override
+			public void onClick(ClickEvent event) {
 
-						notesAdmin.findNotebooksByKeyword(user.getId(),
-								tbSearchNotebook.getText(),
-								new AsyncCallback<ArrayList<Notebook>>() {
-
-									@Override
-									public void onSuccess(
-											ArrayList<Notebook> result) {
-										clNotebook.setRowData(result);
-
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-										System.out
-												.println("Error find notebook "
-														+ caught);
-
-									}
-								});
-					}
-				});
+				searchNotebookByKeyword(user.getId(), tbSearchNotebook.getText());
+				
+			}
+		});
 		
 		
 		/**
@@ -402,32 +350,11 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+
+				searchNoteByKeyword(user.getId(), tbSearchNote.getText(), selectedNotebook.getId());
 				
-				notesAdmin.findNoteByKeyword(user.getId(), tbSearchNote.getText(),
-						selectedNotebook.getId(),
-						new AsyncCallback<ArrayList<Note>>() {
-
-							@Override
-							public void onSuccess(ArrayList<Note> result) {
-								clNote.setRowData(result);
-
-							}
-
-							@Override
-							public void onFailure(Throwable caught) {
-								System.out.println("Error find note " + caught);
-
-							}
-						});
-
 			}
-		});	
-		
-		
-		
-		
-		
-		
+		});
 		
 		this.add(navPanel);
 		this.add(contentPanel);
@@ -440,7 +367,7 @@ public class Homepage extends VerticalPanel {
 	 * @param notebook
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
-		//selectedNotebook = notebook;
+		selectedNotebook = notebook;
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(),
 				new AsyncCallback<ArrayList<Note>>() {
@@ -458,18 +385,50 @@ public class Homepage extends VerticalPanel {
 					}
 				});
 	};
+	
+	public void searchNotebookByKeyword(int userID, String keyword){
+		notesAdmin.findNotebooksByKeyword(userID, keyword,
+				new AsyncCallback<ArrayList<Notebook>>() {
+
+					@Override
+					public void onSuccess(ArrayList<Notebook> result) {
+						clNotebook.setRowData(result);
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println("Error find notebook " + caught);
+
+					}
+				});
+	}
+	
+	public void searchNoteByKeyword(int userID, String keyword, int notebookID) {
+		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebookID: " + notebookID);
+		notesAdmin.findNoteByKeyword(userID, keyword, notebookID, new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				clNote.setRowData(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error find note " + caught);
+
+			}
+		});
+	}
 
 	public static void close_db() {
 
 		dbeditNotebookDialogBox.hide();
 
 	}
-	
-//	public static void setSelectedNotebook (Notebook notebook){
-//		selectedNotebook = notebook;
-//	}
-//	public Notebook getSelectedNotebook (){
-//		return selectedNotebook;
-//	}
+
+	public Notebook getSelectedNotebook (){
+		return selectedNotebook;
+	}
 	
 }

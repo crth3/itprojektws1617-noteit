@@ -13,7 +13,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class NotebookCellList extends Widget {
 
-	private Notebook SelectedNotebook;
+	private Notebook selectedNotebook;
 
 	CellList<Notebook> notebookCellList = null;
 
@@ -52,23 +52,17 @@ public class NotebookCellList extends Widget {
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<Notebook> notebookSelectionModel = new SingleSelectionModel<Notebook>(
 				notebookKeyProvider);
+		
 		notebookCellList.setSelectionModel(notebookSelectionModel);
-		notebookSelectionModel
-				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-					public void onSelectionChange(SelectionChangeEvent event) {
-						// contactForm.setContact(selectionModel.getSelectedObject());
-						Window.alert("Du hast gewählt: "
-								+ notebookSelectionModel.getSelectedObject()
-										.getTitle()
-								+ " - id " + notebookSelectionModel
-										.getSelectedObject().getId());
-						SelectedNotebook = notebookSelectionModel
-								.getSelectedObject();
-//						Homepage.setSelectedNotebook(SelectedNotebook);
-						Homepage.setNotesWhenNotebookSelected(
-								notebookSelectionModel.getSelectedObject());
-					}
-				});
+		
+		notebookSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				// contactForm.setContact(selectionModel.getSelectedObject());
+				Window.alert("Du hast gewählt: " + notebookSelectionModel.getSelectedObject().getTitle() + " - id "
+						+ notebookSelectionModel.getSelectedObject().getId());
+				Homepage.setNotesWhenNotebookSelected(notebookSelectionModel.getSelectedObject());
+			}
+		});
 
 		return notebookCellList;
 
@@ -76,7 +70,7 @@ public class NotebookCellList extends Widget {
 
 	public Notebook getSelectedNotebook() {
 
-		return SelectedNotebook;
+		return selectedNotebook;
 
 	}
 	
