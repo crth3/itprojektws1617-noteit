@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.CellList;
@@ -283,34 +285,39 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * Create the ChangeHandler for TextBox for Search Notebook Function.
 		 */
-		tbSearchNotebook
-				.addValueChangeHandler(new ValueChangeHandler<String>() {
+		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-					@Override
-					public void onValueChange(ValueChangeEvent<String> event) {
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
 
-						notesAdmin.findNotebooksByKeyword(user.getId(),
-								event.getValue(),
-								new AsyncCallback<ArrayList<Notebook>>() {
+				notesAdmin.findNotebooksByKeyword(user.getId(), event.getValue(),
+						new AsyncCallback<ArrayList<Notebook>>() {
 
-									@Override
-									public void onSuccess(
-											ArrayList<Notebook> result) {
-										clNotebook.setRowData(result);
+							@Override
+							public void onSuccess(ArrayList<Notebook> result) {
+								clNotebook.setRowData(result);
 
-									}
+							}
 
-									@Override
-									public void onFailure(Throwable caught) {
-										System.out
-												.println("Error find notebook "
-														+ caught);
+							@Override
+							public void onFailure(Throwable caught) {
+								System.out.println("Error find notebook " + caught);
 
-									}
-								});
-					}
-				});
-
+							}
+						});
+			}
+			
+		});
+		
+		tbSearchNotebook.addMouseDownHandler(new MouseDownHandler() {
+			
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				tbSearchNotebook.setText("");
+				
+			}
+		});
+		
 		/**
 		 * Create the ChangeHandler for TextBox for Search Note Function.
 		 */
@@ -319,8 +326,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 
-				notesAdmin.findNoteByKeyword(user.getId(), event.getValue(),
-						selectedNotebook.getId(),
+				notesAdmin.findNoteByKeyword(user.getId(), event.getValue(), selectedNotebook.getId(),
 						new AsyncCallback<ArrayList<Note>>() {
 
 							@Override
@@ -336,6 +342,15 @@ public class Homepage extends VerticalPanel {
 							}
 						});
 
+			}
+		});
+		
+		tbSearchNote.addMouseDownHandler(new MouseDownHandler() {
+			
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				tbSearchNote.setText("");
+				
 			}
 		});
 
