@@ -53,9 +53,9 @@ public class Homepage extends VerticalPanel {
 	Button btnEditNote = new Button(
 			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
 	Button btnSearchNote = new Button(
-			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+			"<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
 	Button btnSearchNotebook = new Button(
-			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+			"<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
 
 	// --------- Dialog Box -----------//
 	final static DialogBox dbeditNotebookDialogBox = new DialogBox();
