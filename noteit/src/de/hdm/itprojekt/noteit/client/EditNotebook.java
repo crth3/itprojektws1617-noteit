@@ -1,7 +1,10 @@
 package de.hdm.itprojekt.noteit.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -10,18 +13,32 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
+
 public class EditNotebook extends VerticalPanel {
 
 	public void onLoad() {
 
+		Notebook nb = new Notebook();
+		nb = Homepage.selectedNotebook;
+		nb.getTitle();
+		
+		
+		
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 		HorizontalPanel titelPanel = new HorizontalPanel();
 		Label titel = new Label("Titel");
 		TextBox titelTextBox = new TextBox();
+		//titelTextBox.setText();
 		titelPanel.add(titel);
 		titelPanel.add(titelTextBox);
+		
+		/**
+		 * Hinzufügen des Titels zur Textbox
+		 */
+		titelTextBox.setText(nb.getTitle());
 
 		/**
 		 * Create the Panel, Label and TextBox
