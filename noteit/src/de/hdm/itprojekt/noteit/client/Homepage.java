@@ -44,44 +44,33 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
-	Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 
 	// --------- Button -----------//
-	Button btnaddNoteButton = new Button(
-			"<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnaddNotebookButton = new Button(
-			"<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnAddNewNotebook = new Button("Notizbuch erstellen");
-	Button btnEditNotebook = new Button(
-			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnEditNote = new Button(
-			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNote = new Button(
-			"<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNotebook = new Button(
-			"<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
+	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
+	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
+	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
+	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
 
 	// --------- Dialog Box -----------//
 	final static DialogBox dbeditNotebookDialogBox = new DialogBox();
-	final DialogBox dbAddNotebook = new DialogBox();
-	final TextBox tbAddNewNotebook = new TextBox();
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
 	final TextBox tbSearchNote = new TextBox();
 
-	// --------- Custom Classes -----------//
+	// --------- Noteit Class -----------//
 	final User user = new User();
 	final Notebooks notebooks = new Notebooks();
 	final NotebookCellList notebookCellList = new NotebookCellList();
-
-	final CellList<Notebook> clNotebook = new NotebookCellList()
-			.createNotebookCellList();
-	final static CellList<Note> clNote = new NoteCellList()
-			.createNoteCellList();
-
 	static Notebook selectedNotebook= new Notebook();
+	
+	// --------- Cell List -----------//
+	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
+	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
 
+	
 	public void onLoad() {
 
 		user.setId(1);
@@ -94,13 +83,10 @@ public class Homepage extends VerticalPanel {
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 
-		navNotebookPanel
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		contentNotebookPanel
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		contentNotesPanel
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		navPanel.setWidth("1000px");
 		contentPanel.setWidth("1000px");
@@ -114,9 +100,9 @@ public class Homepage extends VerticalPanel {
 
 		navNotebookPanel.add(lbheadlineNotebookLabel);
 		navNotesPanel.add(lbheadlineNotesLabel);
-		navNotesPanel.add(btnaddNoteButton);
+		navNotesPanel.add(btnAddNewNoteButton);
 		navNotesPanel.add(btnEditNote);
-		navNotebookPanel.add(btnaddNotebookButton);
+		navNotebookPanel.add(btnAddNewNotebookButton);
 		navNotebookPanel.add(btnEditNotebook);
 
 		/**
@@ -168,107 +154,50 @@ public class Homepage extends VerticalPanel {
 		dbeditNotebookDialogBox.setWidget(editNotebook);
 
 		/**
-		 * create the DialogBox
-		 */
-
-		dbAddNotebook.setGlassEnabled(true);
-		dbAddNotebook.setAnimationEnabled(true);
-		dbAddNotebook.setText("Notizbuch hinzufügen");
-		VerticalPanel vpAddNewNotebookPanel = new VerticalPanel();
-		Button btnNotebookClose = new Button("abbrechen");
-		vpAddNewNotebookPanel.add(lblTitleAddNotebook);
-		vpAddNewNotebookPanel.add(tbAddNewNotebook);
-		vpAddNewNotebookPanel.add(btnAddNewNotebook);
-		vpAddNewNotebookPanel.add(btnNotebookClose);
-
-		vpAddNewNotebookPanel.setSpacing(40);
-		dbAddNotebook.setWidget(vpAddNewNotebookPanel);
-
-		/**
 		 * Add all notebooks at start to the panel
 		 */
-		notesAdmin.getAllNotebooksByUserID(user.getId(),
-				new AsyncCallback<ArrayList<Notebook>>() {
+		notesAdmin.getAllNotebooksByUserID(user.getId(), new AsyncCallback<ArrayList<Notebook>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				System.out.println("result" + result);
+				clNotebook.setRowData(result);
+				contentNotebookPanel.add(clNotebook);
+
+				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(), new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
-					public void onSuccess(ArrayList<Notebook> result) {
-						System.out.println("result" + result);
-						clNotebook.setRowData(result);
-						contentNotebookPanel.add(clNotebook);
+					public void onSuccess(ArrayList<Note> result) {
 
-						notesAdmin.getAllNotesByNotebookID(
-								result.get(0).getId(),
-								new AsyncCallback<ArrayList<Note>>() {
-
-									@Override
-									public void onSuccess(
-											ArrayList<Note> result) {
-										System.out.println("result" + result);
-
-										clNote.setRowData(result);
-										contentNotesPanel.add(clNote);
-//										selectedNotebook = new Notebook();
-										selectedNotebook.setId(1);
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-										System.out.println("Error" + caught);
-									}
-								});
+						clNote.setRowData(result);
+						contentNotesPanel.add(clNote);
+						selectedNotebook.setId(1);
 					}
 
 					@Override
 					public void onFailure(Throwable caught) {
-						System.out.println("Error" + caught);
+						
 					}
 				});
-
-		btnNotebookClose.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				dbAddNotebook.hide();
-
 			}
-		});
-
-		btnAddNewNotebook.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onClick(ClickEvent event) {
-
-				/**
-				 * create new Notebook
-				 */
-				notebooks.createNotebooks(tbAddNewNotebook.getText(), user);
-
-				tbAddNewNotebook.setText("");
-
-				/**
-				 * close the Popup
-				 */
-				dbAddNotebook.hide();
-
+			public void onFailure(Throwable caught) {
+				System.out.println("Error" + caught);
 			}
 		});
 
 		/**
 		 * Create the Button and the ClickHandler
 		 */
-		btnaddNotebookButton.addClickHandler(new ClickHandler() {
+		btnAddNewNotebookButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				// VerticalPanel editNotebook = new EditNotebook();
-
-				dbAddNotebook.center();
-				dbAddNotebook.show();
-
-				// RootPanel.get("content").clear();
-				// RootPanel.get("content").add(editNotebook);
+				CreateNotebook createNotebook = new CreateNotebook(user);
+				createNotebook.show();
 			}
 		});
 
-		btnaddNoteButton.addClickHandler(new ClickHandler() {
+		btnAddNewNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				VerticalPanel createNote = new CreateNote();
 
@@ -310,9 +239,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-
 				searchNotebookByKeyword(user.getId(), event.getValue());
-
 			}
 		});
 
@@ -323,9 +250,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-
 				searchNoteByKeyword(user.getId(), event.getValue(), selectedNotebook.getId());
-
 			}
 		});
 		
@@ -336,9 +261,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-
 				searchNotebookByKeyword(user.getId(), tbSearchNotebook.getText());
-				
 			}
 		});
 		
@@ -350,9 +273,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-
-				searchNoteByKeyword(user.getId(), tbSearchNote.getText(), selectedNotebook.getId());
-				
+				searchNoteByKeyword(user.getId(), tbSearchNote.getText(), selectedNotebook.getId());	
 			}
 		});
 		
@@ -369,41 +290,39 @@ public class Homepage extends VerticalPanel {
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
 
-		notesAdmin.getAllNotesByNotebookID(notebook.getId(),
-				new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 
-					@Override
-					public void onSuccess(ArrayList<Note> result) {
-						System.out.println("result" + result);
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				System.out.println("result" + result);
 
-						clNote.setRowData(result);
-					}
+				clNote.setRowData(result);
+			}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						System.out.println("Error" + caught);
-					}
-				});
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error" + caught);
+			}
+		});
 	};
 	
-	public void searchNotebookByKeyword(int userID, String keyword){
-		notesAdmin.findNotebooksByKeyword(userID, keyword,
-				new AsyncCallback<ArrayList<Notebook>>() {
+	public void searchNotebookByKeyword(int userID, String keyword) {
+		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
 
-					@Override
-					public void onSuccess(ArrayList<Notebook> result) {
-						clNotebook.setRowData(result);
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				clNotebook.setRowData(result);
 
-					}
+			}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						System.out.println("Error find notebook " + caught);
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error find notebook " + caught);
 
-					}
-				});
+			}
+		});
 	}
-	
+
 	public void searchNoteByKeyword(int userID, String keyword, int notebookID) {
 		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebookID: " + notebookID);
 		notesAdmin.findNoteByKeyword(userID, keyword, notebookID, new AsyncCallback<ArrayList<Note>>() {
@@ -415,16 +334,27 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("Error find note " + caught);
+			}
+		});
+	}
 
+	public static void updateNotebookCellList(int userID) {
+		notesAdmin.getAllNotebooksByUserID(userID, new AsyncCallback<ArrayList<Notebook>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				clNotebook.setRowData(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 			}
 		});
 	}
 
 	public static void close_db() {
-
 		dbeditNotebookDialogBox.hide();
-
 	}
 
 	public Notebook getSelectedNotebook (){
