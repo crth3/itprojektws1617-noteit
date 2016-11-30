@@ -52,6 +52,10 @@ public class Homepage extends VerticalPanel {
 			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
 	Button btnEditNote = new Button(
 			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+	Button btnSearchNote = new Button(
+			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
+	Button btnSearchNotebook = new Button(
+			"<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
 
 	// --------- Dialog Box -----------//
 	final static DialogBox dbeditNotebookDialogBox = new DialogBox();
@@ -117,7 +121,13 @@ public class Homepage extends VerticalPanel {
 
 		tbSearchNotebook.setText("Notizbücher suchen...");
 		navNotebookPanel.add(tbSearchNotebook);
+		
+		/**
+		 * Add the Search Button to the Panel
+		 */
 
+		navNotebookPanel.add(btnSearchNotebook);
+		
 		/**
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
@@ -125,6 +135,13 @@ public class Homepage extends VerticalPanel {
 		tbSearchNote.setText("Notizen suchen...");
 		navNotesPanel.add(tbSearchNote);
 
+		/**
+		 * Add the Search Button to the Panel
+		 */
+		
+		navNotesPanel.add(btnSearchNote);
+
+		
 		/**
 		 * add to the Panels
 		 */
@@ -280,17 +297,83 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 
+//		/**
+//		 * Create the ChangeHandler for TextBox for Search Notebook Function.
+//		 */
+//		tbSearchNotebook
+//				.addValueChangeHandler(new ValueChangeHandler<String>() {
+//
+//					@Override
+//					public void onValueChange(ValueChangeEvent<String> event) {
+//
+//						notesAdmin.findNotebooksByKeyword(user.getId(),
+//								event.getValue(),
+//								new AsyncCallback<ArrayList<Notebook>>() {
+//
+//									@Override
+//									public void onSuccess(
+//											ArrayList<Notebook> result) {
+//										clNotebook.setRowData(result);
+//
+//									}
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										System.out
+//												.println("Error find notebook "
+//														+ caught);
+//
+//									}
+//								});
+//					}
+//				});
+//		
+//		
+//		/**
+//		 * Create the ChangeHandler for TextBox for Search Note Function.
+//		 */
+//		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
+//
+//			@Override
+//			public void onValueChange(ValueChangeEvent<String> event) {
+//
+//				notesAdmin.findNoteByKeyword(user.getId(), event.getValue(),
+//						selectedNotebook.getId(),
+//						new AsyncCallback<ArrayList<Note>>() {
+//
+//							@Override
+//							public void onSuccess(ArrayList<Note> result) {
+//								clNote.setRowData(result);
+//
+//							}
+//
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								System.out.println("Error find note " + caught);
+//
+//							}
+//						});
+//
+//			}
+//		});
+
+		
+		
+		
+		
+		
+		
 		/**
-		 * Create the ChangeHandler for TextBox for Search Notebook Function.
+		 * Create the ClickHandler for Button for Search Notebook Function.
 		 */
-		tbSearchNotebook
-				.addValueChangeHandler(new ValueChangeHandler<String>() {
+		btnSearchNotebook
+				.addClickHandler(new ClickHandler() {
 
 					@Override
-					public void onValueChange(ValueChangeEvent<String> event) {
+					public void onClick(ClickEvent event) {
 
 						notesAdmin.findNotebooksByKeyword(user.getId(),
-								event.getValue(),
+								tbSearchNotebook.getText(),
 								new AsyncCallback<ArrayList<Notebook>>() {
 
 									@Override
@@ -310,16 +393,17 @@ public class Homepage extends VerticalPanel {
 								});
 					}
 				});
-
+		
+		
 		/**
-		 * Create the ChangeHandler for TextBox for Search Note Function.
+		 * Create the ClickHandler for Button for Search Note Function.
 		 */
-		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
+		btnSearchNote.addClickHandler(new ClickHandler() {
 
 			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-
-				notesAdmin.findNoteByKeyword(user.getId(), event.getValue(),
+			public void onClick(ClickEvent event) {
+				
+				notesAdmin.findNoteByKeyword(user.getId(), tbSearchNote.getText(),
 						selectedNotebook.getId(),
 						new AsyncCallback<ArrayList<Note>>() {
 
@@ -337,8 +421,14 @@ public class Homepage extends VerticalPanel {
 						});
 
 			}
-		});
-
+		});	
+		
+		
+		
+		
+		
+		
+		
 		this.add(navPanel);
 		this.add(contentPanel);
 
@@ -350,7 +440,7 @@ public class Homepage extends VerticalPanel {
 	 * @param notebook
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
-		selectedNotebook = notebook;
+		//selectedNotebook = notebook;
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(),
 				new AsyncCallback<ArrayList<Note>>() {
@@ -374,4 +464,12 @@ public class Homepage extends VerticalPanel {
 		dbeditNotebookDialogBox.hide();
 
 	}
+	
+//	public static void setSelectedNotebook (Notebook notebook){
+//		selectedNotebook = notebook;
+//	}
+//	public Notebook getSelectedNotebook (){
+//		return selectedNotebook;
+//	}
+	
 }
