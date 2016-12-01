@@ -305,19 +305,20 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source)
+	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID)
 			throws IllegalArgumentException {
-		ts.getTime();
+		
 		Note note = new Note();
 		// note.setCreator(creatorID); //Int oder Objekt?
+		note.setId(noteID);
 		note.setTitle(title);
 		note.setSubTitle(subtitle);
 		note.setText(text);
 		note.setMaturityDate(maturity);
-		// note.setsource //Methode fehlt noch
+		note.setSource(source);
+		note.setModificationDate(ts);
+		note.setNotebookId(notebookID);
 		// note.setUserId(creator.getId());
-		note.setCreationDate(ts);
-
 		this.nMapper.update(note);
 
 	}

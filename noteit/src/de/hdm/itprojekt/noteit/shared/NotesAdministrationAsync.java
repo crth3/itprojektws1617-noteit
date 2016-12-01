@@ -36,7 +36,7 @@ public interface NotesAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
+	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,int notebookID, int noteID,
 			AsyncCallback<Void> callback);
 
 	void updateNotebook(String title, int notebookID, int userId, AsyncCallback<Void> callback);

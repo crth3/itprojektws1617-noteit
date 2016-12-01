@@ -103,7 +103,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @param source
 	 * @throws IllegalArgumentException
 	 */
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source  ) throws IllegalArgumentException;
+	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID  ) throws IllegalArgumentException;
 	
 	/**
 	 * 

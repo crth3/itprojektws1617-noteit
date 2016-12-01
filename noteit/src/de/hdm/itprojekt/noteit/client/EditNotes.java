@@ -1,11 +1,15 @@
 package de.hdm.itprojekt.noteit.client;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -21,103 +25,101 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class EditNotes extends DialogBox {
 	
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
-	private static Logger rootLogger = Logger.getLogger("");
-	Note note = new Note();
-	User currentUser = new User();
-	VerticalPanel vpEditNotesPanel = new VerticalPanel();
-	
-	
-	HorizontalPanel titelPanel = new HorizontalPanel();
-	HorizontalPanel subTitelPanel = new HorizontalPanel();
-	HorizontalPanel teilenPanel = new HorizontalPanel();
-	HorizontalPanel berechtigungsPanel = new HorizontalPanel();
-	HorizontalPanel hinzufuegenPanel = new HorizontalPanel();
-	HorizontalPanel faelligkeitsPanel = new HorizontalPanel();
-	HorizontalPanel textPanel = new HorizontalPanel();
-	HorizontalPanel buttonPanel = new HorizontalPanel();
 
-	
-	TextBox teilenTextBox = new TextBox();
-	TextBox titelTextBox = new TextBox();
-	TextBox subTitelTextBox = new TextBox();
-	TextBox hinzufuegenTextBox = new TextBox();
+	private Timestamp timestampe;
+	private NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private User currentUser = new User();
+	private Note currentNote = Homepage.selectedNote;
+	private Notebook currentNotebook = Homepage.selectedNotebook;
 
+	VerticalPanel vpEditNote = new VerticalPanel();
 
-	
-	TextArea textArea = new TextArea();
-	
-	Button hinzufuegenButton = new Button("+");
-	Button loeschen = new Button("Löschen");
-	Button abbrechen = new Button("Abbrechen");
-	Button sichern = new Button("Sichern");
-	
-	RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup",
-			"anzeigen + bearbeiten");
-	RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup",
-			"anzeigen");
-	
-	Label darf = new Label("Darf:");
-	Label subTitel = new Label("Subtitel");
-	Label titel = new Label("Titel");
-	Label teilen = new Label("Teilen mit");	
-	Label hinzufuegen = new Label("Hinzufügen zu");
-	Label faelligkeitsdatum = new Label("Fälligkeitsdatum");
-	Label text = new Label("Text");
-	
+	HorizontalPanel hpTitel = new HorizontalPanel();
+	HorizontalPanel hpNoteSubTitel = new HorizontalPanel();
+	HorizontalPanel hpNoteText = new HorizontalPanel();
+	HorizontalPanel hpNoteShare = new HorizontalPanel();
+	HorizontalPanel hpNotePermission = new HorizontalPanel();
+	HorizontalPanel hpUpdateDeleteCloseButtons = new HorizontalPanel();
+	HorizontalPanel hpNoteMaturity = new HorizontalPanel();
+
+	Label lblNoteTitel = new Label("Titel");
+	Label lblNoteSubTitel = new Label("Subtitel");
+	Label lblNoteShare = new Label("Teilen mit");
+	Label lblNoteText = new Label("Deine Notiz");
+	Label lblNoteMaturity = new Label("Fälligkeitsdatum");
+
 	DatePicker datePicker = new DatePicker();
 
-	public EditNotes(User user) {
-		this.currentUser = user;
-	}
-	
+	TextBox tbNoteSubTitel = new TextBox();
+	TextBox tbNoteTitel = new TextBox();
+	TextBox tbNoteShare = new TextBox();
+
+	Button btnNoteShareAdd = new Button("+");
+	Button btnNoteClose = new Button("Abbrechen");
+	Button btnUpdateNote = new Button("Notiz speichern");
+	Button btnDeleteNote = new Button("Notiz löschen");
+
+	TextArea taUpdateNoteText = new TextArea();
+
+	RadioButton rbtnPermission1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+	RadioButton rbtnPermission2 = new RadioButton("myRadioGroup", "anzeigen");
+
+	/**
+	 * This is the entry point method.
+	 */
 	public void onLoad() {
 
-		note = Homepage.selectedNote;
-		
-		titelTextBox.setText(note.getText());
-		textArea.setText(note.getText());
-		subTitelTextBox.setText(note.getSubTitle());
-		
-		
-	
-		titelPanel.add(titel);
-		titelPanel.add(titelTextBox);
+		setAutoHideEnabled(true);
+		setGlassEnabled(true);
+		setText("Neue Notiz erstellen");
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-	
-	
-		
-		subTitelPanel.add(subTitel);
-		subTitelPanel.add(subTitelTextBox);
+
+		hpTitel.add(lblNoteTitel);
+		tbNoteTitel.setText(currentNote.getTitle());
+		hpTitel.add(tbNoteTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-	
 
-		
-		
-		teilenPanel.add(teilen);
-		teilenPanel.add(teilenTextBox);
-		teilenPanel.add(hinzufuegenButton);
+		hpNoteSubTitel.add(lblNoteSubTitel);
+		tbNoteSubTitel.setText(currentNote.getSubTitle());
+		hpNoteSubTitel.add(tbNoteSubTitel);
+
+		/**
+		 * Create note text field
+		 */
+		taUpdateNoteText.setText(currentNote.getText());
+		// hpNoteText.add(lblNoteText);
+		hpNoteText.add(taUpdateNoteText);
+
+		/**
+		 * Create the Panel, Label and TextBox
+		 */
+
+		hpNoteShare.add(lblNoteShare);
+		hpNoteShare.add(tbNoteShare);
+		hpNoteShare.add(btnNoteShareAdd);
 
 		/**
 		 * Create the Panel and Label
 		 */
-	
-		
+		HorizontalPanel berechtigungsPanel = new HorizontalPanel();
+		Label darf = new Label("Darf:");
 
 		/**
 		 * Create the RadioButton
 		 */
-
+		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
 		// RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
 		berechtigungsPanel.add(darf);
 		berechtigungsPanel.add(rbBerechtigungen1);
@@ -126,51 +128,87 @@ public class EditNotes extends DialogBox {
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-
+		HorizontalPanel hinzufuegenPanel = new HorizontalPanel();
+		Label hinzufuegen = new Label("Hinzufügen zu");
+		TextBox hinzufuegenTextBox = new TextBox();
 		hinzufuegenPanel.add(hinzufuegen);
 		hinzufuegenPanel.add(hinzufuegenTextBox);
 
 		/**
 		 * Create the Panel, Label and DatePicker
 		 */
+		Date date = new Date(currentNote.getMaturityDate().getTime());
+		datePicker.setValue(date);
+		datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
-		faelligkeitsPanel.add(faelligkeitsdatum);
-		faelligkeitsPanel.add(datePicker);
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				long time = date.getTime();
+				timestampe = new Timestamp(time);
+				// String dateString =
+				// DateTimeFormat.getMediumDateFormat().format(date);
+				// text.setText(dateString);
+
+			}
+		});
 
 		/**
 		 * Create the Panel, Label and TextArea
 		 */
-		
+		HorizontalPanel textPanel = new HorizontalPanel();
+		Label text = new Label("Text");
+		final TextArea textArea = new TextArea();
 		textPanel.add(text);
 		textPanel.add(textArea);
 
 		/**
 		 * Create the Panel and the Buttons
 		 */
-
-		buttonPanel.add(loeschen);
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		Button abbrechen = new Button("Abbrechen");
+		Button sichern = new Button("Sichern");
 		buttonPanel.add(abbrechen);
 		buttonPanel.add(sichern);
-		
-		vpEditNotesPanel.add(titel);
-		vpEditNotesPanel.add(titelTextBox);
-		vpEditNotesPanel.add(subTitel);
-		vpEditNotesPanel.add(subTitelTextBox);
-		vpEditNotesPanel.add(textArea);
-		vpEditNotesPanel.add(buttonPanel);
-		
-		vpEditNotesPanel.setSpacing(40);
-		setWidget(vpEditNotesPanel);
 
-		// ClickHandler für Löschen Button
-		loeschen.addClickHandler(new ClickHandler() {
+		// ClickHandler für Abbrechen Button
+		btnNoteClose.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				rootLogger.log(Level.SEVERE, "UserID"+note.getUserId());
-				notesAdmin.deleteNote(note.getId(), note.getUserId(), new AsyncCallback<Void>() {
+				EditNotes.this.hide();
+			}
+		});
+
+		// ClickHandler Add Button
+		btnUpdateNote.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+
+				notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), taUpdateNoteText.getText(), timestampe, currentUser.getId(), "keine quelle", currentNotebook.getId(), currentNote.getId(), new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
-						Homepage.updateNotesCellList(note.getNotebookId());
+						EditNotes.this.hide();
+						Homepage.updateNotesCellList(currentNotebook.getId());
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+
+			}
+		});
+		
+		btnDeleteNote.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				notesAdmin.deleteNote(currentNote.getId(), currentNote.getUserId(), new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						Homepage.updateNotesCellList(currentNote.getNotebookId());
 						EditNotes.this.hide();						
 						
 					}
@@ -184,29 +222,25 @@ public class EditNotes extends DialogBox {
 			}
 		});
 
-		// ClickHandler für Abbrechen Button
-		abbrechen.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EditNotes.this.hide();
-			}
-		});
 
-		// ClickHandler für Sichern Button
-		sichern.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
 
-			}
-		});
+		vpEditNote.add(hpTitel);
+		vpEditNote.add(hpNoteSubTitel);
+		vpEditNote.add(hpNoteText);
+		vpEditNote.add(hpNoteMaturity);
+		hpNoteMaturity.add(lblNoteMaturity);
+		hpNoteMaturity.add(datePicker);
+		vpEditNote.add(hpNoteShare);
+		vpEditNote.add(hpUpdateDeleteCloseButtons);
+		hpUpdateDeleteCloseButtons.add(btnNoteClose);
+		hpUpdateDeleteCloseButtons.add(btnUpdateNote);
 
-		this.add(titelPanel);
-		this.add(subTitelPanel);
-		this.add(teilenPanel);
-		this.add(berechtigungsPanel);
-		this.add(hinzufuegenPanel);
-		this.add(faelligkeitsPanel);
-		this.add(textPanel);
-		this.add(buttonPanel);
-
+		vpEditNote.setSpacing(40);
+		setWidget(vpEditNote);
+	}
+	
+	public EditNotes(User user){
+		this.currentUser = user;
 	}
 
 }
