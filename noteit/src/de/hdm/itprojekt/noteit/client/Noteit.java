@@ -103,7 +103,7 @@ public class Noteit implements EntryPoint {
 		Button btnLogOut = new Button("Logout");
 		Button impressumButton = new Button("Impressum");
 		Button zurueckButton = new Button("Zurück");
-		Button btnSettingButton = new Button("<img src='Images/user.png'/ width=\"20\" height=\"20\">");
+		Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"20\" height=\"20\">");
 
 		/**
 		 * Set the Style
@@ -153,7 +153,7 @@ public class Noteit implements EntryPoint {
 		logoutPanel.add(btnLogOut);
 		logoutPanel.add(impressumButton);
 		logoutPanel.add(zurueckButton);
-		logoutPanel.add(btnSettingButton);
+		logoutPanel.add(btnSettingsButton);
 		headerPanel.add(welcomePanel);
 		headerPanel.add(headlinePanel);
 		headerPanel.add(logoutPanel);
@@ -281,7 +281,7 @@ public class Noteit implements EntryPoint {
 			}
 		});
 		
-		btnSettingButton.addClickHandler(new ClickHandler() {
+		btnSettingsButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
