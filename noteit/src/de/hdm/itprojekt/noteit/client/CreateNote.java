@@ -1,10 +1,16 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -14,49 +20,96 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
+import de.hdm.itprojekt.noteit.shared.NotesAdministration;
+import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
+import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
-public class CreateNote extends VerticalPanel {
+public class CreateNote extends DialogBox {
+
+	private Timestamp ts;
+	private NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private User currentUser = new User();
+	private Notes notes = new Notes();
+	private Notebook currentNotebook = new Notebook();
+
+	VerticalPanel vpAddNewNote = new VerticalPanel();
+
+	HorizontalPanel hpTitel = new HorizontalPanel();
+	HorizontalPanel hpNoteSubTitel = new HorizontalPanel();
+	HorizontalPanel hpNoteText = new HorizontalPanel();
+	HorizontalPanel hpNoteShare = new HorizontalPanel();
+	HorizontalPanel hpNotePermission = new HorizontalPanel();
+	HorizontalPanel hpAddCloseButtons = new HorizontalPanel();
+	HorizontalPanel hpNoteMaturity = new HorizontalPanel();
+
+	Label lblNoteTitel = new Label("Titel");
+	Label lblNoteSubTitel = new Label("Subtitel");
+	Label lblNoteShare = new Label("Teilen mit");
+	Label lblNoteText = new Label("Deine Notiz");
+	Label lblNoteMaturity = new Label("Fälligkeitsdatum");
+	
+	DatePicker datePicker = new DatePicker();
+
+	TextBox tbNoteSubTitel = new TextBox();
+	TextBox tbNoteTitel = new TextBox();
+	TextBox tbNoteShare = new TextBox();
+
+	Button btnNoteShareAdd = new Button("+");
+	Button btnNoteClose = new Button("Abbrechen");
+	Button btnAddNewNote = new Button("Notiz erstellen");
+
+	TextArea taNewNoteText = new TextArea();
+
+	RadioButton rbtnPermission1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+	RadioButton rbtnPermission2 = new RadioButton("myRadioGroup", "anzeigen");
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onLoad() {
 
-		// local User
-		final User user = new User();
-		user.setId(1);
-
-		final Notes notes = new Notes();
+		setAutoHideEnabled(true);
+		setGlassEnabled(true);
+		setText("Neue Notiz erstellen");
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-		HorizontalPanel titelPanel = new HorizontalPanel();
-		Label titel = new Label("Titel");
-		final TextBox titelTextBox = new TextBox();
-		titelPanel.add(titel);
-		titelPanel.add(titelTextBox);
+		
+		hpTitel.add(lblNoteTitel);
+		hpTitel.add(tbNoteTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-		HorizontalPanel subTitelPanel = new HorizontalPanel();
-		Label subTitel = new Label("Subtitel");
-		final TextBox subTitelTextBox = new TextBox();
-		subTitelPanel.add(subTitel);
-		subTitelPanel.add(subTitelTextBox);
+		
+		hpNoteSubTitel.add(lblNoteSubTitel);
+		hpNoteSubTitel.add(tbNoteSubTitel);
+
+		/**
+		 * Create note text field
+		 */
+		taNewNoteText.setText("Deine Notiz..");
+		taNewNoteText.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				taNewNoteText.setText("");
+
+			}
+		});
+		// hpNoteText.add(lblNoteText);
+		hpNoteText.add(taNewNoteText);
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
-		HorizontalPanel teilenPanel = new HorizontalPanel();
-		Label teilen = new Label("Teilen mit");
-		TextBox teilenTextBox = new TextBox();
-		Button hinzufuegenButton = new Button("+");
-		teilenPanel.add(teilen);
-		teilenPanel.add(teilenTextBox);
-		teilenPanel.add(hinzufuegenButton);
+		
+		hpNoteShare.add(lblNoteShare);
+		hpNoteShare.add(tbNoteShare);
+		hpNoteShare.add(btnNoteShareAdd);
 
 		/**
 		 * Create the Panel and Label
@@ -67,10 +120,8 @@ public class CreateNote extends VerticalPanel {
 		/**
 		 * Create the RadioButton
 		 */
-		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup",
-				"anzeigen + bearbeiten");
-		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup",
-				"anzeigen");
+		RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
+		RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
 		// RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
 		berechtigungsPanel.add(darf);
 		berechtigungsPanel.add(rbBerechtigungen1);
@@ -88,11 +139,20 @@ public class CreateNote extends VerticalPanel {
 		/**
 		 * Create the Panel, Label and DatePicker
 		 */
-		HorizontalPanel faelligkeitsPanel = new HorizontalPanel();
-		Label faelligkeitsdatum = new Label("Fälligkeitsdatum");
-		final DatePicker datePicker = new DatePicker();
-		faelligkeitsPanel.add(faelligkeitsdatum);
-		faelligkeitsPanel.add(datePicker);
+		
+		datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				Date date = event.getValue();
+				long time = date.getTime();
+				ts = new Timestamp(time);
+//		        String dateString = DateTimeFormat.getMediumDateFormat().format(date);
+//		        text.setText(dateString);
+				
+			}
+		});
+		
 
 		/**
 		 * Create the Panel, Label and TextArea
@@ -113,41 +173,56 @@ public class CreateNote extends VerticalPanel {
 		buttonPanel.add(sichern);
 
 		// ClickHandler für Abbrechen Button
-		abbrechen.addClickHandler(new ClickHandler() {
+		btnNoteClose.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanel homepage = new Homepage();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(homepage);
+				CreateNote.this.hide();
 			}
 		});
 
 		// ClickHandler für Sichern Button
-		sichern.addClickHandler(new ClickHandler() {
+		btnAddNewNote.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				notes.createNote(titelTextBox.getText(),
-						subTitelTextBox.getText(), textArea.getText(),
-						(Timestamp) datePicker.getHighlightedDate(), user,
-						"keine quelle");
-
-				VerticalPanel homepage = new Homepage();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(homepage);
+				notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), taNewNoteText.getText(),
+						ts, currentUser, "keine quelle", currentNotebook.getId(), new AsyncCallback<Note>() {
+							
+							@Override
+							public void onSuccess(Note result) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 
 			}
 		});
 
-		this.add(titelPanel);
-		this.add(subTitelPanel);
-		this.add(teilenPanel);
-		this.add(berechtigungsPanel);
-		this.add(hinzufuegenPanel);
-		this.add(faelligkeitsPanel);
-		this.add(textPanel);
-		this.add(buttonPanel);
+		
+		
+		vpAddNewNote.add(hpTitel);
+		vpAddNewNote.add(hpNoteSubTitel);
+		vpAddNewNote.add(hpNoteText);
+		vpAddNewNote.add(hpNoteMaturity);
+			hpNoteMaturity.add(lblNoteMaturity);
+			hpNoteMaturity.add(datePicker);
+		vpAddNewNote.add(hpNoteShare);
+		vpAddNewNote.add(hpAddCloseButtons);
+			hpAddCloseButtons.add(btnNoteClose);
+			hpAddCloseButtons.add(btnAddNewNote);
+		
+		vpAddNewNote.setSpacing(40);
+		setWidget(vpAddNewNote);
 
+	}
+
+	public CreateNote(User user, Notebook notebook) {
+		this.currentUser = user;
+		this.currentNotebook = notebook;
 	}
 
 }

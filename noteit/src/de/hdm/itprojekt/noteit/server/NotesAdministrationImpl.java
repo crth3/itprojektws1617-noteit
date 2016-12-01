@@ -287,7 +287,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source)
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID)
 			throws IllegalArgumentException {
 
 		ts.getTime();
@@ -296,10 +296,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		note.setSubTitle(subtitle);
 		note.setText(text);
 		note.setMaturityDate(maturity);
-		// note.setsource //Methode fehlt noch
-		// note.setUserId(creator.getId());
+		note.setSource(source);
+		note.setUserId(u.getId());
 		note.setCreationDate(ts);
-
+		note.setNotebookId(notebookID);
 		return this.nMapper.insert(note);
 
 	}
@@ -322,7 +322,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 	}
 /**
- * Note und dazugehörige Permissions löschen
+ * Note und dazugehï¿½rige Permissions lï¿½schen
  */
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
