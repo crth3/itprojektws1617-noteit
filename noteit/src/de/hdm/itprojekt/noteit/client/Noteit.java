@@ -103,6 +103,7 @@ public class Noteit implements EntryPoint {
 		Button btnLogOut = new Button("Logout");
 		Button impressumButton = new Button("Impressum");
 		Button zurueckButton = new Button("Zurück");
+		Button btnSettingButton = new Button("<img src='Images/mind.png'/ width=\"20\" height=\"20\">");
 
 		/**
 		 * Set the Style
