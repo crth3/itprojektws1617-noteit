@@ -13,7 +13,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class NotebookCellList extends Widget {
 
-	private Notebook SelectedNotebook;
+	private Notebook selectedNotebook;
 
 	CellList<Notebook> notebookCellList = null;
 
@@ -30,7 +30,8 @@ public class NotebookCellList extends Widget {
 		NotebookCell notebookCell = new NotebookCell();
 
 		// Use the cell in a CellList.
-		notebookCellList = new CellList<Notebook>(notebookCell, notebookKeyProvider);
+		notebookCellList = new CellList<Notebook>(notebookCell,
+				notebookKeyProvider);
 
 		// Set the width of the CellList.
 		// userCellList.setWidth("230px");
@@ -43,18 +44,23 @@ public class NotebookCellList extends Widget {
 		// used to identify contacts when fields (such as the name and address)
 		// change.
 		notebookCellList.setPageSize(30);
-		notebookCellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		notebookCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		notebookCellList
+				.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		notebookCellList.setKeyboardSelectionPolicy(
+				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<Notebook> notebookSelectionModel = new SingleSelectionModel<Notebook>(
 				notebookKeyProvider);
+		
 		notebookCellList.setSelectionModel(notebookSelectionModel);
+		
 		notebookSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				// contactForm.setContact(selectionModel.getSelectedObject());
-				Window.alert("Du hast gewählt: " + notebookSelectionModel.getSelectedObject().getTitle());
-				SelectedNotebook = notebookSelectionModel.getSelectedObject();
+				Window.alert("Du hast gewählt: " + notebookSelectionModel.getSelectedObject().getTitle() + " - id "
+						+ notebookSelectionModel.getSelectedObject().getId());
+				Homepage.setNotesWhenNotebookSelected(notebookSelectionModel.getSelectedObject());
 			}
 		});
 
@@ -64,8 +70,9 @@ public class NotebookCellList extends Widget {
 
 	public Notebook getSelectedNotebook() {
 
-		return SelectedNotebook;
+		return selectedNotebook;
 
 	}
+	
 
 }

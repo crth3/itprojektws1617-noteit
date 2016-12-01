@@ -11,65 +11,71 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
-public class NoteCellList extends Widget {
+public class UserCellList extends Widget {
 
-	private Note SelectedNote;
+	private User SelectedUser;
 
-	CellList<Note> noteCellList = null;
+	CellList<User> userCellList = null;
 
-	public CellList<Note> createNoteCellList() {
+	public CellList<User> createUserCellList() {
 
 		// Create a KeyProvider.
-		ProvidesKey<Note> noteKeyProvider = new ProvidesKey<Note>() {
-			public Object getKey(Note item) {
-				return (item == null) ? null : item.getTitle();
+		ProvidesKey<User> userKeyProvider = new ProvidesKey<User>() {
+			public Object getKey(User item) {
+				return (item == null) ? null
+						: item.getFirstName() + item.getLastName()
+								+ item.getMail();
 			}
 		};
 
 		// Create a cell to render each value.
-		NoteCell noteCell = new NoteCell();
+		UserCell userCell = new UserCell();
 
 		// Use the cell in a CellList.
-		noteCellList = new CellList<Note>(noteCell, noteKeyProvider);
+		userCellList = new CellList<User>(userCell, userKeyProvider);
 
 		// Set the width of the CellList.
 		// noteCellList.setWidth("230px");
 
 		// Stylen der CellList
-		noteCellList.setStylePrimaryName("CellList");
+		userCellList.setStylePrimaryName("CellList");
 
 		// Set a key provider that provides a unique key for each contact. If
 		// key is
 		// used to identify contacts when fields (such as the name and address)
 		// change.
-		noteCellList.setPageSize(30);
-		noteCellList
+		userCellList.setPageSize(30);
+		userCellList
 				.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		noteCellList.setKeyboardSelectionPolicy(
+		userCellList.setKeyboardSelectionPolicy(
 				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
-		final SingleSelectionModel<Note> noteSelectionModel = new SingleSelectionModel<Note>(
-				noteKeyProvider);
-		noteCellList.setSelectionModel(noteSelectionModel);
-		noteSelectionModel
+		final SingleSelectionModel<User> userSelectionModel = new SingleSelectionModel<User>(
+				userKeyProvider);
+		userCellList.setSelectionModel(userSelectionModel);
+		userSelectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						// contactForm.setContact(selectionModel.getSelectedObject());
-						Window.alert("Du hast gewählt: " + noteSelectionModel
-								.getSelectedObject().getTitle());
-						SelectedNote = noteSelectionModel.getSelectedObject();
-
+						Window.alert("Du hast gewählt: "
+								+ userSelectionModel.getSelectedObject()
+										.getFirstName()
+								+ userSelectionModel.getSelectedObject()
+										.getLastName()
+								+ userSelectionModel.getSelectedObject()
+										.getMail());
+						SelectedUser = userSelectionModel.getSelectedObject();
 					}
 				});
 
-		return noteCellList;
+		return userCellList;
 
 	}
 
-	public Note getSelectedNote() {
+	public User getSelectedUser() {
 
-		return SelectedNote;
+		return SelectedUser;
 
 	}
 

@@ -1,28 +1,22 @@
 package de.hdm.itprojekt.noteit.client;
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
-/**
- * Diese Klasse holt sich das User-Objekt und stellt den selektieren Inhalt
- * eines Objekts in HTML dar.
- * 
- * @author Dahms
- */
+public class UserCell extends AbstractCell<User> {
 
-public class NotebookCell extends AbstractCell<Notebook> {
-
-	@Override
-	public void render(Context context, Notebook value, SafeHtmlBuilder sb) {
+	public void render(Context context, User value, SafeHtmlBuilder sb) {
 
 		if (value == null) {
 			return;
 		}
 
 		sb.appendHtmlConstant("<div>");
-		sb.appendEscaped(value.getTitle() + " ");
+		sb.appendEscaped(value.getFirstName() + value.getLastName()
+				+ value.getMail() + " ");
 		sb.appendHtmlConstant("</div>");
 		sb.appendHtmlConstant(
 				"<div style=\"border-bottom: 4px solid #dddddd;\">");
