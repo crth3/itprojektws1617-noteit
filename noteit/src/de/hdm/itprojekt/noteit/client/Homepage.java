@@ -175,6 +175,7 @@ public class Homepage extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				CreateNotebook createNotebook = new CreateNotebook(currentUser);
 				createNotebook.show();
+				createNotebook.center();
 			}
 		});
 
@@ -202,6 +203,7 @@ public class Homepage extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				EditNotebook editNotebook = new EditNotebook(currentUser);
 				editNotebook.show();
+				editNotebook.center();
 			}
 		});
 
