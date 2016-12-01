@@ -279,6 +279,8 @@ public class NoteMapper {
 								+ "', '"
 								+ n.getText()
 								+ "', '"
+								+ n.getMaturityDate()
+								+ "', '"
 								+ n.getCreationDate()
 								+ "', '"
 								+ n.getUserId()
@@ -296,6 +298,8 @@ public class NoteMapper {
 						+ n.getSubTitle()
 						+ "', '"
 						+ n.getText()
+						+ "', '"
+						+ n.getMaturityDate()
 						+ "', '"
 						+ n.getCreationDate()
 						+ "', '"

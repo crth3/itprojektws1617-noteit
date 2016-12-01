@@ -19,6 +19,7 @@ public class Note extends BusinessObjects {
 	private Timestamp maturityDate;
 	private boolean visible = false;
 	public User creator;
+	private String source;
 	
 	
 	/**
@@ -191,6 +192,14 @@ public class Note extends BusinessObjects {
 	 */
 	public void setCreator(User creator) {
 		this.creator = creator;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }

@@ -182,10 +182,9 @@ public class Homepage extends VerticalPanel {
 
 		btnAddNewNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanel createNote = new CreateNote();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(createNote);
+				CreateNote createNote = new CreateNote(currentUser, selectedNotebook);
+				createNote.show();
+				createNote.center();
 			}
 		});
 

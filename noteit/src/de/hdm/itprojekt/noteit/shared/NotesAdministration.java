@@ -90,7 +90,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source) throws IllegalArgumentException;
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID) throws IllegalArgumentException;
 	
 	//TODO Übergabeparmeter für Berechtigungen siehe Notebook
 	/**
