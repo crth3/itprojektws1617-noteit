@@ -43,7 +43,7 @@ public class UserSettings extends DialogBox {
 	Label lbLastName = new Label("Nachname");
 	Label lbEmail = new Label("Email");
 	Label lbAusgabeEmail = new Label();
-	Label lbAusgabeFirstNAme = new Label (); 
+//	Label lbAusgabeFirstNAme = new Label (); 
 
 	/**
 	 * Create the TextBox
