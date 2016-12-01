@@ -61,6 +61,7 @@ public class Homepage extends VerticalPanel {
 	final Notebooks notebooks = new Notebooks();
 	final NotebookCellList notebookCellList = new NotebookCellList();
 	static Notebook selectedNotebook = new Notebook();
+	static Note selectedNote = new Note();
 
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
@@ -190,10 +191,9 @@ public class Homepage extends VerticalPanel {
 
 		btnEditNote.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanel editNotes = new EditNotes();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(editNotes);
+				EditNotes editNotes = new EditNotes(currentUser);
+				editNotes.show();
+				editNotes.center();
 			}
 		});
 
@@ -290,6 +290,11 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 	};
+	
+	public static void setSelectedNote (Note note){
+		selectedNote = note;
+		
+	}
 
 	public void searchNotebookByKeyword(int userID, String keyword) {
 		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
@@ -334,6 +339,24 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
+			}
+		});
+	}
+	public static void updateNotesCellList (int NotebookId){
+		
+		notesAdmin.getAllNotesByNotebookID(NotebookId, new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+				
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				
+				clNote.setRowData(result);
+				
 			}
 		});
 	}

@@ -328,7 +328,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
 		ArrayList<NotePermission> ArrayListNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
 		Note note = this.nMapper.findById(noteID);
-
+		System.out.println("input:"+noteID + "User"+userID+"db daten:"+note.getUserId());
 		try {
 			if (note.getUserId() == userID) {
 				if (ArrayListNotePermission != null) {

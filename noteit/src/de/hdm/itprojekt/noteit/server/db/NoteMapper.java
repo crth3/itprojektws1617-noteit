@@ -64,7 +64,7 @@ public class NoteMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM NOTE INNER JOIN User ON Note.User_userId = User.userId WHERE Note.noteId= " + id);
+					.executeQuery("SELECT * FROM Note INNER JOIN User ON Note.User_userId = User.userId WHERE Note.noteId= " + id);
 			// Bei Treffer
 			if (rs.next()) {
 				// Neues Note-Objekt erzeugen
@@ -80,8 +80,8 @@ public class NoteMapper {
 				n.setMaturityDate(rs.getTimestamp("maturity"));
 				n.setCreationDate(rs.getTimestamp("creationDate"));
 				n.setModificationDate(rs.getTimestamp("creationDate"));
-			
-				n.setId(rs.getInt("User_userId"));
+				
+				n.setUserId(rs.getInt("User_userId"));
 				n.setCreator(creator);
 				// Objekt zurückgeben
 				return n;
