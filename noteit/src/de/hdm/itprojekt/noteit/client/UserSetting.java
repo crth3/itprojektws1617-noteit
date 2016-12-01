@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -39,8 +40,34 @@ public class UserSetting extends DialogBox{
 	Button btnabbrechen = new Button("Abbrechen");
 	Button btnsichern = new Button("Sichern");
 	
+	/**
+	 * Crate a Panel
+	 */
+	HorizontalPanel hpButtonPanel = new HorizontalPanel();
+
 	
 
+	public void onLoad() {
 
+		setAutoHideEnabled(true);
+		setGlassEnabled(true);
+		setText("Profil bearbeiten");
+		center();
+		vpEditUserSetting.setSpacing(40);
+		setWidget(vpEditUserSetting);
+		
+		/**
+		 * Add the Labels, TextBox and Buttons
+		 */
+		vpEditUserSetting.add(lbFirstName);
+		vpEditUserSetting.add(tbFirstName);
+		vpEditUserSetting.add(lbLastName);
+		vpEditUserSetting.add(tbLastName);;
+		vpEditUserSetting.add(lbEmail);;
+		vpEditUserSetting.add(tbEmail);
+		vpEditUserSetting.add(hpButtonPanel);
+		hpButtonPanel.add(btnabbrechen);
+		hpButtonPanel.add(btnsichern);
 
+	}
 }
