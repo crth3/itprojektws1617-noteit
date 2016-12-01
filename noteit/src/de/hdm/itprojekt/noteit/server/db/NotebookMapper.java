@@ -102,10 +102,19 @@ public class NotebookMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Notebook "
-							+ "WHERE "
-							+ "Notebook.User_userId = "
-							+ id);
+					.executeQuery("SELECT notebookId, title, creationDate "
+							+ "FROM Notebook INNER JOIN NotebookPermission ON "
+							+ "Notebook.notebookId = NotebookPermission.Notebook_notebookId "
+							+ "WHERE Notebook.User_userId = "
+							+ id 
+							+ " GROUP BY notebookId");
+			
+			System.out.println("SELECT notebookId, title, creationDate "
+					+ "FROM Notebook INNER JOIN NotebookPermission ON "
+					+ "Notebook.notebookId = NotebookPermission.Notebook_notebookId "
+					+ "WHERE Notebook.User_userId = "
+					+ id 
+					+ " GROUP BY notebookId");
 
 			while (rs.next()) {
 				Notebook nb = new Notebook();
@@ -117,7 +126,7 @@ public class NotebookMapper {
 				
 		
 				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
+				// Notebook Objekt der Liste hinzufügen
 				notebookList.add(nb);
 			}
 			// Objekt zurückgeben
