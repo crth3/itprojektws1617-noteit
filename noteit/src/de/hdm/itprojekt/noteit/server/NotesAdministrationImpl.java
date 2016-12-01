@@ -130,11 +130,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	/**
-	 * Erstellt ein neus Notizbuch 
-	 * @param title 
-	 * 			Der Titel des Notizbuches
+	 * Erstellt ein neus Notizbuch
+	 * 
+	 * @param title
+	 *            Der Titel des Notizbuches
 	 * @param creator
-	 * 			Der Nutzer der das Notizbuch erstellt
+	 *            Der Nutzer der das Notizbuch erstellt
 	 * 
 	 * @return das erstellte <code>Notebook</code> Objekt
 	 */
@@ -150,8 +151,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	/**
-	 * Updated die Attribute eines bestehenden Notebooks
-	 * Überprüft die Berechtigung des Nutzers ob er bearbeiten darf
+	 * Updated die Attribute eines bestehenden Notebooks Überprüft die
+	 * Berechtigung des Nutzers ob er bearbeiten darf
 	 */
 	@Override
 	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException {
@@ -184,12 +185,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		}
 	}
-	
+
 	/**
 	 * Löscht ein bestehendes Notebook und alle Freigegebenen notebooks
 	 * Überprüft die Berechtigung des Nutzers ob er bearbeiten darf
 	 */
-	//TODO Notizen des Notebooks müssen auch noch gelöscht werden
+	// TODO Notizen des Notebooks müssen auch noch gelöscht werden
 	@Override
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException {
 
@@ -202,31 +203,70 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
 
 		try {
-			if (currentNotebook.getUserId() == userID) { // Wenn der selbe der das Notebook erstellt hat, es löschen möchte
-				if(allNotesByNotebookID != null){ // Wenn das Notizbuch noch Notizen enthält
+			if (currentNotebook.getUserId() == userID) { // Wenn der selbe der
+															// das Notebook
+															// erstellt hat, es
+															// löschen möchte
+				if (allNotesByNotebookID != null) { // Wenn das Notizbuch noch
+													// Notizen enthält
 					deleteAllNotesByNotebookID(userID, notebookID);
 				}
-				
+
 				if (notebookPermissions != null) { // wenn es Permissions gibt
 					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-						this.nbpMapper.delete(foundedNotebookPermission); // lösche zuerst alle Permissions
+						this.nbpMapper.delete(foundedNotebookPermission); // lösche
+																			// zuerst
+																			// alle
+																			// Permissions
 					}
-					this.nbMapper.delete(currentNotebook); // lösche das Notebook
+					this.nbMapper.delete(currentNotebook); // lösche das
+															// Notebook
 				} else {
-					this.nbMapper.delete(currentNotebook); // wenn es keine permission gibt, lösche das notebook
+					this.nbMapper.delete(currentNotebook); // wenn es keine
+															// permission gibt,
+															// lösche das
+															// notebook
 				}
-				
-				
+
 			} else if (notebookPermissions != null) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-					if (userID == foundedNotebookPermission.getUserId()) { // Wenn UserID der der übegeben ist...
-						if (foundedNotebookPermission.getPermission() == 3) { // wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
-							if(allNotesByNotebookID != null){ // Wenn das Notizbuch noch Notizen enthält
+					if (userID == foundedNotebookPermission.getUserId()) { // Wenn
+																			// UserID
+																			// der
+																			// der
+																			// übegeben
+																			// ist...
+						if (foundedNotebookPermission.getPermission() == 3) { // wenn
+																				// Berechtigung
+																				// für
+																				// den
+																				// übergebenen
+																				// User
+																				// 3
+																				// ist,
+																				// der
+																				// das
+																				// Notebook
+																				// löschen
+																				// möchte
+							if (allNotesByNotebookID != null) { // Wenn das
+																// Notizbuch
+																// noch Notizen
+																// enthält
 								deleteAllNotesByNotebookID(userID, notebookID);
-							}											
+							}
 							for (NotebookPermission foundedNotebookPermissions : notebookPermissions) {
-								if (userID != foundedNotebookPermissions.getUserId()) { // Wenn UserID nicht der des übergebenen sit, lösche seien Berechtigung
-																						
+								if (userID != foundedNotebookPermissions.getUserId()) { // Wenn
+																						// UserID
+																						// nicht
+																						// der
+																						// des
+																						// übergebenen
+																						// sit,
+																						// lösche
+																						// seien
+																						// Berechtigung
+
 									this.nbpMapper.delete(foundedNotebookPermissions);
 								}
 							}
@@ -235,7 +275,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 							System.out.println("Lösche Notebook");
 							this.nbMapper.delete(currentNotebook);
 						}
-						System.out.println("Notebook Permission kann aufgrund der Berechtigung nicht gelöscht werden ");
+						System.out
+								.println("Notebook Permission kann aufgrund der Berechtigung nicht gelöscht werden ");
 					}
 				}
 			}
@@ -280,7 +321,9 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		this.nMapper.update(note);
 
 	}
-
+/**
+ * Note und dazugeh�rige Permissions l�schen
+ */
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
 		ArrayList<NotePermission> ArrayListNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
@@ -288,28 +331,42 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		try {
 			if (note.getUserId() == userID) {
-				this.nMapper.delete(note);
-			} else if (ArrayListNotePermission != null) {
-				for (NotePermission foundNotePermission : ArrayListNotePermission) {
-					if (userID == foundNotePermission.getUserId()) {
-						if (foundNotePermission.getPermission() == 3) {
-							this.npMapper.delete(foundNotePermission);
-							this.nMapper.delete(note);
-							break;
-						}
+				if (ArrayListNotePermission != null) {
+					for (NotePermission foundNotePermission : ArrayListNotePermission) {
+						this.npMapper.delete(foundNotePermission);
 					}
 				}
+				this.nMapper.delete(note);
+			}
+
+			else if (ArrayListNotePermission != null) {
+				for (NotePermission foundNotePermission : ArrayListNotePermission) {
+					if (userID == foundNotePermission.getUserId() && foundNotePermission.getPermission() == 3) {
+						NotePermission currentPermission = foundNotePermission;
+						for (NotePermission foundNotePermission1 : ArrayListNotePermission) {
+							if (foundNotePermission1.getId() != currentPermission.getId()) {
+								this.npMapper.delete(foundNotePermission1);
+							}
+
+							this.npMapper.delete(currentPermission);
+							this.nMapper.delete(note);
+						}
+						break;
+					}
+
+				}
+
 			}
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "delete Note", e);
 		}
 
 	}
-	
+
 	@Override
 	public void deleteAllNotesByNotebookID(int userID, int notebookID) throws IllegalArgumentException {
 		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
-		
+
 		for (Note foundedNote : allNotesByNotebookID) {
 			deleteNote(foundedNote.getId(), userID);
 		}
@@ -397,7 +454,5 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
 		return nMapper.findAllNotes();
 	}
-
-	
 
 }
