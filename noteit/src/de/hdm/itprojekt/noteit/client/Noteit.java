@@ -285,9 +285,9 @@ public class Noteit implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				UserSetting userSetting = new UserSetting();
-				userSetting.show();
-				userSetting.center();
+				UserSettings userSettings = new UserSettings(currentUser);
+				userSettings.show();
+				userSettings.center();
 			}
 		});
 

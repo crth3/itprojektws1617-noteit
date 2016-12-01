@@ -12,13 +12,21 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
-public class UserSetting extends DialogBox{
+public class UserSettings extends DialogBox{
 	
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
-	VerticalPanel vpEditUserSetting = new VerticalPanel();
+	VerticalPanel vpEditUserSettings = new VerticalPanel();
 	
-	User currentUser = new User();
+	User currentUser = new User(); 
+	
+	/**
+	 * Konstruktor mit Userobjekt als Übergabeparameter
+	 * @param user
+	 */
+	public UserSettings(User user) {
+		this.currentUser = user;
+	}
 	
 	/**
 	 * Create the Labels
@@ -53,19 +61,19 @@ public class UserSetting extends DialogBox{
 		setGlassEnabled(true);
 		setText("Profil bearbeiten");
 		center();
-		vpEditUserSetting.setSpacing(40);
-		setWidget(vpEditUserSetting);
+		vpEditUserSettings.setSpacing(40);
+		setWidget(vpEditUserSettings);
 		
 		/**
 		 * Add the Labels, TextBox and Buttons
 		 */
-		vpEditUserSetting.add(lbFirstName);
-		vpEditUserSetting.add(tbFirstName);
-		vpEditUserSetting.add(lbLastName);
-		vpEditUserSetting.add(tbLastName);;
-		vpEditUserSetting.add(lbEmail);;
-		vpEditUserSetting.add(tbEmail);
-		vpEditUserSetting.add(hpButtonPanel);
+		vpEditUserSettings.add(lbFirstName);
+		vpEditUserSettings.add(tbFirstName);
+		vpEditUserSettings.add(lbLastName);
+		vpEditUserSettings.add(tbLastName);;
+		vpEditUserSettings.add(lbEmail);;
+		vpEditUserSettings.add(tbEmail);
+		vpEditUserSettings.add(hpButtonPanel);
 		hpButtonPanel.add(btnabbrechen);
 		hpButtonPanel.add(btnsichern);
 
