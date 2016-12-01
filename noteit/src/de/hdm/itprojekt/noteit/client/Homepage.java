@@ -272,7 +272,7 @@ public class Homepage extends VerticalPanel {
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
-		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getNotebookID());
+		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 

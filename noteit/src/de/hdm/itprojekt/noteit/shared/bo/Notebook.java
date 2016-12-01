@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 public class Notebook extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
-	private int notebookID = 0;
 	public int creatorID = 0;
 	private String title = "";
 	private String subTitle = "";
@@ -24,21 +23,6 @@ public class Notebook extends BusinessObjects {
 	 * Fremdschlüsselbeziehung zu userId
 	 */
 	private int userId;
-
-	/**
-	 * @return the notebookID
-	 */
-	public int getNotebookID() {
-		return notebookID;
-	}
-
-	/**
-	 * @param notebookID
-	 *            the notebookID to set
-	 */
-	public void setNotebookID(int notebookID) {
-		this.notebookID = notebookID;
-	}
 
 	/**
 	 * @return the title
