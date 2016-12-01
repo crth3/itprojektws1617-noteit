@@ -61,7 +61,7 @@ public class Homepage extends VerticalPanel {
 	final TextBox tbSearchNote = new TextBox();
 
 	// --------- Noteit Class -----------//
-	final User user = new User();
+	User currentUser = new User();
 	final Notebooks notebooks = new Notebooks();
 	final NotebookCellList notebookCellList = new NotebookCellList();
 	static Notebook selectedNotebook= new Notebook();
@@ -73,7 +73,7 @@ public class Homepage extends VerticalPanel {
 	
 	public void onLoad() {
 
-		user.setId(1);
+		currentUser.setId(1);
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -156,7 +156,7 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * Add all notebooks at start to the panel
 		 */
-		notesAdmin.getAllNotebooksByUserID(user.getId(), new AsyncCallback<ArrayList<Notebook>>() {
+		notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
@@ -192,7 +192,7 @@ public class Homepage extends VerticalPanel {
 		 */
 		btnAddNewNotebookButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateNotebook createNotebook = new CreateNotebook(user);
+				CreateNotebook createNotebook = new CreateNotebook(currentUser);
 				createNotebook.show();
 			}
 		});
@@ -239,7 +239,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				searchNotebookByKeyword(user.getId(), event.getValue());
+				searchNotebookByKeyword(currentUser.getId(), event.getValue());
 			}
 		});
 
@@ -250,7 +250,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				searchNoteByKeyword(user.getId(), event.getValue(), selectedNotebook.getId());
+				searchNoteByKeyword(currentUser.getId(), event.getValue(), selectedNotebook.getId());
 			}
 		});
 		
@@ -261,7 +261,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				searchNotebookByKeyword(user.getId(), tbSearchNotebook.getText());
+				searchNotebookByKeyword(currentUser.getId(), tbSearchNotebook.getText());
 			}
 		});
 		
@@ -273,13 +273,21 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				searchNoteByKeyword(user.getId(), tbSearchNote.getText(), selectedNotebook.getId());	
+				searchNoteByKeyword(currentUser.getId(), tbSearchNote.getText(), selectedNotebook.getId());	
 			}
 		});
 		
 		this.add(navPanel);
 		this.add(contentPanel);
 
+	}
+	
+	public Homepage(){
+		
+	}
+	
+	public Homepage(User currentUser){
+		this.currentUser = currentUser;
 	}
 
 	/**
