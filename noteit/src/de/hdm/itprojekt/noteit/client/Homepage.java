@@ -28,9 +28,8 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class Homepage extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT
-			.create(NotesAdministration.class);
-	
+	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+
 	private static Logger rootLogger = Logger.getLogger("");
 
 	// --------- Horizontal Panel -----------//
@@ -53,9 +52,6 @@ public class Homepage extends VerticalPanel {
 	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
 	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
 
-	// --------- Dialog Box -----------//
-	final static DialogBox dbeditNotebookDialogBox = new DialogBox();
-
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
 	final TextBox tbSearchNote = new TextBox();
@@ -64,13 +60,12 @@ public class Homepage extends VerticalPanel {
 	User currentUser = new User();
 	final Notebooks notebooks = new Notebooks();
 	final NotebookCellList notebookCellList = new NotebookCellList();
-	static Notebook selectedNotebook= new Notebook();
-	
+	static Notebook selectedNotebook = new Notebook();
+
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
 
-	
 	public void onLoad() {
 
 		currentUser.setId(1);
@@ -111,13 +106,13 @@ public class Homepage extends VerticalPanel {
 
 		tbSearchNotebook.setText("Notizbücher suchen...");
 		navNotebookPanel.add(tbSearchNotebook);
-		
+
 		/**
 		 * Add the Search Button to the Panel
 		 */
 
 		navNotebookPanel.add(btnSearchNotebook);
-		
+
 		/**
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
@@ -128,10 +123,9 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * Add the Search Button to the Panel
 		 */
-		
+
 		navNotesPanel.add(btnSearchNote);
 
-		
 		/**
 		 * add to the Panels
 		 */
@@ -139,19 +133,6 @@ public class Homepage extends VerticalPanel {
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
-
-		/**
-		 * Create the DialoBox and Panel, this is the Popup for the
-		 * editNotebookButton
-		 */
-
-		dbeditNotebookDialogBox.setGlassEnabled(true);
-		dbeditNotebookDialogBox.setAnimationEnabled(true);
-		dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
-
-		VerticalPanel editNotebook = new EditNotebook();
-		editNotebook.setSpacing(40);
-		dbeditNotebookDialogBox.setWidget(editNotebook);
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -176,7 +157,7 @@ public class Homepage extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						
+
 					}
 				});
 			}
@@ -219,16 +200,8 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				dbeditNotebookDialogBox.setGlassEnabled(true);
-				dbeditNotebookDialogBox.setAnimationEnabled(true);
-				dbeditNotebookDialogBox.setText("Notizbuch bearbeiten?");
-
-				VerticalPanel editNotebook = new EditNotebook();
-				editNotebook.setSpacing(40);
-				dbeditNotebookDialogBox.setWidget(editNotebook);
-				dbeditNotebookDialogBox.center();
-				dbeditNotebookDialogBox.show();
-
+				EditNotebook editNotebook = new EditNotebook(currentUser);
+				editNotebook.show();
 			}
 		});
 
@@ -253,7 +226,7 @@ public class Homepage extends VerticalPanel {
 				searchNoteByKeyword(currentUser.getId(), event.getValue(), selectedNotebook.getId());
 			}
 		});
-		
+
 		/**
 		 * Create the ClickHandler for Button for Search Notebook Function.
 		 */
@@ -264,8 +237,7 @@ public class Homepage extends VerticalPanel {
 				searchNotebookByKeyword(currentUser.getId(), tbSearchNotebook.getText());
 			}
 		});
-		
-		
+
 		/**
 		 * Create the ClickHandler for Button for Search Note Function.
 		 */
@@ -273,10 +245,12 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+
 				searchNoteByKeyword(currentUser.getId(), tbSearchNote.getText(), selectedNotebook.getId());	
+
 			}
 		});
-		
+
 		this.add(navPanel);
 		this.add(contentPanel);
 
@@ -297,6 +271,7 @@ public class Homepage extends VerticalPanel {
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
+		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getNotebookID());
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 
@@ -313,7 +288,7 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 	};
-	
+
 	public void searchNotebookByKeyword(int userID, String keyword) {
 		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
 
@@ -361,12 +336,8 @@ public class Homepage extends VerticalPanel {
 		});
 	}
 
-	public static void close_db() {
-		dbeditNotebookDialogBox.hide();
-	}
-
-	public Notebook getSelectedNotebook (){
+	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
 	}
-	
+
 }

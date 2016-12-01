@@ -26,7 +26,7 @@ public class CreateNotebook extends DialogBox {
 
 	User user = new User();
 
-	HorizontalPanel vpAddNewNotebookPanel = new HorizontalPanel();
+	VerticalPanel vpAddNewNotebookPanel = new VerticalPanel();
 
 	Label lblTitleAddNotebook = new Label("Name des Notizbuches");
 	
@@ -49,7 +49,6 @@ public class CreateNotebook extends DialogBox {
 		setAutoHideEnabled(true);
 		setGlassEnabled(true);
 		setText("Neuen Notizbuch erstellen");
-		setGlassEnabled(true);
 		center();
 
 		vpAddNewNotebookPanel.add(lblTitleAddNotebook);

@@ -58,8 +58,6 @@ public class NotebookCellList extends Widget {
 		notebookSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				// contactForm.setContact(selectionModel.getSelectedObject());
-				Window.alert("Du hast gewählt: " + notebookSelectionModel.getSelectedObject().getTitle() + " - id "
-						+ notebookSelectionModel.getSelectedObject().getId());
 				Homepage.setNotesWhenNotebookSelected(notebookSelectionModel.getSelectedObject());
 			}
 		});
