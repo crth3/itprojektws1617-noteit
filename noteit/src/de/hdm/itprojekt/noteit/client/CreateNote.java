@@ -28,7 +28,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class CreateNote extends DialogBox {
 
-	private Timestamp ts;
+	private Timestamp timestampe;
 	private NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 	private User currentUser = new User();
 	private Notes notes = new Notes();
@@ -146,7 +146,7 @@ public class CreateNote extends DialogBox {
 			public void onValueChange(ValueChangeEvent<Date> event) {
 				Date date = event.getValue();
 				long time = date.getTime();
-				ts = new Timestamp(time);
+				timestampe = new Timestamp(time);
 //		        String dateString = DateTimeFormat.getMediumDateFormat().format(date);
 //		        text.setText(dateString);
 				
@@ -179,22 +179,23 @@ public class CreateNote extends DialogBox {
 			}
 		});
 
-		// ClickHandler für Sichern Button
+		// ClickHandler Add Button
 		btnAddNewNote.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
 				notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), taNewNoteText.getText(),
-						ts, currentUser, "keine quelle", currentNotebook.getId(), new AsyncCallback<Note>() {
+						timestampe, currentUser, "keine quelle", currentNotebook.getId(), new AsyncCallback<Note>() {
 							
 							@Override
 							public void onSuccess(Note result) {
-								// TODO Auto-generated method stub
+								CreateNote.this.hide();
+								Homepage.updateNotesCellList(currentNotebook.getId());
 								
 							}
 							
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+								
 								
 							}
 						});
