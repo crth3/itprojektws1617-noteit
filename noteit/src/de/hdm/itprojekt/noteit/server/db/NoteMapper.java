@@ -337,16 +337,16 @@ public class NoteMapper {
 			System.out.println("UPDATE Note SET "
 					+ "title = '"
 					+ n.getTitle() 
-					+ "','"
+					+ "',"
 					+ "subtitle = '"
 					+ n.getSubTitle() 
-					+ "','"
+					+ "',"
 					+ "content = '"
 					+ n.getText() 
-					+ "','"
+					+ "',"
 					+ "maturity = '"
 					+ n.getMaturityDate() 
-					+ "','"
+					+ "',"
 					+ "modificationDate = '"
 					+ n.getModificationDate() 
 					+ "' "
@@ -357,16 +357,16 @@ public class NoteMapper {
 			stmt.executeUpdate("UPDATE Note SET "
 					+ "title = '"
 					+ n.getTitle() 
-					+ "','"
+					+ "',"
 					+ "subtitle = '"
 					+ n.getSubTitle() 
-					+ "','"
+					+ "',"
 					+ "content = '"
 					+ n.getText() 
-					+ "','"
+					+ "',"
 					+ "maturity = '"
 					+ n.getMaturityDate() 
-					+ "','"
+					+ "',"
 					+ "modificationDate = '"
 					+ n.getModificationDate() 
 					+ "' "
