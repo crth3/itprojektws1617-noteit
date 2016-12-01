@@ -57,7 +57,7 @@ public class Homepage extends VerticalPanel {
 	final TextBox tbSearchNote = new TextBox();
 
 	// --------- Noteit Class -----------//
-	User currentUser = new User();
+	static User currentUser = new User();
 	final Notebooks notebooks = new Notebooks();
 	final NotebookCellList notebookCellList = new NotebookCellList();
 	static Notebook selectedNotebook = new Notebook();
@@ -272,7 +272,7 @@ public class Homepage extends VerticalPanel {
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
-		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getNotebookID());
+		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 

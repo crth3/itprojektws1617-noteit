@@ -197,76 +197,48 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in deleteNotebook");
 
+		System.out.println("notebookID" + notebookID);
 		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper
 				.findNotebookPermissionByNotebookId(notebookID);
-		Notebook currentNotebook = this.nbMapper.findById(notebookID);
+		Notebook currentNotebook = new Notebook();
+		currentNotebook = this.nbMapper.findById(notebookID);
+		System.out.println("current Notebook User ID: " +currentNotebook.getUserId());
+		System.out.println("übergebene UserID: " + userID);
 		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
 
 		try {
-			if (currentNotebook.getUserId() == userID) { // Wenn der selbe der
-															// das Notebook
-															// erstellt hat, es
-															// löschen möchte
-				if (allNotesByNotebookID != null) { // Wenn das Notizbuch noch
-													// Notizen enthält
+			// Wenn der selbe derdas Notebookerstellt hat, es löschen möchte
+			if (currentNotebook.getUserId() == userID) { 
+				// Wenn das Notizbuch nochNotizen enthält
+				if (allNotesByNotebookID != null) { 
 					deleteAllNotesByNotebookID(userID, notebookID);
 				}
-
-				if (notebookPermissions != null) { // wenn es Permissions gibt
+				// wenn es Permissions gibt
+				if (notebookPermissions != null) { 
 					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-						this.nbpMapper.delete(foundedNotebookPermission); // lösche
-																			// zuerst
-																			// alle
-																			// Permissions
+						//lösche zuerst alle Permissions
+						this.nbpMapper.delete(foundedNotebookPermission); 
 					}
-					this.nbMapper.delete(currentNotebook); // lösche das
-															// Notebook
+					// lösche das Notebook
+					this.nbMapper.delete(currentNotebook); 
 				} else {
-					this.nbMapper.delete(currentNotebook); // wenn es keine
-															// permission gibt,
-															// lösche das
-															// notebook
+					// wenn es keine permission gibt, lösche das notebook
+					this.nbMapper.delete(currentNotebook); 
 				}
 
 			} else if (notebookPermissions != null) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-					if (userID == foundedNotebookPermission.getUserId()) { // Wenn
-																			// UserID
-																			// der
-																			// der
-																			// übegeben
-																			// ist...
-						if (foundedNotebookPermission.getPermission() == 3) { // wenn
-																				// Berechtigung
-																				// für
-																				// den
-																				// übergebenen
-																				// User
-																				// 3
-																				// ist,
-																				// der
-																				// das
-																				// Notebook
-																				// löschen
-																				// möchte
-							if (allNotesByNotebookID != null) { // Wenn das
-																// Notizbuch
-																// noch Notizen
-																// enthält
+					if (userID == foundedNotebookPermission.getUserId()) {
+						// wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
+						if (foundedNotebookPermission.getPermission() == 3) { 
+							// Wenn das Notizbuch noch Notizen enthält
+							if (allNotesByNotebookID != null) { 
 								deleteAllNotesByNotebookID(userID, notebookID);
 							}
 							for (NotebookPermission foundedNotebookPermissions : notebookPermissions) {
-								if (userID != foundedNotebookPermissions.getUserId()) { // Wenn
-																						// UserID
-																						// nicht
-																						// der
-																						// des
-																						// übergebenen
-																						// sit,
-																						// lösche
-																						// seien
-																						// Berechtigung
-
+								// Wenn UserID nicht der des übergebenen ist,lösche seine Berechtigung
+								if (userID != foundedNotebookPermissions.getUserId()) { 
+														
 									this.nbpMapper.delete(foundedNotebookPermissions);
 								}
 							}

@@ -61,8 +61,6 @@ public class EditNotebook extends DialogBox {
 	public void onLoad() {
 
 		nb = Homepage.selectedNotebook;
-		nb.getTitle();
-		nb.getNotebookID();
 
 		setAutoHideEnabled(true);
 		setGlassEnabled(true);
@@ -97,7 +95,7 @@ public class EditNotebook extends DialogBox {
 		btnLoeschen.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				notesAdmin.deleteNotebook(nb.getNotebookID(), nb.getUserId(), new AsyncCallback<Void>() {
+				notesAdmin.deleteNotebook(nb.getId(), nb.getUserId(), new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
