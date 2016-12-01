@@ -27,7 +27,6 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Anchor;
 
@@ -60,8 +59,13 @@ public class Noteit implements EntryPoint {
 			"Please sign in to your Google Account to access the StockWatcher application.");
 	private Anchor signInLink = new Anchor("Sign In");
 	private Anchor signOutLink = new Anchor("Sign Out");
+	
+	private User currentUser = new User();
 
 	Logger logger = Logger.getLogger("NameOfYourLogger");
+	
+	private Homepage HomepagePanel;
+	private Impressum ImpressumPanel;
 
 	/**
 	 * This is the entry point method.
@@ -162,7 +166,7 @@ public class Noteit implements EntryPoint {
 		// RootPanel.get("content").add(editNotes);
 
 		/**
-		 * Login Status mit Login service �berpr�fen. Client-side proxy
+		 * Login Status mit Login service überprüfen. Client-side proxy
 		 * erstellen.
 		 */
 		// Check login status using login service.
@@ -176,7 +180,62 @@ public class Noteit implements EntryPoint {
 					public void onSuccess(LoginInfo result) {
 
 						loginInfo = result;
+						
+						final String mail = result.getEmailAddress();
+						notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
+							
+							@Override
+							public void onSuccess(User result) {
+								if (result != null) {
+									logger.log(Level.SEVERE,
+											"Nutzer gefunden: " + result);
+									 currentUser = result;
+									 //SettingsPanel = new Settings(currentUser, loginInfo);
+									 HomepagePanel = new Homepage(currentUser);									 
+									 ImpressumPanel = new Impressum();
+
+								} else if (mail != null) {
+									logger.log(Level.SEVERE,
+											"Neuen Nutzer angelegt "
+													+ currentUser);
+									
+									notesAdministrationService.createUser(mail, loginInfo.getFirstName(), loginInfo.getLastName(), new AsyncCallback<User>() {
+										
+										@Override
+										public void onFailure(Throwable caught) {
+											logger.log(Level.SEVERE,
+													"RPC Fehler "+caught);
+											
+										}
+
+										@Override
+										public void onSuccess(User result) {
+											currentUser = result;
+											logger.log(Level.SEVERE,
+													"RPC erfolgreich "+result);
+											
+										}
+									});
+									logger.log(Level.SEVERE,
+											"Nutzer in die DB geschrieben ");
+									 HomepagePanel = new Homepage(currentUser);							 
+									 ImpressumPanel = new Impressum();		
+
+								}
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								logger.log(Level.SEVERE,
+										"Error Login: " + caught);
+								
+							}
+						});
+						
 						if (loginInfo.isLoggedIn()) {
+							logger.log(Level.SEVERE,
+									"IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
 							RootPanel.get("content").add(vpBasisPanel);
 							RootPanel.get("content").add(homepage);
 							RootPanel.get("header").add(headerPanel);
