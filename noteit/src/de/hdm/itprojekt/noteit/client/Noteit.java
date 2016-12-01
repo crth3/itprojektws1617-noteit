@@ -71,6 +71,11 @@ public class Noteit implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
+		currentUser.setId(1);
+		currentUser.setFirstName("Max");
+		currentUser.setLastName("Mustermann");
+		currentUser.setMail("max@mustermann.de");
 
 		/**
 		 * create new Panels

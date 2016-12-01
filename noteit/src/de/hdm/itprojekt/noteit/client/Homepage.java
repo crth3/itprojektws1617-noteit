@@ -70,6 +70,9 @@ public class Homepage extends VerticalPanel {
 	public void onLoad() {
 
 		currentUser.setId(1);
+		currentUser.setFirstName("Max");
+		currentUser.setLastName("Mustermann");
+		currentUser.setMail("max@mustermann.de");
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
