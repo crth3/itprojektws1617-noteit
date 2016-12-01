@@ -56,9 +56,8 @@ public class NoteCellList extends Widget {
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						// contactForm.setContact(selectionModel.getSelectedObject());
-						Window.alert("Du hast gewählt: " + noteSelectionModel
-								.getSelectedObject().getTitle());
 						SelectedNote = noteSelectionModel.getSelectedObject();
+						Homepage.setSelectedNote(noteSelectionModel.getSelectedObject());
 
 					}
 				});
