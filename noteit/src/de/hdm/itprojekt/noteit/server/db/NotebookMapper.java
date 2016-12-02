@@ -106,6 +106,11 @@ public class NotebookMapper {
 							+ "WHERE "
 							+ "Notebook.User_userId = "
 							+ id);
+			
+			System.out.println("SELECT * FROM Notebook "
+					+ "WHERE "
+					+ "Notebook.User_userId = "
+					+ id);
 
 			while (rs.next()) {
 				Notebook nb = new Notebook();
@@ -117,7 +122,7 @@ public class NotebookMapper {
 				
 		
 				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
+				// Notebook Objekt der Liste hinzufügen
 				notebookList.add(nb);
 			}
 			// Objekt zurückgeben
