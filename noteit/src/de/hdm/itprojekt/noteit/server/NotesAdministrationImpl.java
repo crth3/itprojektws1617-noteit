@@ -351,10 +351,17 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 * Gibt alle Notizbücher eines Nutzers zurück
 	 */
 	@Override
-	public ArrayList<Notebook> getAllNotebooksByUserID(int UserID) throws IllegalArgumentException {
+	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		ArrayList<Notebook> createdNotebooks = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
+		
+		for (NotebookPermission foundedNotebookPermission : sharedNotebooks) {
+			createdNotebooks.add(nbMapper.findById(foundedNotebookPermission.getNotebookId()));
+		}
+		
 
-		return this.nbMapper.findNotebooksByUserID(UserID);
+		return createdNotebooks;
 	}
 
 	/**

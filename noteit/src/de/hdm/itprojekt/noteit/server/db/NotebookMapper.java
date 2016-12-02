@@ -102,19 +102,15 @@ public class NotebookMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT notebookId, title, creationDate "
-							+ "FROM Notebook INNER JOIN NotebookPermission ON "
-							+ "Notebook.notebookId = NotebookPermission.Notebook_notebookId "
-							+ "WHERE Notebook.User_userId = "
-							+ id 
-							+ " GROUP BY notebookId");
+					.executeQuery("SELECT * FROM Notebook "
+							+ "WHERE "
+							+ "Notebook.User_userId = "
+							+ id);
 			
-			System.out.println("SELECT notebookId, title, creationDate "
-					+ "FROM Notebook INNER JOIN NotebookPermission ON "
-					+ "Notebook.notebookId = NotebookPermission.Notebook_notebookId "
-					+ "WHERE Notebook.User_userId = "
-					+ id 
-					+ " GROUP BY notebookId");
+			System.out.println("SELECT * FROM Notebook "
+					+ "WHERE "
+					+ "Notebook.User_userId = "
+					+ id);
 
 			while (rs.next()) {
 				Notebook nb = new Notebook();
