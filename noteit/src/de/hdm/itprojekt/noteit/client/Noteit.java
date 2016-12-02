@@ -40,16 +40,17 @@ public class Noteit implements EntryPoint {
 	 * returns an error.
 	 */
 	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network "
-			+ "connection and try again.";
+			+ "attempting to contact the server. Please check your network " + "connection and try again.";
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final NotesAdministrationAsync notesAdministrationService = GWT
-			.create(NotesAdministration.class);
+	private final NotesAdministrationAsync notesAdministrationService = GWT.create(NotesAdministration.class);
 
+	private static Logger rootLogger = Logger.getLogger("");
+
+	
 	/**
 	 * Login-Widgets
 	 */
@@ -59,56 +60,60 @@ public class Noteit implements EntryPoint {
 			"Please sign in to your Google Account to access the StockWatcher application.");
 	private Anchor signInLink = new Anchor("Sign In");
 	private Anchor signOutLink = new Anchor("Sign Out");
-	
+
 	private User currentUser = new User();
 
 	Logger logger = Logger.getLogger("NameOfYourLogger");
-	
+
 	private Homepage HomepagePanel;
 	private Impressum ImpressumPanel;
 
 	/**
+	 * create new Panels
+	 */
+	final VerticalPanel vpBasisPanel = new VerticalPanel();
+	final HorizontalPanel headerPanel = new HorizontalPanel();
+	final static HorizontalPanel welcomePanel = new HorizontalPanel();
+	final HorizontalPanel headlinePanel = new HorizontalPanel();
+	final HorizontalPanel logoutPanel = new HorizontalPanel();
+	final VerticalPanel homepage = new Homepage();
+	// HorizontalPanel navPanel = new HorizontalPanel();
+	// HorizontalPanel navNotebookPanel = new HorizontalPanel();
+	// HorizontalPanel navNotesPanel = new HorizontalPanel();
+	// HorizontalPanel contentPanel = new HorizontalPanel();
+	// HorizontalPanel contentNotebookPanel = new HorizontalPanel();
+	// HorizontalPanel contentNotesPanel = new HorizontalPanel();
+	// VerticalPanel editNotes = new EditNotes();
+
+	/**
+	 * Create new Labels
+	 */
+	static String x = Homepage.getCurrentUser().getFirstName();
+	static Label welcomeLabel = new Label("Wilkommen " + x);
+	Label headlineLabel = new Label("NoteIt");
+	// Label headlineNotebookLabel = new Label ("Notizbücher");
+	// Label headlineNotesLabel = new Label ("Notizen");
+
+	/**
+	 * Create new Buttons
+	 */
+	Button btnLogOut = new Button("Logout");
+	Button impressumButton = new Button("Impressum");
+	Button zurueckButton = new Button("Zurück");
+	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"20\" height=\"20\">");
+
+	/**
 	 * This is the entry point method.
 	 */
+
 	public void onModuleLoad() {
+
 		
 		currentUser.setId(1);
 		currentUser.setFirstName("Max");
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
-
-		/**
-		 * create new Panels
-		 */
-		final VerticalPanel vpBasisPanel = new VerticalPanel();
-		final HorizontalPanel headerPanel = new HorizontalPanel();
-		final HorizontalPanel welcomePanel = new HorizontalPanel();
-		final HorizontalPanel headlinePanel = new HorizontalPanel();
-		final HorizontalPanel logoutPanel = new HorizontalPanel();
-		final VerticalPanel homepage = new Homepage();
-		// HorizontalPanel navPanel = new HorizontalPanel();
-		// HorizontalPanel navNotebookPanel = new HorizontalPanel();
-		// HorizontalPanel navNotesPanel = new HorizontalPanel();
-		// HorizontalPanel contentPanel = new HorizontalPanel();
-		// HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-		// HorizontalPanel contentNotesPanel = new HorizontalPanel();
-		// VerticalPanel editNotes = new EditNotes();
-
-		/**
-		 * Create new Labels
-		 */
-		Label welcomeLabel = new Label("Wilkommen Chris");
-		Label headlineLabel = new Label("NoteIt");
-		// Label headlineNotebookLabel = new Label ("Notizbücher");
-		// Label headlineNotesLabel = new Label ("Notizen");
-
-		/**
-		 * Create new Buttons
-		 */
-		Button btnLogOut = new Button("Logout");
-		Button impressumButton = new Button("Impressum");
-		Button zurueckButton = new Button("Zurück");
-		Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"20\" height=\"20\">");
+		
 
 		/**
 		 * Set the Style
@@ -127,8 +132,7 @@ public class Noteit implements EntryPoint {
 		// contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		// contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		headlinePanel
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		// navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
@@ -178,82 +182,75 @@ public class Noteit implements EntryPoint {
 		 */
 		// Check login status using login service.
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(),
-				new AsyncCallback<LoginInfo>() {
-					public void onFailure(Throwable error) {
-						logger.log(Level.SEVERE, "ERROR Login" + error);
-					}
+		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+			public void onFailure(Throwable error) {
+				logger.log(Level.SEVERE, "ERROR Login" + error);
+			}
 
-					public void onSuccess(LoginInfo result) {
+			public void onSuccess(LoginInfo result) {
 
-						loginInfo = result;
-						
-						final String mail = result.getEmailAddress();
-						notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
-							
-							@Override
-							public void onSuccess(User result) {
-								if (result != null) {
-									logger.log(Level.SEVERE,
-											"Nutzer gefunden: " + result);
-									 currentUser = result;
-									 //SettingsPanel = new Settings(currentUser, loginInfo);
-									 HomepagePanel = new Homepage(currentUser);									 
-									 ImpressumPanel = new Impressum();
+				loginInfo = result;
 
-								} else if (mail != null) {
-									logger.log(Level.SEVERE,
-											"Neuen Nutzer angelegt "
-													+ currentUser);
-									
-									notesAdministrationService.createUser(mail, loginInfo.getFirstName(), loginInfo.getLastName(), new AsyncCallback<User>() {
-										
+				final String mail = result.getEmailAddress();
+				notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
+
+					@Override
+					public void onSuccess(User result) {
+						if (result != null) {
+							logger.log(Level.SEVERE, "Nutzer gefunden: " + result);
+							currentUser = result;
+							// SettingsPanel = new Settings(currentUser,
+							// loginInfo);
+							HomepagePanel = new Homepage(currentUser);
+							ImpressumPanel = new Impressum();
+
+						} else if (mail != null) {
+							logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
+
+							notesAdministrationService.createUser(mail, loginInfo.getFirstName(),
+									loginInfo.getLastName(), new AsyncCallback<User>() {
+
 										@Override
 										public void onFailure(Throwable caught) {
-											logger.log(Level.SEVERE,
-													"RPC Fehler "+caught);
-											
+											logger.log(Level.SEVERE, "RPC Fehler " + caught);
+
 										}
 
 										@Override
 										public void onSuccess(User result) {
 											currentUser = result;
-											logger.log(Level.SEVERE,
-													"RPC erfolgreich "+result);
-											
+											logger.log(Level.SEVERE, "RPC erfolgreich " + result);
+
 										}
 									});
-									logger.log(Level.SEVERE,
-											"Nutzer in die DB geschrieben ");
-									 HomepagePanel = new Homepage(currentUser);							 
-									 ImpressumPanel = new Impressum();		
+							logger.log(Level.SEVERE, "Nutzer in die DB geschrieben ");
+							HomepagePanel = new Homepage(currentUser);
+							ImpressumPanel = new Impressum();
 
-								}
-								
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								logger.log(Level.SEVERE,
-										"Error Login: " + caught);
-								
-							}
-						});
-						
-						if (loginInfo.isLoggedIn()) {
-							logger.log(Level.SEVERE,
-									"IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
-							RootPanel.get("content").add(vpBasisPanel);
-							RootPanel.get("content").add(homepage);
-							RootPanel.get("header").add(headerPanel);
-							// Hier muss auf die Hompage-Steie verwiesen werden
-
-						} else {
-							logger.log(Level.SEVERE, "DONE Login" + result);
-							loadLogin();
 						}
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						logger.log(Level.SEVERE, "Error Login: " + caught);
+
 					}
 				});
+
+				if (loginInfo.isLoggedIn()) {
+					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
+					RootPanel.get("content").add(vpBasisPanel);
+					RootPanel.get("content").add(homepage);
+					RootPanel.get("header").add(headerPanel);
+					// Hier muss auf die Hompage-Steie verwiesen werden
+
+				} else {
+					logger.log(Level.SEVERE, "DONE Login" + result);
+					loadLogin();
+				}
+			}
+		});
 
 		// ClickHandler für Impressum Button
 		impressumButton.addClickHandler(new ClickHandler() {
@@ -272,7 +269,7 @@ public class Noteit implements EntryPoint {
 
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(homepage);
-				
+
 			}
 		});
 
@@ -285,14 +282,18 @@ public class Noteit implements EntryPoint {
 
 			}
 		});
-		
+
 		btnSettingsButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				UserSettings userSettings = new UserSettings(currentUser);
-				userSettings.show();
-				userSettings.center();
+				Settings settings = new Settings(currentUser);
+				settings.show();
+				settings.center();
+
+				// UserSettings userSettings = new UserSettings(currentUser);
+				// userSettings.show();
+				// userSettings.center();
 			}
 		});
 
@@ -319,23 +320,21 @@ public class Noteit implements EntryPoint {
 		/**
 		 * 
 		 */
-		notesAdministrationService.findNoteByKeyword(1, "title", 1,
-				new AsyncCallback<ArrayList<Note>>() {
+		notesAdministrationService.findNoteByKeyword(1, "title", 1, new AsyncCallback<ArrayList<Note>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 
-					}
+			}
 
-					@Override
-					public void onSuccess(ArrayList<Note> result) {
-						Logger logger = Logger.getLogger("NameOfYourLogger");
-						logger.log(Level.SEVERE,
-								"on success Note by Keyword " + result.size());
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				Logger logger = Logger.getLogger("NameOfYourLogger");
+				logger.log(Level.SEVERE, "on success Note by Keyword " + result.size());
 
-					}
-				});
+			}
+		});
 
 	}
 
@@ -345,5 +344,13 @@ public class Noteit implements EntryPoint {
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 		RootPanel.get("content").add(loginPanel);
+	}
+
+	public static void setWelcomeName(String name) {
+		welcomePanel.remove(welcomeLabel);
+		x = name;
+		
+		welcomeLabel.setText("Wilkommen " + x);
+		welcomePanel.add(welcomeLabel);
 	}
 }
