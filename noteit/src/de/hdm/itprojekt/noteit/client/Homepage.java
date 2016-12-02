@@ -45,12 +45,12 @@ public class Homepage extends VerticalPanel {
 	Label lbheadlineNotesLabel = new Label("Notizen");
 
 	// --------- Button -----------//
-	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
+	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
+	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
+	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
+	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
@@ -81,6 +81,15 @@ public class Homepage extends VerticalPanel {
 		navNotesPanel.setStylePrimaryName("navNotesPanel");
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
+		
+		contentPanel.setStylePrimaryName("contentPanel");
+		
+		btnSearchNotebook.setStylePrimaryName("btnSearchNotebook");
+		btnAddNewNoteButton.setStylePrimaryName("btnAddNewNoteButton");
+		btnAddNewNotebookButton.setStylePrimaryName("btnAddNewNotebookButton");
+		btnEditNotebook.setStylePrimaryName("btnEditNotebook");
+		btnEditNote.setStylePrimaryName("btnEditNote");
+		btnSearchNote.setStylePrimaryName("btnSearchNote");
 
 		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -94,9 +103,10 @@ public class Homepage extends VerticalPanel {
 		contentNotebookPanel.setWidth("500px");
 		contentNotesPanel.setWidth("500px");
 
-		contentNotebookPanel.setHeight("300px");
-		contentNotesPanel.setHeight("300px");
+		contentNotebookPanel.setHeight("500px");
+		contentNotesPanel.setHeight("500px");
 
+		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
 		navNotesPanel.add(lbheadlineNotesLabel);
 		navNotesPanel.add(btnAddNewNoteButton);
@@ -109,6 +119,7 @@ public class Homepage extends VerticalPanel {
 		 */
 
 		tbSearchNotebook.setText("Notizbücher suchen...");
+		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
 		navNotebookPanel.add(tbSearchNotebook);
 
 		/**
@@ -122,6 +133,7 @@ public class Homepage extends VerticalPanel {
 		 */
 
 		tbSearchNote.setText("Notizen suchen...");
+		tbSearchNote.setStylePrimaryName("tbSearchNote");
 		navNotesPanel.add(tbSearchNote);
 
 		/**

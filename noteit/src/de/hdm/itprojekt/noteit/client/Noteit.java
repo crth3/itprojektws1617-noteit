@@ -139,6 +139,8 @@ public class Noteit implements EntryPoint {
 		// contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
+		homepage.setStylePrimaryName("homepage");
+		
 		/**
 		 * set the width
 		 */
@@ -242,7 +244,7 @@ public class Noteit implements EntryPoint {
 					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
 					RootPanel.get("content").add(vpBasisPanel);
 					RootPanel.get("content").add(homepage);
-					RootPanel.get("header").add(headerPanel);
+					RootPanel.get("head").add(headerPanel);
 					// Hier muss auf die Hompage-Steie verwiesen werden
 
 				} else {
