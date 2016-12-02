@@ -36,7 +36,7 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navPanel = new HorizontalPanel();
 	HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
-	HorizontalPanel contentPanel = new HorizontalPanel();
+	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
@@ -62,6 +62,9 @@ public class Homepage extends VerticalPanel {
 	final NotebookCellList notebookCellList = new NotebookCellList();
 	static Notebook selectedNotebook = new Notebook();
 	static Note selectedNote = new Note();
+	
+	
+    
 
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
@@ -171,6 +174,8 @@ public class Homepage extends VerticalPanel {
 				System.out.println("Error" + caught);
 			}
 		});
+		
+
 
 		/**
 		 * Create the Button and the ClickHandler
@@ -267,6 +272,17 @@ public class Homepage extends VerticalPanel {
 	public Homepage(User currentUser){
 		this.currentUser = currentUser;
 	}
+	
+
+	public static void showCurrentNote(VerticalPanel vpShowNote){
+		
+		contentPanel.remove(contentNotesPanel);
+		vpShowNote.setHeight("300px");
+		vpShowNote.setWidth("500px");
+		contentPanel.add(vpShowNote);
+		
+		
+	}
 
 	/**
 	 * set all notes from selected notebook
@@ -356,7 +372,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
-				
+				clNote.setRowCount(0);
 				clNote.setRowData(result);
 				
 			}
@@ -366,5 +382,6 @@ public class Homepage extends VerticalPanel {
 	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
 	}
+
 
 }
