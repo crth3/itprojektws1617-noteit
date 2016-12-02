@@ -69,10 +69,7 @@ public class Homepage extends VerticalPanel {
 
 	public void onLoad() {
 
-		currentUser.setId(1);
-		currentUser.setFirstName("Max");
-		currentUser.setLastName("Mustermann");
-		currentUser.setMail("max@mustermann.de");
+		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -137,6 +134,8 @@ public class Homepage extends VerticalPanel {
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
+		
+		getCurrentUser();
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -365,6 +364,14 @@ public class Homepage extends VerticalPanel {
 
 	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
+	}
+	
+	public static User getCurrentUser(){
+		currentUser.setId(1);
+		currentUser.setFirstName("Max");
+		currentUser.setLastName("Mustermann");
+		currentUser.setMail("max@mustermann.de");
+		return currentUser;
 	}
 
 }
