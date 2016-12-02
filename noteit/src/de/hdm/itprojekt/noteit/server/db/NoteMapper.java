@@ -69,20 +69,15 @@ public class NoteMapper {
 			if (rs.next()) {
 				// Neues Note-Objekt erzeugen
 				Note n = new Note();
-				User creator = new User();
-				creator.setId(rs.getInt("userId"));
-				creator.setFirstName(rs.getString("firstName"));
-				creator.setLastName(rs.getString("lastName"));
-				creator.setMail(rs.getString("emailAddress"));
 				
 				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
 				n.setText(rs.getString("content"));
 				n.setMaturityDate(rs.getTimestamp("maturity"));
 				n.setCreationDate(rs.getTimestamp("creationDate"));
 				n.setModificationDate(rs.getTimestamp("creationDate"));
 				
 				n.setUserId(rs.getInt("User_userId"));
-				n.setCreator(creator);
 				// Objekt zurückgeben
 				return n;
 			}

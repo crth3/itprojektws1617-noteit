@@ -32,7 +32,7 @@ public interface NotesAdministrationAsync {
 
 	void getAllNotebooksByUserID(int UserID, AsyncCallback<ArrayList<Notebook>> callback);
 
-	void getAllNotesByNotebookID(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+	void getAllNotesByNotebookID(int notebookID, int userID, AsyncCallback<ArrayList<Note>> callback);
 
 	void init(AsyncCallback<Void> callback);
 

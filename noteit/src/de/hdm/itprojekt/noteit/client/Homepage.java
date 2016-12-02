@@ -151,7 +151,7 @@ public class Homepage extends VerticalPanel {
 				clNotebook.setRowData(result);
 				contentNotebookPanel.add(clNotebook);
 
-				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(), new AsyncCallback<ArrayList<Note>>() {
+				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(),currentUser.getId() , new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onSuccess(ArrayList<Note> result) {
@@ -292,7 +292,7 @@ public class Homepage extends VerticalPanel {
 		selectedNotebook = notebook;
 		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
-		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebook.getId(),getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
@@ -359,9 +359,9 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 	}
-	public static void updateNotesCellList (int NotebookId){
+	public static void updateNotesCellList (int notebookId){
 		
-		notesAdmin.getAllNotesByNotebookID(NotebookId, new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebookId, getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

@@ -353,9 +353,20 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		ArrayList<Notebook> createdNotebooks = this.nbMapper.findNotebooksByUserID(userID);
-		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
+		Notebook finalNotebook = new Notebook();
+		finalNotebook.setId(0);
+		finalNotebook.setUserId(0);
+		finalNotebook.setTitle("Für mich geteilte Notizen");
+		finalNotebook.setCreationDate(ts);
 		
+		ArrayList<Notebook> createdNotebooks = new ArrayList<Notebook>();
+		createdNotebooks.add(finalNotebook);
+		
+		ArrayList<Notebook> allNotebooks = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
+		for (Notebook foundedNotebooks : allNotebooks) {
+			createdNotebooks.add(foundedNotebooks);
+		}
 		for (NotebookPermission foundedNotebookPermission : sharedNotebooks) {
 			createdNotebooks.add(nbMapper.findById(foundedNotebookPermission.getNotebookId()));
 		}
@@ -368,9 +379,39 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 * Gibt alles Notizen eines Notizbuches zurück
 	 */
 	@Override
-	public ArrayList<Note> getAllNotesByNotebookID(int notebookID) throws IllegalArgumentException {
+	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return this.nMapper.findNotesByNotebookId(notebookID);
+		ArrayList<Note> currentNotes = this.nMapper.findNotesByNotebookId(notebookID);
+		ArrayList<NotePermission> notesPermission = this.npMapper.findNotePermissionByUserId(userID);
+		ArrayList<Note> allFoundedNotes = new ArrayList<Note>();
+		ArrayList<Note> sharedNotes= new ArrayList<Note>();
+		
+		if(notebookID == 0){
+			if(notesPermission != null){ 
+				for (NotePermission foundedNotePermission : notesPermission) {
+					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getText());
+				}
+			}
+			return allFoundedNotes;
+		}else if(this.nbMapper.findById(notebookID).getUserId() != userID){
+			if(notesPermission != null){ 
+				for (NotePermission foundedNotePermission : notesPermission) {
+					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+				}
+			}
+			
+			for (Note foundedNote : allFoundedNotes) {
+				if(foundedNote.getNotebookId() == notebookID){
+					sharedNotes.add(foundedNote);
+				}
+			}
+			return sharedNotes;
+		}else{
+			
+			return currentNotes;
+		}
+		
 	}
 
 	/**
