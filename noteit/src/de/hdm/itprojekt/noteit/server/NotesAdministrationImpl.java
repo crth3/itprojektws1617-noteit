@@ -196,37 +196,44 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in deleteNotebook");
-
+		
 		System.out.println("notebookID" + notebookID);
+		
 		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper
 				.findNotebookPermissionByNotebookId(notebookID);
 		Notebook currentNotebook = new Notebook();
 		currentNotebook = this.nbMapper.findById(notebookID);
-		System.out.println("current Notebook User ID: " +currentNotebook.getUserId());
+		System.out.println("current Notebook.getUserId: " +currentNotebook.getUserId());
 		System.out.println("übergebene UserID: " + userID);
 		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
 
 		try {
 			// Wenn der selbe derdas Notebookerstellt hat, es löschen möchte
 			if (currentNotebook.getUserId() == userID) { 
+				System.out.println("userID = notebook.getUserId");
 				// Wenn das Notizbuch nochNotizen enthält
 				if (allNotesByNotebookID != null) { 
+					
 					deleteAllNotesByNotebookID(userID, notebookID);
+					System.out.println("alle Notizen gelöscht");
 				}
 				// wenn es Permissions gibt
 				if (notebookPermissions != null) { 
+					System.out.println("es gibt permissions");
 					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 						//lösche zuerst alle Permissions
 						this.nbpMapper.delete(foundedNotebookPermission); 
 					}
 					// lösche das Notebook
+					System.out.println("Notizbuch löschen");
 					this.nbMapper.delete(currentNotebook); 
 				} else {
+					System.out.println("Notizbuch löschen ohne permissions");
 					// wenn es keine permission gibt, lösche das notebook
 					this.nbMapper.delete(currentNotebook); 
 				}
 
-			} else if (notebookPermissions != null) {
+			} else if(notebookPermissions != null && currentNotebook.getUserId() != userID) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 					if (userID == foundedNotebookPermission.getUserId()) {
 						// wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
