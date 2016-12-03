@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -219,9 +220,13 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				EditNotebook editNotebook = new EditNotebook(currentUser);
-				editNotebook.show();
-				editNotebook.center();
+				if(selectedNotebook.getId() != 0){
+					EditNotebook editNotebook = new EditNotebook(currentUser);
+					editNotebook.show();
+					editNotebook.center();
+				}else{
+					Window.alert("Dieses Notizbuch kann nicht bearbeitet werden");
+				}
 			}
 		});
 
