@@ -5,6 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -119,7 +123,7 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNotebook.setText("Notizbücher suchen...");
+		tbSearchNotebook.getElement().setPropertyString("placeholder", "Notizbücher suchen...");
 		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
 		navNotebookPanel.add(tbSearchNotebook);
 
@@ -133,7 +137,7 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNote.setText("Notizen suchen...");
+		tbSearchNote.getElement().setPropertyString("placeholder", "Notizen suchen...");
 		tbSearchNote.setStylePrimaryName("tbSearchNote");
 		navNotesPanel.add(tbSearchNote);
 
@@ -238,6 +242,15 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				searchNotebookByKeyword(currentUser.getId(), event.getValue());
+			}
+		});
+		
+		tbSearchNotebook.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				tbSearchNotebook.setText("");
+				
 			}
 		});
 
