@@ -421,7 +421,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> findNotebooksByKeyword(int userID, String keyword) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		ArrayList<Notebook> allNotebooksFromThisUser = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<Notebook> allNotebooksFromThisUser = getAllNotebooksByUserID(userID);
 		ArrayList<Notebook> notebooksWithKeyword = new ArrayList<Notebook>();
 
 		if (allNotebooksFromThisUser != null) {
