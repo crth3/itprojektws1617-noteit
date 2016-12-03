@@ -175,7 +175,6 @@ public class Homepage extends VerticalPanel {
 
 						clNote.setRowData(result);
 						contentNotesPanel.add(clNote);
-						selectedNotebook.setId(1);
 					}
 
 					@Override

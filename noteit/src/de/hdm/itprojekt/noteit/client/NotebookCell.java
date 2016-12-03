@@ -17,7 +17,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class NotebookCell extends AbstractCell<Notebook> {
 	
-
+	
 
 	@Override	
 	public void render(Context context, Notebook value, SafeHtmlBuilder sb) {
@@ -27,7 +27,8 @@ public class NotebookCell extends AbstractCell<Notebook> {
 		}
 
 		sb.appendHtmlConstant("<div>");
-		if(value.getUserId() != Homepage.getCurrentUser().getId()){
+		sb.appendHtmlConstant("<div style=\"padding: 5px ;margin: auto ;\">");
+		if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0){
 				
 			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
 		}
@@ -36,7 +37,8 @@ public class NotebookCell extends AbstractCell<Notebook> {
 		
 		sb.appendHtmlConstant("</div>");
 		
-			//sb.appendHtmlConstant("<div style=\"border-bottom: 4px solid #dddddd;\">");
+//		sb.appendHtmlConstant("<div style=\"border-bottom: 4px solid #dddddd;\">");
+		
 
 		
 		// sb.appendHtmlConstant("<email style='font-size:80%; padding-left:
