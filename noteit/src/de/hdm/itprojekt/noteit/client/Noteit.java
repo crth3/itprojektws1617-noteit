@@ -100,7 +100,7 @@ public class Noteit implements EntryPoint {
 	Button btnLogOut = new Button("Logout");
 	Button impressumButton = new Button("Impressum");
 	Button zurueckButton = new Button("Zurück");
-	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"20\" height=\"20\">");
+	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"14\" height=\"14\">");
 
 	/**
 	 * This is the entry point method.
@@ -138,6 +138,7 @@ public class Noteit implements EntryPoint {
 		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		// contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		btnSettingsButton.setStylePrimaryName("btnSettingsButton");
 
 		homepage.setStylePrimaryName("homepage");
 		
