@@ -39,6 +39,7 @@ public class EditNotebook extends DialogBox {
 	HorizontalPanel titelPanel = new HorizontalPanel();
 	HorizontalPanel teilenPanel = new HorizontalPanel();
 	HorizontalPanel hpButtonPanel = new HorizontalPanel();
+	HorizontalPanel hpAskForDelete = new HorizontalPanel();
 	HorizontalPanel hpBerechtigungsPanel = new HorizontalPanel();
 	RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
 	RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
@@ -47,8 +48,13 @@ public class EditNotebook extends DialogBox {
 	Button btnLoeschen = new Button("Löschen");
 	Button btnAbbrechen = new Button("Abbrechen");
 	Button btnSichern = new Button("Sichern");
+	Button btnDeleteInAskForDelete = new Button("Löschen");
+	Button btnCancelInAskForDelete = new Button("Abbrechen");
+	
 	TextBox tbTitelTextBox = new TextBox();
 	TextBox tbTeilenTextBox = new TextBox();
+	
+	DialogBox askForDelete = new DialogBox();
 
 	/**
 	 * Konstruktor mit Userobjekt als Übergabeparameter
@@ -62,10 +68,9 @@ public class EditNotebook extends DialogBox {
 
 		nb = Homepage.selectedNotebook;
 
-		setAutoHideEnabled(true);
+		//setAutoHideEnabled(true);
 		setGlassEnabled(true);
 		setText("Notizbuch bearbeiten");
-		center();
 
 		/**
 		 *	Add the Labels, Panels, Radio Buttons, Buttons and TexBox
@@ -85,6 +90,16 @@ public class EditNotebook extends DialogBox {
 
 		vpEditNotebookPanel.setSpacing(40);
 		setWidget(vpEditNotebookPanel);
+		
+		
+		
+		/* ----- Delete dialogBox -----*/
+		hpAskForDelete.add(btnDeleteInAskForDelete);
+		hpAskForDelete.add(btnCancelInAskForDelete);
+		askForDelete.setText("Möchtest du das Notizbuch wirklich Löschen?");
+		hpAskForDelete.setSpacing(40);
+		askForDelete.add(hpAskForDelete);
+		
 
 		/**
 		 * Hinzufügen des Titels zur Textbox
@@ -94,18 +109,40 @@ public class EditNotebook extends DialogBox {
 		// ClickHandler für Löschen Button
 		btnLoeschen.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-
-				notesAdmin.deleteNotebook(nb.getId(), nb.getUserId(), new AsyncCallback<Void>() {
+				
+				askForDelete.setGlassEnabled(true);
+				askForDelete.center();
+				askForDelete.show();
+				
+				btnDeleteInAskForDelete.addClickHandler(new ClickHandler() {
 
 					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+					public void onClick(ClickEvent event) {
+						notesAdmin.deleteNotebook(nb.getId(), nb.getUserId(), new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								Homepage.updateNotebookCellList(nb.getUserId());
+								askForDelete.hide();
+								EditNotebook.this.hide();
+
+							}
+						});
 
 					}
+				});
+
+				btnCancelInAskForDelete.addClickHandler(new ClickHandler() {
 
 					@Override
-					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
+					public void onClick(ClickEvent event) {
+						askForDelete.hide();
 
 					}
 				});

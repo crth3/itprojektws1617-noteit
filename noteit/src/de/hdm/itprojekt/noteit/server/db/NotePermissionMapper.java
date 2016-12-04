@@ -114,7 +114,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 				n.setTitle(rs.getString("title"));
 				n.setSubTitle(rs.getString("subtitle"));
 				n.setText(rs.getString("content"));
-				n.setMaturityDate(rs.getTimestamp("maturityDate"));
+				n.setMaturityDate(rs.getTimestamp("maturity"));
 				n.setCreationDate(rs.getTimestamp("creationDate"));
 				n.setModificationDate(rs.getTimestamp("modificationDate"));
 				n.setNotebookId(rs.getInt("Notebook_notebookId"));
@@ -289,7 +289,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-			stmt.executeUpdate("DELETE FROM NotePermisison "
+			stmt.executeUpdate("DELETE FROM NotePermission "
 					+ "WHERE notePermissionId = " 
 					+ np.getNotePermissionId());
 		}

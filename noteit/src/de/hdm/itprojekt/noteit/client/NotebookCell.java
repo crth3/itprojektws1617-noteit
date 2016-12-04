@@ -1,6 +1,9 @@
 package de.hdm.itprojekt.noteit.client;
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.itprojekt.noteit.shared.bo.*;
@@ -13,8 +16,10 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
  */
 
 public class NotebookCell extends AbstractCell<Notebook> {
+	
+	
 
-	@Override
+	@Override	
 	public void render(Context context, Notebook value, SafeHtmlBuilder sb) {
 
 		if (value == null) {
@@ -22,15 +27,19 @@ public class NotebookCell extends AbstractCell<Notebook> {
 		}
 
 		sb.appendHtmlConstant("<div>");
-		sb.appendEscaped(value.getTitle() + " ");
-		sb.appendHtmlConstant("</div>");
-		if(value.getUserId() != Homepage.currentUser.getId()){
-			sb.appendHtmlConstant(
-					"<div style=\"border-bottom: 4px solid #dd77dd;\">");
-		}else{
-			sb.appendHtmlConstant(
-					"<div style=\"border-bottom: 4px solid #dddddd;\">");
+		sb.appendHtmlConstant("<div style=\"padding: 5px ;margin: auto ;\">");
+		if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0){
+				
+			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
 		}
+		
+		sb.appendEscaped(" "+ value.getTitle());
+		
+		sb.appendHtmlConstant("</div>");
+		
+//		sb.appendHtmlConstant("<div style=\"border-bottom: 4px solid #dddddd;\">");
+		
+
 		
 		// sb.appendHtmlConstant("<email style='font-size:80%; padding-left:
 		// 10px;'>");

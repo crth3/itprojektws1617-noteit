@@ -5,11 +5,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -45,12 +50,12 @@ public class Homepage extends VerticalPanel {
 	Label lbheadlineNotesLabel = new Label("Notizen");
 
 	// --------- Button -----------//
-	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"20\" height=\"20\">");
-	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
-	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"20\" height=\"20\">");
+	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
+	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
+	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
+	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
@@ -72,10 +77,7 @@ public class Homepage extends VerticalPanel {
 
 	public void onLoad() {
 
-		currentUser.setId(1);
-		currentUser.setFirstName("Max");
-		currentUser.setLastName("Mustermann");
-		currentUser.setMail("max@mustermann.de");
+		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -84,6 +86,15 @@ public class Homepage extends VerticalPanel {
 		navNotesPanel.setStylePrimaryName("navNotesPanel");
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
+		
+		contentPanel.setStylePrimaryName("contentPanel");
+		
+		btnSearchNotebook.setStylePrimaryName("btnSearchNotebook");
+		btnAddNewNoteButton.setStylePrimaryName("btnAddNewNoteButton");
+		btnAddNewNotebookButton.setStylePrimaryName("btnAddNewNotebookButton");
+		btnEditNotebook.setStylePrimaryName("btnEditNotebook");
+		btnEditNote.setStylePrimaryName("btnEditNote");
+		btnSearchNote.setStylePrimaryName("btnSearchNote");
 
 		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -97,9 +108,10 @@ public class Homepage extends VerticalPanel {
 		contentNotebookPanel.setWidth("500px");
 		contentNotesPanel.setWidth("500px");
 
-		contentNotebookPanel.setHeight("300px");
-		contentNotesPanel.setHeight("300px");
+		contentNotebookPanel.setHeight("500px");
+		contentNotesPanel.setHeight("500px");
 
+		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
 		navNotesPanel.add(lbheadlineNotesLabel);
 		navNotesPanel.add(btnAddNewNoteButton);
@@ -111,7 +123,8 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNotebook.setText("Notizbücher suchen...");
+		tbSearchNotebook.getElement().setPropertyString("placeholder", "Notizbücher suchen...");
+		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
 		navNotebookPanel.add(tbSearchNotebook);
 
 		/**
@@ -124,7 +137,8 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNote.setText("Notizen suchen...");
+		tbSearchNote.getElement().setPropertyString("placeholder", "Notizen suchen...");
+		tbSearchNote.setStylePrimaryName("tbSearchNote");
 		navNotesPanel.add(tbSearchNote);
 
 		/**
@@ -140,6 +154,8 @@ public class Homepage extends VerticalPanel {
 		navPanel.add(navNotesPanel);
 		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
+		
+		getCurrentUser();
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -152,14 +168,13 @@ public class Homepage extends VerticalPanel {
 				clNotebook.setRowData(result);
 				contentNotebookPanel.add(clNotebook);
 
-				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(), new AsyncCallback<ArrayList<Note>>() {
+				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(),currentUser.getId() , new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onSuccess(ArrayList<Note> result) {
 
 						clNote.setRowData(result);
 						contentNotesPanel.add(clNote);
-						selectedNotebook.setId(1);
 					}
 
 					@Override
@@ -208,9 +223,13 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				EditNotebook editNotebook = new EditNotebook(currentUser);
-				editNotebook.show();
-				editNotebook.center();
+				if(selectedNotebook.getId() != 0){
+					EditNotebook editNotebook = new EditNotebook(currentUser);
+					editNotebook.show();
+					editNotebook.center();
+				}else{
+					Window.alert("Dieses Notizbuch kann nicht bearbeitet werden");
+				}
 			}
 		});
 
@@ -222,6 +241,15 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				searchNotebookByKeyword(currentUser.getId(), event.getValue());
+			}
+		});
+		
+		tbSearchNotebook.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				tbSearchNotebook.setText("");
+				
 			}
 		});
 
@@ -293,7 +321,7 @@ public class Homepage extends VerticalPanel {
 		selectedNotebook = notebook;
 		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
-		notesAdmin.getAllNotesByNotebookID(notebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebook.getId(),getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
@@ -360,9 +388,9 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 	}
-	public static void updateNotesCellList (int NotebookId){
+	public static void updateNotesCellList (int notebookId){
 		
-		notesAdmin.getAllNotesByNotebookID(NotebookId, new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebookId, getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -381,6 +409,14 @@ public class Homepage extends VerticalPanel {
 
 	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
+	}
+	
+	public static User getCurrentUser(){
+		currentUser.setId(1);
+		currentUser.setFirstName("Max");
+		currentUser.setLastName("Mustermann");
+		currentUser.setMail("max@mustermann.de");
+		return currentUser;
 	}
 
 

@@ -196,37 +196,44 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in deleteNotebook");
-
+		
 		System.out.println("notebookID" + notebookID);
+		
 		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper
 				.findNotebookPermissionByNotebookId(notebookID);
 		Notebook currentNotebook = new Notebook();
 		currentNotebook = this.nbMapper.findById(notebookID);
-		System.out.println("current Notebook User ID: " +currentNotebook.getUserId());
+		System.out.println("current Notebook.getUserId: " +currentNotebook.getUserId());
 		System.out.println("übergebene UserID: " + userID);
 		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
 
 		try {
 			// Wenn der selbe derdas Notebookerstellt hat, es löschen möchte
 			if (currentNotebook.getUserId() == userID) { 
+				System.out.println("userID = notebook.getUserId");
 				// Wenn das Notizbuch nochNotizen enthält
 				if (allNotesByNotebookID != null) { 
+					
 					deleteAllNotesByNotebookID(userID, notebookID);
+					System.out.println("alle Notizen gelöscht");
 				}
 				// wenn es Permissions gibt
 				if (notebookPermissions != null) { 
+					System.out.println("es gibt permissions");
 					for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 						//lösche zuerst alle Permissions
 						this.nbpMapper.delete(foundedNotebookPermission); 
 					}
 					// lösche das Notebook
+					System.out.println("Notizbuch löschen");
 					this.nbMapper.delete(currentNotebook); 
 				} else {
+					System.out.println("Notizbuch löschen ohne permissions");
 					// wenn es keine permission gibt, lösche das notebook
 					this.nbMapper.delete(currentNotebook); 
 				}
 
-			} else if (notebookPermissions != null) {
+			} else if(notebookPermissions != null && currentNotebook.getUserId() != userID) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 					if (userID == foundedNotebookPermission.getUserId()) {
 						// wenn Berechtigung für den übergebenen User 3 ist, der das Notebook löschen möchte
@@ -353,9 +360,20 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		ArrayList<Notebook> createdNotebooks = this.nbMapper.findNotebooksByUserID(userID);
-		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
+		Notebook finalNotebook = new Notebook();
+		finalNotebook.setId(0);
+		finalNotebook.setUserId(0);
+		finalNotebook.setTitle("Für mich geteilte Notizen");
+		finalNotebook.setCreationDate(ts);
 		
+		ArrayList<Notebook> createdNotebooks = new ArrayList<Notebook>();
+		createdNotebooks.add(finalNotebook);
+		
+		ArrayList<Notebook> allNotebooks = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
+		for (Notebook foundedNotebooks : allNotebooks) {
+			createdNotebooks.add(foundedNotebooks);
+		}
 		for (NotebookPermission foundedNotebookPermission : sharedNotebooks) {
 			createdNotebooks.add(nbMapper.findById(foundedNotebookPermission.getNotebookId()));
 		}
@@ -368,9 +386,39 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 * Gibt alles Notizen eines Notizbuches zurück
 	 */
 	@Override
-	public ArrayList<Note> getAllNotesByNotebookID(int notebookID) throws IllegalArgumentException {
+	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return this.nMapper.findNotesByNotebookId(notebookID);
+		ArrayList<Note> currentNotes = this.nMapper.findNotesByNotebookId(notebookID);
+		ArrayList<NotePermission> notesPermission = this.npMapper.findNotePermissionByUserId(userID);
+		ArrayList<Note> allFoundedNotes = new ArrayList<Note>();
+		ArrayList<Note> sharedNotes= new ArrayList<Note>();
+		
+		if(notebookID == 0){
+			if(notesPermission != null){ 
+				for (NotePermission foundedNotePermission : notesPermission) {
+					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getText());
+				}
+			}
+			return allFoundedNotes;
+		}else if(this.nbMapper.findById(notebookID).getUserId() != userID){
+			if(notesPermission != null){ 
+				for (NotePermission foundedNotePermission : notesPermission) {
+					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+				}
+			}
+			
+			for (Note foundedNote : allFoundedNotes) {
+				if(foundedNote.getNotebookId() == notebookID){
+					sharedNotes.add(foundedNote);
+				}
+			}
+			return sharedNotes;
+		}else{
+			
+			return currentNotes;
+		}
+		
 	}
 
 	/**
@@ -380,7 +428,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> findNotebooksByKeyword(int userID, String keyword) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		ArrayList<Notebook> allNotebooksFromThisUser = this.nbMapper.findNotebooksByUserID(userID);
+		ArrayList<Notebook> allNotebooksFromThisUser = getAllNotebooksByUserID(userID);
 		ArrayList<Notebook> notebooksWithKeyword = new ArrayList<Notebook>();
 
 		if (allNotebooksFromThisUser != null) {
