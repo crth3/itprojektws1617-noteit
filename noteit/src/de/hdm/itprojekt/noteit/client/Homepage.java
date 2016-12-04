@@ -304,11 +304,17 @@ public class Homepage extends VerticalPanel {
 
 	public static void showCurrentNote(VerticalPanel vpShowNote){
 		
-		contentPanel.remove(contentNotesPanel);
+		contentPanel.remove(1);
 		vpShowNote.setHeight("300px");
 		vpShowNote.setWidth("500px");
 		contentPanel.add(vpShowNote);
 		
+		
+	}
+	
+	public static void showNotes(){
+		contentPanel.remove(1);
+		contentPanel.add(contentNotesPanel);
 		
 	}
 

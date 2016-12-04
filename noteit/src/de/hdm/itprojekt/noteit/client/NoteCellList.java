@@ -5,6 +5,7 @@ import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagin
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -49,19 +50,22 @@ public class NoteCellList extends Widget {
 				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
-		final SingleSelectionModel<Note> noteSelectionModel = new SingleSelectionModel<Note>(
+		final NoSelectionModel<Note> noteSelectionModel = new NoSelectionModel<Note>(
 				noteKeyProvider);
-		noteCellList.setSelectionModel(noteSelectionModel);
+		
+		
 		noteSelectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						// contactForm.setContact(selectionModel.getSelectedObject());
-						SelectedNote = noteSelectionModel.getSelectedObject();
-						Homepage.setSelectedNote(noteSelectionModel.getSelectedObject());
-						ShowNote.showNote(noteSelectionModel.getSelectedObject());
+						SelectedNote = noteSelectionModel.getLastSelectedObject();
+						Homepage.setSelectedNote(noteSelectionModel.getLastSelectedObject());
+						ShowNote.showNote(noteSelectionModel.getLastSelectedObject());
 
 					}
 				});
+		
+		noteCellList.setSelectionModel(noteSelectionModel);
 
 		return noteCellList;
 
