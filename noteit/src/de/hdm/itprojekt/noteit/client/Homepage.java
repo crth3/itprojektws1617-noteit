@@ -13,7 +13,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -24,6 +26,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel;
+import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
@@ -41,7 +45,7 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navPanel = new HorizontalPanel();
 	HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
-	static HorizontalPanel contentPanel = new HorizontalPanel();
+	static VerticalPanel contentPanel = new VerticalPanel();
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
@@ -69,14 +73,16 @@ public class Homepage extends VerticalPanel {
 	static Note selectedNote = new Note();
 	
 	
+	
     
 
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
+	
+	
 
 	public void onLoad() {
-
 		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -150,9 +156,9 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * add to the Panels
 		 */
+		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
-		contentPanel.add(contentNotebookPanel);
 		contentPanel.add(contentNotesPanel);
 		
 		getCurrentUser();
@@ -167,7 +173,6 @@ public class Homepage extends VerticalPanel {
 				System.out.println("result" + result);
 				clNotebook.setRowData(result);
 				contentNotebookPanel.add(clNotebook);
-
 				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(),currentUser.getId() , new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
@@ -175,6 +180,7 @@ public class Homepage extends VerticalPanel {
 
 						clNote.setRowData(result);
 						contentNotesPanel.add(clNote);
+						
 					}
 
 					@Override
