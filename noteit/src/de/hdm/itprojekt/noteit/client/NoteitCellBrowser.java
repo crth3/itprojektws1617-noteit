@@ -83,24 +83,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 			//ListDataProvider<Notebook> dataProvider = new ListDataProvider<Notebook>(notebooks);
 			
 			
-			// Create a cell to display a Notebook.
-			Cell<Notebook> cell = new AbstractCell<Notebook>(){
-	           
-				@Override
-				public void render(Context context, Notebook value,
-						SafeHtmlBuilder sb) {
-					
-					if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0){
-							
-						sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
-					}
-					
-					sb.appendEscaped(" "+ value.getTitle());
-					
-				}
-	         };
 			// Return a node info that pairs the data provider and the cell.
-			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, cell, selectionModelNotebook, null);
+			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook, null);
 			
 		} else if (value instanceof Notebook) {
 			
@@ -125,23 +109,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 				}
 			});
 			
-			Cell<Note> noteCell = new AbstractCell<Note>(){
-
-				@Override
-				public void render(com.google.gwt.cell.client.Cell.Context context, Note value, SafeHtmlBuilder sb) {
-					if(value.getUserId() != Homepage.getCurrentUser().getId()){
-						
-						sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
-						
-					}
-					sb.appendEscaped(" "+value.getTitle());
-					
-				}
-				
-			};
 			
-//			return new DefaultNodeInfo<Note>(notesListDataProvider, noteCell, selectionModel, null);
-			return new DefaultNodeInfo<Note>(notesListDataProvider,noteCell, selectionModelNote, null);
+			return new DefaultNodeInfo<Note>(notesListDataProvider, new NoteCell(), selectionModelNote, null);
 		} 
 
 		return null;
