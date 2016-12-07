@@ -18,7 +18,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
@@ -36,30 +38,23 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	private ListDataProvider<Notebook> notebooksListDataProvider;
 	private ListDataProvider<Note> notesListDataProvider;
-	
+
 	private User currentUser = Noteit.currentUser;
-	/**
-	 * This selection model is shared across all leaf nodes. A selection model
-	 * can also be shared across all nodes in the tree, or each set of child
-	 * nodes can have its own instance. This gives you flexibility to determine
-	 * how nodes are selected.
-	 */
+	private Note SelectedNote;
+
 	private final SingleSelectionModel<Notebook> selectionModelNotebook = new SingleSelectionModel<Notebook>();
 	private final SingleSelectionModel<Note> selectionModelNote = new SingleSelectionModel<Note>();
 
-	
-	
 	/**
 	 * Get the {@link NodeInfo} that provides the children of the specified
 	 * value.
 	 */
-	
-	public NoteitCellBrowser() {
-	}
-	public <T> NodeInfo<?> getNodeInfo(T value) {
-		
-		if (value == null) {
 
+	public <T> NodeInfo<?> getNodeInfo(T value) {
+
+		if (value == null) {
+			// LEVEL 0.
+			// We passed null as the root value. Return the notebooks.
 			notebooksListDataProvider = new ListDataProvider<Notebook>();
 			notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
@@ -76,42 +71,40 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				}
 			});
-			// LEVEL 0.
-			// We passed null as the root value. Return the composers.
 
-			// Create a data provider that contains the list of composers.
-			//ListDataProvider<Notebook> dataProvider = new ListDataProvider<Notebook>(notebooks);
-			
-			
 			// Return a node info that pairs the data provider and the cell.
-			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook, null);
-			
+			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook,
+					null);
+
 		} else if (value instanceof Notebook) {
-			
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
-			
 			notesListDataProvider = new ListDataProvider<Note>();
-			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(), new AsyncCallback<ArrayList<Note>>() {
-				
-				@Override
-				public void onSuccess(ArrayList<Note> result) {
-					for (Note note : result) {
-						notesListDataProvider.getList().add(note);
-					}
-					
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-			
+			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
+					new AsyncCallback<ArrayList<Note>>() {
+
+						@Override
+						public void onSuccess(ArrayList<Note> result) {
+							for (Note note : result) {
+								notesListDataProvider.getList().add(note);
+							}
+
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+
 			return new DefaultNodeInfo<Note>(notesListDataProvider, new NoteCell(), selectionModelNote, null);
-		} 
+		} else if (value instanceof Note) {
+			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
+			// true);
+			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
+			ShowNote.showNote(selectionModelNote.getSelectedObject());
+		}
 
 		return null;
 	}

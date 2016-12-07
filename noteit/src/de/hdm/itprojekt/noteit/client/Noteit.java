@@ -127,16 +127,16 @@ public class Noteit implements EntryPoint {
 		
 		//CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
-		CellBrowser browser = new CellBrowser(model, null);
+		CellBrowser cellBrowser = new CellBrowser(model, null);
 		
-		browser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-	    browser.setHeight("300px");
-	    browser.setWidth("600px");
+		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+	    cellBrowser.setHeight("300px");
+	    cellBrowser.setWidth("415px");
 		
 	    dockPanel.add(headerPanel, DockPanel.NORTH);
 		dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-		dockPanel.add(browser, DockPanel.WEST);
-		dockPanel.add(new HTML("This is the Detail component."), DockPanel.CENTER);
+		dockPanel.add(cellBrowser, DockPanel.WEST);
+		dockPanel.add(new HTML("This is the Detail component."), DockPanel.EAST);
 		vpBasisPanel.add(dockPanel);
 		
 		
