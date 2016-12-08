@@ -126,22 +126,22 @@ public class Noteit implements EntryPoint {
 
 		
 		
-		//CellBrowser
-		TreeViewModel model = new NoteitCellBrowser();
-		CellBrowser cellBrowser = new CellBrowser(model, null);
-		
-		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-	    cellBrowser.setHeight("500px");
-	    cellBrowser.setWidth("400px");
-		
-	    dockPanel.add(headerPanel, DockPanel.NORTH);
-	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-		dockPanel.add(showNote, DockPanel.EAST);
-		dockPanel.add(cellBrowser, DockPanel.WEST);
-		
-		content.add(cellBrowser);
-		content.add(showNote);
-		vpBasisPanel.add(content);
+//		//CellBrowser
+//		TreeViewModel model = new NoteitCellBrowser();
+//		CellBrowser cellBrowser = new CellBrowser(model, null);
+//		
+//		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+//	    cellBrowser.setHeight("500px");
+//	    cellBrowser.setWidth("400px");
+//		
+////	    dockPanel.add(headerPanel, DockPanel.NORTH);
+////	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
+////		dockPanel.add(showNote, DockPanel.EAST);
+////		dockPanel.add(cellBrowser, DockPanel.WEST);
+//		
+//		content.add(cellBrowser);
+//		content.add(showNote);
+//		vpBasisPanel.add(content);
 		
 		
 		
@@ -274,8 +274,8 @@ public class Noteit implements EntryPoint {
 				if (loginInfo.isLoggedIn()) {
 					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
 					RootPanel.get().add(vpBasisPanel);
-//					RootPanel.get("content").add(homepage);
-//					RootPanel.get("head").add(headerPanel);
+					RootPanel.get("content").add(homepage);
+					RootPanel.get("head").add(headerPanel);
 
 					// Hier muss auf die Hompage-Steie verwiesen werden
 

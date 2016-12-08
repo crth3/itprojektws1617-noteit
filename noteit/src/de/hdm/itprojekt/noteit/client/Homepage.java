@@ -45,7 +45,10 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navPanel = new HorizontalPanel();
 	HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
-	static VerticalPanel contentPanel = new VerticalPanel();
+	static HorizontalPanel contentPanel = new HorizontalPanel();
+	final VerticalPanel showNote = new ShowNote();
+	
+	
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
@@ -84,6 +87,23 @@ public class Homepage extends VerticalPanel {
 
 	public void onLoad() {
 		
+		//CellBrowser
+				TreeViewModel model = new NoteitCellBrowser();
+				CellBrowser cellBrowser = new CellBrowser(model, null);
+				
+				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+			    cellBrowser.setHeight("500px");
+			    cellBrowser.setWidth("400px");
+				
+//			    dockPanel.add(headerPanel, DockPanel.NORTH);
+//			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
+//				dockPanel.add(showNote, DockPanel.EAST);
+//				dockPanel.add(cellBrowser, DockPanel.WEST);
+				
+				contentPanel.add(cellBrowser);
+				contentPanel.add(showNote);
+				
+		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -108,14 +128,7 @@ public class Homepage extends VerticalPanel {
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		navPanel.setWidth("1000px");
-		contentPanel.setWidth("1000px");
-		navNotebookPanel.setWidth("500px");
-		navNotesPanel.setWidth("500px");
-		contentNotebookPanel.setWidth("500px");
-		contentNotesPanel.setWidth("500px");
-
-		contentNotebookPanel.setHeight("500px");
-		contentNotesPanel.setHeight("500px");
+		contentPanel.setWidth("100%");
 
 		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
@@ -159,7 +172,7 @@ public class Homepage extends VerticalPanel {
 		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
-		contentPanel.add(contentNotesPanel);
+	//	contentPanel.add(contentNotesPanel);
 		
 		getCurrentUser();
 
