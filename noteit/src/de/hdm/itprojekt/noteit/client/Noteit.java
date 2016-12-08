@@ -2,7 +2,6 @@ package de.hdm.itprojekt.noteit.client;
 
 import de.hdm.itprojekt.noteit.client.Impressum;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
-import de.hdm.itprojekt.noteit.shared.FieldVerifier;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
@@ -11,23 +10,25 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.cellview.client.CellBrowser;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.user.client.ui.Anchor;
 
 /**
@@ -48,7 +49,6 @@ public class Noteit implements EntryPoint {
 	 */
 	private final NotesAdministrationAsync notesAdministrationService = GWT.create(NotesAdministration.class);
 
-	private static Logger rootLogger = Logger.getLogger("");
 
 	
 	/**
@@ -61,7 +61,7 @@ public class Noteit implements EntryPoint {
 	private Anchor signInLink = new Anchor("Sign In");
 	private Anchor signOutLink = new Anchor("Sign Out");
 
-	private User currentUser = new User();
+	public static User currentUser = new User();
 
 	Logger logger = Logger.getLogger("NameOfYourLogger");
 
@@ -71,12 +71,17 @@ public class Noteit implements EntryPoint {
 	/**
 	 * create new Panels
 	 */
-	final VerticalPanel vpBasisPanel = new VerticalPanel();
-	final HorizontalPanel headerPanel = new HorizontalPanel();
+	DockPanel dockPanel = new DockPanel();
+	VerticalPanel vpBasisPanel = new VerticalPanel();
+	HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
+	final HorizontalPanel content = new HorizontalPanel();
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
+	final VerticalPanel showNote = new ShowNote();
+	
+	
 	// HorizontalPanel navPanel = new HorizontalPanel();
 	// HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	// HorizontalPanel navNotesPanel = new HorizontalPanel();
@@ -105,14 +110,40 @@ public class Noteit implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-
+	
+	
+	
 	public void onModuleLoad() {
-
 		
 		currentUser.setId(1);
 		currentUser.setFirstName("Max");
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
+		
+		// neues Panel
+		dockPanel.setStyleName("dockpanel");
+		dockPanel.setSpacing(4);
+
+		
+		
+//		//CellBrowser
+//		TreeViewModel model = new NoteitCellBrowser();
+//		CellBrowser cellBrowser = new CellBrowser(model, null);
+//		
+//		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+//	    cellBrowser.setHeight("500px");
+//	    cellBrowser.setWidth("400px");
+//		
+////	    dockPanel.add(headerPanel, DockPanel.NORTH);
+////	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
+////		dockPanel.add(showNote, DockPanel.EAST);
+////		dockPanel.add(cellBrowser, DockPanel.WEST);
+//		
+//		content.add(cellBrowser);
+//		content.add(showNote);
+//		vpBasisPanel.add(content);
+		
+		
 		
 
 		/**
@@ -132,7 +163,6 @@ public class Noteit implements EntryPoint {
 		// contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		// contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		headlinePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		// navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
@@ -145,7 +175,7 @@ public class Noteit implements EntryPoint {
 		/**
 		 * set the width
 		 */
-		headerPanel.setWidth("1000px");
+		//headerPanel.setWidth("1000px");
 		// navPanel.setWidth("1000px");
 		// contentPanel.setWidth("1000px");
 		// navNotebookPanel.setWidth("500px");
@@ -243,9 +273,10 @@ public class Noteit implements EntryPoint {
 
 				if (loginInfo.isLoggedIn()) {
 					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
-					RootPanel.get("content").add(vpBasisPanel);
+					RootPanel.get().add(vpBasisPanel);
 					RootPanel.get("content").add(homepage);
 					RootPanel.get("head").add(headerPanel);
+
 					// Hier muss auf die Hompage-Steie verwiesen werden
 
 				} else {
@@ -268,10 +299,10 @@ public class Noteit implements EntryPoint {
 		// ClickHandler für Zurück Button
 		zurueckButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanel homepage = new Homepage();
+				//VerticalPanel homepage = new Homepage();
 
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(homepage);
+				RootPanel.get("content").add(vpBasisPanel);
 
 			}
 		});
