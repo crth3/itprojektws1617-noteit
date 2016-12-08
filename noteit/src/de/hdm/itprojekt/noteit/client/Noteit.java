@@ -131,12 +131,12 @@ public class Noteit implements EntryPoint {
 		
 		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 	    cellBrowser.setHeight("500px");
-	    cellBrowser.setWidth("auto");
+	    cellBrowser.setWidth("400px");
 		
 	    dockPanel.add(headerPanel, DockPanel.NORTH);
-		dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-		dockPanel.add(cellBrowser, DockPanel.CENTER);
-		//dockPanel.add(new HTML("This is the Detail component."), DockPanel.EAST);
+	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
+		dockPanel.add(new HTML("This is the detail Panel."), DockPanel.EAST);
+		dockPanel.add(cellBrowser, DockPanel.WEST);
 		vpBasisPanel.add(dockPanel);
 		
 		
