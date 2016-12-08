@@ -77,6 +77,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 					null);
 
 		} else if (value instanceof Notebook) {
+			EditNotebook.setNotebook(selectionModelNotebook.getSelectedObject());
+			Homepage.editNotebookView();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
 			notesListDataProvider = new ListDataProvider<Note>();
@@ -100,6 +102,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			return new DefaultNodeInfo<Note>(notesListDataProvider, new NoteCell(), selectionModelNote, null);
 		} else if (value instanceof Note) {
+			Homepage.showNoteView();
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
 //			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());

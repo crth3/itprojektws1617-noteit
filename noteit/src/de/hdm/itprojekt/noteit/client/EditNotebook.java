@@ -21,13 +21,13 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
-public class EditNotebook extends DialogBox {
+public class EditNotebook extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
 	VerticalPanel vpEditNotebookPanel = new VerticalPanel();
 
-	Notebook nb = new Notebook();
+	static Notebook nb = new Notebook();
 	User currentUser = new User();
 
 	/**
@@ -50,14 +50,15 @@ public class EditNotebook extends DialogBox {
 	Button btnSichern = new Button("Sichern");
 	Button btnDeleteInAskForDelete = new Button("Löschen");
 	Button btnCancelInAskForDelete = new Button("Abbrechen");
-	
+
 	TextBox tbTitelTextBox = new TextBox();
 	TextBox tbTeilenTextBox = new TextBox();
-	
+
 	DialogBox askForDelete = new DialogBox();
 
 	/**
 	 * Konstruktor mit Userobjekt als Übergabeparameter
+	 * 
 	 * @param user
 	 */
 	public EditNotebook(User user) {
@@ -66,14 +67,8 @@ public class EditNotebook extends DialogBox {
 
 	public void onLoad() {
 
-		nb = Homepage.selectedNotebook;
-
-		//setAutoHideEnabled(true);
-		setGlassEnabled(true);
-		setText("Notizbuch bearbeiten");
-
 		/**
-		 *	Add the Labels, Panels, Radio Buttons, Buttons and TexBox
+		 * Add the Labels, Panels, Radio Buttons, Buttons and TexBox
 		 */
 		vpEditNotebookPanel.add(lbTitel);
 		vpEditNotebookPanel.add(tbTitelTextBox);
@@ -88,18 +83,16 @@ public class EditNotebook extends DialogBox {
 		hpButtonPanel.add(btnLoeschen);
 		hpButtonPanel.add(btnSichern);
 
-		vpEditNotebookPanel.setSpacing(40);
-		setWidget(vpEditNotebookPanel);
-		
-		
-		
-		/* ----- Delete dialogBox -----*/
+		this.add(vpEditNotebookPanel);
+		this.add(hpBerechtigungsPanel);
+		this.add(hpButtonPanel);
+
+		/* ----- Delete dialogBox ----- */
 		hpAskForDelete.add(btnDeleteInAskForDelete);
 		hpAskForDelete.add(btnCancelInAskForDelete);
 		askForDelete.setText("Möchtest du das Notizbuch wirklich Löschen?");
 		hpAskForDelete.setSpacing(40);
 		askForDelete.add(hpAskForDelete);
-		
 
 		/**
 		 * Hinzufügen des Titels zur Textbox
@@ -109,11 +102,11 @@ public class EditNotebook extends DialogBox {
 		// ClickHandler für Löschen Button
 		btnLoeschen.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				askForDelete.setGlassEnabled(true);
 				askForDelete.center();
 				askForDelete.show();
-				
+
 				btnDeleteInAskForDelete.addClickHandler(new ClickHandler() {
 
 					@Override
@@ -130,7 +123,7 @@ public class EditNotebook extends DialogBox {
 							public void onSuccess(Void result) {
 								Homepage.updateNotebookCellList(nb.getUserId());
 								askForDelete.hide();
-								EditNotebook.this.hide();
+								// EditNotebook.this.hide();
 
 							}
 						});
@@ -153,7 +146,7 @@ public class EditNotebook extends DialogBox {
 		// ClickHandler für Abbrechen Button
 		btnAbbrechen.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditNotebook.this.hide();
+				// EditNotebook.this.hide();
 
 			}
 		});
@@ -174,7 +167,7 @@ public class EditNotebook extends DialogBox {
 							@Override
 							public void onSuccess(Void result) {
 								Homepage.updateNotebookCellList(nb.getUserId());
-								EditNotebook.this.hide();
+								// EditNotebook.this.hide();
 							}
 						});
 
@@ -182,5 +175,7 @@ public class EditNotebook extends DialogBox {
 		});
 
 	}
-
+public static void setNotebook(Notebook notebook){
+	nb = notebook;
+}
 }
