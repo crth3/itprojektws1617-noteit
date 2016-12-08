@@ -46,7 +46,9 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
-	final VerticalPanel showNote = new ShowNote();
+	final static VerticalPanel showNote = new ShowNote();
+	final VerticalPanel editNotebook = new EditNotebook(null);
+	
 	
 	
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
@@ -93,7 +95,7 @@ public class Homepage extends VerticalPanel {
 				
 				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 			    cellBrowser.setHeight("500px");
-			    cellBrowser.setWidth("400px");
+			    cellBrowser.setWidth("500px");
 				
 //			    dockPanel.add(headerPanel, DockPanel.NORTH);
 //			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
@@ -128,7 +130,7 @@ public class Homepage extends VerticalPanel {
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		navPanel.setWidth("1000px");
-		contentPanel.setWidth("100%");
+		contentPanel.setWidth("1500px");
 
 		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
@@ -244,8 +246,8 @@ public class Homepage extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if(selectedNotebook.getId() != 0){
 					EditNotebook editNotebook = new EditNotebook(currentUser);
-					editNotebook.show();
-					editNotebook.center();
+	//				editNotebook.show();
+	//				editNotebook.center();
 				}else{
 					Window.alert("Dieses Notizbuch kann nicht bearbeitet werden");
 				}
@@ -442,6 +444,17 @@ public class Homepage extends VerticalPanel {
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
 		return currentUser;
+	}
+	
+	public static void editNotebookView(){
+		contentPanel.remove(1);
+		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
+		contentPanel.add(editNotebookView);
+	}
+	public static void showNoteView(){
+		contentPanel.remove(1);
+		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
+		contentPanel.add(showNote);
 	}
 
 
