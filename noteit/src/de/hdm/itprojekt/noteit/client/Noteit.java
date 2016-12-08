@@ -76,9 +76,10 @@ public class Noteit implements EntryPoint {
 	HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
+	final HorizontalPanel content = new HorizontalPanel();
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
-	
+	final VerticalPanel showNote = new ShowNote();
 	
 	
 	// HorizontalPanel navPanel = new HorizontalPanel();
@@ -135,10 +136,12 @@ public class Noteit implements EntryPoint {
 		
 	    dockPanel.add(headerPanel, DockPanel.NORTH);
 	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-		dockPanel.add(new HTML("This is the detail Panel."), DockPanel.EAST);
+		dockPanel.add(showNote, DockPanel.EAST);
 		dockPanel.add(cellBrowser, DockPanel.WEST);
-		vpBasisPanel.add(dockPanel);
 		
+		content.add(cellBrowser);
+		content.add(showNote);
+		vpBasisPanel.add(content);
 		
 		
 		

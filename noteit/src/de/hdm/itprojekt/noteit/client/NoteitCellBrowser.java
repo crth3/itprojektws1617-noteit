@@ -102,7 +102,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 		} else if (value instanceof Note) {
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
-			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
+//			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
 			ShowNote.showNote(selectionModelNote.getSelectedObject());
 		}
 
