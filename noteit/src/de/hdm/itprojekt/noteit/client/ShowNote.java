@@ -23,7 +23,8 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 
-public class ShowNote {
+public class ShowNote extends VerticalPanel {
+	
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
@@ -59,24 +60,11 @@ public class ShowNote {
 	// Date maturity = new Date();
 
 	// modificationdate
-
-	public static void showNote(Note note) {
-		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
-
-		tbNoteTitel.setText(note.getTitle());
-		tbNoteSubTitel.setText(note.getSubTitle());
-		content.setText(note.getText());
-		content.setText(note.getText());
-		lblNoteTitel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		tbMaturity.setText(note.getMaturityDate().toString());
-
-		hpNoteMaturity.add(lblNoteMaturity);
-		hpNoteMaturity.add(tbMaturity);
-
-		hpBackButton.add(btnNoteBack);
-
-		// vpShowNote.setSpacing(40);
-
+	
+	@Override
+	protected void onLoad() {
+		
+		vpShowNote.setWidth("600px");
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
@@ -100,6 +88,11 @@ public class ShowNote {
 
 		hpNoteText.add(lblNoteText);
 		hpNoteText.add(content);
+		
+		hpNoteMaturity.add(lblNoteMaturity);
+		hpNoteMaturity.add(tbMaturity);
+
+		hpBackButton.add(btnNoteBack);
 
 		vpShowNote.add(vpTitel);
 		vpShowNote.add(hpNoteSubTitel);
@@ -107,7 +100,32 @@ public class ShowNote {
 		vpShowNote.add(hpNoteMaturity);
 		vpShowNote.add(hpBackButton);
 
-		Homepage.showCurrentNote(vpShowNote);
+		
+		vpShowNote.add(vpTitel);
+		vpShowNote.add(hpNoteSubTitel);
+		vpShowNote.add(hpNoteText);
+		vpShowNote.add(hpNoteMaturity);
+		vpShowNote.add(hpBackButton);
+
+		this.add(vpShowNote);
+	}
+
+	public static void showNote(Note note) {
+		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
+
+		tbNoteTitel.setText(note.getTitle());
+		tbNoteSubTitel.setText(note.getSubTitle());
+		content.setText(note.getText());
+		content.setText(note.getText());
+		lblNoteTitel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		tbMaturity.setText(note.getMaturityDate().toString());
+
+
+
+		// vpShowNote.setSpacing(40);
+
+		
+	//	Homepage.showCurrentNote(vpShowNote);
 
 		btnNoteBack.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
