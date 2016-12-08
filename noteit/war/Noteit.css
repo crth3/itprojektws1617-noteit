@@ -1,31 +1,313 @@
-body{
-   text-align: center;
-   font-family: verdana, sans-serif;
-   background: #f2f2f2 !important;
-}
-h1{
-   font-size: 2em;
-   font-weight: bold;
-   color: #777777;
-   margin: 40px 0px 70px;
-   text-align: center;
-}
-table{
-	min-height: 100%;
-	max-width: 1280px;
-	margin: 0 auto;
-	background: #fff
-}
-.dockpanel{
-	width: 100%;
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
 
-.dockpanel td {
-   border: 1px solid #BBBBBB;
-   padding: 3px;
+.sendButton {
+	display: block;
+	font-size: 16pt;
 }
 
-.headerPanel{
-	width: 100%;
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+	width: 400px;
 }
 
+.dialogVPanel {
+	margin: 5px;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+	margin: 15px 6px 6px;
+}
+
+div#header {
+	width: 500px;
+}
+
+.welcomeLabel {
+	vertical-align: center;
+}
+
+.headlineLabel {
+	font-family: monospace;
+	font-size: 40pt;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.logOutButton {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 10px;
+}
+
+.btnSettingsButton {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 10px;
+}
+
+.welcomePanel {
+	vertical-align: bottom;
+	line-height: 50px;
+	margin-left: 10px;
+	margin-top: 15px;
+}
+
+.headlinePanel {
+	vertical-align: middle;
+	line-height: 50px;
+	text-align: center;
+	float: right;
+	margin-left: 75px;
+}
+
+.logoutPanel {
+	vertical-align: middle;
+	line-height: 50px;
+	float: right;
+	margin-right: 10px;
+	margin-top: 15px;
+}
+
+.headerPanel {
+	/*background-color: yellow;*/
+	align: center;
+	background-color: #FFFF00;
+	height: 50px;
+}
+
+.headlineNotebookLabel {
+	float: left;
+	font-family: Arial;
+	font-size: 20pt;
+	margin-left: 9px; 
+	margin-right: 7px;
+}
+
+.headlineNotesLabel {
+	float: left;
+	font-family: Arial;
+	font-size: 20pt;
+	margin-left: 9px; 
+	margin-right: 20px;
+}
+
+.btnSearchNotebook {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: 10px;
+}
+
+.btnSearchNote {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: 10px;
+}
+
+.btnAddNewNoteButton {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: -46px;
+}
+
+.btnAddNewNotebookButton {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: 0px;
+}
+
+.btnEditNotebook {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: -30px;
+}
+
+.btnEditNote {
+	margin: 0;
+	padding: 5px 7px;
+	text-decoration: none;
+	cursor: pointer;
+	cursor: hand;
+	font-size:small;
+	background: url("images/hborder.png") repeat-x 0px -2077px;
+	border:1px solid #bbb;
+	border-bottom: 1px solid #a0a0a0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	background-color: #eee;
+	float: right;
+	margin-top: 9px;
+	margin-right: -76px;
+}
+
+.tbSearchNotebook {
+	padding: 5px 4px;
+	border: 1px solid #ccc;
+	border-top: 1px solid #999;
+	font-size: small;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	
+	float: right;
+	margin-right: -15px;
+	margin-top: 9px;
+}
+
+.tbSearchNote {
+	padding: 5px 4px;
+	border: 1px solid #ccc;
+	border-top: 1px solid #999;
+	font-size: small;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	
+	float: right;
+	margin-right: -30px;
+	margin-top: 9px;
+}
+
+
+.navNotebookPanel {
+	background-color: #D8D8D8;
+	line-height: 50px;
+	border-right-style: solid;
+	border-color: grey;
+	border-width: 0.5px;
+}
+
+.navNotesPanel {
+	background-color: #D8D8D8;
+	line-height: 50px;
+	border-left-style: solid;
+	border-color: grey;
+	border-width: 0.5px;
+}
+
+.contentNotebookPanel {
+	background-color: #F2F5A9;
+	border-right-style: solid;
+	border-color: grey;
+	border-width: 0.5px;
+}
+
+.contentNotesPanel {
+	background-color: #F2F5A9;
+	border-left-style: solid;
+	border-color: grey;
+	border-width: 0.5px;
+}
+
+.headPanel {
+	background-color: yellow;
+}
+
+div#head {
+	margin-top: 30px;
+}
+
+div#content {
+	
+}
+ 
+.homepage {
+	/*border-right-style: solid;
+	border-left-style: solid;
+	border-bottom-style: solid;*/
+	border-top-style: solid;
+	border-color: grey;
+	border-width: 1px;
+}
