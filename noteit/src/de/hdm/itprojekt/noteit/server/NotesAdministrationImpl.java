@@ -156,21 +156,112 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 */
 	@Override
 	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException {
+		
+		//WICHTIG TODO übergabeparmater um "ArrayList<NotebookPermission> notebookPermissions" ergänzen WICHTIG!!!
+		ArrayList<NotebookPermission> notebookPermissions = null;
+		
+		
 		nb = new Notebook();
 		nb.setId(notebookID);
 		nb.setTitle(title);
 
 		Notebook notebook = this.nbMapper.findById(notebookID);
-
+		ArrayList<Note> allNotesFromThisNotebook = new ArrayList<Note>();
+		allNotesFromThisNotebook = getAllNotesByNotebookID(notebookID, userId);
+		ArrayList<NotePermission> allNotePermssionFromThisNote;
+		ArrayList<NotePermission> usersWithNotePermissionInThisNotebook = new ArrayList<NotePermission>();
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in updateNotebook  " + notebook.getTitle());
+		
+		
+		if (notebookPermissions != null) {
+			/**
+			 *  Überprüfung ob es schon Nutzer mit freigegebenen Notizen in diesem Notizbuch gibt
+			 */
+			for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
+				// für jede Notiz des Notizbuches
+				for (Note foundedNote : allNotesFromThisNotebook) {
+					allNotePermssionFromThisNote = npMapper.findNotePermissionByNoteId(foundedNote.getId());
+					// für jede Permission der Notiz
+					for (NotePermission foundedNotePermission : allNotePermssionFromThisNote) {
+						// wenn die 
+						if (foundedNotePermission.getUserId() == foundedNotebookPermission.getUserId()) {
+							usersWithNotePermissionInThisNotebook.add(foundedNotePermission);
+						}
+					}
+				}
 
+			}
+			
+			/**
+			 * NotePermission anlegen
+			 */
+			for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
+				// wenn Permission 1 ist
+				if(foundedNotebookPermission.getPermission() == 1){
+					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
+					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
+						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
+							break;
+						}else{
+							for (Note foundedNote : allNotesFromThisNotebook) {
+								NotePermission np = new NotePermission();
+								np.setNoteId(foundedNote.getId());
+								np.setUserId(foundedNotebookPermission.getUserId());
+								np.setNotePermissionId(foundedNotebookPermission.getPermission());
+								npMapper.insert(np);
+							}
+							
+						}
+					}
+				}else if(foundedNotebookPermission.getPermission() == 2){
+					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
+					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
+						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
+							if(foundedUsers.getNotePermissionId() == 1){
+								foundedUsers.setNotePermissionId(2);
+								npMapper.update(foundedUsers);
+							}
+						}else{
+							for (Note foundedNote : allNotesFromThisNotebook) {
+								NotePermission np = new NotePermission();
+								np.setNoteId(foundedNote.getId());
+								np.setUserId(foundedNotebookPermission.getUserId());
+								np.setNotePermissionId(foundedNotebookPermission.getPermission());
+								npMapper.insert(np);
+							}
+							
+						}
+					}
+				}else if(foundedNotebookPermission.getPermission() == 3){
+					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
+					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
+						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
+							if(foundedUsers.getNotePermissionId() == 1 || foundedUsers.getNotePermissionId() == 2){
+								foundedUsers.setNotePermissionId(3);
+								npMapper.update(foundedUsers);
+							}
+						}else{
+							for (Note foundedNote : allNotesFromThisNotebook) {
+								NotePermission np = new NotePermission();
+								np.setNoteId(foundedNote.getId());
+								np.setUserId(foundedNotebookPermission.getUserId());
+								np.setNotePermissionId(foundedNotebookPermission.getPermission());
+								npMapper.insert(np);
+							}
+							
+						}
+					}
+				}
+			}
+		}
+		
+		//Überprüfen der Berechtigung zum bearbeiten
 		if (notebook.getUserId() == userId) {
 			this.nbMapper.edit(nb);
 			logger.log(Level.SEVERE, "SUCCESS");
 		} else {
-			ArrayList<NotebookPermission> notebookPermissionList = this.nbpMapper
-					.findNotebookPermissionByNotebookId(notebookID);
+			ArrayList<NotebookPermission> notebookPermissionList = this.nbpMapper.findNotebookPermissionByNotebookId(notebookID);
 			for (NotebookPermission findResult : notebookPermissionList) {
 				if (findResult.getUserId() == userId) {
 					if (findResult.getPermission() > 1) {
@@ -185,6 +276,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		}
 	}
+	
 
 	/**
 	 * Löscht ein bestehendes Notebook und alle Freigegebenen notebooks
