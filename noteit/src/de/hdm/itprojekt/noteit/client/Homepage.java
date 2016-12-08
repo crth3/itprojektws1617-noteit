@@ -13,7 +13,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -24,6 +26,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel;
+import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
@@ -42,6 +46,11 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navNotebookPanel = new HorizontalPanel();
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
+	final static VerticalPanel showNote = new ShowNote();
+	final VerticalPanel editNotebook = new EditNotebook(null);
+	
+	
+	
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
 
@@ -69,14 +78,33 @@ public class Homepage extends VerticalPanel {
 	static Note selectedNote = new Note();
 	
 	
+	
     
 
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
+	
+	
 
 	public void onLoad() {
-
+		
+		//CellBrowser
+				TreeViewModel model = new NoteitCellBrowser();
+				CellBrowser cellBrowser = new CellBrowser(model, null);
+				
+				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+			    cellBrowser.setHeight("500px");
+			    cellBrowser.setWidth("500px");
+				
+//			    dockPanel.add(headerPanel, DockPanel.NORTH);
+//			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
+//				dockPanel.add(showNote, DockPanel.EAST);
+//				dockPanel.add(cellBrowser, DockPanel.WEST);
+				
+				contentPanel.add(cellBrowser);
+				contentPanel.add(showNote);
+				
 		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -102,14 +130,7 @@ public class Homepage extends VerticalPanel {
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		navPanel.setWidth("1000px");
-		contentPanel.setWidth("1000px");
-		navNotebookPanel.setWidth("500px");
-		navNotesPanel.setWidth("500px");
-		contentNotebookPanel.setWidth("500px");
-		contentNotesPanel.setWidth("500px");
-
-		contentNotebookPanel.setHeight("500px");
-		contentNotesPanel.setHeight("500px");
+		contentPanel.setWidth("1500px");
 
 		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
@@ -150,10 +171,10 @@ public class Homepage extends VerticalPanel {
 		/**
 		 * add to the Panels
 		 */
+		
 		navPanel.add(navNotebookPanel);
 		navPanel.add(navNotesPanel);
-		contentPanel.add(contentNotebookPanel);
-		contentPanel.add(contentNotesPanel);
+	//	contentPanel.add(contentNotesPanel);
 		
 		getCurrentUser();
 
@@ -167,7 +188,6 @@ public class Homepage extends VerticalPanel {
 				System.out.println("result" + result);
 				clNotebook.setRowData(result);
 				contentNotebookPanel.add(clNotebook);
-
 				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(),currentUser.getId() , new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
@@ -175,6 +195,7 @@ public class Homepage extends VerticalPanel {
 
 						clNote.setRowData(result);
 						contentNotesPanel.add(clNote);
+						
 					}
 
 					@Override
@@ -225,8 +246,8 @@ public class Homepage extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if(selectedNotebook.getId() != 0){
 					EditNotebook editNotebook = new EditNotebook(currentUser);
-					editNotebook.show();
-					editNotebook.center();
+	//				editNotebook.show();
+	//				editNotebook.center();
 				}else{
 					Window.alert("Dieses Notizbuch kann nicht bearbeitet werden");
 				}
@@ -423,6 +444,17 @@ public class Homepage extends VerticalPanel {
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
 		return currentUser;
+	}
+	
+	public static void editNotebookView(){
+		contentPanel.remove(1);
+		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
+		contentPanel.add(editNotebookView);
+	}
+	public static void showNoteView(){
+		contentPanel.remove(1);
+		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
+		contentPanel.add(showNote);
 	}
 
 
