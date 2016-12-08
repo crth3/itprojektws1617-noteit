@@ -24,7 +24,6 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 
 public class ShowNote extends VerticalPanel {
-	
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
@@ -60,10 +59,10 @@ public class ShowNote extends VerticalPanel {
 	// Date maturity = new Date();
 
 	// modificationdate
-	
+
 	@Override
 	protected void onLoad() {
-		
+
 		vpShowNote.setWidth("600px");
 		/**
 		 * Create the Panel, Label and TextBox
@@ -88,7 +87,7 @@ public class ShowNote extends VerticalPanel {
 
 		hpNoteText.add(lblNoteText);
 		hpNoteText.add(content);
-		
+
 		hpNoteMaturity.add(lblNoteMaturity);
 		hpNoteMaturity.add(tbMaturity);
 
@@ -100,7 +99,6 @@ public class ShowNote extends VerticalPanel {
 		vpShowNote.add(hpNoteMaturity);
 		vpShowNote.add(hpBackButton);
 
-		
 		vpShowNote.add(vpTitel);
 		vpShowNote.add(hpNoteSubTitel);
 		vpShowNote.add(hpNoteText);
@@ -119,20 +117,6 @@ public class ShowNote extends VerticalPanel {
 		content.setText(note.getText());
 		lblNoteTitel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		tbMaturity.setText(note.getMaturityDate().toString());
-
-
-
-		// vpShowNote.setSpacing(40);
-
-		
-	//	Homepage.showCurrentNote(vpShowNote);
-
-		btnNoteBack.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				Homepage.showNotes();
-
-			}
-		});
 
 	}
 }
