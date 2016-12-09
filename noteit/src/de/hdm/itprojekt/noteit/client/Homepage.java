@@ -261,7 +261,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				searchNotebookByKeyword(currentUser.getId(), event.getValue());
+				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
 			}
 		});
 		
@@ -281,7 +281,7 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				searchNoteByKeyword(currentUser.getId(), event.getValue(), selectedNotebook.getId());
+				NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
 			}
 		});
 
