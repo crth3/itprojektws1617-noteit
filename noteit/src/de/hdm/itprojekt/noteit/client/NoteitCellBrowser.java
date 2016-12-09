@@ -2,6 +2,8 @@ package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.jetty.util.log.Log;
 
@@ -34,16 +36,19 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
  * The model that defines the nodes in the tree.
  */
 public class NoteitCellBrowser implements TreeViewModel {
-	private NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
-	private ListDataProvider<Notebook> notebooksListDataProvider;
-	private ListDataProvider<Note> notesListDataProvider;
+	private static ListDataProvider<Notebook> notebooksListDataProvider = new ListDataProvider<Notebook>();
+	private static ListDataProvider<Note> notesListDataProvider = new ListDataProvider<Note>();
 
 	private User currentUser = Noteit.currentUser;
-	private Note SelectedNote;
+	private static Notebook selectedNotebook = new Notebook();
+	private Note selectedNote = new Note();
 
-	private final SingleSelectionModel<Notebook> selectionModelNotebook = new SingleSelectionModel<Notebook>();
-	private final SingleSelectionModel<Note> selectionModelNote = new SingleSelectionModel<Note>();
+	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
+	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
+	
+	private static Logger rootLogger = Logger.getLogger("");
 
 	/**
 	 * Get the {@link NodeInfo} that provides the children of the specified
@@ -62,6 +67,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				public void onSuccess(ArrayList<Notebook> result) {
 					for (Notebook notebook : result) {
 						notebooksListDataProvider.getList().add(notebook);
+						
 					}
 				}
 
@@ -71,17 +77,17 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				}
 			});
-
+			
 			// Return a node info that pairs the data provider and the cell.
 			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook,
 					null);
 
 		} else if (value instanceof Notebook) {
-			EditNotebook.setNotebook(selectionModelNotebook.getSelectedObject());
+			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
+			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
 			Homepage.editNotebookView();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
-			notesListDataProvider = new ListDataProvider<Note>();
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
 
@@ -106,7 +112,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
 //			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
-			ShowNote.showNote(selectionModelNote.getSelectedObject());
+			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 		}
 
 		return null;
@@ -122,6 +128,38 @@ public class NoteitCellBrowser implements TreeViewModel {
 			return true;
 		}
 		return false;
+	}
+	
+	public static void searchNotebookByKeyword(int userID, String keyword){
+	
+		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
+		
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				notebooksListDataProvider.setList(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error find notebook " + caught);
+
+			}
+		});
+	}
+	
+	public static void searchNoteByKeyword(int userID, String keyword) {
+		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
+		notesAdmin.findNoteByKeyword(userID, keyword, selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				notesListDataProvider.setList(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 
 }

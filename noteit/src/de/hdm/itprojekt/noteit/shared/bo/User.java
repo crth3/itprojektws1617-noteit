@@ -25,6 +25,11 @@ public class User extends BusinessObjects {
 	 * Email Adresse des Nutzers
 	 */
 	private String mail = "";
+	
+	/**
+	 * Freigabe des nutzers
+	 */
+	private int permissionID;
 
 	/**
 	 * Ausgabe des Vornamens des Nutzers
@@ -66,5 +71,13 @@ public class User extends BusinessObjects {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public int getPermissionID() {
+		return permissionID;
+	}
+
+	public void setPermissionID(int permissionID) {
+		this.permissionID = permissionID;
 	}
 }
