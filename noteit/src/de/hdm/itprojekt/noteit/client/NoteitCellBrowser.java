@@ -2,6 +2,8 @@ package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.eclipse.jetty.util.log.Log;
 
@@ -45,6 +47,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
+	
+	private static Logger rootLogger = Logger.getLogger("");
 
 	/**
 	 * Get the {@link NodeInfo} that provides the children of the specified
@@ -73,12 +77,13 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				}
 			});
-			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
+			
 			// Return a node info that pairs the data provider and the cell.
 			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook,
 					null);
 
 		} else if (value instanceof Notebook) {
+			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
 			Homepage.editNotebookView();
 			// LEVEL 1.
@@ -126,7 +131,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 	
 	public static void searchNotebookByKeyword(int userID, String keyword){
-		Window.alert("notebook: " +selectedNotebook.getTitle());
+	
 		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
 		
 			@Override
@@ -143,7 +148,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 	
 	public static void searchNoteByKeyword(int userID, String keyword) {
-		
+		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
 		notesAdmin.findNoteByKeyword(userID, keyword, selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
