@@ -1,6 +1,8 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.tools.ant.taskdefs.Delete;
 
@@ -10,9 +12,11 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -25,157 +29,91 @@ public class EditNotebook extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
-	VerticalPanel vpEditNotebookPanel = new VerticalPanel();
+	private static Logger rootLogger = Logger.getLogger("");
 
-	static Notebook nb = new Notebook();
-	User currentUser = new User();
+	static VerticalPanel vpEditNotebook = new VerticalPanel();
 
-	/**
-	 * Create the Labels, Panels, Radio Buttons, Buttons and TexBox
-	 */
-	Label lbTitel = new Label("Titel");
-	Label lbteilen = new Label("Teilen mit");
-	Label lbDarf = new Label("Darf:");
-	HorizontalPanel titelPanel = new HorizontalPanel();
-	HorizontalPanel teilenPanel = new HorizontalPanel();
-	HorizontalPanel hpButtonPanel = new HorizontalPanel();
-	HorizontalPanel hpAskForDelete = new HorizontalPanel();
-	HorizontalPanel hpBerechtigungsPanel = new HorizontalPanel();
-	RadioButton rbBerechtigungen1 = new RadioButton("myRadioGroup", "anzeigen + bearbeiten");
-	RadioButton rbBerechtigungen2 = new RadioButton("myRadioGroup", "anzeigen");
-	// RadioButton berechtigungen1 = new RadioButton("myRadioGroup", "foo");
-	Button btnHinzufuegenButton = new Button("+");
-	Button btnLoeschen = new Button("Löschen");
-	Button btnAbbrechen = new Button("Abbrechen");
-	Button btnSichern = new Button("Sichern");
-	Button btnDeleteInAskForDelete = new Button("Löschen");
-	Button btnCancelInAskForDelete = new Button("Abbrechen");
+	static VerticalPanel vpTitel = new VerticalPanel();
+	static VerticalPanel hpNoteSubTitel = new VerticalPanel();
+	static VerticalPanel hpNoteText = new VerticalPanel();
+	static VerticalPanel hpNoteShare = new VerticalPanel();
+	static VerticalPanel hpNotePermission = new VerticalPanel();
+	static VerticalPanel hpBackButton = new VerticalPanel();
+	static VerticalPanel hpNoteMaturity = new VerticalPanel();
 
-	TextBox tbTitelTextBox = new TextBox();
-	TextBox tbTeilenTextBox = new TextBox();
+	static Label lblNoteTitel = new Label("Titel");
+	static Label lblNoteSubTitel = new Label("Subtitel");
+	static Label lblNoteShare = new Label("Teilen mit");
+	static Label lblNoteText = new Label("Deine Notiz");
+	static Label lblNoteMaturity = new Label("Faelligkeitsdatum");
 
-	DialogBox askForDelete = new DialogBox();
+	static TextBox tbNoteSubTitel = new TextBox();
+	static TextBox tbNoteTitel = new TextBox();
+	static TextBox tbNoteShare = new TextBox();
+	static TextBox tbMaturity = new TextBox();
 
-	/**
-	 * Konstruktor mit Userobjekt als Übergabeparameter
-	 * 
-	 * @param user
-	 */
-	public EditNotebook(User user) {
-		this.currentUser = user;
-	}
+	static Button btnNoteBack = new Button("Zurueck");
 
-	public void onLoad() {
+	static RichTextArea content = new RichTextArea();
+
+	// Timestamp maturity = new Timestamp();
+
+	// Date maturity = new Date();
+
+	// modificationdate
+
+	@Override
+	protected void onLoad() {
+
+		vpEditNotebook.setWidth("600px");
+		/**
+		 * Create the Panel, Label and TextBox
+		 */
+
+		vpTitel.add(lblNoteTitel);
+		vpTitel.add(tbNoteTitel);
 
 		/**
-		 * Add the Labels, Panels, Radio Buttons, Buttons and TexBox
+		 * Create the Panel, Label and TextBox
 		 */
-		vpEditNotebookPanel.add(lbTitel);
-		vpEditNotebookPanel.add(tbTitelTextBox);
-		vpEditNotebookPanel.add(lbteilen);
-		vpEditNotebookPanel.add(tbTeilenTextBox);
-		vpEditNotebookPanel.add(lbDarf);
-		vpEditNotebookPanel.add(hpBerechtigungsPanel);
-		hpBerechtigungsPanel.add(rbBerechtigungen1);
-		hpBerechtigungsPanel.add(rbBerechtigungen2);
-		vpEditNotebookPanel.add(hpButtonPanel);
-		hpButtonPanel.add(btnAbbrechen);
-		hpButtonPanel.add(btnLoeschen);
-		hpButtonPanel.add(btnSichern);
 
-		this.add(vpEditNotebookPanel);
-		this.add(hpBerechtigungsPanel);
-		this.add(hpButtonPanel);
-
-		/* ----- Delete dialogBox ----- */
-		hpAskForDelete.add(btnDeleteInAskForDelete);
-		hpAskForDelete.add(btnCancelInAskForDelete);
-		askForDelete.setText("Möchtest du das Notizbuch wirklich Löschen?");
-		hpAskForDelete.setSpacing(40);
-		askForDelete.add(hpAskForDelete);
+		hpNoteSubTitel.add(lblNoteSubTitel);
+		hpNoteSubTitel.add(tbNoteSubTitel);
 
 		/**
-		 * Hinzufügen des Titels zur Textbox
+		 * Create the Panel, Label and TextBox
 		 */
-		tbTitelTextBox.setText(nb.getTitle());
 
-		// ClickHandler für Löschen Button
-		btnLoeschen.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		hpNoteShare.add(lblNoteShare);
+		hpNoteShare.add(tbNoteShare);
 
-				askForDelete.setGlassEnabled(true);
-				askForDelete.center();
-				askForDelete.show();
+		hpNoteText.add(lblNoteText);
+		hpNoteText.add(content);
 
-				btnDeleteInAskForDelete.addClickHandler(new ClickHandler() {
+		hpNoteMaturity.add(lblNoteMaturity);
+		hpNoteMaturity.add(tbMaturity);
 
-					@Override
-					public void onClick(ClickEvent event) {
-						notesAdmin.deleteNotebook(nb.getId(), nb.getUserId(), new AsyncCallback<Void>() {
+		hpBackButton.add(btnNoteBack);
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+		vpEditNotebook.add(vpTitel);
+		vpEditNotebook.add(hpNoteSubTitel);
+		//vpEditNotebook.add(hpNoteText);
+		vpEditNotebook.add(hpNoteMaturity);
+		vpEditNotebook.add(hpBackButton);
 
-							}
+		vpEditNotebook.add(vpTitel);
+		vpEditNotebook.add(hpNoteSubTitel);
+		//vpEditNotebook.add(hpNoteText);
+		vpEditNotebook.add(hpNoteMaturity);
+		vpEditNotebook.add(hpBackButton);
 
-							@Override
-							public void onSuccess(Void result) {
-								Homepage.updateNotebookCellList(nb.getUserId());
-								askForDelete.hide();
-								// EditNotebook.this.hide();
-
-							}
-						});
-
-					}
-				});
-
-				btnCancelInAskForDelete.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						askForDelete.hide();
-
-					}
-				});
-
-			}
-		});
-
-		// ClickHandler für Abbrechen Button
-		btnAbbrechen.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				// EditNotebook.this.hide();
-
-			}
-		});
-
-		// ClickHandler für Sichern Button
-		btnSichern.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-
-				notesAdmin.updateNotebook(tbTitelTextBox.getText(), nb.getId(), nb.getUserId(),
-						new AsyncCallback<Void>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onSuccess(Void result) {
-								Homepage.updateNotebookCellList(nb.getUserId());
-								// EditNotebook.this.hide();
-							}
-						});
-
-			}
-		});
-
+		this.add(vpEditNotebook);
 	}
-public static void setNotebook(Notebook notebook){
-	nb = notebook;
-}
+
+	public static void setNotebook(Notebook notebook){
+		tbNoteTitel.setText(notebook.getTitle());
+		tbNoteSubTitel.setText(notebook.getSubTitle());
+		tbMaturity.setText(notebook.getText());
+		
+	}
 }

@@ -47,7 +47,7 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navNotesPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
-	final VerticalPanel editNotebook = new EditNotebook(null);
+	final static VerticalPanel editNotebook = new EditNotebook();
 	
 	
 	
@@ -130,7 +130,7 @@ public class Homepage extends VerticalPanel {
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		navPanel.setWidth("1000px");
-		contentPanel.setWidth("1500px");
+		contentPanel.setWidth("100%");
 
 		
 		navNotebookPanel.add(lbheadlineNotebookLabel);
@@ -245,7 +245,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if(selectedNotebook.getId() != 0){
-					EditNotebook editNotebook = new EditNotebook(currentUser);
+					EditNotebook editNotebook = new EditNotebook();
 	//				editNotebook.show();
 	//				editNotebook.center();
 				}else{
@@ -448,13 +448,13 @@ public class Homepage extends VerticalPanel {
 	
 	public static void editNotebookView(){
 		contentPanel.remove(1);
-		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
+		EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebookView);
 	}
 	public static void showNoteView(){
 		contentPanel.remove(1);
-		EditNotebook editNotebookView = new EditNotebook(getCurrentUser());
 		contentPanel.add(showNote);
+		
 	}
 
 
