@@ -42,8 +42,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private User currentUser = Noteit.currentUser;
 	private Note SelectedNote;
 
-	private final SingleSelectionModel<Notebook> selectionModelNotebook = new SingleSelectionModel<Notebook>();
-	private final SingleSelectionModel<Note> selectionModelNote = new SingleSelectionModel<Note>();
+	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
+	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 
 	/**
 	 * Get the {@link NodeInfo} that provides the children of the specified
@@ -62,6 +62,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				public void onSuccess(ArrayList<Notebook> result) {
 					for (Notebook notebook : result) {
 						notebooksListDataProvider.getList().add(notebook);
+						
 					}
 				}
 
@@ -77,7 +78,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 					null);
 
 		} else if (value instanceof Notebook) {
-			EditNotebook.setNotebook(selectionModelNotebook.getSelectedObject());
+			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
 			Homepage.editNotebookView();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
@@ -106,7 +107,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
 //			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
-			ShowNote.showNote(selectionModelNote.getSelectedObject());
+			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 		}
 
 		return null;
