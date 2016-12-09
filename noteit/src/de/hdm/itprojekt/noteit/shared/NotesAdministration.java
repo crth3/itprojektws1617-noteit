@@ -160,6 +160,11 @@ public interface NotesAdministration extends RemoteService{
 
 	void deleteAllNotesByNotebookID(int userID, int notebookID) throws IllegalArgumentException;
 
-
+	/**
+	 * return all permitted user from this notbook
+	 * @param notebookID
+	 * @return 
+	 */
+	public ArrayList<User> getAllPermittedUsersByNotebookID(int notebookID) throws IllegalArgumentException;
 
 }

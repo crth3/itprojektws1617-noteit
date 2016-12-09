@@ -576,5 +576,17 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
 		return nMapper.findAllNotes();
 	}
+	
+	public ArrayList<User> getAllPermittedUsersByNotebookID(int notebookID){
+		ArrayList<NotebookPermission> allUsersWithPermission = nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		ArrayList<User> permittedUsers = new ArrayList<User>();
+		for (NotebookPermission foundedNotebookPermission : allUsersWithPermission) {
+			User user = new User();
+			user = uMapper.findByID(foundedNotebookPermission.getUserId());
+			user.setPermissionID(foundedNotebookPermission.getPermission());
+			permittedUsers.add(user);
+		}
+		return permittedUsers;
+	}
 
 }
