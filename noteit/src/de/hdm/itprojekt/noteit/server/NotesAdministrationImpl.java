@@ -2,6 +2,7 @@ package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -358,7 +359,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID)
+	public Note createNote(String title, String subtitle, String text, Date maturity, User u, String source, int notebookID)
 			throws IllegalArgumentException {
 
 		System.out.println("User: "+ u);

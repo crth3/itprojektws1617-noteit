@@ -220,9 +220,7 @@ public class Homepage extends VerticalPanel {
 		 */
 		btnAddNewNotebookButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-//				CreateNotebook createNotebook = new CreateNotebook(currentUser);
-//				createNotebook.show();
-//				createNotebook.center();
+
 				NoteitCellBrowser.addNotebook();
 			
 			}
@@ -230,17 +228,16 @@ public class Homepage extends VerticalPanel {
 
 		btnAddNewNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-//				CreateNote createNote = new CreateNote(currentUser, selectedNotebook);
-//				createNote.show();
-//				createNote.center();
+				if (selectedNotebook.getId() == 0){
+					Window.alert("in diesem Notizbuch können sie keine Notizen erstellen");
+				}else
+				NoteitCellBrowser.addNote();
 			}
 		});
 
 		btnEditNote.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				EditNotes editNotes = new EditNotes(currentUser);
-				editNotes.show();
-				editNotes.center();
+
 			}
 		});
 
@@ -440,6 +437,9 @@ public class Homepage extends VerticalPanel {
 
 	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
+	}
+	public static void setSelectedNotebook(Notebook selectedNotebook2){
+		selectedNotebook = selectedNotebook2;
 	}
 	
 	public static User getCurrentUser(){

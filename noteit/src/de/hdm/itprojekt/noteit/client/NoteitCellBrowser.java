@@ -43,15 +43,13 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	private User currentUser = Noteit.currentUser;
 	private static Notebook selectedNotebook = new Notebook();
-	private Note selectedNote = new Note();
+	private static Note selectedNote = new Note();
 
 	private Notebook firstNotebook = new Notebook();
 	private boolean selectedNull;
 
 	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
-	
-	
 
 	private static Logger rootLogger = Logger.getLogger("");
 
@@ -61,7 +59,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-	
+
 		if (value == null) {
 
 			// LEVEL 0.
@@ -93,6 +91,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
+			Homepage.setSelectedNotebook(selectedNotebook);
 
 			Homepage.editNotebookView();
 			// LEVEL 1.
@@ -102,6 +101,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 						@Override
 						public void onSuccess(ArrayList<Note> result) {
+							notesListDataProvider.getList().clear();
 							for (Note note : result) {
 								notesListDataProvider.getList().add(note);
 							}
@@ -125,7 +125,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 		}
 
-		Window.alert("DRIN!");
 		return null;
 	}
 
@@ -173,16 +172,34 @@ public class NoteitCellBrowser implements TreeViewModel {
 			}
 		});
 	}
-	
-	
-	public static void addNotebook(){
+
+	public static void addNotebook() {
 		Notebook newNotebook = new Notebook();
 		newNotebook.setTitle("Neues Notebook");
 		notebooksListDataProvider.getList().add(newNotebook);
-		}
-	public static void deleteNotebook(){
+	}
+
+	public static void deleteNotebook() {
 		notebooksListDataProvider.getList().remove(selectedNotebook.getId());
-		
+
+	}
+
+	public static void addNote() {
+		if (selectedNotebook == null) {
+			Window.alert("kein Notebook ausgewählt");
+		} else {
+
+			Note newNote = new Note();
+			newNote.setTitle("Neue Notiz");
+			newNote.setNotebookId(selectedNotebook.getId());
+			ShowNote.setNote(newNote);
+			notesListDataProvider.getList().add(newNote);
+		}
+	}
+
+	public static void deleteNote() {
+		notesListDataProvider.getList().remove(selectedNote.getId());
+
 	}
 
 }

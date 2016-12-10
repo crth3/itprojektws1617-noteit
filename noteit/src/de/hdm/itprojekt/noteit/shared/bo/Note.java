@@ -1,6 +1,7 @@
 package de.hdm.itprojekt.noteit.shared.bo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 
@@ -16,7 +17,7 @@ public class Note extends BusinessObjects {
 	private String text = "";
 	private Timestamp creationDate;
 	private Timestamp modificationDate;
-	private Timestamp maturityDate;
+	private Date maturityDate;
 	private boolean visible = false;
 	public User creator;
 	private String source;
@@ -110,16 +111,16 @@ public class Note extends BusinessObjects {
 	/**
 	 * @return the maturityDate
 	 */
-	public Timestamp getMaturityDate() {
+	public Date getMaturityDate() {
 		return maturityDate;
 	}
 
 	/**
-	 * @param maturityDate
+	 * @param maturity
 	 *            the maturityDate to set
 	 */
-	public void setMaturityDate(Timestamp maturityDate) {
-		this.maturityDate = maturityDate;
+	public void setMaturityDate(Date maturity) {
+		this.maturityDate = maturity;
 	}
 
 	/**

@@ -28,7 +28,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class CreateNote extends DialogBox {
 
-	private Timestamp timestampe;
+	private Date timestampe;
 	private NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 	private User currentUser = new User();
 	private Notes notes = new Notes();
