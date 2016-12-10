@@ -76,8 +76,8 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteSubTitel.add(lblNotebookSubTitel);
-		hpNoteSubTitel.add(tbNotebookSubTitel);
+//		hpNoteSubTitel.add(lblNotebookSubTitel);
+//		hpNoteSubTitel.add(tbNotebookSubTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
@@ -86,21 +86,15 @@ public class EditNotebook extends VerticalPanel {
 		hpNoteShare.add(lblNotebookShare);
 		hpNoteShare.add(tbNotebookShare);
 
-		hpNoteMaturity.add(lblNoteMaturity);
-		hpNoteMaturity.add(tbMaturity);
+//		hpNoteMaturity.add(lblNoteMaturity);
+//		hpNoteMaturity.add(tbMaturity);
 
 		hpBackButton.add(btnNotebookSave);
 
 		vpEditNotebook.add(vpTitel);
-		vpEditNotebook.add(hpNoteSubTitel);
+//		vpEditNotebook.add(hpNoteSubTitel);
 		// vpEditNotebook.add(hpNoteText);
-		vpEditNotebook.add(hpNoteMaturity);
-		vpEditNotebook.add(hpBackButton);
-
-		vpEditNotebook.add(vpTitel);
-		vpEditNotebook.add(hpNoteSubTitel);
-		// vpEditNotebook.add(hpNoteText);
-		vpEditNotebook.add(hpNoteMaturity);
+//		vpEditNotebook.add(hpNoteMaturity);
 		vpEditNotebook.add(hpBackButton);
 
 		this.add(vpEditNotebook);
@@ -109,7 +103,7 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.createNotebook(tbNotebookTitel.getText(), tbNotebookSubTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
+				notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -130,8 +124,7 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		tbNotebookTitel.setText(notebook.getTitle());
-		tbNotebookSubTitel.setText(notebook.getSubTitle());
-		tbMaturity.setText(notebook.getText());
+	//	tbMaturity.setText(notebook.get());
 
 	}
 }
