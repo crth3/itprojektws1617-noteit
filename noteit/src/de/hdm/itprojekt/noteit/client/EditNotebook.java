@@ -109,7 +109,7 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.createNotebook(tbNotebookTitel.getText(), tbNotebookSubTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
+				notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -130,7 +130,6 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		tbNotebookTitel.setText(notebook.getTitle());
-		tbNotebookSubTitel.setText(notebook.getSubTitle());
 		tbMaturity.setText(notebook.getText());
 
 	}

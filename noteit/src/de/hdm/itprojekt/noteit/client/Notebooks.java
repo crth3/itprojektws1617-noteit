@@ -22,7 +22,7 @@ public class Notebooks extends HorizontalPanel {
 
 	public Notebook createNotebooks(String title, String subtitle, final User creator) {
 
-		notesAdmin.createNotebook(title, subtitle, creator,
+		notesAdmin.createNotebook(title, creator,
 				new AsyncCallback<Notebook>() {
 
 					@Override

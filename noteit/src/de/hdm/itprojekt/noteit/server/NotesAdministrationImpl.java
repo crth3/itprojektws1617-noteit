@@ -140,13 +140,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 * @return das erstellte <code>Notebook</code> Objekt
 	 */
 	@Override
-	public Notebook createNotebook(String title, String subtitle, User creator) throws IllegalArgumentException {
+	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException {
 
 		ts.getTime();
 		nb = new Notebook();
 		nb.setUserId(creator.getId());
 		nb.setTitle(title);
-		nb.setSubTitle(subtitle);
 		nb.setCreationDate(ts);
 		return this.nbMapper.insert(nb);
 	}

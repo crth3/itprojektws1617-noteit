@@ -12,8 +12,6 @@ public class Notebook extends BusinessObjects {
 	private static final long serialVersionUID = 1L;
 	public int creatorID = 0;
 	private String title = "";
-	private String subTitle = "";
-	private String text = "";
 	private Timestamp creationDate;
 	private boolean visible = false;
 	public User creator;
@@ -39,35 +37,6 @@ public class Notebook extends BusinessObjects {
 		this.title = title;
 	}
 
-	/**
-	 * @return the subTitle
-	 */
-	public String getSubTitle() {
-		return subTitle;
-	}
-
-	/**
-	 * @param subTitle
-	 *            the subTitle to set
-	 */
-	public void setSubTitle(String subTitle) {
-		this.subTitle = subTitle;
-	}
-
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * @param text
-	 *            the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
 
 	/**
 	 * @return the creationDate
