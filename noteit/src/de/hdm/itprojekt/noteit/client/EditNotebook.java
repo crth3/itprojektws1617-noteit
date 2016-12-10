@@ -41,18 +41,17 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel hpBackButton = new VerticalPanel();
 	static VerticalPanel hpNoteMaturity = new VerticalPanel();
 
-	static Label lblNoteTitel = new Label("Titel");
-	static Label lblNoteSubTitel = new Label("Subtitel");
-	static Label lblNoteShare = new Label("Teilen mit");
-	static Label lblNoteText = new Label("Deine Notiz");
+	static Label lblNotebookTitel = new Label("Titel");
+	static Label lblNotebookSubTitel = new Label("Subtitel");
+	static Label lblNotebookShare = new Label("Teilen mit");
 	static Label lblNoteMaturity = new Label("Faelligkeitsdatum");
 
-	static TextBox tbNoteSubTitel = new TextBox();
-	static TextBox tbNoteTitel = new TextBox();
-	static TextBox tbNoteShare = new TextBox();
+	static TextBox tbNotebookSubTitel = new TextBox();
+	static TextBox tbNotebookTitel = new TextBox();
+	static TextBox tbNotebookShare = new TextBox();
 	static TextBox tbMaturity = new TextBox();
 
-	static Button btnNoteBack = new Button("Zurueck");
+	static Button btnNotebookSave = new Button("Speichern");
 
 	static RichTextArea content = new RichTextArea();
 
@@ -70,50 +69,69 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		vpTitel.add(lblNoteTitel);
-		vpTitel.add(tbNoteTitel);
+		vpTitel.add(lblNotebookTitel);
+		vpTitel.add(tbNotebookTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteSubTitel.add(lblNoteSubTitel);
-		hpNoteSubTitel.add(tbNoteSubTitel);
+		hpNoteSubTitel.add(lblNotebookSubTitel);
+		hpNoteSubTitel.add(tbNotebookSubTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteShare.add(lblNoteShare);
-		hpNoteShare.add(tbNoteShare);
-
-		hpNoteText.add(lblNoteText);
-		hpNoteText.add(content);
+		hpNoteShare.add(lblNotebookShare);
+		hpNoteShare.add(tbNotebookShare);
 
 		hpNoteMaturity.add(lblNoteMaturity);
 		hpNoteMaturity.add(tbMaturity);
 
-		hpBackButton.add(btnNoteBack);
+		hpBackButton.add(btnNotebookSave);
 
 		vpEditNotebook.add(vpTitel);
 		vpEditNotebook.add(hpNoteSubTitel);
-		//vpEditNotebook.add(hpNoteText);
+		// vpEditNotebook.add(hpNoteText);
 		vpEditNotebook.add(hpNoteMaturity);
 		vpEditNotebook.add(hpBackButton);
 
 		vpEditNotebook.add(vpTitel);
 		vpEditNotebook.add(hpNoteSubTitel);
-		//vpEditNotebook.add(hpNoteText);
+		// vpEditNotebook.add(hpNoteText);
 		vpEditNotebook.add(hpNoteMaturity);
 		vpEditNotebook.add(hpBackButton);
 
 		this.add(vpEditNotebook);
+
+		btnNotebookSave.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				notesAdmin.createNotebook(tbNotebookTitel.getText(), tbNotebookSubTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Notebook result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+			}
+		});
 	}
 
-	public static void setNotebook(Notebook notebook){
-		tbNoteTitel.setText(notebook.getTitle());
-		tbNoteSubTitel.setText(notebook.getSubTitle());
+	public static void setNotebook(Notebook notebook) {
+		tbNotebookTitel.setText(notebook.getTitle());
+		tbNotebookSubTitel.setText(notebook.getSubTitle());
 		tbMaturity.setText(notebook.getText());
-		
+
 	}
 }

@@ -20,9 +20,9 @@ public class Notebooks extends HorizontalPanel {
 			.createNotebookCellList();
 	Notebook notebook = new Notebook();
 
-	public Notebook createNotebooks(String title, final User creator) {
+	public Notebook createNotebooks(String title, String subtitle, final User creator) {
 
-		notesAdmin.createNotebook(title, creator,
+		notesAdmin.createNotebook(title, subtitle, creator,
 				new AsyncCallback<Notebook>() {
 
 					@Override

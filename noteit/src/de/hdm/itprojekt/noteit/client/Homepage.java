@@ -105,6 +105,8 @@ public class Homepage extends VerticalPanel {
 				contentPanel.add(cellBrowser);
 				contentPanel.add(showNote);
 				
+				
+				
 		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
@@ -218,17 +220,19 @@ public class Homepage extends VerticalPanel {
 		 */
 		btnAddNewNotebookButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateNotebook createNotebook = new CreateNotebook(currentUser);
-				createNotebook.show();
-				createNotebook.center();
+//				CreateNotebook createNotebook = new CreateNotebook(currentUser);
+//				createNotebook.show();
+//				createNotebook.center();
+				NoteitCellBrowser.addNotebook();
+			
 			}
 		});
 
 		btnAddNewNoteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				CreateNote createNote = new CreateNote(currentUser, selectedNotebook);
-				createNote.show();
-				createNote.center();
+//				CreateNote createNote = new CreateNote(currentUser, selectedNotebook);
+//				createNote.show();
+//				createNote.center();
 			}
 		});
 

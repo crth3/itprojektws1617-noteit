@@ -15,14 +15,14 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
  */
 
 @RemoteServiceRelativePath("notesadministration")
-public interface NotesAdministration extends RemoteService{
-	
+public interface NotesAdministration extends RemoteService {
+
 	/**
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	public void init() throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param mail
@@ -31,9 +31,8 @@ public interface NotesAdministration extends RemoteService{
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public User createUser(String mail,String firstName,String lastName)
-		      throws IllegalArgumentException;
-	
+	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException;
+
 	/**
 	 * 
 	 * @param userID
@@ -42,25 +41,19 @@ public interface NotesAdministration extends RemoteService{
 	 * @param lastName
 	 * @throws IllegalArgumentException
 	 */
-	public void updateUser(int userID, String mail,String firstName,String lastName) throws IllegalArgumentException;
-	
+	public void updateUser(int userID, String mail, String firstName, String lastName) throws IllegalArgumentException;
+
 	/**
 	 * 
 	 * @param UserID
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteUser(User UserID) throws IllegalArgumentException;
-	
-	/**
-	 * 
-	 * @param title
-	 * @param creator
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException;
-	
-	//TODO Übergabeparmater für Berechtigungen überarbeiten evtl ein Objekt -> auch bei update Note hinzufügen
+
+	Notebook createNotebook(String title, String subtitle, User creator);
+
+	// TODO Übergabeparmater für Berechtigungen überarbeiten evtl ein Objekt
+	// -> auch bei update Note hinzufügen
 	/**
 	 * 
 	 * @param title
@@ -70,7 +63,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param notebookID
@@ -78,7 +71,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param title
@@ -90,9 +83,10 @@ public interface NotesAdministration extends RemoteService{
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID) throws IllegalArgumentException;
-	
-	//TODO Übergabeparmeter für Berechtigungen siehe Notebook
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source,
+			int notebookID) throws IllegalArgumentException;
+
+	// TODO Übergabeparmeter für Berechtigungen siehe Notebook
 	/**
 	 * 
 	 * @param title
@@ -103,8 +97,9 @@ public interface NotesAdministration extends RemoteService{
 	 * @param source
 	 * @throws IllegalArgumentException
 	 */
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID  ) throws IllegalArgumentException;
-	
+	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
+			int notebookID, int noteID) throws IllegalArgumentException;
+
 	/**
 	 * 
 	 * @param noteID
@@ -112,7 +107,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param UserID
@@ -120,7 +115,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Notebook> getAllNotebooksByUserID(int UserID) throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param notebookID
@@ -128,9 +123,9 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException;
-	
+
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param userID
@@ -139,7 +134,7 @@ public interface NotesAdministration extends RemoteService{
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Notebook> findNotebooksByKeyword(int userID, String keyword) throws IllegalArgumentException;
-	
+
 	/**
 	 * 
 	 * @param userID
@@ -148,8 +143,9 @@ public interface NotesAdministration extends RemoteService{
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Note> findNoteByKeyword(int userID, String keyword, int notebookID) throws IllegalArgumentException;
-	
+	public ArrayList<Note> findNoteByKeyword(int userID, String keyword, int notebookID)
+			throws IllegalArgumentException;
+
 	/**
 	 * 
 	 * @param mail
@@ -162,9 +158,9 @@ public interface NotesAdministration extends RemoteService{
 
 	/**
 	 * return all permitted user from this notbook
+	 * 
 	 * @param notebookID
-	 * @return 
+	 * @return
 	 */
 	public ArrayList<User> getAllPermittedUsersByNotebookID(int notebookID) throws IllegalArgumentException;
-
 }
