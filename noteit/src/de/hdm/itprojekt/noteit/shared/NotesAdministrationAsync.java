@@ -46,4 +46,6 @@ public interface NotesAdministrationAsync {
 	void deleteAllNotesByNotebookID(int userID, int notebookID, AsyncCallback<Void> callback);
 
 	void getAllNotes(AsyncCallback<ArrayList<Note>> callback);
+
+	void getAllPermittedUsersByNotebookID(int notebookID, AsyncCallback<ArrayList<User>> callback);
 }

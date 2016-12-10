@@ -67,7 +67,7 @@ implements ReportAdmin {
 	}
 
 	@Override
-	public ReportSimpleAllNotesWithGeneralInformations createReportSimpleAllNotesWithGeneralInformations()
+		public ReportSimpleAllNotesWithGeneralInformations createReportSimpleAllNotesWithGeneralInformations()
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
