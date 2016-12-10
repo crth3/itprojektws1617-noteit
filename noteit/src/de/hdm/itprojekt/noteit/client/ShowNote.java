@@ -5,10 +5,14 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.text.AsyncBoxView;
+
 import com.google.appengine.api.search.query.QueryParser.text_return;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -50,9 +54,12 @@ public class ShowNote extends VerticalPanel {
 	static TextBox tbNoteShare = new TextBox();
 	static TextBox tbMaturity = new TextBox();
 
-	static Button btnNoteBack = new Button("Zurueck");
+	static Button btnSaveNote = new Button("Speichern");
 
 	static RichTextArea content = new RichTextArea();
+	
+	static Note currentNote = new Note();
+	
 
 	// Timestamp maturity = new Timestamp();
 
@@ -91,7 +98,7 @@ public class ShowNote extends VerticalPanel {
 		hpNoteMaturity.add(lblNoteMaturity);
 		hpNoteMaturity.add(tbMaturity);
 
-		hpBackButton.add(btnNoteBack);
+		hpBackButton.add(btnSaveNote);
 
 		vpShowNote.add(vpTitel);
 		vpShowNote.add(hpNoteSubTitel);
@@ -106,17 +113,51 @@ public class ShowNote extends VerticalPanel {
 		vpShowNote.add(hpBackButton);
 
 		this.add(vpShowNote);
+		
+
 	}
+	
+	
 
 	public static void showNote(Note note) {
+		 currentNote = note;
 		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
-
+		
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());
 		content.setText(note.getText());
 		lblNoteTitel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		tbMaturity.setText(note.getMaturityDate().toString());
+		
+		btnSaveNote.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+				
+						
+				notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(), null, Homepage.getCurrentUser(), null, currentNote.getNotebookId(), new AsyncCallback<Note>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Note result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+		
+			}
+		});
 
 	}
+	
+	public static void setNote(Note newNote){
+		currentNote = newNote;
+	}
+	
+
 }

@@ -1,5 +1,6 @@
 package de.hdm.itprojekt.noteit.shared;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -72,19 +73,8 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException;
 
-	/**
-	 * 
-	 * @param title
-	 * @param subtitle
-	 * @param text
-	 * @param maturity
-	 * @param creatorID
-	 * @param source
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source,
-			int notebookID) throws IllegalArgumentException;
+	Note createNote(String title, String subtitle, String text, java.util.Date date, User u, String source,
+			int notebookID);
 
 	// TODO Übergabeparmeter für Berechtigungen siehe Notebook
 	/**
