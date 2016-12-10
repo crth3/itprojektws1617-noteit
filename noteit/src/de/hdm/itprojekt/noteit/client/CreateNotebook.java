@@ -100,21 +100,21 @@ public class CreateNotebook extends DialogBox {
 	 * close Dialoge Box
 	 */
 	public void createNewNotebook(String notebookTitle, final User user) {
-		notesAdmin.createNotebook(notebookTitle, user, new AsyncCallback<Notebook>() {
-
-			@Override
-			public void onSuccess(Notebook result) {
-				CreateNotebook.this.hide();
-				Homepage.updateNotebookCellList(user.getId());
-				CreateNotebook.this.hide();
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+//		notesAdmin.createNotebook(notebookTitle, user, new AsyncCallback<Notebook>() {
+//
+//			@Override
+//			public void onSuccess(Notebook result) {
+//				CreateNotebook.this.hide();
+//				Homepage.updateNotebookCellList(user.getId());
+//				CreateNotebook.this.hide();
+//			}
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		});
 	}
 
 	// HorizontalPanel titelPanel = new HorizontalPanel();

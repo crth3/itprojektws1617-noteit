@@ -18,7 +18,7 @@ public interface NotesAdministrationAsync {
 	void createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source,
 			int notebookID, AsyncCallback<Note> callback);
 
-	void createNotebook(String title, User creator, AsyncCallback<Notebook> callback);
+	void createNotebook(String title, String subtitle, User creator, AsyncCallback<Notebook> callback);
 
 	void deleteNote(int noteID, int userID, AsyncCallback<Void> callback);
 

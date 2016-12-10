@@ -45,9 +45,14 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static Notebook selectedNotebook = new Notebook();
 	private Note selectedNote = new Note();
 
+	private Notebook firstNotebook = new Notebook();
+	private boolean selectedNull;
+
 	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 	
+	
+
 	private static Logger rootLogger = Logger.getLogger("");
 
 	/**
@@ -56,19 +61,21 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-
+	
 		if (value == null) {
+
 			// LEVEL 0.
 			// We passed null as the root value. Return the notebooks.
-			notebooksListDataProvider = new ListDataProvider<Notebook>();
+
 			notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
 				@Override
 				public void onSuccess(ArrayList<Notebook> result) {
 					for (Notebook notebook : result) {
 						notebooksListDataProvider.getList().add(notebook);
-						
+
 					}
+
 				}
 
 				@Override
@@ -77,14 +84,16 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				}
 			});
-			
+			selectionModelNotebook.setSelected(firstNotebook, true);
 			// Return a node info that pairs the data provider and the cell.
 			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook,
 					null);
 
 		} else if (value instanceof Notebook) {
+
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
+
 			Homepage.editNotebookView();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
@@ -111,10 +120,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 			Homepage.showNoteView();
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
-//			Window.alert("name der Note: " + selectionModelNote.getSelectedObject().getTitle());
+			// Window.alert("name der Note: " +
+			// selectionModelNote.getSelectedObject().getTitle());
 			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 		}
 
+		Window.alert("DRIN!");
 		return null;
 	}
 
@@ -129,11 +140,11 @@ public class NoteitCellBrowser implements TreeViewModel {
 		}
 		return false;
 	}
-	
-	public static void searchNotebookByKeyword(int userID, String keyword){
-	
+
+	public static void searchNotebookByKeyword(int userID, String keyword) {
+
 		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
-		
+
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
 				notebooksListDataProvider.setList(result);
@@ -146,9 +157,10 @@ public class NoteitCellBrowser implements TreeViewModel {
 			}
 		});
 	}
-	
+
 	public static void searchNoteByKeyword(int userID, String keyword) {
-		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
+		rootLogger.log(Level.SEVERE,
+				"userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
 		notesAdmin.findNoteByKeyword(userID, keyword, selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
@@ -160,6 +172,17 @@ public class NoteitCellBrowser implements TreeViewModel {
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+	
+	
+	public static void addNotebook(){
+		Notebook newNotebook = new Notebook();
+		newNotebook.setTitle("Neues Notebook");
+		notebooksListDataProvider.getList().add(newNotebook);
+		}
+	public static void deleteNotebook(){
+		notebooksListDataProvider.getList().remove(selectedNotebook.getId());
+		
 	}
 
 }
