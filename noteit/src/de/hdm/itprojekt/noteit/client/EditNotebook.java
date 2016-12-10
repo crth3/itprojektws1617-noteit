@@ -76,8 +76,8 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteSubTitel.add(lblNotebookSubTitel);
-		hpNoteSubTitel.add(tbNotebookSubTitel);
+//		hpNoteSubTitel.add(lblNotebookSubTitel);
+//		hpNoteSubTitel.add(tbNotebookSubTitel);
 
 		/**
 		 * Create the Panel, Label and TextBox
@@ -86,21 +86,15 @@ public class EditNotebook extends VerticalPanel {
 		hpNoteShare.add(lblNotebookShare);
 		hpNoteShare.add(tbNotebookShare);
 
-		hpNoteMaturity.add(lblNoteMaturity);
-		hpNoteMaturity.add(tbMaturity);
+//		hpNoteMaturity.add(lblNoteMaturity);
+//		hpNoteMaturity.add(tbMaturity);
 
 		hpBackButton.add(btnNotebookSave);
 
 		vpEditNotebook.add(vpTitel);
-		vpEditNotebook.add(hpNoteSubTitel);
+//		vpEditNotebook.add(hpNoteSubTitel);
 		// vpEditNotebook.add(hpNoteText);
-		vpEditNotebook.add(hpNoteMaturity);
-		vpEditNotebook.add(hpBackButton);
-
-		vpEditNotebook.add(vpTitel);
-		vpEditNotebook.add(hpNoteSubTitel);
-		// vpEditNotebook.add(hpNoteText);
-		vpEditNotebook.add(hpNoteMaturity);
+//		vpEditNotebook.add(hpNoteMaturity);
 		vpEditNotebook.add(hpBackButton);
 
 		this.add(vpEditNotebook);
