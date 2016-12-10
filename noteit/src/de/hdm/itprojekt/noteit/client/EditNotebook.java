@@ -130,7 +130,7 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		tbNotebookTitel.setText(notebook.getTitle());
-		tbMaturity.setText(notebook.getText());
+	//	tbMaturity.setText(notebook.get());
 
 	}
 }
