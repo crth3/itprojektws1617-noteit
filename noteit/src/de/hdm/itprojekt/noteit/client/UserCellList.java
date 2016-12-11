@@ -66,6 +66,7 @@ public class UserCellList extends Widget {
 								+ userSelectionModel.getSelectedObject()
 										.getMail());
 						SelectedUser = userSelectionModel.getSelectedObject();
+						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
 					}
 				});
 

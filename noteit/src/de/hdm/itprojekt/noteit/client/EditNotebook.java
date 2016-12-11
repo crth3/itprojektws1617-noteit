@@ -9,15 +9,19 @@ import org.apache.tools.ant.taskdefs.Delete;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -28,33 +32,39 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 public class EditNotebook extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
-
+	
+	static Notebook currentNotebook;
+	ArrayList<User> userList = new ArrayList<User>();
 	private static Logger rootLogger = Logger.getLogger("");
 
-	static VerticalPanel vpEditNotebook = new VerticalPanel();
+	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
+	static HorizontalPanel hpButtons = new HorizontalPanel();
 
-	static VerticalPanel vpTitel = new VerticalPanel();
-	static VerticalPanel hpNoteSubTitel = new VerticalPanel();
-	static VerticalPanel hpNoteText = new VerticalPanel();
-	static VerticalPanel hpNoteShare = new VerticalPanel();
-	static VerticalPanel hpNotePermission = new VerticalPanel();
+	static VerticalPanel vpLeft = new VerticalPanel();
+	static VerticalPanel vpRight = new VerticalPanel();
+	static VerticalPanel vpTitle = new VerticalPanel();
+	static HorizontalPanel vpAddPermission = new HorizontalPanel();
+	
+	static VerticalPanel hpNotebookShare = new VerticalPanel();
+	static VerticalPanel vpNotebookPermission = new VerticalPanel();
 	static VerticalPanel hpBackButton = new VerticalPanel();
-	static VerticalPanel hpNoteMaturity = new VerticalPanel();
 
 	static Label lblNotebookTitel = new Label("Titel");
-	static Label lblNotebookSubTitel = new Label("Subtitel");
+	static Label lblNotebookPermission = new Label("Freigabe erhalten:");
 	static Label lblNotebookShare = new Label("Teilen mit");
-	static Label lblNoteMaturity = new Label("Faelligkeitsdatum");
 
-	static TextBox tbNotebookSubTitel = new TextBox();
 	static TextBox tbNotebookTitel = new TextBox();
-	static TextBox tbNotebookShare = new TextBox();
-	static TextBox tbMaturity = new TextBox();
+	static TextBox tbNotebookShareMail = new TextBox();
 
 	static Button btnNotebookSave = new Button("Speichern");
-
-	static RichTextArea content = new RichTextArea();
-
+	static Button btnAddPermission = new Button("+");
+	static Button btnDeletePermission = new Button("x");
+	static CellList<User> clUser = new UserCellList().createUserCellList();
+	
+	static RadioButton rbRead = new RadioButton("permission", "lesen");
+	static RadioButton rbWrite = new RadioButton("permission", "bearbeiten");
+	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
+	
 	// Timestamp maturity = new Timestamp();
 
 	// Date maturity = new Date();
@@ -63,14 +73,46 @@ public class EditNotebook extends VerticalPanel {
 
 	@Override
 	protected void onLoad() {
-
-		vpEditNotebook.setWidth("600px");
+		
+		hpEditNotebook.setWidth("600px");
+		hpButtons.setWidth("300px");
+		vpLeft.setWidth("300px");
+		vpAddPermission.setWidth("300px");
+		vpTitle.setWidth("300px");
+		vpRight.setWidth("300px");
+		vpNotebookPermission.setWidth("300px");
+		
+		
+		
+	    rbRead.setValue(true);
+	    vpAddPermission.add(rbRead);
+	    vpAddPermission.add(rbWrite);
+	    vpAddPermission.add(rbDelete);
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 
-		vpTitel.add(lblNotebookTitel);
-		vpTitel.add(tbNotebookTitel);
+		vpTitle.add(lblNotebookTitel);
+		vpTitle.add(tbNotebookTitel);
+		
+		
+		vpAddPermission.add(tbNotebookShareMail);
+		vpAddPermission.add(btnAddPermission);
+		vpAddPermission.add(btnDeletePermission);
+		vpAddPermission.setSpacing(0);
+		
+		vpNotebookPermission.add(lblNotebookPermission);
+		vpNotebookPermission.add(clUser);
+		
+		vpLeft.add(lblNotebookTitel);
+		vpLeft.add(tbNotebookTitel);
+		vpLeft.add(lblNotebookShare);
+		vpLeft.add(vpAddPermission);
+		vpLeft.add(rbRead);
+		vpLeft.add(rbWrite);
+		vpLeft.add(rbDelete);
+		vpLeft.add(hpButtons);
+		vpRight.add(vpNotebookPermission);
 
 		/**
 		 * Create the Panel, Label and TextBox
@@ -83,21 +125,15 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteShare.add(lblNotebookShare);
-		hpNoteShare.add(tbNotebookShare);
 
-//		hpNoteMaturity.add(lblNoteMaturity);
-//		hpNoteMaturity.add(tbMaturity);
+		hpButtons.add(btnNotebookSave);
 
-		hpBackButton.add(btnNotebookSave);
+		hpEditNotebook.add(vpLeft);
+		hpEditNotebook.add(vpRight);
+		//hpEditNotebook.add(vpNotebookPermission);
+		//hpEditNotebook.add(hpButtons);
 
-		vpEditNotebook.add(vpTitel);
-//		vpEditNotebook.add(hpNoteSubTitel);
-		// vpEditNotebook.add(hpNoteText);
-//		vpEditNotebook.add(hpNoteMaturity);
-		vpEditNotebook.add(hpBackButton);
-
-		this.add(vpEditNotebook);
+		this.add(hpEditNotebook);
 
 		btnNotebookSave.addClickHandler(new ClickHandler() {
 
@@ -120,11 +156,73 @@ public class EditNotebook extends VerticalPanel {
 				
 			}
 		});
+		
+		tbNotebookShareMail.getElement().setPropertyString("placeholder", "max@yahoo.de");
+		btnAddPermission.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				setUserPermission(tbNotebookShareMail.getText());
+				
+			}
+		});
 	}
 
 	public static void setNotebook(Notebook notebook) {
+		currentNotebook = notebook;
 		tbNotebookTitel.setText(notebook.getTitle());
 	//	tbMaturity.setText(notebook.get());
 
 	}
+	
+	public static void getAllPermittedUsersbyNotebookID(int notebookID){
+		
+		notesAdmin.getAllPermittedUsersByNotebookID(notebookID, new AsyncCallback<ArrayList<User>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<User> result) {
+				// TODO Auto-generated method stub
+//				userList = result;
+				
+				clUser.setRowData(result);
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	public void setUserPermission(String mail){
+		notesAdmin.findUserByMail(mail, new AsyncCallback<User>() {
+			
+			@Override
+			public void onSuccess(User result) {
+				userList.add(result);
+				clUser.setRowData(userList);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Dieser Nutzer wurde nicht gefunden");
+				
+			}
+		});
+	}
+	
+	public static void setSelectedUserPermissionInTextbox(User user){
+		tbNotebookShareMail.setText(user.getMail());
+		if(user.getPermissionID() == 1){
+			rbRead.setValue(true);
+		}else if(user.getPermissionID() == 2){
+			rbWrite.setValue(true);
+		}else{
+			rbDelete.setValue(true);
+		}
+		
+	}
+	
 }

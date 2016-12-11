@@ -91,6 +91,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
+			EditNotebook.getAllPermittedUsersbyNotebookID(selectionModelNotebook.getLastSelectedObject().getId());
 			Homepage.setSelectedNotebook(selectedNotebook);
 
 			Homepage.editNotebookView();
@@ -186,7 +187,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	public static void addNote() {
 		if (selectedNotebook == null) {
-			Window.alert("kein Notebook ausgewählt");
+			Window.alert("kein Notebook ausgewï¿½hlt");
 		} else {
 
 			Note newNote = new Note();
