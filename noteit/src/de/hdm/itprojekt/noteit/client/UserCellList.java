@@ -58,14 +58,9 @@ public class UserCellList extends Widget {
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						// contactForm.setContact(selectionModel.getSelectedObject());
-						Window.alert("Du hast gewählt: "
-								+ userSelectionModel.getSelectedObject()
-										.getFirstName()
-								+ userSelectionModel.getSelectedObject()
-										.getLastName()
-								+ userSelectionModel.getSelectedObject()
-										.getMail());
+						
 						SelectedUser = userSelectionModel.getSelectedObject();
+						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
 					}
 				});
 

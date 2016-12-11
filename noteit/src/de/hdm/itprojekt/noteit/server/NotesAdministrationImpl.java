@@ -590,4 +590,17 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		return permittedUsers;
 	}
 
+	@Override
+	public void setUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
+		System.out.println("Email: " + mail);
+		System.out.println("permissionID: " + permissionID);
+		
+	}
+
+	@Override
+	public void deleteUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
