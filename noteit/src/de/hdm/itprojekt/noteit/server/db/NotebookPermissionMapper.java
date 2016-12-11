@@ -102,9 +102,9 @@ public class NotebookPermissionMapper {
 				NotebookPermission nbp = new NotebookPermission();
 //				Notebook nb = new Notebook();
 
-//				nbp.setId(rs.getInt("notebookPermissionId"));
+				nbp.setId(rs.getInt("notebookPermissionId"));
 				nbp.setPermission(rs.getInt("permission"));
-//				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
+				nbp.setNotebookId(rs.getInt("Notebook_notebookId"));
 				nbp.setUserId(rs.getInt("User_userId"));
 
 //				nb.setId(rs.getInt("notebookId"));
