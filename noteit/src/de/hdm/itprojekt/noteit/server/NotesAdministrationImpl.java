@@ -591,45 +591,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public boolean setUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException {
+	public void setUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
 		System.out.println("Email: " + mail);
 		System.out.println("permissionID: " + permissionID);
-		User user = uMapper.findByEmail(mail);
-		if(user == null){
-			System.out.println("user nicht vorhanden");
-			return false;
-		}else{
-			System.out.println("user: "+user.getMail());
-		}
-		 
-		ArrayList<NotebookPermission> NotebookPermissions = nbpMapper.findNotebookPermissionByNotebookId(notebookID);
-		NotebookPermission nbp = new NotebookPermission();
-		boolean updated = false;
-
-		
-		nbp.setPermission(permissionID);
-		nbp.setUserId(user.getId());
-		nbp.setNotebookId(notebookID);
-		for (NotebookPermission foundedNotebookPermission : NotebookPermissions) {
-			 if(user.getId() == foundedNotebookPermission.getUserId() && permissionID != foundedNotebookPermission.getPermission()){
-				
-				 foundedNotebookPermission.setPermission(permissionID);
-				nbpMapper.update(foundedNotebookPermission);
-				updated = true;
-				return true;
-			}
-		}
-		if (updated == false){
-			nbpMapper.insert(nbp);
-		}
-		return true;
-		
-		
 		
 	}
 
 	@Override
-	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException {
+	public void deleteUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
