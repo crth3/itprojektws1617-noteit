@@ -34,7 +34,7 @@ public class EditNotebook extends VerticalPanel {
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 	
 	static Notebook currentNotebook;
-	ArrayList<User> userList = new ArrayList<User>();
+	static ArrayList<User> userList = new ArrayList<User>();
 	private static Logger rootLogger = Logger.getLogger("");
 
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
@@ -50,7 +50,7 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel hpBackButton = new VerticalPanel();
 
 	static Label lblNotebookTitel = new Label("Titel");
-	static Label lblNotebookPermission = new Label("Freigabe erhalten:");
+	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Teilen mit");
 
 	static TextBox tbNotebookTitel = new TextBox();
@@ -64,6 +64,8 @@ public class EditNotebook extends VerticalPanel {
 	static RadioButton rbRead = new RadioButton("permission", "lesen");
 	static RadioButton rbWrite = new RadioButton("permission", "bearbeiten");
 	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
+	
+	
 	
 	// Timestamp maturity = new Timestamp();
 
@@ -134,6 +136,63 @@ public class EditNotebook extends VerticalPanel {
 		//hpEditNotebook.add(hpButtons);
 
 		this.add(hpEditNotebook);
+		
+		
+		/**
+		 * Erstellen oder bearbeiten von Freigaben RPC
+		 */
+		btnAddPermission.addClickHandler(new ClickHandler() {
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onClick(ClickEvent event) {
+				int permissionID;
+				if (rbRead.isChecked()) {
+					permissionID = 1;
+				} else if (rbWrite.isChecked()) {
+					permissionID = 2;
+				} else {
+					permissionID = 3;
+				}
+				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+					notesAdmin.setUserNotebookPermission(tbNotebookTitel.getText(), permissionID,
+							new AsyncCallback<Void>() {
+
+								@Override
+								public void onSuccess(Void result) {
+									tbNotebookShareMail.setText("");
+									tbNotebookShareMail.getElement().setPropertyString("placeholder", "beispiel@noteit.de");
+									rbRead.setValue(true);
+
+								}
+
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+				}else{
+					Window.alert("Bitte gebe eine E-Mail-Adresse an!");
+					clUser.setRowData(userList);
+				}
+
+			}
+		});
+		
+		
+		btnDeletePermission.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+					Window.alert("Abfrage ob die Freigabe wirklich gelöscht werden soll");
+				}else{
+					Window.alert("Bitte wähle eine bestehende Freigabe aus die du löschen möchtest!");
+				}
+
+			}
+		});
 
 		btnNotebookSave.addClickHandler(new ClickHandler() {
 
@@ -157,7 +216,7 @@ public class EditNotebook extends VerticalPanel {
 			}
 		});
 		
-		tbNotebookShareMail.getElement().setPropertyString("placeholder", "max@yahoo.de");
+		tbNotebookShareMail.getElement().setPropertyString("placeholder", "beispiel@noteit.de");
 		btnAddPermission.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -182,7 +241,7 @@ public class EditNotebook extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<User> result) {
 				// TODO Auto-generated method stub
-//				userList = result;
+				userList = result;
 				
 				clUser.setRowData(result);
 				
@@ -215,6 +274,7 @@ public class EditNotebook extends VerticalPanel {
 	
 	public static void setSelectedUserPermissionInTextbox(User user){
 		tbNotebookShareMail.setText(user.getMail());
+		tbNotebookShareMail.getElement().setPropertyString("placeholder", "");
 		if(user.getPermissionID() == 1){
 			rbRead.setValue(true);
 		}else if(user.getPermissionID() == 2){
