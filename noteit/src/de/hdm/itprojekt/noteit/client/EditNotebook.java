@@ -155,15 +155,19 @@ public class EditNotebook extends VerticalPanel {
 					permissionID = 3;
 				}
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-					notesAdmin.setUserNotebookPermission(tbNotebookTitel.getText(), permissionID,
-							new AsyncCallback<Void>() {
+					notesAdmin.setUserNotebookPermission(tbNotebookShareMail.getText(), permissionID,currentNotebook.getId(),
+							new AsyncCallback<Boolean>() {
 
 								@Override
-								public void onSuccess(Void result) {
+								public void onSuccess(Boolean result) {
+									if(result == true){
 									tbNotebookShareMail.setText("");
 									tbNotebookShareMail.getElement().setPropertyString("placeholder", "beispiel@noteit.de");
 									rbRead.setValue(true);
-
+									getAllPermittedUsersbyNotebookID(currentNotebook.getId());
+									}else{
+										Window.alert("Der Nutzer mit der E-Mail `"+ tbNotebookShareMail.getText()+"` wurde nicht gefunden" );
+									}
 								}
 
 								@Override
