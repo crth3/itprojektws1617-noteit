@@ -12,8 +12,8 @@ import de.hdm.itprojekt.noteit.shared.report.Column;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphComposite;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphSimple;
 import de.hdm.itprojekt.noteit.shared.report.Report;
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralInformations;
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralSharingInformations;
+import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
+import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
 import de.hdm.itprojekt.noteit.shared.report.Row;
 
 /**
@@ -67,20 +67,20 @@ implements ReportAdmin {
 	}
 
 	@Override
-		public ReportSimpleAllNotesWithGeneralInformations createReportSimpleAllNotesWithGeneralInformations()
+		public NotesGeneralInformation createReportNotesGeneralInformation()
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 
-		ReportSimpleAllNotesWithGeneralInformations reportSimpleAllNotesWithGeneralInformations = new ReportSimpleAllNotesWithGeneralInformations();
+		NotesGeneralInformation notesGeneralInformation = new NotesGeneralInformation();
 
-		reportSimpleAllNotesWithGeneralInformations
+		notesGeneralInformation
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
 						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
 
-		this.addImprint(reportSimpleAllNotesWithGeneralInformations);
+		this.addImprint(notesGeneralInformation);
 
-		reportSimpleAllNotesWithGeneralInformations.setCreated(new Date());
+		notesGeneralInformation.setCreated(new Date());
 
 		/*
 		 * Ab hier erfolgt ein zeilenweises hinzufügen von Notiz-Informationen.
@@ -94,7 +94,7 @@ implements ReportAdmin {
 		headline.addColumn(new Column("Modifikationsdatum"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
-		reportSimpleAllNotesWithGeneralInformations.addRow(headline);
+		notesGeneralInformation.addRow(headline);
 
 		ArrayList<Note> notes = this.notesAdministration.getAllNotes();
 
@@ -109,14 +109,14 @@ implements ReportAdmin {
 			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
 
-			reportSimpleAllNotesWithGeneralInformations.addRow(noteRow);
+			notesGeneralInformation.addRow(noteRow);
 		}
 
-		return reportSimpleAllNotesWithGeneralInformations;
+		return notesGeneralInformation;
 	}
 
 	@Override
-	public ReportSimpleAllNotesWithGeneralSharingInformations createReportSimpleAllNotesWithGeneralSharingInformations()
+	public NotesSharingInformation createReportNotesSharingInformation()
 			throws IllegalArgumentException {
 		
 		return null;

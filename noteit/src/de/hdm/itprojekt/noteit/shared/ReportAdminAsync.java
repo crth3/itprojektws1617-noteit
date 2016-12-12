@@ -2,17 +2,18 @@ package de.hdm.itprojekt.noteit.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralInformations;
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralSharingInformations;
+import de.hdm.itprojekt.noteit.shared.report.ReportSimple;
+import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
 
 public interface ReportAdminAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createReportSimpleAllNotesWithGeneralInformations(
-			AsyncCallback<ReportSimpleAllNotesWithGeneralInformations> callback);
+	void createReportNotesGeneralInformation(AsyncCallback<ReportSimple> callback);
 
-	void createReportSimpleAllNotesWithGeneralSharingInformations(
-			AsyncCallback<ReportSimpleAllNotesWithGeneralSharingInformations> callback);
+
+	void createReportNotesSharingInformation(
+			AsyncCallback<NotesSharingInformation> callback);
+
 
 }
