@@ -15,6 +15,6 @@ public interface ReportAdmin extends RemoteService{
 	
 	public void init();
 	
-	public ReportSimpleAllNotesWithGeneralInformations createReportSimpleAllNotesWithGeneralInformations() throws IllegalArgumentException;
-	public ReportSimpleAllNotesWithGeneralSharingInformations createReportSimpleAllNotesWithGeneralSharingInformations() throws IllegalArgumentException;
+	ReportSimple createReportNotesGeneralInformation();
+	public NotesSharingInformation createReportNotesSharingInformation() throws IllegalArgumentException;
 }
