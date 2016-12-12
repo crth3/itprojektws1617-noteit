@@ -1,6 +1,5 @@
 package de.hdm.itprojekt.noteit.client;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
