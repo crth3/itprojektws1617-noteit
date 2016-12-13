@@ -21,13 +21,44 @@ import de.hdm.itprojekt.noteit.shared.report.Row;
  * @author maikzimmermann
  *
  */
-public class ReportAdminImpl extends RemoteServiceServlet 
+public class ReportServiceImpl extends RemoteServiceServlet 
 implements ReportAdmin {
 	
 	private NotesAdministration notesAdministration = null;
-	
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * No Argument Kontstruktor
+	 * @throws IllegalArgumentException
+	 */
+	public ReportServiceImpl() throws IllegalArgumentException {
+		
+	}
+	
+	/**
+	 * Initialization Method
+	 */
+	public void init() {
+		NotesAdministrationImpl notesAdministrationImpl = new NotesAdministrationImpl();
+		notesAdministrationImpl.init();
+		this.notesAdministration = notesAdministrationImpl;
+	}
+
+
+	
+	/**
+	 * Method to get the <code>AdministrationService</code> Object
+	 * 
+	 * @return AdministrationService
+	 */
+	protected NotesAdministration getNotesAdministration(){
+		return this.notesAdministration;
+	}
+
+	/**
+	 * Method to add Imprint
+	 * @param r
+	 */
 	public void addImprint(Report r) {
 		/*
 		 * Das Impressum soll wesentliche Informationen über die Noteit
@@ -45,27 +76,12 @@ implements ReportAdmin {
 		imprint.addSubParagraph(new ParagraphSimple("73733 Stuttgart"));
 
 		r.setImprint(imprint);
-
-	}
-
-	/**
-	 * No Argument Kontstruktor
-	 * @throws IllegalArgumentException
-	 */
-	public ReportAdminImpl() throws IllegalArgumentException {
-		
-	}
-
-	public void init() {
-		NotesAdministrationImpl notesAdministrationImpl = new NotesAdministrationImpl();
-		notesAdministrationImpl.init();
-		this.notesAdministration = notesAdministrationImpl;
 	}
 	
-	protected NotesAdministration getNotesAdministration(){
-		return this.notesAdministration;
-	}
-
+	
+	/**
+	 * Method to get a <code>Report</code> Object of all Notes by a user
+	 */
 	@Override
 		public NotesByUser createReportNotesByUser()
 			throws IllegalArgumentException {
