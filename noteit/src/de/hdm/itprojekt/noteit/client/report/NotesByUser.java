@@ -10,37 +10,37 @@ import de.hdm.itprojekt.noteit.shared.ReportAdminAsync;
 import de.hdm.itprojekt.noteit.shared.report.ReportSimple;
 import de.hdm.itprojekt.noteit.shared.report.HTMLReportWriter;
 
-public class NotesGeneralInformation extends VerticalPanel{
+public class NotesByUser extends VerticalPanel{
 	
 private ReportAdminAsync rpAdmin = null;
 	
 	private  Label lblNotesGeneralInformation;
 
-	public NotesGeneralInformation() {
-		
-		rpAdmin = ClientsideSettings.getReportService();
-		
-		lblNotesGeneralInformation = new Label("All Notes with General Information");
-		add(lblNotesGeneralInformation);
-		rpAdmin.createReportNotesGeneralInformation(new AsyncCallback<ReportSimple>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(ReportSimple result) {
-			
-				HTMLReportWriter hTMLReportWriter = new HTMLReportWriter();
-				final ReportSimple report = result;
-					hTMLReportWriter.process(report);
-				add(new HTML(hTMLReportWriter.getReportText()));
-			}
-		});;
-	
-			
+	public NotesByUser() {
+//		
+//		rpAdmin = ClientsideSettings.getReportService();
+//		
+//		lblNotesGeneralInformation = new Label("All Notes with General Information");
+//		add(lblNotesGeneralInformation);
+//		rpAdmin.createReportNotesGeneralInformation(new AsyncCallback<ReportSimple>() {
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void onSuccess(ReportSimple result) {
+//			
+//				HTMLReportWriter hTMLReportWriter = new HTMLReportWriter();
+//				final ReportSimple report = result;
+//					hTMLReportWriter.process(report);
+//				add(new HTML(hTMLReportWriter.getReportText()));
+//			}
+//		});;
+//	
+//			
 	}
 
 }
