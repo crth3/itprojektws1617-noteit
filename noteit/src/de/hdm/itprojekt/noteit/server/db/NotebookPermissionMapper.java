@@ -235,13 +235,31 @@ public class NotebookPermissionMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 
-			System.out.println("UPDATE NotebookPermission SET " + "permission=" + nbp.getPermission() + "','"
-					+ "Notebook_notebookId=" + nbp.getNotebookId() + "','" + "User_userId=" + nbp.getUserId()
-					+ "' WHERE notebookPermissionId=" + nbp.getId());
+			System.out.println("UPDATE NotebookPermission SET " 
+			+ "permission='" 
+					+ nbp.getPermission() 
+					+ "', "
+					+ "Notebook_notebookId='" 
+					+ nbp.getNotebookId() 
+					+ "'," + "User_userId='" 
+					+ nbp.getUserId()
+					+ "' WHERE notebookPermissionId='" 
+					+ nbp.getId()
+					+ "'"
+					);
 
-			stmt.executeUpdate("UPDATE NotebookPermission SET " + "permission=" + nbp.getPermission() + "','"
-					+ "Notebook_notebookId=" + nbp.getNotebookId() + "','" + "User_userId=" + nbp.getUserId()
-					+ "' WHERE notebookPermissionId=" + nbp.getId());
+			stmt.executeUpdate("UPDATE NotebookPermission SET " 
+			+ "permission='" 
+					+ nbp.getPermission() 
+					+ "', "
+					+ "Notebook_notebookId='" 
+					+ nbp.getNotebookId() 
+					+ "'," + "User_userId='" 
+					+ nbp.getUserId()
+					+ "' WHERE notebookPermissionId='" 
+					+ nbp.getId()
+					+ "'"
+					);
 		}
 		// Error Handling
 		catch (SQLException e) {
