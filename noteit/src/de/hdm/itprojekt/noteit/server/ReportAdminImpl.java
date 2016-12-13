@@ -12,8 +12,8 @@ import de.hdm.itprojekt.noteit.shared.report.Column;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphComposite;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphSimple;
 import de.hdm.itprojekt.noteit.shared.report.Report;
-import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
-import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
+import de.hdm.itprojekt.noteit.shared.report.NotesByUser;
+import de.hdm.itprojekt.noteit.shared.report.NotesByKeyword;
 import de.hdm.itprojekt.noteit.shared.report.Row;
 
 /**
@@ -67,20 +67,21 @@ implements ReportAdmin {
 	}
 
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation()
+		public NotesByUser createReportNotesByUser()
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 
-		NotesGeneralInformation notesGeneralInformation = new NotesGeneralInformation();
+		NotesByUser notesByUser = new NotesByUser();
 
-		notesGeneralInformation
+		notesByUser
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
 						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
 
-		this.addImprint(notesGeneralInformation);
+		this.addImprint(notesByUser);
 
-		notesGeneralInformation.setCreated(new Date());
+		notesByUser.setCreated(new Date());
+		
 
 		/*
 		 * Ab hier erfolgt ein zeilenweises hinzufügen von Notiz-Informationen.
@@ -94,7 +95,7 @@ implements ReportAdmin {
 		headline.addColumn(new Column("Modifikationsdatum"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
-		notesGeneralInformation.addRow(headline);
+		notesByUser.addRow(headline);
 
 		ArrayList<Note> notes = this.notesAdministration.getAllNotes();
 
@@ -109,14 +110,14 @@ implements ReportAdmin {
 			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
 
-			notesGeneralInformation.addRow(noteRow);
+			notesByUser.addRow(noteRow);
 		}
 
-		return notesGeneralInformation;
+		return notesByUser;
 	}
 
 	@Override
-	public NotesSharingInformation createReportNotesSharingInformation()
+	public NotesByKeyword createReportNotesByKeyword()
 			throws IllegalArgumentException {
 		
 		return null;
