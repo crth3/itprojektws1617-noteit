@@ -93,7 +93,7 @@ public class HTMLReportWriter extends ReportWriter {
    * 
    * @param r der zu prozessierende Report
    */
-  public void process(NotesGeneralInformation r) {
+  public void process(NotesByUser r) {
     // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
     this.resetReportText();
 
@@ -155,7 +155,7 @@ public class HTMLReportWriter extends ReportWriter {
    * 
    * @param r der zu prozessierende Report
    */
-  public void process(NotesSharingInformation r) {
+  public void process(NotesByKeyword r) {
     // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
     this.resetReportText();
 
