@@ -77,7 +77,8 @@ tr .headerPanel {
 }
 
 .lblHeaderTitel {
-	text-align: center;
+	float: left;
+	font-weight: bold;
 }
 
 .showDetailContent {
@@ -90,5 +91,15 @@ tr .headerPanel {
 
 .vpAddPermissionNotebook {
 	display: block
+}
+.lblNoteDate{
+	float: right;
+	color: #9199a1;
+}
+.textbox{
+	border: 0;
+border-bottom: 1px solid;
+height: 30px;
+margin-bottom: 20px;
 }
 

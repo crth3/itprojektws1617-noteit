@@ -398,7 +398,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			if(notesPermission != null){ 
 				for (NotePermission foundedNotePermission : notesPermission) {
 					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
-					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getText());
+					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getTitle());
 				}
 			}
 			return allFoundedNotes;
@@ -556,6 +556,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			return false;
 		}else{
 			System.out.println("user: "+user.getMail());
+			System.out.println("userid: "+user.getId());
 		}
 		 
 		ArrayList<NotePermission> notePermissions = npMapper.findNotePermissionByNoteId(noteID);

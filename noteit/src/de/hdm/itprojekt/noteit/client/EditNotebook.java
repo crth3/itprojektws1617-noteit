@@ -203,7 +203,7 @@ public class EditNotebook extends VerticalPanel {
 						@Override
 						public void onSuccess(Void result) {
 							Window.alert("Nuter wurde gelöscht");
-							
+							getAllPermittedUsersbyNotebookID(currentNotebook.getId());
 						}
 						
 						@Override
@@ -241,7 +241,7 @@ public class EditNotebook extends VerticalPanel {
 			}
 		});
 		
-		tbNotebookShareMail.getElement().setPropertyString("placeholder", "beispiel@noteit.de");
+		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
 		btnAddPermission.addClickHandler(new ClickHandler() {
 			
 			@Override

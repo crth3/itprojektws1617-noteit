@@ -1,32 +1,26 @@
 package de.hdm.itprojekt.noteit.client;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.text.AsyncBoxView;
-
-import com.google.appengine.api.search.query.QueryParser.text_return;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
@@ -55,6 +49,7 @@ public class ShowNote extends VerticalPanel {
 
 	static Label lblHeaderTitel = new Label();
 	static Label lblNoteTitel = new Label("Titel");
+	static Label lblNoteDate = new Label();
 	static Label lblNoteSubTitel = new Label("Subtitel");
 	static Label lblNoteText = new Label("Deine Notiz");
 	static Label lblNoteMaturity = new Label("Fälligkeitsdatum");
@@ -66,7 +61,6 @@ public class ShowNote extends VerticalPanel {
 	static TextBox tbNoteSubTitel = new TextBox();
 	static TextBox tbNoteTitel = new TextBox();
 	static TextBox tbNoteShareMail = new TextBox();
-	static TextBox tbMaturity = new TextBox();
 
 	static Button btnSaveNote = new Button("Speichern");
 	static Button btnAddNotePermission = new Button("+");
@@ -79,6 +73,8 @@ public class ShowNote extends VerticalPanel {
 	static RadioButton rbRead = new RadioButton("permission", "lesen");
 	static RadioButton rbWrite = new RadioButton("permission", "bearbeiten");
 	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
+	DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
+	static DateBox dateBox = new DateBox();
 
 	// Timestamp maturity = new Timestamp();
 
@@ -88,16 +84,27 @@ public class ShowNote extends VerticalPanel {
 
 	@Override
 	protected void onLoad() {
+
 		vpLeft.setWidth("300px");
 		vpRight.setWidth("300px");
 		hpAddPermission.setWidth("300px");
 		vpNotePermission.setWidth("300px");
+		
+		tbNoteShareMail.getElement().setPropertyString("placeholder","nutzer@noteit.de");
+		tbNoteSubTitel.getElement().setPropertyString("placeholder","Dein Untertitel");
+		tbNoteTitel.getElement().setPropertyString("placeholder","Dein Titel");
+		content.getElement().setAttribute("placeholder","Deine Notiz");
 
 		hpHeader.setStyleName("headerDetailView");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		hpShowNote.setStyleName("showDetailContent");
 		vpRight.setStyleName("vpRightDetailContent");
 		hpAddPermission.setStyleName("vpAddPermissionNotebook");
+		lblNoteDate.setStyleName("lblNoteDate");
+		
+		tbNoteTitel.setStyleName("textbox");
+		tbNoteSubTitel.setStyleName("textbox");
+		dateBox.setStyleName("textbox");
 
 		rbRead.setValue(true);
 		hpAddPermission.add(tbNoteShareMail);
@@ -106,12 +113,13 @@ public class ShowNote extends VerticalPanel {
 		hpAddPermission.setSpacing(0);
 
 		hpHeader.add(lblHeaderTitel);
+		hpHeader.add(lblNoteDate);
 		hpShowNote.setWidth("600px");
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
 
-		vpTitel.add(lblNoteTitel);
+//		vpTitel.add(lblNoteTitel);
 		vpTitel.add(tbNoteTitel);
 		vpTitel.setWidth("300px");
 
@@ -119,7 +127,7 @@ public class ShowNote extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteSubTitel.add(lblNoteSubTitel);
+//		hpNoteSubTitel.add(lblNoteSubTitel);
 		hpNoteSubTitel.add(tbNoteSubTitel);
 		hpNoteSubTitel.setWidth("300px");
 
@@ -127,12 +135,19 @@ public class ShowNote extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpNoteText.add(lblNoteText);
+//		hpNoteText.add(lblNoteText);
 		hpNoteText.add(content);
 		hpNoteText.setWidth("300px");
 
-		hpNoteMaturity.add(lblNoteMaturity);
-		hpNoteMaturity.add(tbMaturity);
+		dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+		dateBox.getDatePicker().setYearArrowsVisible(true);
+		dateBox.getElement().setPropertyString("placeholder", "Fälligkeitsdatum");
+		if (currentNote.getMaturityDate() != null) {
+			dateBox.setValue(currentNote.getMaturityDate());
+		}
+
+//		hpNoteMaturity.add(lblNoteMaturity);
+		hpNoteMaturity.add(dateBox);
 		hpNoteMaturity.setWidth("300px");
 
 		hpBackButton.add(btnSaveNote);
@@ -145,7 +160,7 @@ public class ShowNote extends VerticalPanel {
 		vpLeft.add(hpNoteSubTitel);
 		vpLeft.add(hpNoteText);
 		vpLeft.add(hpNoteMaturity);
-		vpLeft.add(hpBackButton);
+		vpLeft.add(btnSaveNote);
 		vpRight.add(lblNoteShare);
 		vpRight.add(hpAddPermission);
 		vpRight.add(lblNoteShareRB);
@@ -157,8 +172,7 @@ public class ShowNote extends VerticalPanel {
 		hpShowNote.add(vpLeft);
 		hpShowNote.add(vpRight);
 
-		this.add(hpHeader);
-		this.add(hpShowNote);
+		
 
 		/**
 		 * Erstellen oder bearbeiten von Freigaben RPC
@@ -208,53 +222,85 @@ public class ShowNote extends VerticalPanel {
 			}
 		});
 
+		btnSaveNote.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+				
+				if (currentNote.getId() == 0) {
+					Window.alert("create Note" +currentNote.getId());
+					Date date = dateBox.getValue();
+					long time = date.getTime();
+					Timestamp timestampe = new Timestamp(time);
+					notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
+							timestampe, Homepage.getCurrentUser(), null, currentNote.getNotebookId(),
+							new AsyncCallback<Note>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+
+								}
+
+								@Override
+								public void onSuccess(Note result) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+				}else{
+					Window.alert("update Note");
+					Window.alert("create Note" +currentNote.getId());
+					Date date = dateBox.getValue();
+					long time = date.getTime();
+					Timestamp timestampe = new Timestamp(time);
+					notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(), timestampe, Homepage.getCurrentUser().getId(), null,  currentNote.getNotebookId(), currentNote.getId(), new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+				}
+			}
+		});
+		
+		this.add(hpHeader);
+		this.add(hpShowNote);
+
 	}
 
 	public static void showNote(Note note) {
 		currentNote = note;
 		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
-	
-		
-		if(note.getModificationDate()== null){
-			lblHeaderTitel.setText(note.getTitle() +"    "+ note.getCreationDate().toString());
-			
-		}else{
-			lblHeaderTitel.setText(note.getTitle() +"    "+ note.getModificationDate().toString());
+
+		if (note.getModificationDate() == null) {
+			Timestamp ts = note.getCreationDate();
+			Date date = new Date(ts.getTime());
+			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+			lblNoteDate.setText("Hinzugefügt am: "+sdfmt.format(date));
+			lblHeaderTitel.setText(note.getTitle());
+
+		} else {
+			Timestamp ts = note.getModificationDate();
+			Date date = new Date(ts.getTime());
+			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+			lblNoteDate.setText("Zuletzt bearbeitet am: "+sdfmt.format(date));
+			lblHeaderTitel.setText(note.getTitle());
 		}
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());
-		content.setText(note.getText());
-		tbMaturity.setText(note.getMaturityDate().toString());
 
-		btnSaveNote.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-
-				notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(), null,
-						Homepage.getCurrentUser(), null, currentNote.getNotebookId(), new AsyncCallback<Note>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onSuccess(Note result) {
-								// TODO Auto-generated method stub
-
-							}
-						});
-
-			}
-		});
 
 	}
 
-	public static void setNote(Note newNote) {
-		currentNote = newNote;
-	}
 
 	public static void getAllPermittedUsersbyNoteID(int noteID) {
 
@@ -265,12 +311,12 @@ public class ShowNote extends VerticalPanel {
 				// TODO Auto-generated method stub
 				userList = result;
 				clUser.setRowData(result);
-				if(result.size() <1){
+				if (result.size() < 1) {
 					lblNotePermission.setText("Diese Notiz wurde niemandem freigegeben");
-				}else if(result.size() == 1){
+				} else if (result.size() == 1) {
 					lblNotePermission.setText("Freigegeben an folgenden Nutzer:");
-				}else{
-					lblNotePermission.setText("Freigegeben an folgende "+result.size()+ " Nutzer:");
+				} else {
+					lblNotePermission.setText("Freigegeben an folgende " + result.size() + " Nutzer:");
 				}
 
 			}
@@ -282,18 +328,18 @@ public class ShowNote extends VerticalPanel {
 			}
 		});
 	}
-	
-	public static void setSelectedUserPermissionInTextbox(User user){
+
+	public static void setSelectedUserPermissionInTextbox(User user) {
 		tbNoteShareMail.setText(user.getMail());
 		tbNoteShareMail.getElement().setPropertyString("placeholder", "");
-		if(user.getPermissionID() == 1){
+		if (user.getPermissionID() == 1) {
 			rbRead.setValue(true);
-		}else if(user.getPermissionID() == 2){
+		} else if (user.getPermissionID() == 2) {
 			rbWrite.setValue(true);
-		}else{
+		} else {
 			rbDelete.setValue(true);
 		}
-		
-	}
+
+	};
 
 }

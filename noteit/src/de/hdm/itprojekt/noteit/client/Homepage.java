@@ -94,7 +94,7 @@ public class Homepage extends VerticalPanel {
 				
 				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 			    cellBrowser.setHeight("500px");
-			    cellBrowser.setWidth("500px");
+			    cellBrowser.setWidth("430px");
 			
 //			    dockPanel.add(headerPanel, DockPanel.NORTH);
 //			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);

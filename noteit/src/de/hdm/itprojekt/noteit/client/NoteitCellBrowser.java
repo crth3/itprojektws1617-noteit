@@ -50,6 +50,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
+	
 
 	private static Logger rootLogger = Logger.getLogger("");
 
@@ -92,11 +93,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 		} else if (value instanceof Notebook) {
 
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
-			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
-			EditNotebook.getAllPermittedUsersbyNotebookID(selectionModelNotebook.getLastSelectedObject().getId());
+			EditNotebook.setNotebook(selectedNotebook);
+			EditNotebook.getAllPermittedUsersbyNotebookID(selectedNotebook.getId());
 			Homepage.setSelectedNotebook(selectedNotebook);
 			
 			Homepage.editNotebookView();
+			notesListDataProvider.getList().clear();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
@@ -105,7 +107,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 						@Override
 						public void onSuccess(ArrayList<Note> result) {
 							
-							notesListDataProvider.getList().clear();
+							
 							for (Note note : result) {
 								notesListDataProvider.getList().add(note);
 							}
@@ -121,15 +123,17 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			return new DefaultNodeInfo<Note>(notesListDataProvider, new NoteCell(), selectionModelNote, null);
 		} else if (value instanceof Note) {
-			Homepage.showNoteView();
+			
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
-			ShowNote.setNote(selectionModelNote.getLastSelectedObject());
+//			ShowNote.setNote(selectionModelNote.getLastSelectedObject());
 			ShowNote.getAllPermittedUsersbyNoteID(selectionModelNote.getLastSelectedObject().getId());
 			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
+			
+			Homepage.showNoteView();
 		}
 
-		return null;
+	return null;
 	}
 
 	/**
@@ -191,14 +195,16 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	public static void addNote() {
 		if (selectedNotebook == null) {
-			Window.alert("kein Notebook ausgew�hlt");
+			Window.alert("kein Notebook ausgewählt");
 		} else {
 
 			Note newNote = new Note();
+			newNote.setId(400000);
 			newNote.setTitle("Neue Notiz");
 			newNote.setNotebookId(selectedNotebook.getId());
-			ShowNote.setNote(newNote);
+//			ShowNote.setNote(newNote);
 			notesListDataProvider.getList().add(newNote);
+			Window.alert("noteID"+newNote.getId());
 		}
 	}
 
