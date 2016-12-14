@@ -73,7 +73,7 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException;
 
-	Note createNote(String title, String subtitle, String text, java.util.Date date, User u, String source,
+	Note createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
 			int notebookID);
 
 	// TODO Übergabeparmeter für Berechtigungen siehe Notebook

@@ -1,6 +1,6 @@
 package de.hdm.itprojekt.noteit.shared;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public interface NotesAdministrationAsync {
 
 	void updateUser(int userID, String mail, String firstName, String lastName, AsyncCallback<Void> callback);
 
-	void createNote(String title, String subtitle, String text, java.util.Date date, User u, String source,
+	void createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
 			int notebookID, AsyncCallback<Note> callback);
 
 	void createNotebook(String title, User creator, AsyncCallback<Notebook> callback);

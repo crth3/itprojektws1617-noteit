@@ -1,6 +1,6 @@
 package de.hdm.itprojekt.noteit.shared.bo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * 
@@ -14,9 +14,9 @@ public class Note extends BusinessObjects {
 	private String title = "";
 	private String subTitle = "";
 	private String text = "";
-	private Date creationDate;
-	private Date modificationDate;
-	private Date maturityDate;
+	private Timestamp creationDate;
+	private Timestamp modificationDate;
+	private Timestamp maturityDate;
 	private boolean visible = false;
 	public User creator;
 	private String source;
@@ -93,32 +93,32 @@ public class Note extends BusinessObjects {
 	}
 
 	/**
-	 * @return the creationDate
+	 * @return the creationTimestamp
 	 */
-	public Date getCreationDate() {
+	public Timestamp getCreationDate() {
 		return creationDate;
 	}
 
 	/**
-	 * @param creationDate
-	 *            the creationDate to set
+	 * @param creationTimestamp
+	 *            the creationTimestamp to set
 	 */
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
 
 	/**
-	 * @return the maturityDate
+	 * @return the maturityTimestamp
 	 */
-	public Date getMaturityDate() {
+	public Timestamp getMaturityDate() {
 		return maturityDate;
 	}
 
 	/**
 	 * @param maturity
-	 *            the maturityDate to set
+	 *            the maturityTimestamp to set
 	 */
-	public void setMaturityDate(Date maturity) {
+	public void setMaturityDate(Timestamp maturity) {
 		this.maturityDate = maturity;
 	}
 
@@ -157,17 +157,17 @@ public class Note extends BusinessObjects {
 	
 	/**
 	 * 
-	 * @return modificationDate
+	 * @return modificationTimestamp
 	 */
-	public Date getModificationDate() {
+	public Timestamp getModificationDate() {
 		return modificationDate;
 	}
 	
 	/**
 	 * 
-	 * @param modificationDate
+	 * @param modificationTimestamp
 	 */
-	public void setModificationDate(Date modificationDate) {
+	public void setModificationDate(Timestamp modificationDate) {
 		this.modificationDate = modificationDate;
 	}
 

@@ -266,7 +266,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Date maturity, User u, String source, int notebookID)
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID)
 			throws IllegalArgumentException {
 
 		System.out.println("User: "+ u);
