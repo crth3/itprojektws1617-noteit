@@ -1,6 +1,6 @@
 package de.hdm.itprojekt.noteit.shared.bo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * 
@@ -12,7 +12,7 @@ public class Notebook extends BusinessObjects {
 	private static final long serialVersionUID = 1L;
 	public int creatorID = 0;
 	private String title = "";
-	private Timestamp creationDate;
+	private Date creationDate;
 	private boolean visible = false;
 	public User creator;
 	public Note note;
@@ -41,7 +41,7 @@ public class Notebook extends BusinessObjects {
 	/**
 	 * @return the creationDate
 	 */
-	public Timestamp getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
@@ -49,7 +49,7 @@ public class Notebook extends BusinessObjects {
 	 * @param creationDate
 	 *            the creationDate to set
 	 */
-	public void setCreationDate(Timestamp creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

@@ -1,7 +1,8 @@
 package de.hdm.itprojekt.noteit.shared.bo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
+
 
 public class BusinessObjects implements Serializable {
 
@@ -9,7 +10,7 @@ public class BusinessObjects implements Serializable {
 
 	private int id = 0;
 
-	protected Timestamp creationDate = new Timestamp(System.currentTimeMillis());
+	protected Date creationDate = new Date(System.currentTimeMillis());
 
 	/**
 	 * @return the id
@@ -56,7 +57,7 @@ public class BusinessObjects implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Timestamp getCreationDate() {
+	public Date getCreationDate() {
 		return this.creationDate;
 	}
 
@@ -65,7 +66,7 @@ public class BusinessObjects implements Serializable {
 	 * 
 	 * @param creationDate
 	 */
-	public void setCreationDate(Timestamp creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

@@ -1,7 +1,6 @@
 package de.hdm.itprojekt.noteit.shared.bo;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * 
@@ -15,8 +14,8 @@ public class Note extends BusinessObjects {
 	private String title = "";
 	private String subTitle = "";
 	private String text = "";
-	private Timestamp creationDate;
-	private Timestamp modificationDate;
+	private Date creationDate;
+	private Date modificationDate;
 	private Date maturityDate;
 	private boolean visible = false;
 	public User creator;
@@ -96,7 +95,7 @@ public class Note extends BusinessObjects {
 	/**
 	 * @return the creationDate
 	 */
-	public Timestamp getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
@@ -104,7 +103,7 @@ public class Note extends BusinessObjects {
 	 * @param creationDate
 	 *            the creationDate to set
 	 */
-	public void setCreationDate(Timestamp creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -160,7 +159,7 @@ public class Note extends BusinessObjects {
 	 * 
 	 * @return modificationDate
 	 */
-	public Timestamp getModificationDate() {
+	public Date getModificationDate() {
 		return modificationDate;
 	}
 	
@@ -168,7 +167,7 @@ public class Note extends BusinessObjects {
 	 * 
 	 * @param modificationDate
 	 */
-	public void setModificationDate(Timestamp modificationDate) {
+	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
 
