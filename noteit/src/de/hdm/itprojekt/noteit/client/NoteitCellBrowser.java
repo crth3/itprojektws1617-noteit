@@ -95,15 +95,16 @@ public class NoteitCellBrowser implements TreeViewModel {
 			EditNotebook.setNotebook(selectionModelNotebook.getLastSelectedObject());
 			EditNotebook.getAllPermittedUsersbyNotebookID(selectionModelNotebook.getLastSelectedObject().getId());
 			Homepage.setSelectedNotebook(selectedNotebook);
-
+			
 			Homepage.editNotebookView();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
-
+				
 						@Override
 						public void onSuccess(ArrayList<Note> result) {
+							
 							notesListDataProvider.getList().clear();
 							for (Note note : result) {
 								notesListDataProvider.getList().add(note);
@@ -123,8 +124,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 			Homepage.showNoteView();
 			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
 			// true);
-			// Window.alert("name der Note: " +
-			// selectionModelNote.getSelectedObject().getTitle());
+			ShowNote.setNote(selectionModelNote.getLastSelectedObject());
+			ShowNote.getAllPermittedUsersbyNoteID(selectionModelNote.getLastSelectedObject().getId());
 			ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 		}
 
@@ -178,6 +179,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	public static void addNotebook() {
 		Notebook newNotebook = new Notebook();
+		newNotebook.setId(400000);
 		newNotebook.setTitle("Neues Notebook");
 		notebooksListDataProvider.getList().add(newNotebook);
 	}

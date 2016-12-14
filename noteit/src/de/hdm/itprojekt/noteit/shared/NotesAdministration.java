@@ -154,6 +154,15 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public ArrayList<User> getAllPermittedUsersByNotebookID(int notebookID) throws IllegalArgumentException;
 	
+	
+	/**
+	 *  return all permitted user from this note
+	 * @param noteID
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getAllPermittedUsersByNoteID(int noteID) throws IllegalArgumentException;
+	
 	/**
 	 * set User Notebook Permission
 	 * @param mail
@@ -171,4 +180,17 @@ public interface NotesAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
+	
+	
+	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
+	
+	/**
+	 * set User Note Permission
+	 * @param mail
+	 * @param permissionID
+	 * @param noteID
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public boolean setUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
 }

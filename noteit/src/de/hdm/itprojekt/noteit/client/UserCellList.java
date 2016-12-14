@@ -61,6 +61,7 @@ public class UserCellList extends Widget {
 						
 						SelectedUser = userSelectionModel.getSelectedObject();
 						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
+						ShowNote.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
 					}
 				});
 

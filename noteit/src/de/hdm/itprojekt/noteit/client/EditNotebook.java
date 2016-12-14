@@ -40,20 +40,19 @@ public class EditNotebook extends VerticalPanel {
 	static HorizontalPanel hpHeader = new HorizontalPanel();
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
 	static HorizontalPanel hpButtons = new HorizontalPanel();
+	static HorizontalPanel hpAddPermission = new HorizontalPanel();
 
 	static VerticalPanel vpLeft = new VerticalPanel();
 	static VerticalPanel vpRight = new VerticalPanel();
 	static VerticalPanel vpTitle = new VerticalPanel();
-	static HorizontalPanel vpAddPermission = new HorizontalPanel();
-	
-	static VerticalPanel hpNotebookShare = new VerticalPanel();
+	static VerticalPanel vpNotebookShare = new VerticalPanel();
 	static VerticalPanel vpNotebookPermission = new VerticalPanel();
-	static VerticalPanel hpBackButton = new VerticalPanel();
+	static VerticalPanel vpBackButton = new VerticalPanel();
 
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
-	static Label lblNotebookShare = new Label("Teilen mit");
+	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
 
 	static TextBox tbNotebookTitel = new TextBox();
 	static TextBox tbNotebookShareMail = new TextBox();
@@ -81,12 +80,12 @@ public class EditNotebook extends VerticalPanel {
 		hpEditNotebook.setWidth("600px");
 		hpButtons.setWidth("300px");
 		vpLeft.setWidth("300px");
-		vpAddPermission.setWidth("300px");
+		hpAddPermission.setWidth("300px");
 		vpTitle.setWidth("300px");
 		vpRight.setWidth("300px");
 		vpNotebookPermission.setWidth("300px");
 		
-		vpAddPermission.setStyleName("vpAddPermissionNotebook");
+		hpAddPermission.setStyleName("vpAddPermissionNotebook");
 		hpHeader.setStyleName("headerDetailView");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		hpEditNotebook.setStyleName("showDetailContent");
@@ -94,9 +93,9 @@ public class EditNotebook extends VerticalPanel {
 		hpHeader.add(lblHeaderTitel);
 		
 	    rbRead.setValue(true);
-	    vpAddPermission.add(rbRead);
-	    vpAddPermission.add(rbWrite);
-	    vpAddPermission.add(rbDelete);
+	    hpAddPermission.add(rbRead);
+	    hpAddPermission.add(rbWrite);
+	    hpAddPermission.add(rbDelete);
 		/**
 		 * Create the Panel, Label and TextBox
 		 */
@@ -105,10 +104,10 @@ public class EditNotebook extends VerticalPanel {
 		vpTitle.add(tbNotebookTitel);
 		
 		
-		vpAddPermission.add(tbNotebookShareMail);
-		vpAddPermission.add(btnAddPermission);
-		vpAddPermission.add(btnDeletePermission);
-		vpAddPermission.setSpacing(0);
+		hpAddPermission.add(tbNotebookShareMail);
+		hpAddPermission.add(btnAddPermission);
+		hpAddPermission.add(btnDeletePermission);
+		hpAddPermission.setSpacing(0);
 		
 		vpNotebookPermission.add(lblNotebookPermission);
 		vpNotebookPermission.add(clUser);
@@ -116,7 +115,7 @@ public class EditNotebook extends VerticalPanel {
 		vpLeft.add(lblNotebookTitel);
 		vpLeft.add(tbNotebookTitel);
 		vpLeft.add(lblNotebookShare);
-		vpLeft.add(vpAddPermission);
+		vpLeft.add(hpAddPermission);
 		vpLeft.add(rbRead);
 		vpLeft.add(rbWrite);
 		vpLeft.add(rbDelete);
@@ -170,7 +169,7 @@ public class EditNotebook extends VerticalPanel {
 								public void onSuccess(Boolean result) {
 									if(result == true){
 									tbNotebookShareMail.setText("");
-									tbNotebookShareMail.getElement().setPropertyString("placeholder", "beispiel@noteit.de");
+									tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
 									rbRead.setValue(true);
 									getAllPermittedUsersbyNotebookID(currentNotebook.getId());
 									}else{
@@ -199,6 +198,20 @@ public class EditNotebook extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
 					Window.alert("Abfrage ob die Freigabe wirklich gelöscht werden soll");
+					notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(), Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							Window.alert("Nuter wurde gelöscht");
+							
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
 				}else{
 					Window.alert("Bitte wähle eine bestehende Freigabe aus die du löschen möchtest!");
 				}

@@ -128,7 +128,7 @@ public class Homepage extends VerticalPanel {
 			    settings.addItem("Profil", settingDialog);
 			    settings.addItem("Abmelden", logout);
 				MenuBar menu = new MenuBar();
-			    menu.addItem("Hallo, "+currentUser.getFirstName(), settings);
+			    menu.addItem(currentUser.getFirstName(), settings);
 			    
 			   
 				

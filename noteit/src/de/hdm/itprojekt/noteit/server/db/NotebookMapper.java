@@ -145,7 +145,7 @@ public class NotebookMapper {
 	public Notebook insert(Notebook nb) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
-		
+		System.out.println(nb.getId()+ ","+nb.getTitle()+" "+nb.getCreationDate() + " "+nb.getUserId());
 		try {
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();

@@ -42,7 +42,7 @@ public class Notebook extends BusinessObjects {
 	 * @return the creationTimestamp
 	 */
 	public Timestamp getCreationDate() {
-		return creationTimestamp;
+		return creationDate;
 	}
 
 	/**

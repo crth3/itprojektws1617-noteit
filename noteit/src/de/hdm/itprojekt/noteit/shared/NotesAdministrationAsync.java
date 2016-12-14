@@ -53,4 +53,10 @@ public interface NotesAdministrationAsync {
 	void deleteUserNotebookPermission(String mail, int permissionID,int notebookID, AsyncCallback<Void> callback);
 
 	void setUserNotebookPermission(String mail, int permissionID, int notebookID, AsyncCallback<Boolean> callback);
+
+	void setUserNotePermission(String mail, int permissionID, int noteID, AsyncCallback<Boolean> callback);
+
+	void getAllPermittedUsersByNoteID(int noteID, AsyncCallback<ArrayList<User>> callback);
+
+	void deleteUserNotePermission(String mail, int permissionID, int noteID, AsyncCallback<Void> callback);
 }

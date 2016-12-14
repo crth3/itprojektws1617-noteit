@@ -1,75 +1,94 @@
-body{
-   text-align: center;
-   font-family: verdana, sans-serif;
- background: #f2f2f2 !important;
+body {
+	text-align: center;
+	font-family: verdana, sans-serif;
+	background: #f2f2f2 !important;
+}
 
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
-h1{
-   font-size: 2em;
-   font-weight: bold;
-   color: #777777;
-   margin: 40px 0px 70px;
-   text-align: center;
-}
-table{
+
+table {
 	min-height: 100%;
 	max-width: 1280px;
 	margin: 0 auto;
 	background: #fff
 }
-.dockpanel{
+
+.dockpanel {
 	width: 1280px;
 	width: 100%;
 }
 
 td {
-  
 }
-.lbheadlineNoteit{
+
+.lbheadlineNoteit {
 	text-align: center;
-color: rgba(255, 255, 255, .6);
-font-size: 3rem;
-font-weight: 700;
-padding: 3%;
+	color: rgba(255, 255, 255, .6);
+	font-size: 3rem;
+	font-weight: 700;
+	padding: 3%;
 }
-.headlinePanel{
+
+.headlinePanel {
 	background-color: #F49152;
 }
-.navPanel{
+
+.navPanel {
 	background-color: #DDDDDB;
 	padding: 8px;
 }
-.navLeftPanel{
+
+.navLeftPanel {
 	display:block;
 	float: left;
 	height: 100%;
 	background-color: #DDDDDB;
 }
-.navRightPanel{
+
+.navRightPanel {
 	background-color: #DDDDDB;
 }
-.menu{
+
+.menu {
 	background-color: #DDDDDB;
 	padding-right: 20px;
 	float: right;
 }
-tr .headerPanel{
+
+tr .headerPanel {
 	width: 100%;
 }
 
-.contentPanel{
+.contentPanel {
 	padding: 8px;
 }
-.headerDetailView{
-	width: 100%;
+
+.headerDetailView {
+	width: 98%;
 	border-bottom: 1px solid #DDDDDB;
+	margin-left: 8px;
+	
 }
-.lblHeaderTitel{
+
+.lblHeaderTitel {
 	text-align: center;
 }
-.showDetailContent{
+
+.showDetailContent {
 	padding-top: 8px;
+	padding-left: 8px;
 }
-.vpAddPermissionNotebook{
+.vpRightDetailContent{
+	padding-left: 8px;
+}
+
+.vpAddPermissionNotebook {
 	display: block
 }
+
