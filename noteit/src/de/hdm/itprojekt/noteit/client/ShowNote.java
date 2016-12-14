@@ -34,7 +34,7 @@ public class ShowNote extends VerticalPanel {
 	private static Logger rootLogger = Logger.getLogger("");
 
 	static VerticalPanel vpShowNote = new VerticalPanel();
-
+	static HorizontalPanel hpHeader = new HorizontalPanel();
 	static VerticalPanel vpTitel = new VerticalPanel();
 	static VerticalPanel hpNoteSubTitel = new VerticalPanel();
 	static VerticalPanel hpNoteText = new VerticalPanel();
@@ -43,6 +43,7 @@ public class ShowNote extends VerticalPanel {
 	static VerticalPanel hpBackButton = new VerticalPanel();
 	static VerticalPanel hpNoteMaturity = new VerticalPanel();
 
+	static Label lblHeaderTitel = new Label();
 	static Label lblNoteTitel = new Label("Titel");
 	static Label lblNoteSubTitel = new Label("Subtitel");
 	static Label lblNoteShare = new Label("Teilen mit");
@@ -69,7 +70,14 @@ public class ShowNote extends VerticalPanel {
 
 	@Override
 	protected void onLoad() {
-
+		
+		
+		hpHeader.setStyleName("headerDetailView");
+		lblHeaderTitel.setStyleName("lblHeaderTitel");
+		vpShowNote.setStyleName("showDetailContent");
+		
+		
+		hpHeader.add(lblHeaderTitel);
 		vpShowNote.setWidth("600px");
 		/**
 		 * Create the Panel, Label and TextBox
@@ -111,7 +119,8 @@ public class ShowNote extends VerticalPanel {
 		vpShowNote.add(hpNoteText);
 		vpShowNote.add(hpNoteMaturity);
 		vpShowNote.add(hpBackButton);
-
+		
+		this.add(hpHeader);
 		this.add(vpShowNote);
 		
 
@@ -122,7 +131,7 @@ public class ShowNote extends VerticalPanel {
 	public static void showNote(Note note) {
 		 currentNote = note;
 		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
-		
+		lblHeaderTitel.setText(note.getTitle());
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());

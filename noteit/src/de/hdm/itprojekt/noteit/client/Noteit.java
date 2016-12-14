@@ -54,12 +54,12 @@ public class Noteit implements EntryPoint {
 	/**
 	 * Login-Widgets
 	 */
-	private LoginInfo loginInfo = null;
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label(
+	public static LoginInfo loginInfo = null;
+	private static VerticalPanel loginPanel = new VerticalPanel();
+	private static Label loginLabel = new Label(
 			"Please sign in to your Google Account to access the StockWatcher application.");
-	private Anchor signInLink = new Anchor("Sign In");
-	private Anchor signOutLink = new Anchor("Sign Out");
+	private static Anchor signInLink = new Anchor("Sign In");
+//	private Anchor signOutLink = new Anchor("Sign Out");
 
 	public static User currentUser = new User();
 
@@ -73,7 +73,7 @@ public class Noteit implements EntryPoint {
 	 */
 	DockPanel dockPanel = new DockPanel();
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-	HorizontalPanel headerPanel = new HorizontalPanel();
+//	HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
@@ -93,8 +93,8 @@ public class Noteit implements EntryPoint {
 	/**
 	 * Create new Labels
 	 */
-	static String x = Homepage.getCurrentUser().getFirstName();
-	static Label welcomeLabel = new Label("Wilkommen " + x);
+//	static String x = Homepage.getCurrentUser().getFirstName();
+//	static Label welcomeLabel = new Label("Wilkommen " + x);
 	Label headlineLabel = new Label("NoteIt");
 	// Label headlineNotebookLabel = new Label ("Notizbücher");
 	// Label headlineNotesLabel = new Label ("Notizen");
@@ -105,7 +105,7 @@ public class Noteit implements EntryPoint {
 	Button btnLogOut = new Button("Logout");
 	Button impressumButton = new Button("Impressum");
 	Button zurueckButton = new Button("Zurück");
-	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"14\" height=\"14\">");
+//	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"14\" height=\"14\">"+ " max");
 
 	/**
 	 * This is the entry point method.
@@ -150,11 +150,11 @@ public class Noteit implements EntryPoint {
 		 * Set the Style
 		 */
 		btnLogOut.setStylePrimaryName("logOutButton");
-		welcomeLabel.setStylePrimaryName("welcomeLabel");
+//		welcomeLabel.setStylePrimaryName("welcomeLabel");
 		headlineLabel.setStylePrimaryName("headlineLabel");
 		// headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		// headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
-		headerPanel.setStylePrimaryName("headerPanel");
+//		headerPanel.setStylePrimaryName("headerPanel");
 		welcomePanel.setStylePrimaryName("welcomePanel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
@@ -168,7 +168,7 @@ public class Noteit implements EntryPoint {
 		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		// contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		// contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		btnSettingsButton.setStylePrimaryName("btnSettingsButton");
+//		btnSettingsButton.setStylePrimaryName("btnSettingsButton");
 
 		homepage.setStylePrimaryName("homepage");
 		
@@ -190,15 +190,15 @@ public class Noteit implements EntryPoint {
 		/**
 		 * add the widgets
 		 */
-		welcomePanel.add(welcomeLabel);
+//		welcomePanel.add(welcomeLabel);
 		headlinePanel.add(headlineLabel);
 		logoutPanel.add(btnLogOut);
 		logoutPanel.add(impressumButton);
 		logoutPanel.add(zurueckButton);
-		logoutPanel.add(btnSettingsButton);
-		headerPanel.add(welcomePanel);
-		headerPanel.add(headlinePanel);
-		headerPanel.add(logoutPanel);
+//		logoutPanel.add(btnSettingsButton);
+//		headerPanel.add(welcomePanel);
+//		headerPanel.add(headlinePanel);
+//		headerPanel.add(logoutPanel);
 		vpBasisPanel.add(loginPanel);
 
 		// navPanel.add(navNotebookPanel);
@@ -275,7 +275,7 @@ public class Noteit implements EntryPoint {
 					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
 					RootPanel.get().add(vpBasisPanel);
 					RootPanel.get("content").add(homepage);
-					RootPanel.get("head").add(headerPanel);
+//					RootPanel.get("head").add(headerPanel);
 
 					// Hier muss auf die Hompage-Steie verwiesen werden
 
@@ -317,19 +317,7 @@ public class Noteit implements EntryPoint {
 			}
 		});
 
-		btnSettingsButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Settings settings = new Settings(currentUser);
-				settings.show();
-				settings.center();
-
-				// UserSettings userSettings = new UserSettings(currentUser);
-				// userSettings.show();
-				// userSettings.center();
-			}
-		});
+		
 
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
@@ -372,7 +360,7 @@ public class Noteit implements EntryPoint {
 
 	}
 
-	private void loadLogin() {
+	public static void loadLogin() {
 		// Assemble login panel.
 		signInLink.setHref(loginInfo.getLoginUrl());
 		loginPanel.add(loginLabel);
@@ -381,10 +369,10 @@ public class Noteit implements EntryPoint {
 	}
 
 	public static void setWelcomeName(String name) {
-		welcomePanel.remove(welcomeLabel);
-		x = name;
-		
-		welcomeLabel.setText("Wilkommen " + x);
-		welcomePanel.add(welcomeLabel);
+//		welcomePanel.remove(welcomeLabel);
+//		x = name;
+//		
+//		welcomeLabel.setText("Wilkommen " + x);
+//		welcomePanel.add(welcomeLabel);
 	}
 }

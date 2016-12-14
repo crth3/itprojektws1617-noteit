@@ -17,6 +17,7 @@ import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -46,7 +47,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static Note selectedNote = new Note();
 
 	private Notebook firstNotebook = new Notebook();
-	private boolean selectedNull;
 
 	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
@@ -59,7 +59,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-
+		
 		if (value == null) {
 
 			// LEVEL 0.
@@ -83,6 +83,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 				}
 			});
 			selectionModelNotebook.setSelected(firstNotebook, true);
+
+			
 			// Return a node info that pairs the data provider and the cell.
 			return new DefaultNodeInfo<Notebook>(notebooksListDataProvider, new NotebookCell(), selectionModelNotebook,
 					null);

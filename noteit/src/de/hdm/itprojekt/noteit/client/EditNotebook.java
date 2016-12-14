@@ -37,6 +37,7 @@ public class EditNotebook extends VerticalPanel {
 	static ArrayList<User> userList = new ArrayList<User>();
 	private static Logger rootLogger = Logger.getLogger("");
 
+	static HorizontalPanel hpHeader = new HorizontalPanel();
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
 	static HorizontalPanel hpButtons = new HorizontalPanel();
 
@@ -49,6 +50,7 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel vpNotebookPermission = new VerticalPanel();
 	static VerticalPanel hpBackButton = new VerticalPanel();
 
+	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Teilen mit");
@@ -84,7 +86,12 @@ public class EditNotebook extends VerticalPanel {
 		vpRight.setWidth("300px");
 		vpNotebookPermission.setWidth("300px");
 		
+		vpAddPermission.setStyleName("vpAddPermissionNotebook");
+		hpHeader.setStyleName("headerDetailView");
+		lblHeaderTitel.setStyleName("lblHeaderTitel");
+		hpEditNotebook.setStyleName("showDetailContent");
 		
+		hpHeader.add(lblHeaderTitel);
 		
 	    rbRead.setValue(true);
 	    vpAddPermission.add(rbRead);
@@ -135,6 +142,7 @@ public class EditNotebook extends VerticalPanel {
 		//hpEditNotebook.add(vpNotebookPermission);
 		//hpEditNotebook.add(hpButtons);
 
+		this.add(hpHeader);
 		this.add(hpEditNotebook);
 		
 		
@@ -233,6 +241,7 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
+		lblHeaderTitel.setText(notebook.getTitle());
 		tbNotebookTitel.setText(notebook.getTitle());
 	//	tbMaturity.setText(notebook.get());
 
