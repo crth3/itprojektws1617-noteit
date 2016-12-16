@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
-import de.hdm.itprojekt.noteit.shared.ReportAdminAsync;
+import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
 
 /**
  * Class for relevant client-side settings and services.
@@ -20,7 +20,7 @@ public class ClientsideSettings {
 	
 	private static NotesAdministrationAsync notesAdministration = null;
 	private static LoginServiceAsync loginService = null;
-	private static ReportAdminAsync reportService = null;
+	private static ReportServiceAsync reportService = null;
 	private static final Logger log = Logger
 			.getLogger("Logger");
 
@@ -67,9 +67,9 @@ public class ClientsideSettings {
 	 * 
 	 * @return ReportService
 	 */
-	public static ReportAdminAsync getReportService() {
+	public static ReportServiceAsync getReportService() {
 		if (reportService == null) {
-			reportService = GWT.create(ReportAdminAsync.class);
+			reportService = GWT.create(ReportServiceAsync.class);
 		}
 
 		reportService.init(new AsyncCallback<Void>() {
