@@ -6,13 +6,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.itprojekt.noteit.client.ClientsideSettings;
-import de.hdm.itprojekt.noteit.shared.ReportAdminAsync;
+import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
 import de.hdm.itprojekt.noteit.shared.report.ReportSimple;
 import de.hdm.itprojekt.noteit.shared.report.HTMLReportWriter;
 
 public class NotesByUser extends VerticalPanel{
 	
-private ReportAdminAsync rpAdmin = null;
+private ReportServiceAsync rpAdmin = null;
 	
 	private  Label lblNotesGeneralInformation;
 

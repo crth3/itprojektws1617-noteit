@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.shared;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -193,4 +194,11 @@ public interface NotesAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public boolean setUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
+	
+	/**
+	 * get All User
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getAllUser() throws IllegalArgumentException;
 }
