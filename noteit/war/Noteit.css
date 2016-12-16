@@ -19,12 +19,12 @@ table {
 	background: #fff
 }
 
-.dockpanel {
-	width: 1280px;
-	width: 100%;
-}
 
 td {
+}
+
+.headerPanel{
+	width: 1280px;
 }
 
 .lbheadlineNoteit {

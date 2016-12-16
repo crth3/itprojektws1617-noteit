@@ -226,48 +226,53 @@ public class ShowNote extends VerticalPanel {
 			
 			public void onClick(ClickEvent event) {
 				
-				if (currentNote.getId() == 0) {
-					Window.alert("create Note" +currentNote.getId());
-					Date date = dateBox.getValue();
-					long time = date.getTime();
-					Timestamp timestampe = new Timestamp(time);
-					notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-							timestampe, Homepage.getCurrentUser(), null, currentNote.getNotebookId(),
-							new AsyncCallback<Note>() {
+				if(tbNoteTitel.getText() != null){
+					if (currentNote.getId() == 0) {
+						Window.alert("create Note" +currentNote.getId());
+						Date date = dateBox.getValue();
+						long time = date.getTime();
+						Timestamp timestampe = new Timestamp(time);
+						notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
+								timestampe, Homepage.getCurrentUser(), null, currentNote.getNotebookId(),
+								new AsyncCallback<Note>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-								}
+									}
 
-								@Override
-								public void onSuccess(Note result) {
-									// TODO Auto-generated method stub
+									@Override
+									public void onSuccess(Note result) {
+										// TODO Auto-generated method stub
 
-								}
-							});
+									}
+								});
+					}else{
+						Window.alert("update Note");
+						Window.alert("create Note" +currentNote.getId());
+						Date date = dateBox.getValue();
+						long time = date.getTime();
+						Timestamp timestampe = new Timestamp(time);
+						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(), timestampe, Homepage.getCurrentUser().getId(), null,  currentNote.getNotebookId(), currentNote.getId(), new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								// TODO Auto-generated method stub
+
+							}
+						});
+					}
 				}else{
-					Window.alert("update Note");
-					Window.alert("create Note" +currentNote.getId());
-					Date date = dateBox.getValue();
-					long time = date.getTime();
-					Timestamp timestampe = new Timestamp(time);
-					notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(), timestampe, Homepage.getCurrentUser().getId(), null,  currentNote.getNotebookId(), currentNote.getId(), new AsyncCallback<Void>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
-
-						}
-					});
+					Window.alert("Bitte vergebe einen Titel für deine Notiz");
 				}
+				
 			}
 		});
 		

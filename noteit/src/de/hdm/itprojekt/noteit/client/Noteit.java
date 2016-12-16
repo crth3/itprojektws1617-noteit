@@ -71,7 +71,7 @@ public class Noteit implements EntryPoint {
 	/**
 	 * create new Panels
 	 */
-	DockPanel dockPanel = new DockPanel();
+	
 	VerticalPanel vpBasisPanel = new VerticalPanel();
 //	HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
@@ -80,24 +80,11 @@ public class Noteit implements EntryPoint {
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
 	final VerticalPanel showNote = new ShowNote();
-	
-	
-	// HorizontalPanel navPanel = new HorizontalPanel();
-	// HorizontalPanel navNotebookPanel = new HorizontalPanel();
-	// HorizontalPanel navNotesPanel = new HorizontalPanel();
-	// HorizontalPanel contentPanel = new HorizontalPanel();
-	// HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-	// HorizontalPanel contentNotesPanel = new HorizontalPanel();
-	// VerticalPanel editNotes = new EditNotes();
 
 	/**
 	 * Create new Labels
 	 */
-//	static String x = Homepage.getCurrentUser().getFirstName();
-//	static Label welcomeLabel = new Label("Wilkommen " + x);
 	Label headlineLabel = new Label("NoteIt");
-	// Label headlineNotebookLabel = new Label ("Notizbücher");
-	// Label headlineNotesLabel = new Label ("Notizen");
 
 	/**
 	 * Create new Buttons
@@ -105,7 +92,6 @@ public class Noteit implements EntryPoint {
 	Button btnLogOut = new Button("Logout");
 	Button impressumButton = new Button("Impressum");
 	Button zurueckButton = new Button("Zurück");
-//	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"14\" height=\"14\">"+ " max");
 
 	/**
 	 * This is the entry point method.
@@ -119,95 +105,29 @@ public class Noteit implements EntryPoint {
 		currentUser.setFirstName("Max");
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
-		
-		// neues Panel
-		dockPanel.setStyleName("dockpanel");
-		dockPanel.setSpacing(4);
-
-		
-		
-//		//CellBrowser
-//		TreeViewModel model = new NoteitCellBrowser();
-//		CellBrowser cellBrowser = new CellBrowser(model, null);
-//		
-//		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-//	    cellBrowser.setHeight("500px");
-//	    cellBrowser.setWidth("400px");
-//		
-////	    dockPanel.add(headerPanel, DockPanel.NORTH);
-////	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-////		dockPanel.add(showNote, DockPanel.EAST);
-////		dockPanel.add(cellBrowser, DockPanel.WEST);
-//		
-//		content.add(cellBrowser);
-//		content.add(showNote);
-//		vpBasisPanel.add(content);
-		
-		
-		
+	
 
 		/**
 		 * Set the Style
 		 */
 		btnLogOut.setStylePrimaryName("logOutButton");
-//		welcomeLabel.setStylePrimaryName("welcomeLabel");
 		headlineLabel.setStylePrimaryName("headlineLabel");
-		// headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
-		// headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
-//		headerPanel.setStylePrimaryName("headerPanel");
-		welcomePanel.setStylePrimaryName("welcomePanel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
-		// navNotebookPanel.setStylePrimaryName("navNotebookPanel");
-		// navNotesPanel.setStylePrimaryName("navNotesPanel");
-		// contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
-		// contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		// navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		// contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		// contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-//		btnSettingsButton.setStylePrimaryName("btnSettingsButton");
 
 		homepage.setStylePrimaryName("homepage");
-		
-		/**
-		 * set the width
-		 */
-		//headerPanel.setWidth("1000px");
-		// navPanel.setWidth("1000px");
-		// contentPanel.setWidth("1000px");
-		// navNotebookPanel.setWidth("500px");
-		// navNotesPanel.setWidth("500px");
-		// contentNotebookPanel.setWidth("500px");
-		// contentNotesPanel.setWidth("500px");
-		// contentNotebookPanel.setHeight("300px");
-		// contentNotesPanel.setHeight("300px");
-		// navNotebookPanel.add(headlineNotebookLabel);
-		// navNotesPanel.add(headlineNotesLabel);
+
 
 		/**
 		 * add the widgets
 		 */
-//		welcomePanel.add(welcomeLabel);
 		headlinePanel.add(headlineLabel);
 		logoutPanel.add(btnLogOut);
 		logoutPanel.add(impressumButton);
 		logoutPanel.add(zurueckButton);
-//		logoutPanel.add(btnSettingsButton);
-//		headerPanel.add(welcomePanel);
-//		headerPanel.add(headlinePanel);
-//		headerPanel.add(logoutPanel);
 		vpBasisPanel.add(loginPanel);
-
-		// navPanel.add(navNotebookPanel);
-		// navPanel.add(navNotesPanel);
-		// contentPanel.add(contentNotebookPanel);
-		// contentPanel.add(contentNotesPanel);
-		// RootPanel.get("nav").add(navPanel);
-		// RootPanel.get("content").add(contentPanel);
-		// RootPanel.get("content").add(editNotes);
 
 		/**
 		 * Login Status mit Login service überprüfen. Client-side proxy
@@ -293,17 +213,6 @@ public class Noteit implements EntryPoint {
 
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(impressum);
-			}
-		});
-
-		// ClickHandler für Zurück Button
-		zurueckButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				//VerticalPanel homepage = new Homepage();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(vpBasisPanel);
-
 			}
 		});
 

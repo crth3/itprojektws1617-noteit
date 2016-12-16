@@ -223,21 +223,25 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(), new AsyncCallback<Notebook>() {
+				if (tbNotebookTitel != null) {
+					notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(),
+							new AsyncCallback<Notebook>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
 
-					@Override
-					public void onSuccess(Notebook result) {
-//TODO get all notebooks by user ID
-						
-					}
-				});
-				
+								}
+
+								@Override
+								public void onSuccess(Notebook result) {
+									// TODO get all notebooks by user ID
+
+								}
+							});
+				}else{
+					Window.alert("Bitte vergebe einen Titel für dien Notizbuch");
+				}
 			}
 		});
 		

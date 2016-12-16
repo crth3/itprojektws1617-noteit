@@ -66,7 +66,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 			// LEVEL 0.
 			// We passed null as the root value. Return the notebooks.
 			Notebook addNotebook = new Notebook();
-			addNotebook.setTitle("Neues Notizbuch");
+			addNotebook.setId(0);
+			addNotebook.setTitle("");
 			notebooksListDataProvider.getList().add(addNotebook);
 			notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
@@ -105,7 +106,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 			// We want the children of the notebook. Return the notes.
 			Note addNote = new Note();
 			addNote.setId(0);
-			addNote.setTitle("Neue Notiz");
+			addNote.setTitle("");
 			notesListDataProvider.getList().add(addNote);
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
