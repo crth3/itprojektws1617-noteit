@@ -5,7 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.itprojekt.noteit.shared.report.NotesByKeyword;
 import de.hdm.itprojekt.noteit.shared.report.NotesByUser;
 
-public interface ReportAdminAsync {
+public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 	

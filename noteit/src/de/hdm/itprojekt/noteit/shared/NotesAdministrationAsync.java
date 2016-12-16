@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.shared;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -59,4 +60,6 @@ public interface NotesAdministrationAsync {
 	void getAllPermittedUsersByNoteID(int noteID, AsyncCallback<ArrayList<User>> callback);
 
 	void deleteUserNotePermission(String mail, int permissionID, int noteID, AsyncCallback<Void> callback);
+
+	void getAllUser(AsyncCallback<ArrayList<User>> asyncCallback);
 }

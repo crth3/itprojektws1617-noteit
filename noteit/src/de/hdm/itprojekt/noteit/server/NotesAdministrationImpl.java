@@ -126,6 +126,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public User findUserByMail(String mail) throws IllegalArgumentException {
 		return this.uMapper.findByEmail(mail);
 	}
+	
+	public ArrayList<User> getAllUser() throws IllegalArgumentException {
+		return this.uMapper.findAll();
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * Erstellt ein neus Notizbuch
@@ -611,5 +617,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

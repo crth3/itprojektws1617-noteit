@@ -13,8 +13,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.itprojekt.noteit.shared.ReportAdmin;
-import de.hdm.itprojekt.noteit.shared.ReportAdminAsync;
+import de.hdm.itprojekt.noteit.shared.ReportService;
+import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
+
 
 /**
  * 
@@ -27,7 +28,7 @@ public class NotesReport implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Report
 	 * service.
 	 */
-	private final ReportAdminAsync report = GWT.create(ReportAdmin.class);
+	private final ReportServiceAsync report = GWT.create(ReportService.class);
 	
 	//Logger
 	private static Logger logger = Logger.getLogger("");
@@ -72,6 +73,5 @@ public class NotesReport implements EntryPoint {
 		RootPanel.get("head").add(vpBasisPanel);
 		
 
+		}
 	}
-
-}

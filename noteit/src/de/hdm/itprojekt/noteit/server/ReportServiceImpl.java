@@ -6,7 +6,7 @@ import java.util.Date;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
-import de.hdm.itprojekt.noteit.shared.ReportAdmin;
+import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.report.Column;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphComposite;
@@ -22,7 +22,7 @@ import de.hdm.itprojekt.noteit.shared.report.Row;
  *
  */
 public class ReportServiceImpl extends RemoteServiceServlet 
-implements ReportAdmin {
+implements ReportService {
 	
 	private NotesAdministration notesAdministration = null;
 	private static final long serialVersionUID = 1L;

@@ -11,7 +11,7 @@ import de.hdm.itprojekt.noteit.shared.report.*;
  *
  */
 @RemoteServiceRelativePath("report")
-public interface ReportAdmin extends RemoteService{
+public interface ReportService extends RemoteService{
 	
 	public void init();
 	
