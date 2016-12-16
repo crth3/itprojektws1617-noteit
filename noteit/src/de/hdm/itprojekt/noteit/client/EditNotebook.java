@@ -223,7 +223,7 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (tbNotebookTitel != null) {
+				if (tbNotebookTitel.getText().length() > 0) {
 					notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(),
 							new AsyncCallback<Notebook>() {
 

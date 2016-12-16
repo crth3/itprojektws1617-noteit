@@ -226,7 +226,7 @@ public class ShowNote extends VerticalPanel {
 			
 			public void onClick(ClickEvent event) {
 				
-				if(tbNoteTitel.getText() != null){
+				if(tbNoteTitel.getText().length() > 0){
 					if (currentNote.getId() == 0) {
 						Window.alert("create Note" +currentNote.getId());
 						Date date = dateBox.getValue();
