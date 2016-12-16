@@ -394,6 +394,9 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ArrayList<Note> allFoundedNotes = new ArrayList<Note>();
 		ArrayList<Note> sharedNotes= new ArrayList<Note>();
 		System.out.println("getAllNotesByNotebookID");
+		System.out.println("nb id: " + notebookID);
+		System.out.println("usr id: " + userID);
+		
 		if(notebookID == 0){
 			if(notesPermission != null){ 
 				for (NotePermission foundedNotePermission : notesPermission) {
@@ -525,6 +528,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				nbpMapper.update(foundedNotebookPermission);
 				updated = true;
 				return true;
+			}else{
+				return true;
 			}
 		}
 		if (updated == false){
@@ -574,6 +579,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				 System.out.println("Userpermission wurde geupdatet ");
 				npMapper.update(foundedNotePermission);
 				updated = true;
+				return true;
+			}else{
 				return true;
 			}
 		}
