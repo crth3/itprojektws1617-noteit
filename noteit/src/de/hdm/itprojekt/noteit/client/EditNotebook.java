@@ -233,7 +233,7 @@ public class EditNotebook extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Notebook result) {
-						// TODO Auto-generated method stub
+//TODO get all notebooks by user ID
 						
 					}
 				});

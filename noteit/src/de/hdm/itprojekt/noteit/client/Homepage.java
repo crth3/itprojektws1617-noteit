@@ -64,7 +64,7 @@ public class Homepage extends VerticalPanel {
 	Label lbheadlineNoteit = new Label("Noteit");
 
 	// --------- Button -----------//
-	Button btnAddNewNotebookOrNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+//	Button btnAddNewNotebookOrNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
@@ -145,7 +145,7 @@ public class Homepage extends VerticalPanel {
 		navPanel.setStylePrimaryName("navPanel");
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
-		btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
+//		btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment
 		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -157,7 +157,7 @@ public class Homepage extends VerticalPanel {
 		headlinePanel.setWidth("100%");
 		headlinePanel.add(lbheadlineNoteit);
 		navLeftPanel.add(listBox1);
-		navLeftPanel.add(btnAddNewNotebookOrNoteButton);
+//		navLeftPanel.add(btnAddNewNotebookOrNoteButton);
 		navLeftPanel.add(tbSearchNotebook);
 		
 		navRightPanel.add(menu);
@@ -219,18 +219,18 @@ public class Homepage extends VerticalPanel {
 		});
 		
 
-		btnAddNewNotebookOrNoteButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (listBox1.getSelectedItemText() == "Notiz") {
-					if (selectedNotebook.getId() == 0) {
-						Window.alert("in diesem Notizbuch können sie keine Notizen erstellen");
-					} else
-						NoteitCellBrowser.addNote();
-				}else{
-					NoteitCellBrowser.addNotebook();
-				}
-			}
-		});
+//		btnAddNewNotebookOrNoteButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				if (listBox1.getSelectedItemText() == "Notiz") {
+//					if (selectedNotebook.getId() == 0) {
+//						Window.alert("in diesem Notizbuch können sie keine Notizen erstellen");
+//					} else
+//						NoteitCellBrowser.addNote();
+//				}else{
+//					NoteitCellBrowser.addNotebook();
+//				}
+//			}
+//		});
 		
 
 
