@@ -102,7 +102,7 @@ public class Homepage extends VerticalPanel {
 //				dockPanel.add(cellBrowser, DockPanel.WEST);
 				
 				contentPanel.add(cellBrowser);
-				contentPanel.add(showNote);
+				contentPanel.add(editNotebook);
 				
 				final ListBox listBox1 = new ListBox();
 				listBox1.addItem("Notizbuch");
