@@ -61,7 +61,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 
 		if (value == null) {
-
+			
 			// LEVEL 0.
 			// We passed null as the root value. Return the notebooks.
 			Notebook addNotebook = new Notebook();
@@ -201,19 +201,28 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	}
 
-	public static void addNote() {
-		if (selectedNotebook == null) {
-			Window.alert("kein Notebook ausgewählt");
-		} else {
+//	public static void addNote() {
+//		if (selectedNotebook == null) {
+//			Window.alert("kein Notebook ausgewählt");
+//		} else {
+//
+//			Note newNote = new Note();
+//			newNote.setId(400000);
+//			newNote.setTitle("Neue Notiz");
+//			newNote.setNotebookId(selectedNotebook.getId());
+//			// ShowNote.setNote(newNote);
+//			notesListDataProvider.getList().add(newNote);
+//			Window.alert("noteID" + newNote.getId());
+//		}
+//	}
+	
+	public static void getNotebookList(Notebook notebook){
+		
+		notebooksListDataProvider.getList().add(notebook);
+	}
+	public static void getNoteList(Note note){
+		notesListDataProvider.getList().add(note);
 
-			Note newNote = new Note();
-			newNote.setId(400000);
-			newNote.setTitle("Neue Notiz");
-			newNote.setNotebookId(selectedNotebook.getId());
-			// ShowNote.setNote(newNote);
-			notesListDataProvider.getList().add(newNote);
-			Window.alert("noteID" + newNote.getId());
-		}
 	}
 
 	public static void deleteNote() {

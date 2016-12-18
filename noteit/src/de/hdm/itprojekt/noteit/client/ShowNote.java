@@ -246,7 +246,7 @@ public class ShowNote extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Note result) {
-										// TODO Auto-generated method stub
+										NoteitCellBrowser.getNoteList(result);
 
 									}
 								});
@@ -304,6 +304,7 @@ public class ShowNote extends VerticalPanel {
 
 		} else if(note.getMaturityDate() == null){
 			 dateBox.setValue(null);
+
 		}else{
 			Timestamp ts = note.getModificationDate();
 			Date date = new Date(ts.getTime());

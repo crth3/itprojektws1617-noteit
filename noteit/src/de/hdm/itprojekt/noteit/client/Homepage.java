@@ -145,6 +145,7 @@ public class Homepage extends VerticalPanel {
 		navPanel.setStylePrimaryName("navPanel");
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
+		tbSearchNotebook.setStyleName("textbox");
 //		btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment

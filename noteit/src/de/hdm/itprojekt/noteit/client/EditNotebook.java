@@ -224,6 +224,7 @@ public class EditNotebook extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (tbNotebookTitel.getText().length() > 0) {
+					
 					notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(),
 							new AsyncCallback<Notebook>() {
 
@@ -236,7 +237,8 @@ public class EditNotebook extends VerticalPanel {
 								@Override
 								public void onSuccess(Notebook result) {
 									// TODO get all notebooks by user ID
-
+									lblHeaderTitel.setText(tbNotebookTitel.getText());
+									NoteitCellBrowser.getNotebookList(result);
 								}
 							});
 				}else{
