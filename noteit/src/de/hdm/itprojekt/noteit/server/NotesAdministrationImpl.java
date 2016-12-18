@@ -295,7 +295,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID)
 			throws IllegalArgumentException {
-		
+		System.out.println("ablaufdatum: " +maturity);
 		Note note = new Note();
 		// note.setCreator(creatorID); //Int oder Objekt?
 		note.setId(noteID);
