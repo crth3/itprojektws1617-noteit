@@ -27,10 +27,13 @@ public class NotebookCell extends AbstractCell<Notebook> {
 		}
 
 		sb.appendHtmlConstant("<div>");
-		sb.appendHtmlConstant("<div style=\"padding: 5px ;margin: auto ;\">");
+		sb.appendHtmlConstant("<div style=\"margin: 5px ;margin: auto ;\">");
+		
 		if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0){
 				
 			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
+		}else if(value.getTitle() == "" && value.getId() == 0){
+			sb.appendHtmlConstant("<img src='Images/button_add.png'/ width=\"30\" height=\"30\">");
 		}
 		
 		sb.appendEscaped(" "+ value.getTitle());

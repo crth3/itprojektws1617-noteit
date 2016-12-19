@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.shared;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -73,7 +74,7 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException;
 
-	Note createNote(String title, String subtitle, String text, java.util.Date date, User u, String source,
+	Note createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
 			int notebookID);
 
 	// TODO Übergabeparmeter für Berechtigungen siehe Notebook
@@ -154,13 +155,24 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public ArrayList<User> getAllPermittedUsersByNotebookID(int notebookID) throws IllegalArgumentException;
 	
+	
+	/**
+	 *  return all permitted user from this note
+	 * @param noteID
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getAllPermittedUsersByNoteID(int noteID) throws IllegalArgumentException;
+	
 	/**
 	 * set User Notebook Permission
 	 * @param mail
 	 * @param permissionID
+	 * @param notebookID
+	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public void setUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException;
+	public boolean setUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
 	
 	/**
 	 * deleteUserNotebookPermission
@@ -168,5 +180,25 @@ public interface NotesAdministration extends RemoteService {
 	 * @param permissionID
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException;
+	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
+	
+	
+	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
+	
+	/**
+	 * set User Note Permission
+	 * @param mail
+	 * @param permissionID
+	 * @param noteID
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public boolean setUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
+	
+	/**
+	 * get All User
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getAllUser() throws IllegalArgumentException;
 }

@@ -247,26 +247,28 @@ private static NotePermissionMapper notePermissionMapper = null;
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 			System.out.println("UPDATE NotePermission SET "
-					+ "permission="
+					+ "permission='" 
 					+ np.getPermission()
-					+ "','"
-					+ "Note_noteId="
+					+ "',"
+					+ "Note_noteId='"
 					+ np.getNoteId()
-					+ "','"
-					+ "User_userId="
+					+ "',"
+					+ "User_userId='"
 					+ np.getUserId()
-					+"' WHERE notePermissionId="+np.getId());
+					+"' WHERE notePermissionId='"+np.getId()
+					+ "'");
 			
 			stmt.executeUpdate("UPDATE NotePermission SET "
-					+ "permission="
+					+ "permission='" 
 					+ np.getPermission()
-					+ "','"
-					+ "Note_noteId="
+					+ "',"
+					+ "Note_noteId='"
 					+ np.getNoteId()
-					+ "','"
-					+ "User_userId="
+					+ "',"
+					+ "User_userId='"
 					+ np.getUserId()
-					+"' WHERE notePermissionId="+np.getId());
+					+"' WHERE notePermissionId='"+np.getId()
+					+ "'");
 		}
 		// Error Handling
 		catch (SQLException e) {

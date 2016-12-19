@@ -16,6 +16,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -23,6 +24,8 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -38,13 +41,14 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 public class Homepage extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
-
+	
 	private static Logger rootLogger = Logger.getLogger("");
 
 	// --------- Horizontal Panel -----------//
+	HorizontalPanel headlinePanel = new HorizontalPanel();
 	HorizontalPanel navPanel = new HorizontalPanel();
-	HorizontalPanel navNotebookPanel = new HorizontalPanel();
-	HorizontalPanel navNotesPanel = new HorizontalPanel();
+	HorizontalPanel navLeftPanel = new HorizontalPanel();
+	HorizontalPanel navRightPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
 	final static VerticalPanel editNotebook = new EditNotebook();
@@ -57,18 +61,13 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
+	Label lbheadlineNoteit = new Label("Noteit");
 
 	// --------- Button -----------//
-	Button btnAddNewNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
-	Button btnAddNewNotebookButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
-	Button btnEditNotebook = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
-	Button btnEditNote = new Button("<img src='Images/stift.png'/ width=\"15\" height=\"15\">");
-	Button btnSearchNote = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
-	Button btnSearchNotebook = new Button("<img src='Images/Search.png'/ width=\"15\" height=\"15\">");
+//	Button btnAddNewNotebookOrNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
-	final TextBox tbSearchNote = new TextBox();
 
 	// --------- Noteit Class -----------//
 	static User currentUser = new User();
@@ -88,97 +87,104 @@ public class Homepage extends VerticalPanel {
 	
 
 	public void onLoad() {
-		
+		getCurrentUser();
 		//CellBrowser
 				TreeViewModel model = new NoteitCellBrowser();
 				CellBrowser cellBrowser = new CellBrowser(model, null);
 				
 				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 			    cellBrowser.setHeight("500px");
-			    cellBrowser.setWidth("500px");
-				
+			    cellBrowser.setWidth("430px");
+			
 //			    dockPanel.add(headerPanel, DockPanel.NORTH);
 //			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
 //				dockPanel.add(showNote, DockPanel.EAST);
 //				dockPanel.add(cellBrowser, DockPanel.WEST);
 				
 				contentPanel.add(cellBrowser);
-				contentPanel.add(showNote);
+				contentPanel.add(editNotebook);
 				
+				final ListBox listBox1 = new ListBox();
+				listBox1.addItem("Notizbuch");
+				listBox1.addItem("Notiz");
+			      
+				Command settingDialog = new Command() {
+					public void execute() {
+						Settings settings = new Settings(currentUser);
+						settings.show();
+						settings.center();
+						settings.setGlassEnabled(true);
+					}
+				};
+				Command logout = new Command() {
+					public void execute() {
+						Noteit.loginInfo.getLogoutUrl();
+						Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
+						Noteit.loadLogin();
+					}
+				};
 				
+				MenuBar settings = new MenuBar(true);
+			    settings.addItem("Profil", settingDialog);
+			    settings.addItem("Abmelden", logout);
+				MenuBar menu = new MenuBar();
+			    menu.addItem(currentUser.getFirstName(), settings);
+			    
+			   
 				
 		
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
-
-		navNotebookPanel.setStylePrimaryName("navNotebookPanel");
-		navNotesPanel.setStylePrimaryName("navNotesPanel");
+		lbheadlineNoteit.setStyleName("lbheadlineNoteit");
+		// Style Names
+		headlinePanel.setStyleName("headlinePanel");
+		navLeftPanel.setStylePrimaryName("navLeftPanel");
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
-		
+		navPanel.setStylePrimaryName("navPanel");
+		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
-		
-		btnSearchNotebook.setStylePrimaryName("btnSearchNotebook");
-		btnAddNewNoteButton.setStylePrimaryName("btnAddNewNoteButton");
-		btnAddNewNotebookButton.setStylePrimaryName("btnAddNewNotebookButton");
-		btnEditNotebook.setStylePrimaryName("btnEditNotebook");
-		btnEditNote.setStylePrimaryName("btnEditNote");
-		btnSearchNote.setStylePrimaryName("btnSearchNote");
+		tbSearchNotebook.setStyleName("textbox");
+//		btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
-		navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		// Alignment
 		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		navPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-		navPanel.setWidth("1000px");
+		navPanel.setWidth("100%");
 		contentPanel.setWidth("100%");
-
+		headlinePanel.setWidth("100%");
+		headlinePanel.add(lbheadlineNoteit);
+		navLeftPanel.add(listBox1);
+//		navLeftPanel.add(btnAddNewNotebookOrNoteButton);
+		navLeftPanel.add(tbSearchNotebook);
 		
-		navNotebookPanel.add(lbheadlineNotebookLabel);
-		navNotesPanel.add(lbheadlineNotesLabel);
-		navNotesPanel.add(btnAddNewNoteButton);
-		navNotesPanel.add(btnEditNote);
-		navNotebookPanel.add(btnAddNewNotebookButton);
-		navNotebookPanel.add(btnEditNotebook);
+		navRightPanel.add(menu);
+		
+		navPanel.add(navLeftPanel);
+		navPanel.add(navRightPanel);
 
 		/**
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNotebook.getElement().setPropertyString("placeholder", "Notizbücher suchen...");
+		tbSearchNotebook.getElement().setPropertyString("placeholder", "Suchen...");
 		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
-		navNotebookPanel.add(tbSearchNotebook);
+		
 
-		/**
-		 * Add the Search Button to the Panel
-		 */
 
-		navNotebookPanel.add(btnSearchNotebook);
-
-		/**
-		 * create the TextBox for Notebook Search, and include it to the Panel
-		 */
-
-		tbSearchNote.getElement().setPropertyString("placeholder", "Notizen suchen...");
-		tbSearchNote.setStylePrimaryName("tbSearchNote");
-		navNotesPanel.add(tbSearchNote);
-
-		/**
-		 * Add the Search Button to the Panel
-		 */
-
-		navNotesPanel.add(btnSearchNote);
 
 		/**
 		 * add to the Panels
 		 */
 		
-		navPanel.add(navNotebookPanel);
-		navPanel.add(navNotesPanel);
+		//navPanel.add(navNotebookPanel);
+//		navPanel.add(navNotesPanel);
 	//	contentPanel.add(contentNotesPanel);
 		
-		getCurrentUser();
+		
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -214,102 +220,60 @@ public class Homepage extends VerticalPanel {
 		});
 		
 
-
-		/**
-		 * Create the Button and the ClickHandler
-		 */
-		btnAddNewNotebookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-
-				NoteitCellBrowser.addNotebook();
-			
-			}
-		});
-
-		btnAddNewNoteButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (selectedNotebook.getId() == 0){
-					Window.alert("in diesem Notizbuch k�nnen sie keine Notizen erstellen");
-				}else
-				NoteitCellBrowser.addNote();
-			}
-		});
-
-		btnEditNote.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-
-			}
-		});
-
-		btnEditNotebook.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				if(selectedNotebook.getId() != 0){
-					EditNotebook editNotebook = new EditNotebook();
-	//				editNotebook.show();
-	//				editNotebook.center();
-				}else{
-					Window.alert("Dieses Notizbuch kann nicht bearbeitet werden");
-				}
-			}
-		});
-
-		/**
-		 * Create the ChangeHandler for TextBox for Search Notebook Function.
-		 */
-		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-			}
-		});
+//		btnAddNewNotebookOrNoteButton.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				if (listBox1.getSelectedItemText() == "Notiz") {
+//					if (selectedNotebook.getId() == 0) {
+//						Window.alert("in diesem Notizbuch können sie keine Notizen erstellen");
+//					} else
+//						NoteitCellBrowser.addNote();
+//				}else{
+//					NoteitCellBrowser.addNotebook();
+//				}
+//			}
+//		});
 		
-		tbSearchNotebook.addClickHandler(new ClickHandler() {
+
+
+		
+		listBox1.addChangeHandler(new ChangeHandler() {
 			
 			@Override
-			public void onClick(ClickEvent event) {
-				tbSearchNotebook.setText("");
+			public void onChange(ChangeEvent event) {
+				if(listBox1.getSelectedItemText() == "Notiz"){
+					/**
+					 * Create the ChangeHandler for TextBox for Search Note Function.
+					 */
+					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+						@Override
+						public void onValueChange(ValueChangeEvent<String> event) {
+							NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
+							
+						}
+					});
+					
+					
+			      }else{
+			    	  /**
+			  		 * Create the ChangeHandler for TextBox for Search Notebook Function.
+			  		 */
+			  		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+			  			@Override
+			  			public void onValueChange(ValueChangeEvent<String> event) {
+			  				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
+			  				
+			  			}
+			  		});
+			  		
+			  		
+			      }
 				
 			}
 		});
 
-		/**
-		 * Create the ChangeHandler for TextBox for Search Note Function.
-		 */
-		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
-			}
-		});
-
-		/**
-		 * Create the ClickHandler for Button for Search Notebook Function.
-		 */
-		btnSearchNotebook.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				searchNotebookByKeyword(currentUser.getId(), tbSearchNotebook.getText());
-			}
-		});
-
-		/**
-		 * Create the ClickHandler for Button for Search Note Function.
-		 */
-		btnSearchNote.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-
-				searchNoteByKeyword(currentUser.getId(), tbSearchNote.getText(), selectedNotebook.getId());	
-
-			}
-		});
-
+		this.add(headlinePanel);
 		this.add(navPanel);
 		this.add(contentPanel);
 

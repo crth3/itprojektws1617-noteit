@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.shared.bo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+
 public class BusinessObjects implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,12 +1,11 @@
 package de.hdm.itprojekt.noteit.server;
 
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.apphosting.client.serviceapp.AuthService.UserPermissions;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
@@ -25,8 +24,6 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 public class NotesAdministrationImpl extends RemoteServiceServlet implements NotesAdministration {
 
 	private static final long serialVersionUID = 1L;
-
-	private User user = null;
 
 	private UserMapper uMapper = null;
 	private NoteMapper nMapper = null;
@@ -129,6 +126,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public User findUserByMail(String mail) throws IllegalArgumentException {
 		return this.uMapper.findByEmail(mail);
 	}
+	
+	public ArrayList<User> getAllUser() throws IllegalArgumentException {
+		return this.uMapper.findAll();
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * Erstellt ein neus Notizbuch
@@ -143,7 +146,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException {
 
-		ts.getTime();
+		
+		System.out.println("CreateNotebook user "+ ts);
 		nb = new Notebook();
 		nb.setUserId(creator.getId());
 		nb.setTitle(title);
@@ -158,104 +162,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException {
 		
-		//WICHTIG TODO übergabeparmater um "ArrayList<NotebookPermission> notebookPermissions" ergänzen WICHTIG!!!
-		ArrayList<NotebookPermission> notebookPermissions = null;
-		
-		
 		nb = new Notebook();
 		nb.setId(notebookID);
 		nb.setTitle(title);
 
 		Notebook notebook = this.nbMapper.findById(notebookID);
-		ArrayList<Note> allNotesFromThisNotebook = new ArrayList<Note>();
-		allNotesFromThisNotebook = getAllNotesByNotebookID(notebookID, userId);
-		ArrayList<NotePermission> allNotePermssionFromThisNote;
-		ArrayList<NotePermission> usersWithNotePermissionInThisNotebook = new ArrayList<NotePermission>();
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in updateNotebook  " + notebook.getTitle());
 		
-		
-		if (notebookPermissions != null) {
-			/**
-			 *  Überprüfung ob es schon Nutzer mit freigegebenen Notizen in diesem Notizbuch gibt
-			 */
-			for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-				// für jede Notiz des Notizbuches
-				for (Note foundedNote : allNotesFromThisNotebook) {
-					allNotePermssionFromThisNote = npMapper.findNotePermissionByNoteId(foundedNote.getId());
-					// für jede Permission der Notiz
-					for (NotePermission foundedNotePermission : allNotePermssionFromThisNote) {
-						// wenn die 
-						if (foundedNotePermission.getUserId() == foundedNotebookPermission.getUserId()) {
-							usersWithNotePermissionInThisNotebook.add(foundedNotePermission);
-						}
-					}
-				}
-
-			}
-			
-			/**
-			 * NotePermission anlegen
-			 */
-			for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
-				// wenn Permission 1 ist
-				if(foundedNotebookPermission.getPermission() == 1){
-					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
-					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
-						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
-							break;
-						}else{
-							for (Note foundedNote : allNotesFromThisNotebook) {
-								NotePermission np = new NotePermission();
-								np.setNoteId(foundedNote.getId());
-								np.setUserId(foundedNotebookPermission.getUserId());
-								np.setNotePermissionId(foundedNotebookPermission.getPermission());
-								npMapper.insert(np);
-							}
-							
-						}
-					}
-				}else if(foundedNotebookPermission.getPermission() == 2){
-					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
-					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
-						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
-							if(foundedUsers.getNotePermissionId() == 1){
-								foundedUsers.setNotePermissionId(2);
-								npMapper.update(foundedUsers);
-							}
-						}else{
-							for (Note foundedNote : allNotesFromThisNotebook) {
-								NotePermission np = new NotePermission();
-								np.setNoteId(foundedNote.getId());
-								np.setUserId(foundedNotebookPermission.getUserId());
-								np.setNotePermissionId(foundedNotebookPermission.getPermission());
-								npMapper.insert(np);
-							}
-							
-						}
-					}
-				}else if(foundedNotebookPermission.getPermission() == 3){
-					// Überprüfung ob ein nutzer schon einer NotePermission in diesem Notbook hat, wenn nein eine notePermission anlegen
-					for (NotePermission foundedUsers : usersWithNotePermissionInThisNotebook) {
-						if(foundedUsers.getUserId() == foundedNotebookPermission.getUserId()){
-							if(foundedUsers.getNotePermissionId() == 1 || foundedUsers.getNotePermissionId() == 2){
-								foundedUsers.setNotePermissionId(3);
-								npMapper.update(foundedUsers);
-							}
-						}else{
-							for (Note foundedNote : allNotesFromThisNotebook) {
-								NotePermission np = new NotePermission();
-								np.setNoteId(foundedNote.getId());
-								np.setUserId(foundedNotebookPermission.getUserId());
-								np.setNotePermissionId(foundedNotebookPermission.getPermission());
-								npMapper.insert(np);
-							}
-							
-						}
-					}
-				}
-			}
-		}
 		
 		//Überprüfen der Berechtigung zum bearbeiten
 		if (notebook.getUserId() == userId) {
@@ -359,7 +273,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Date maturity, User u, String source, int notebookID)
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID)
 			throws IllegalArgumentException {
 
 		System.out.println("User: "+ u);
@@ -381,7 +295,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID)
 			throws IllegalArgumentException {
-		
+		System.out.println("ablaufdatum: " +maturity);
 		Note note = new Note();
 		// note.setCreator(creatorID); //Int oder Objekt?
 		note.setId(noteID);
@@ -485,12 +399,15 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ArrayList<NotePermission> notesPermission = this.npMapper.findNotePermissionByUserId(userID);
 		ArrayList<Note> allFoundedNotes = new ArrayList<Note>();
 		ArrayList<Note> sharedNotes= new ArrayList<Note>();
+		System.out.println("getAllNotesByNotebookID");
+		System.out.println("nb id: " + notebookID);
+		System.out.println("usr id: " + userID);
 		
 		if(notebookID == 0){
 			if(notesPermission != null){ 
 				for (NotePermission foundedNotePermission : notesPermission) {
 					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
-					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getText());
+					System.out.println("Notiz titel: "+this.nMapper.findById(foundedNotePermission.getNoteId()).getTitle());
 				}
 			}
 			return allFoundedNotes;
@@ -591,16 +508,115 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void setUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
+	public boolean setUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException {
 		System.out.println("Email: " + mail);
 		System.out.println("permissionID: " + permissionID);
+		User user = uMapper.findByEmail(mail);
+		if(user == null){
+			System.out.println("user nicht vorhanden");
+			return false;
+		}else{
+			System.out.println("user: "+user.getMail());
+		}
+		 
+		ArrayList<NotebookPermission> NotebookPermissions = nbpMapper.findNotebookPermissionByNotebookId(notebookID);
+		NotebookPermission nbp = new NotebookPermission();
+		boolean updated = false;
+
+		
+		nbp.setPermission(permissionID);
+		nbp.setUserId(user.getId());
+		nbp.setNotebookId(notebookID);
+		for (NotebookPermission foundedNotebookPermission : NotebookPermissions) {
+			 if(user.getId() == foundedNotebookPermission.getUserId() && permissionID != foundedNotebookPermission.getPermission()){
+				
+				 foundedNotebookPermission.setPermission(permissionID);
+				nbpMapper.update(foundedNotebookPermission);
+				updated = true;
+				return true;
+			}else{
+				return true;
+			}
+		}
+		if (updated == false){
+			nbpMapper.insert(nbp);
+		}
+		return true;
+		
+		
 		
 	}
 
 	@Override
-	public void deleteUserNotebookPermission(String mail, int permissionID) throws IllegalArgumentException {
+	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException {
+		User u = uMapper.findByEmail(mail);
+		for(NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByUserId(u.getId())){
+			if(foundedNotebookPermission.getNotebookId() == notebookID){
+				nbpMapper.delete(foundedNotebookPermission);
+			}
+		}		
+	}
+
+	@Override
+	public boolean setUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException {
+		System.out.println("Email: " + mail);
+		System.out.println("permissionID: " + permissionID);
+		User user = uMapper.findByEmail(mail);
+		if(user == null){
+			System.out.println("user nicht vorhanden");
+			return false;
+		}else{
+			System.out.println("user: "+user.getMail());
+			System.out.println("userid: "+user.getId());
+		}
+		 
+		ArrayList<NotePermission> notePermissions = npMapper.findNotePermissionByNoteId(noteID);
+		NotePermission np = new NotePermission();
+		boolean updated = false;
+
+		
+		np.setPermission(permissionID);
+		np.setUserId(user.getId());
+		np.setNoteId(noteID);
+		for (NotePermission foundedNotePermission : notePermissions) {
+			 if(user.getId() == foundedNotePermission.getUserId() && permissionID != foundedNotePermission.getPermission()){
+				
+				 foundedNotePermission.setPermission(permissionID);
+				 System.out.println("Userpermission wurde geupdatet ");
+				npMapper.update(foundedNotePermission);
+				updated = true;
+				return true;
+			}else{
+				return true;
+			}
+		}
+		if (updated == false){
+			npMapper.insert(np);
+			System.out.println("Userpermission wurde erstellt ");
+		}
+		return true;
+	}
+
+	@Override
+	public ArrayList<User> getAllPermittedUsersByNoteID(int noteID) throws IllegalArgumentException {
+		ArrayList<NotePermission> allUsersWithPermission = npMapper.findNotePermissionByNoteId(noteID);
+		System.out.println("Note ID: " + noteID);
+		System.out.println("Anzahl freigebener Nutzer pro Note: " +allUsersWithPermission.size());
+		ArrayList<User> permittedUsers = new ArrayList<User>();
+		for (NotePermission foundedNotePermission : allUsersWithPermission) {
+			User user = new User();
+			user = uMapper.findByID(foundedNotePermission.getUserId());
+			user.setPermissionID(foundedNotePermission.getPermission());
+			permittedUsers.add(user);
+		}
+		return permittedUsers;
+	}
+
+	@Override
+	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

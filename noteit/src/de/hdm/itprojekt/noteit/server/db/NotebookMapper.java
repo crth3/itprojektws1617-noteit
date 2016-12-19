@@ -75,6 +75,12 @@ public class NotebookMapper {
 				// Objekt zurückgeben
 				return nb;
 			}
+			else {
+				Notebook nb = new Notebook();
+				nb.setId(id);
+				nb.setUserId(0);
+				return nb;
+			}
 		} 
 		// Error Handling
 		catch (SQLException e) {
@@ -82,7 +88,7 @@ public class NotebookMapper {
 			return null;
 		}
 		// Falls nichts gefunden wurde null zurückgeben
-		return null;
+		// return null;
 	}
 	
 	
@@ -145,7 +151,7 @@ public class NotebookMapper {
 	public Notebook insert(Notebook nb) {
 		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
-		
+		System.out.println(nb.getId()+ ","+nb.getTitle()+" "+nb.getCreationDate() + " "+nb.getUserId());
 		try {
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();

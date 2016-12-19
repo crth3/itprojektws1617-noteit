@@ -6,14 +6,14 @@ import java.util.Date;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
-import de.hdm.itprojekt.noteit.shared.ReportAdmin;
+import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.report.Column;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphComposite;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphSimple;
 import de.hdm.itprojekt.noteit.shared.report.Report;
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralInformations;
-import de.hdm.itprojekt.noteit.shared.report.ReportSimpleAllNotesWithGeneralSharingInformations;
+import de.hdm.itprojekt.noteit.shared.report.NotesByUser;
+import de.hdm.itprojekt.noteit.shared.report.NotesByKeyword;
 import de.hdm.itprojekt.noteit.shared.report.Row;
 
 /**
@@ -21,13 +21,44 @@ import de.hdm.itprojekt.noteit.shared.report.Row;
  * @author maikzimmermann
  *
  */
-public class ReportAdminImpl extends RemoteServiceServlet 
-implements ReportAdmin {
+public class ReportServiceImpl extends RemoteServiceServlet 
+implements ReportService {
 	
 	private NotesAdministration notesAdministration = null;
-	
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * No Argument Kontstruktor
+	 * @throws IllegalArgumentException
+	 */
+	public ReportServiceImpl() throws IllegalArgumentException {
+		
+	}
+	
+	/**
+	 * Initialization Method
+	 */
+	public void init() {
+		NotesAdministrationImpl notesAdministrationImpl = new NotesAdministrationImpl();
+		notesAdministrationImpl.init();
+		this.notesAdministration = notesAdministrationImpl;
+	}
+
+
+	
+	/**
+	 * Method to get the <code>AdministrationService</code> Object
+	 * 
+	 * @return AdministrationService
+	 */
+	protected NotesAdministration getNotesAdministration(){
+		return this.notesAdministration;
+	}
+
+	/**
+	 * Method to add Imprint
+	 * @param r
+	 */
 	public void addImprint(Report r) {
 		/*
 		 * Das Impressum soll wesentliche Informationen über die Noteit
@@ -45,42 +76,28 @@ implements ReportAdmin {
 		imprint.addSubParagraph(new ParagraphSimple("73733 Stuttgart"));
 
 		r.setImprint(imprint);
-
-	}
-
-	/**
-	 * No Argument Kontstruktor
-	 * @throws IllegalArgumentException
-	 */
-	public ReportAdminImpl() throws IllegalArgumentException {
-		
-	}
-
-	public void init() {
-		NotesAdministrationImpl notesAdministrationImpl = new NotesAdministrationImpl();
-		notesAdministrationImpl.init();
-		this.notesAdministration = notesAdministrationImpl;
 	}
 	
-	protected NotesAdministration getNotesAdministration(){
-		return this.notesAdministration;
-	}
-
+	
+	/**
+	 * Method to get a <code>Report</code> Object of all Notes by a user
+	 */
 	@Override
-		public ReportSimpleAllNotesWithGeneralInformations createReportSimpleAllNotesWithGeneralInformations()
+		public NotesByUser createReportNotesByUser()
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 
-		ReportSimpleAllNotesWithGeneralInformations reportSimpleAllNotesWithGeneralInformations = new ReportSimpleAllNotesWithGeneralInformations();
+		NotesByUser notesByUser = new NotesByUser();
 
-		reportSimpleAllNotesWithGeneralInformations
+		notesByUser
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
 						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
 
-		this.addImprint(reportSimpleAllNotesWithGeneralInformations);
+		this.addImprint(notesByUser);
 
-		reportSimpleAllNotesWithGeneralInformations.setCreated(new Date());
+		notesByUser.setCreated(new Date());
+		
 
 		/*
 		 * Ab hier erfolgt ein zeilenweises hinzufügen von Notiz-Informationen.
@@ -94,7 +111,7 @@ implements ReportAdmin {
 		headline.addColumn(new Column("Modifikationsdatum"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
-		reportSimpleAllNotesWithGeneralInformations.addRow(headline);
+		notesByUser.addRow(headline);
 
 		ArrayList<Note> notes = this.notesAdministration.getAllNotes();
 
@@ -109,14 +126,14 @@ implements ReportAdmin {
 			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
 
-			reportSimpleAllNotesWithGeneralInformations.addRow(noteRow);
+			notesByUser.addRow(noteRow);
 		}
 
-		return reportSimpleAllNotesWithGeneralInformations;
+		return notesByUser;
 	}
 
 	@Override
-	public ReportSimpleAllNotesWithGeneralSharingInformations createReportSimpleAllNotesWithGeneralSharingInformations()
+	public NotesByKeyword createReportNotesByKeyword()
 			throws IllegalArgumentException {
 		
 		return null;

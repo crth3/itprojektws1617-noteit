@@ -54,12 +54,12 @@ public class Noteit implements EntryPoint {
 	/**
 	 * Login-Widgets
 	 */
-	private LoginInfo loginInfo = null;
-	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label(
+	public static LoginInfo loginInfo = null;
+	private static VerticalPanel loginPanel = new VerticalPanel();
+	private static Label loginLabel = new Label(
 			"Please sign in to your Google Account to access the StockWatcher application.");
-	private Anchor signInLink = new Anchor("Sign In");
-	private Anchor signOutLink = new Anchor("Sign Out");
+	private static Anchor signInLink = new Anchor("Sign In");
+//	private Anchor signOutLink = new Anchor("Sign Out");
 
 	public static User currentUser = new User();
 
@@ -71,33 +71,20 @@ public class Noteit implements EntryPoint {
 	/**
 	 * create new Panels
 	 */
-	DockPanel dockPanel = new DockPanel();
+	
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-	HorizontalPanel headerPanel = new HorizontalPanel();
+//	HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
 	final VerticalPanel showNote = new ShowNote();
-	
-	
-	// HorizontalPanel navPanel = new HorizontalPanel();
-	// HorizontalPanel navNotebookPanel = new HorizontalPanel();
-	// HorizontalPanel navNotesPanel = new HorizontalPanel();
-	// HorizontalPanel contentPanel = new HorizontalPanel();
-	// HorizontalPanel contentNotebookPanel = new HorizontalPanel();
-	// HorizontalPanel contentNotesPanel = new HorizontalPanel();
-	// VerticalPanel editNotes = new EditNotes();
 
 	/**
 	 * Create new Labels
 	 */
-	static String x = Homepage.getCurrentUser().getFirstName();
-	static Label welcomeLabel = new Label("Wilkommen " + x);
 	Label headlineLabel = new Label("NoteIt");
-	// Label headlineNotebookLabel = new Label ("Notizbücher");
-	// Label headlineNotesLabel = new Label ("Notizen");
 
 	/**
 	 * Create new Buttons
@@ -105,7 +92,6 @@ public class Noteit implements EntryPoint {
 	Button btnLogOut = new Button("Logout");
 	Button impressumButton = new Button("Impressum");
 	Button zurueckButton = new Button("Zurück");
-	Button btnSettingsButton = new Button("<img src='Images/user.png'/ width=\"14\" height=\"14\">");
 
 	/**
 	 * This is the entry point method.
@@ -119,95 +105,29 @@ public class Noteit implements EntryPoint {
 		currentUser.setFirstName("Max");
 		currentUser.setLastName("Mustermann");
 		currentUser.setMail("max@mustermann.de");
-		
-		// neues Panel
-		dockPanel.setStyleName("dockpanel");
-		dockPanel.setSpacing(4);
-
-		
-		
-//		//CellBrowser
-//		TreeViewModel model = new NoteitCellBrowser();
-//		CellBrowser cellBrowser = new CellBrowser(model, null);
-//		
-//		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-//	    cellBrowser.setHeight("500px");
-//	    cellBrowser.setWidth("400px");
-//		
-////	    dockPanel.add(headerPanel, DockPanel.NORTH);
-////	    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-////		dockPanel.add(showNote, DockPanel.EAST);
-////		dockPanel.add(cellBrowser, DockPanel.WEST);
-//		
-//		content.add(cellBrowser);
-//		content.add(showNote);
-//		vpBasisPanel.add(content);
-		
-		
-		
+	
 
 		/**
 		 * Set the Style
 		 */
 		btnLogOut.setStylePrimaryName("logOutButton");
-		welcomeLabel.setStylePrimaryName("welcomeLabel");
 		headlineLabel.setStylePrimaryName("headlineLabel");
-		// headlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
-		// headlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
-		headerPanel.setStylePrimaryName("headerPanel");
-		welcomePanel.setStylePrimaryName("welcomePanel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
-		// navNotebookPanel.setStylePrimaryName("navNotebookPanel");
-		// navNotesPanel.setStylePrimaryName("navNotesPanel");
-		// contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
-		// contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		// navNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		// navNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		// contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		// contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		btnSettingsButton.setStylePrimaryName("btnSettingsButton");
 
 		homepage.setStylePrimaryName("homepage");
-		
-		/**
-		 * set the width
-		 */
-		//headerPanel.setWidth("1000px");
-		// navPanel.setWidth("1000px");
-		// contentPanel.setWidth("1000px");
-		// navNotebookPanel.setWidth("500px");
-		// navNotesPanel.setWidth("500px");
-		// contentNotebookPanel.setWidth("500px");
-		// contentNotesPanel.setWidth("500px");
-		// contentNotebookPanel.setHeight("300px");
-		// contentNotesPanel.setHeight("300px");
-		// navNotebookPanel.add(headlineNotebookLabel);
-		// navNotesPanel.add(headlineNotesLabel);
+
 
 		/**
 		 * add the widgets
 		 */
-		welcomePanel.add(welcomeLabel);
 		headlinePanel.add(headlineLabel);
 		logoutPanel.add(btnLogOut);
 		logoutPanel.add(impressumButton);
 		logoutPanel.add(zurueckButton);
-		logoutPanel.add(btnSettingsButton);
-		headerPanel.add(welcomePanel);
-		headerPanel.add(headlinePanel);
-		headerPanel.add(logoutPanel);
 		vpBasisPanel.add(loginPanel);
-
-		// navPanel.add(navNotebookPanel);
-		// navPanel.add(navNotesPanel);
-		// contentPanel.add(contentNotebookPanel);
-		// contentPanel.add(contentNotesPanel);
-		// RootPanel.get("nav").add(navPanel);
-		// RootPanel.get("content").add(contentPanel);
-		// RootPanel.get("content").add(editNotes);
 
 		/**
 		 * Login Status mit Login service überprüfen. Client-side proxy
@@ -275,7 +195,7 @@ public class Noteit implements EntryPoint {
 					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
 					RootPanel.get().add(vpBasisPanel);
 					RootPanel.get("content").add(homepage);
-					RootPanel.get("head").add(headerPanel);
+//					RootPanel.get("head").add(headerPanel);
 
 					// Hier muss auf die Hompage-Steie verwiesen werden
 
@@ -296,17 +216,6 @@ public class Noteit implements EntryPoint {
 			}
 		});
 
-		// ClickHandler für Zurück Button
-		zurueckButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				//VerticalPanel homepage = new Homepage();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(vpBasisPanel);
-
-			}
-		});
-
 		// ClickHandler für LogOut Button
 		btnLogOut.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -317,19 +226,7 @@ public class Noteit implements EntryPoint {
 			}
 		});
 
-		btnSettingsButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Settings settings = new Settings(currentUser);
-				settings.show();
-				settings.center();
-
-				// UserSettings userSettings = new UserSettings(currentUser);
-				// userSettings.show();
-				// userSettings.center();
-			}
-		});
+		
 
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
@@ -372,7 +269,7 @@ public class Noteit implements EntryPoint {
 
 	}
 
-	private void loadLogin() {
+	public static void loadLogin() {
 		// Assemble login panel.
 		signInLink.setHref(loginInfo.getLoginUrl());
 		loginPanel.add(loginLabel);
@@ -381,10 +278,10 @@ public class Noteit implements EntryPoint {
 	}
 
 	public static void setWelcomeName(String name) {
-		welcomePanel.remove(welcomeLabel);
-		x = name;
-		
-		welcomeLabel.setText("Wilkommen " + x);
-		welcomePanel.add(welcomeLabel);
+//		welcomePanel.remove(welcomeLabel);
+//		x = name;
+//		
+//		welcomeLabel.setText("Wilkommen " + x);
+//		welcomePanel.add(welcomeLabel);
 	}
 }

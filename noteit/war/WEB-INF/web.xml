@@ -30,7 +30,7 @@
   
    <servlet>
     <servlet-name>reportAdmin</servlet-name>
-    <servlet-class>de.hdm.itprojekt.noteit.server.ReportAdminImpl</servlet-class>
+    <servlet-class>de.hdm.itprojekt.noteit.server.ReportServiceImpl</servlet-class>
   </servlet>
   
   
