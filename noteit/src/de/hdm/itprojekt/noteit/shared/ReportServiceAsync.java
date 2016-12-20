@@ -2,16 +2,17 @@ package de.hdm.itprojekt.noteit.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.itprojekt.noteit.shared.report.NotesByKeyword;
-import de.hdm.itprojekt.noteit.shared.report.NotesByUser;
+import de.hdm.itprojekt.noteit.client.NotesGeneralInformationReport;
+import de.hdm.itprojekt.noteit.client.NotesSharingInformationReport;
+import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
+import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
 
 public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
+
+	public void createReportNotesGeneralInformation(AsyncCallback<NotesGeneralInformation> callback);
+
+	public void createReportNotesSharingInformation(AsyncCallback<NotesSharingInformation> callback);
 	
-	void createReportNotesByUser(AsyncCallback<NotesByUser> asyncCallback);
-
-	void createReportNotesByKeyword(AsyncCallback<NotesByKeyword> asyncCallback);
-
-
 }
