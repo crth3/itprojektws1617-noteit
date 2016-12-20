@@ -3,7 +3,10 @@ package de.hdm.itprojekt.noteit.shared;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.itprojekt.noteit.shared.report.*;
+import de.hdm.itprojekt.noteit.client.NotesGeneralInformationReport;
+import de.hdm.itprojekt.noteit.client.NotesSharingInformationReport;
+import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
+import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
 
 /**
  * 
@@ -15,6 +18,7 @@ public interface ReportService extends RemoteService{
 	
 	public void init();
 	
-	public NotesByUser createReportNotesByUser() throws IllegalArgumentException;
-	public NotesByKeyword createReportNotesByKeyword() throws IllegalArgumentException;
+	public NotesGeneralInformation createReportNotesGeneralInformation();
+	public NotesSharingInformation createReportNotesSharingInformation();
+
 }

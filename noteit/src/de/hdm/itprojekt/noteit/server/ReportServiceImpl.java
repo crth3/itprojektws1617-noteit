@@ -5,15 +5,16 @@ import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.report.Column;
+import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
+import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphComposite;
 import de.hdm.itprojekt.noteit.shared.report.ParagraphSimple;
 import de.hdm.itprojekt.noteit.shared.report.Report;
-import de.hdm.itprojekt.noteit.shared.report.NotesByUser;
-import de.hdm.itprojekt.noteit.shared.report.NotesByKeyword;
 import de.hdm.itprojekt.noteit.shared.report.Row;
 
 /**
@@ -83,20 +84,20 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesByUser createReportNotesByUser()
+		public NotesGeneralInformation createReportNotesGeneralInformation()
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 
-		NotesByUser notesByUser = new NotesByUser();
+		NotesGeneralInformation notesGeneralInformation = new NotesGeneralInformation();
 
-		notesByUser
+		notesGeneralInformation
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
 						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
 
-		this.addImprint(notesByUser);
+		this.addImprint(notesGeneralInformation);
 
-		notesByUser.setCreated(new Date());
+		notesGeneralInformation.setCreated(new Date());
 		
 
 		/*
@@ -111,7 +112,7 @@ implements ReportService {
 		headline.addColumn(new Column("Modifikationsdatum"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
-		notesByUser.addRow(headline);
+		notesGeneralInformation.addRow(headline);
 
 		ArrayList<Note> notes = this.notesAdministration.getAllNotes();
 
@@ -126,14 +127,14 @@ implements ReportService {
 			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
 
-			notesByUser.addRow(noteRow);
+			notesGeneralInformation.addRow(noteRow);
 		}
 
-		return notesByUser;
+		return notesGeneralInformation;
 	}
 
 	@Override
-	public NotesByKeyword createReportNotesByKeyword()
+	public NotesSharingInformation createReportNotesSharingInformation()
 			throws IllegalArgumentException {
 		
 		return null;

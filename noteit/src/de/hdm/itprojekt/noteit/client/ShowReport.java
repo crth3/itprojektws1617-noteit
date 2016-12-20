@@ -3,26 +3,26 @@ package de.hdm.itprojekt.noteit.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
 
+public class ShowReport extends Composite  {
+	
+	private LoginInfo loginInfo = null;
 
-/**
- * 
- * @Entry point classes define <code>onModuleLoad()</code>.
- *s
- */
-public class NotesReport implements EntryPoint {
+	private NotesGeneralInformationReport GeneralInformationPanel;
+	private NotesSharingInformationReport SharingInformationPanel;
+
 	
 	/**
 	 * Create a remote service proxy to talk to the server-side Report
@@ -39,38 +39,64 @@ public class NotesReport implements EntryPoint {
 	HorizontalPanel headerPanel = new HorizontalPanel();
 	private VerticalPanel vpReport = new VerticalPanel();
 	private HorizontalPanel headlinePanel = new HorizontalPanel();
-	Button b = new Button("djfsk");
 	
-
+	private HorizontalPanel hpGeneral = new HorizontalPanel();
+	private HorizontalPanel hpSharing = new HorizontalPanel();
+	Button b = new Button("sdd");
+	Button c = new Button("sdd");
+	
 	VerticalPanel vpBasisPanel = new VerticalPanel();
 	// Labels
 	Label headlineLabel = new Label("NoteIt Report");
+	Label lblGeneralReport = new Label("General Information");
+	Label lblSharingReport = new Label("Sharing Information");
 	
 	
-
-	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
+		
+		
+		// TODO Auto-generated method stub 
 		// Set style 
 		headerPanel.setStylePrimaryName("headerPanel");
 		headlineLabel.setStylePrimaryName("lbheadlineNoteit");
 		headlinePanel.setStylePrimaryName("headlinePanel");
 		contentPanel.setStylePrimaryName("contentPanel");
+		hpGeneral.setStylePrimaryName("hpGeneral");
+		hpSharing.setStylePrimaryName("hpSharing");
 		navPanel.setStylePrimaryName("navPanel");
+		
+		
 		// Add the Widgets
 		headlinePanel.add(headlineLabel);
 		headerPanel.add(headlinePanel);
-		contentPanel.add(b);
-
+		
+		
 		vpBasisPanel.add(headerPanel);
 		vpBasisPanel.add(navPanel);
 		vpBasisPanel.add(contentPanel);
+		
+		
+		hpGeneral.add(lblGeneralReport);
+		
+		hpSharing.add(lblSharingReport);
+		
+		
+		
+		contentPanel.add(hpGeneral);
+		contentPanel.add(hpSharing);
+		
 		logger.log(Level.SEVERE, "test");
 		navPanel.setWidth("100%");
 		vpBasisPanel.setWidth("100%");
 		headlinePanel.setWidth("100%");
 		
-		RootPanel.get("head").add(vpBasisPanel);
-
-		}
+		GeneralInformationPanel = new NotesGeneralInformationReport();
+		SharingInformationPanel = new NotesSharingInformationReport();
+		
+		//vpBasisPanel.add(SharingInformationPanel);
+		
+		
+		RootPanel.get("content").add(vpBasisPanel);
+		
 	}
+}
