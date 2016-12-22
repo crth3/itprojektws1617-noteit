@@ -188,12 +188,15 @@ implements ReportService {
 				
 				// Erste Spalte: NotePermissionId hinzuf�gen
 				NotePremissionRow.addColumn(new Column(""+np.getId()));
-
+				
 			    // Zweite Spalte: 
-				NotePremissionRow.addColumn(new Column(""+np.getNoteId()));
+				NotePremissionRow.addColumn(new Column(""+np.getPermission()));
 				
 				// dritte Spalte
-				NotePremissionRow.addColumn(new Column(""+np.getNotePermissionId()));
+				NotePremissionRow.addColumn(new Column(""+np.getNoteId()));
+				
+				//vierte Spalte
+				NotePremissionRow.addColumn(new Column(""+np.getUserId()));
 
 			    // und schlie�lich die Zeile dem Report hinzuf�gen.
 				notesSharingInformation.addRow(NotePremissionRow);

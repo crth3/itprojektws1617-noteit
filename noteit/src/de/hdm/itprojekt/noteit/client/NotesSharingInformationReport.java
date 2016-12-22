@@ -81,7 +81,7 @@ private Button btnGenerate = new Button("Generate");
 	//Example
 	final User utest = new User();
 	
-	utest.setId(1);
+	utest.setId(7);
 	
 	//--------------------------//
 	
@@ -99,13 +99,19 @@ private Button btnGenerate = new Button("Generate");
 				
 
 				@Override
-				public void onSuccess(NotesSharingInformation result) {
+				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
 
+
+					
+					System.out.println("fehler: " + notesSharingInformation);
 					HTMLReportWriter writerreport = new HTMLReportWriter();
-					final	ReportSimple report = result;
+					final	ReportSimple report = notesSharingInformation;
 						writerreport.process(report);
 					add(new HTML(writerreport.getReportText()));
+					
+					Window.alert("writereport "+ writerreport.getReportText());
+
 				}
 			});
 			
