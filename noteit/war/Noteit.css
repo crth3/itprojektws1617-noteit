@@ -1,3 +1,4 @@
+
 body {
 	text-align: center;
 	font-family: verdana, sans-serif;
@@ -52,6 +53,17 @@ td {
 }
 
 .navRightPanel {
+	background-color: #DDDDDB;
+}
+
+.vpLeft {
+	display:block;
+	float: left;
+	height: 100%;
+	background-color: #DDDDDB;
+}
+
+.vpRight {
 	background-color: #DDDDDB;
 }
 

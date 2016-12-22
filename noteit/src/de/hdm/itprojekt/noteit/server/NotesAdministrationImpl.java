@@ -127,10 +127,30 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		return this.uMapper.findByEmail(mail);
 	}
 	
-	public ArrayList<User> getAllUser() throws IllegalArgumentException {
-		return this.uMapper.findAll();
+public ArrayList<User> findAllUser() throws IllegalArgumentException {
+		
+		Logger logger = Logger.getLogger("nutzer");
+		//logger.log(Level.SEVERE, "finde alle Nutzer:  " + this.uMapper.findAllUser());
+		
+		//rrayList<User> result = null;
+		
+		
+		return this.uMapper.findAllUser();
 		// TODO Auto-generated method stub
 		
+
+		
+//		User testuser = new User();
+//		testuser.setFirstName("Max");
+//		testuser.setLastName("Mustermann");
+//		
+//		
+//		result.add(testuser);
+//		
+//		System.out.println("testuser:  " + testuser);
+//		System.out.println("result:  " + result);
+//
+//		return result;
 	}
 
 	/**

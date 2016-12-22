@@ -200,5 +200,5 @@ public interface NotesAdministration extends RemoteService {
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<User> getAllUser() throws IllegalArgumentException;
+	public ArrayList<User> findAllUser() throws IllegalArgumentException;
 }

@@ -174,7 +174,7 @@ package de.hdm.itprojekt.noteit.server.db;
 		 * 
 		 * @return Vektor mit allen registrierten Nutzern
 		 */
-		public ArrayList<User> findAll() {
+		public ArrayList<User> findAllUser() {
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
 			// Ergebnisvektor anlegen
@@ -185,15 +185,15 @@ package de.hdm.itprojekt.noteit.server.db;
 				Statement stmt = con.createStatement();
 				// SQL Query ausführen
 				// TODO evtl. OrderBy ergänzen
-				ResultSet rs = stmt.executeQuery("SELECT userId, firstName, lastName, emailAddress " +
+				ResultSet rs = stmt.executeQuery("SELECT * " +
 						"FROM User");
 				// Für jeden Eintrag neues User Objekt erzeugen
 				while(rs.next()) {
 					User u = new User();
-					u.setId(rs.getInt("userId"));
+					//u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					u.setMail(rs.getString("emailAddress"));
+					//u.setMail(rs.getString("emailAddress"));
 					// User dem Ergebnisvektor hinzufügen
 					result.add(u);
 				}

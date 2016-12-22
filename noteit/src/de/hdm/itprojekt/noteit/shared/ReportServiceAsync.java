@@ -11,8 +11,8 @@ public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	public void createReportNotesGeneralInformation(AsyncCallback<NotesGeneralInformation> callback);
+	void createReportNotesGeneralInformation(AsyncCallback<NotesGeneralInformation> callback);
 
-	public void createReportNotesSharingInformation(AsyncCallback<NotesSharingInformation> callback);
+	void createReportNotesSharingInformation(AsyncCallback<NotesSharingInformation> callback);
 	
 }
