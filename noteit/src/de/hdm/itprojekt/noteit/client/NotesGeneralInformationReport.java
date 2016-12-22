@@ -32,8 +32,8 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 	public NotesGeneralInformationReport() {
 		
-		notesAdministration = ClientsideSettings.getAdministrationService();
-		reportService = ClientsideSettings.getReportService();
+//		notesAdministration = ClientsideSettings.getAdministrationService();
+//		reportService = ClientsideSettings.getReportService();
 		oracle = new MultiWordSuggestOracle();
 		
 		notesAdministration.findAllUser(new AsyncCallback<ArrayList<User>>() {
