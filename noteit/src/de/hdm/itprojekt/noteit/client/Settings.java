@@ -104,7 +104,7 @@ public class Settings extends DialogBox{
 							
 							@Override
 							public void onSuccess(Void result) {
-								VerticalPanel homepage = new Homepage();
+								//VerticalPanel homepage = new Homepage();
 								Noteit.setWelcomeName(tbFirstName.getText());
 								currentUser.setFirstName(tbFirstName.getText());
 								Settings.this.hide();

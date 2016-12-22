@@ -52,6 +52,7 @@ public class Homepage extends VerticalPanel {
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
 	final static VerticalPanel editNotebook = new EditNotebook();
+	final static VerticalPanel settingView = new VerticalPanel(); 
 	
 	
 	
@@ -108,12 +109,12 @@ public class Homepage extends VerticalPanel {
 				listBox1.addItem("Notizbuch");
 				listBox1.addItem("Notiz");
 			      
-				Command settingDialog = new Command() {
+				Command showSetting = new Command() {
 					public void execute() {
 						Settings settings = new Settings(currentUser);
-						settings.show();
-						settings.center();
-						settings.setGlassEnabled(true);
+						contentPanel.clear();
+						contentPanel.add(settings);
+					
 					}
 				};
 				Command logout = new Command() {
@@ -125,7 +126,7 @@ public class Homepage extends VerticalPanel {
 				};
 				
 				MenuBar settings = new MenuBar(true);
-			    settings.addItem("Profil", settingDialog);
+			    settings.addItem("Profil", showSetting);
 			    settings.addItem("Abmelden", logout);
 				MenuBar menu = new MenuBar();
 			    menu.addItem(currentUser.getFirstName(), settings);
@@ -236,42 +237,42 @@ public class Homepage extends VerticalPanel {
 
 
 		
-		listBox1.addChangeHandler(new ChangeHandler() {
-			
-			@Override
-			public void onChange(ChangeEvent event) {
-				if(listBox1.getSelectedItemText() == "Notiz"){
-					/**
-					 * Create the ChangeHandler for TextBox for Search Note Function.
-					 */
-					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-						@Override
-						public void onValueChange(ValueChangeEvent<String> event) {
-							NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
-							
-						}
-					});
-					
-					
-			      }else{
-			    	  /**
-			  		 * Create the ChangeHandler for TextBox for Search Notebook Function.
-			  		 */
-			  		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-			  			@Override
-			  			public void onValueChange(ValueChangeEvent<String> event) {
-			  				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-			  				
-			  			}
-			  		});
-			  		
-			  		
-			      }
-				
-			}
-		});
+//		listBox1.addChangeHandler(new ChangeHandler() {
+//			
+//			@Override
+//			public void onChange(ChangeEvent event) {
+//				if(listBox1.getSelectedItemText() == "Notiz"){
+//					/**
+//					 * Create the ChangeHandler for TextBox for Search Note Function.
+//					 */
+//					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+//
+//						@Override
+//						public void onValueChange(ValueChangeEvent<String> event) {
+//							NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
+//							
+//						}
+//					});
+//					
+//					
+//			      }else{
+//			    	  /**
+//			  		 * Create the ChangeHandler for TextBox for Search Notebook Function.
+//			  		 */
+//			  		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+//
+//			  			@Override
+//			  			public void onValueChange(ValueChangeEvent<String> event) {
+//			  				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
+//			  				
+//			  			}
+//			  		});
+//			  		
+//			  		
+//			      }
+//				
+//			}
+//		});
 
 		this.add(headlinePanel);
 		this.add(navPanel);
@@ -423,6 +424,10 @@ public class Homepage extends VerticalPanel {
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
 		
+	}
+	
+	public static void showSettingView(){
+		contentPanel.add(settingView);
 	}
 
 
