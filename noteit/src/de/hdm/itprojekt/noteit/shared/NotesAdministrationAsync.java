@@ -61,5 +61,5 @@ public interface NotesAdministrationAsync {
 
 	void deleteUserNotePermission(String mail, int permissionID, int noteID, AsyncCallback<Void> callback);
 
-	void getAllUser(AsyncCallback<ArrayList<User>> asyncCallback);
+	void findAllUser(AsyncCallback<ArrayList<User>> callback);
 }
