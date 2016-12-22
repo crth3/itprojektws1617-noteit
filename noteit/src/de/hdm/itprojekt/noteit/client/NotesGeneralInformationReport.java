@@ -36,7 +36,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		reportService = ClientsideSettings.getReportService();
 		oracle = new MultiWordSuggestOracle();
 		
-		notesAdministration.getAllUser(new AsyncCallback<ArrayList<User>>() {
+		notesAdministration.findAllUser(new AsyncCallback<ArrayList<User>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
