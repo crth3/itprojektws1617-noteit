@@ -28,10 +28,20 @@
     <url-pattern>/noteit/notesadministration</url-pattern>
   </servlet-mapping> 
   
+    <servlet-mapping>
+    <servlet-name>NotesAdministrationImpl</servlet-name>
+    <url-pattern>/NotesReport/notesadministration</url-pattern>
+  </servlet-mapping> 
+  
    <servlet>
     <servlet-name>reportAdmin</servlet-name>
     <servlet-class>de.hdm.itprojekt.noteit.server.ReportServiceImpl</servlet-class>
   </servlet>
+  
+      <servlet-mapping>
+    <servlet-name>reportAdmin</servlet-name>
+    <url-pattern>/NotesReport/report</url-pattern>
+  </servlet-mapping>
   
   
   <!-- Default page to serve -->

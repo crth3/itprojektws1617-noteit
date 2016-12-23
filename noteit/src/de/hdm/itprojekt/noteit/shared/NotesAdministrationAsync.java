@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.NotePermission;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
@@ -61,5 +62,7 @@ public interface NotesAdministrationAsync {
 
 	void deleteUserNotePermission(String mail, int permissionID, int noteID, AsyncCallback<Void> callback);
 
-	void getAllUser(AsyncCallback<ArrayList<User>> asyncCallback);
+	void findAllUser(AsyncCallback<ArrayList<User>> callback);
+
+	void findNotePermissionByUserId(int userId, AsyncCallback<ArrayList<NotePermission>> callback);
 }
