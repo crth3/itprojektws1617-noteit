@@ -114,7 +114,7 @@ public class Homepage extends VerticalPanel {
 						Settings settings = new Settings(currentUser);
 						contentPanel.clear();
 						contentPanel.add(settings);
-					
+
 					}
 				};
 				Command logout = new Command() {
