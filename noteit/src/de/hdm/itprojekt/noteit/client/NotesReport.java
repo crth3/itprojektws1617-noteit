@@ -120,7 +120,9 @@ public class NotesReport implements EntryPoint {
 
 		contentPanel.add(vpLeft);
 		contentPanel.add(vpRight);
+
 			
+		RootPanel.get("Reporthead").add(vpReport);
 		RootPanel.get("Reporthead").add(vpBasisPanel);
 		
 		bSharing.addClickHandler(new ClickHandler() {

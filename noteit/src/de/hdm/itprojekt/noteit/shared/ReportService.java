@@ -5,8 +5,10 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.itprojekt.noteit.client.NotesGeneralInformationReport;
 import de.hdm.itprojekt.noteit.client.NotesSharingInformationReport;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
 import de.hdm.itprojekt.noteit.shared.report.NotesSharingInformation;
+import de.hdm.itprojekt.noteit.shared.report.ReportSimple;
 
 /**
  * 
@@ -19,6 +21,6 @@ public interface ReportService extends RemoteService{
 	public void init();
 	
 	public NotesGeneralInformation createReportNotesGeneralInformation();
-	public NotesSharingInformation createReportNotesSharingInformation();
+	public NotesSharingInformation createReportNotesSharingInformation(User u);
 
 }

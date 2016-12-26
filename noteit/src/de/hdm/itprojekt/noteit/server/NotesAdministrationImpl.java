@@ -637,6 +637,12 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public ArrayList<NotePermission> findNotePermissionByUserId(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.npMapper.findNotePermissionByUserId(userId);
+	}
 	
 
 }

@@ -147,6 +147,8 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * 	 
 	 * */
 	public ArrayList<NotePermission> findNotePermissionByUserId(int id) {
+		
+		System.out.println("userId: " +id);
 
 		Connection con = DBConnection.connection();
 		ArrayList<NotePermission> notePermissionList = new ArrayList<NotePermission>();
@@ -162,19 +164,24 @@ private static NotePermissionMapper notePermissionMapper = null;
 
 			while (rs.next()) {
 				NotePermission np = new NotePermission();
-				User u = new User();
+				//User u = new User();
 				
 				np.setId(rs.getInt("notePermissionId"));
 				np.setPermission(rs.getInt("permission"));
 				np.setNoteId(rs.getInt("Note_noteId"));
 				np.setUserId(rs.getInt("User_userId"));
 				
-				u.setId(rs.getInt("userId"));
-				u.setFirstName(rs.getString("firstName"));
-				u.setLastName(rs.getString("lastName"));
+				System.out.println("ID: " + np.getId());
+				System.out.println("permission: " + np.getPermission());
+				System.out.println("noteid" + np.getNoteId());
+				System.out.println("userId: " + np.getUserId());
 				
-				np.setUser(u);
-							
+				//u.setId(rs.getInt("userId"));
+				//u.setFirstName(rs.getString("firstName"));
+				//u.setLastName(rs.getString("lastName"));
+				
+				//np.setUser(u);
+				
 				System.out.println(rs);
 				// Conversation Objekt der Liste hinzufügen
 				notePermissionList.add(np);
