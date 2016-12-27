@@ -509,6 +509,11 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		}
 		return notesWithKeyword;
 	}
+	
+	public Note findById(int id) throws IllegalArgumentException {
+		return this.nMapper.findById(id);
+		
+	}
 
 	@Override
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
