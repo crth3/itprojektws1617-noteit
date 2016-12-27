@@ -190,10 +190,10 @@ package de.hdm.itprojekt.noteit.server.db;
 				// Für jeden Eintrag neues User Objekt erzeugen
 				while(rs.next()) {
 					User u = new User();
-					//u.setId(rs.getInt("userId"));
+					u.setId(rs.getInt("userId"));
 					u.setFirstName(rs.getString("firstName"));
 					u.setLastName(rs.getString("lastName"));
-					//u.setMail(rs.getString("emailAddress"));
+					u.setMail(rs.getString("emailAddress"));
 					// User dem Ergebnisvektor hinzufügen
 					result.add(u);
 				}

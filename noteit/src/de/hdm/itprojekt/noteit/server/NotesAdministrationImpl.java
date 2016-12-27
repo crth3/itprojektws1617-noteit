@@ -92,10 +92,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void updateUser(int userID, String mail, String firstName, String lastName) throws IllegalArgumentException {
+	public void updateUser(int userId, String mail, String firstName, String lastName) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		if (userID != 0) {
-			User user = findUserByID(userID);
+		if (userId != 0) {
+			User user = findUserById(userId);
 			try {
 				user.setMail(mail);
 				user.setFirstName(firstName);
@@ -115,11 +115,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		logger.log(Level.SEVERE, "DRIN");
 		this.uMapper.delete(user);
 
-	}
-
-	// TODO methode noch in shared nodesAdministration hinzufügen?
-	public User findUserByID(int userID) {
-		return this.uMapper.findByID(userID);
 	}
 
 	@Override
@@ -647,6 +642,12 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	public ArrayList<NotePermission> findNotePermissionByUserId(int userId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.npMapper.findNotePermissionByUserId(userId);
+	}
+
+	@Override
+	public User findUserById(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.uMapper.findByID(userId);
 	}
 	
 
