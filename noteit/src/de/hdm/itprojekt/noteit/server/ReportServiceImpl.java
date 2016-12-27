@@ -136,7 +136,7 @@ implements ReportService {
 	}
 
 	@Override
-	public NotesSharingInformation createReportNotesSharingInformation(User u)
+	public NotesSharingInformation createReportNotesSharingInformation(User u) 
 			throws IllegalArgumentException {
 			if (this.getNotesAdministration() == null)
 			return null;
@@ -146,19 +146,36 @@ implements ReportService {
 			/*
 		     * Zun�chst legen wir uns einen leeren Report an.
 		     */
-			NotesSharingInformation notesSharingInformation = new NotesSharingInformation();
+			NotesSharingInformation result = new NotesSharingInformation();
 			
-			notesSharingInformation
+			result
 			.setTitle("SharingInformationen zu einem Nutzer");
 			
 			 // Imressum hinzuf�gen
-		    this.addImprint(notesSharingInformation);
+		    this.addImprint(result);
 		    
 		    /*
 		     * Datum der Erstellung hinzuf�gen. new Date() erzeugt autom. einen
 		     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		     */
-		    notesSharingInformation.setCreated(new Date());
+		    result.setCreated(new Date());
+		    
+		    /*
+		     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+		     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
+		     * die Verwendung von ParagraphComposite.
+		     */
+		    ParagraphComposite header = new ParagraphComposite();
+
+		    // Name und Vorname des Kunden aufnehmen
+		    header.addSubParagraph(new ParagraphSimple(u.getLastName() + ", "
+		        + u.getFirstName()));
+
+		    // Kundennummer aufnehmen
+		    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+		    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
+		    result.setHeaderData(header);
+		    
 		    
 		    /*
 		     * Zun�chst legen wir eine Kopfzeile f�r die Konto-Tabelle an.
@@ -176,7 +193,7 @@ implements ReportService {
 		    headline.addColumn(new Column("Note-Nr."));
 
 		    // Hinzuf�gen der Kopfzeile
-		    notesSharingInformation.addRow(headline);
+		    result.addRow(headline);
 		    
 		    
 			ArrayList<NotePermission> notePermissionlist = this.notesAdministration.findNotePermissionByUserId(userId);
@@ -199,16 +216,16 @@ implements ReportService {
 				NotePremissionRow.addColumn(new Column(""+np.getUserId()));
 
 			    // und schlie�lich die Zeile dem Report hinzuf�gen.
-				notesSharingInformation.addRow(NotePremissionRow);
+				result.addRow(NotePremissionRow);
 			    }
 		    
 		    
 			/*
 		     * Zum Schluss m�ssen wir noch den fertigen Report zur�ckgeben.
 		     */    
-		return notesSharingInformation;
-		
+		return result;
 		
 	}
 	
 }
+	

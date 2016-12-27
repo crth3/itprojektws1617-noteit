@@ -102,16 +102,11 @@ private Button btnGenerate = new Button("Generate");
 				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
 
-
-					
-					System.out.println("fehler: " + notesSharingInformation);
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesSharingInformation;
-						writerreport.process(report);
+					writerreport.process(report);
 					add(new HTML(writerreport.getReportText()));
 					
-					Window.alert("writereport "+ writerreport.getReportText());
-
 				}
 			});
 			
