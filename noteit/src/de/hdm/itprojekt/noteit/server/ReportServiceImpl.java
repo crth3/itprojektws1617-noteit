@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
@@ -29,6 +28,11 @@ implements ReportService {
 	
 	private NotesAdministration notesAdministration = null;
 	private static final long serialVersionUID = 1L;
+	
+	private String sPermission = null;
+	private String sPermissionRead = "Lesen";
+	private String sPermissionReadWrite = "Lesen & Schreiben";
+	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
 	
 	/**
 	 * No Argument Kontstruktor
@@ -173,6 +177,8 @@ implements ReportService {
 
 		    // Kundennummer aufnehmen
 		    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+		    header.addSubParagraph(new ParagraphSimple("Name: " + u.getLastName()));
+		    header.addSubParagraph(new ParagraphSimple("Vorname: " + u.getFirstName()));
 		    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
 		    result.setHeaderData(header);
 		    
@@ -188,32 +194,41 @@ implements ReportService {
 		     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
 		     * �berschriften ab.
 		     */
-		    headline.addColumn(new Column("NotePermission-Nr."));
-		    headline.addColumn(new Column("NotePermission"));
+		  
 		    headline.addColumn(new Column("Note-Nr."));
+		    headline.addColumn(new Column("Berechtigung"));
 
 		    // Hinzuf�gen der Kopfzeile
 		    result.addRow(headline);
 		    
 		    
 			ArrayList<NotePermission> notePermissionlist = this.notesAdministration.findNotePermissionByUserId(userId);
-			
+					
 			for (NotePermission np : notePermissionlist) {
+				
+				 switch(np.getPermission()){ 
+			        case 1: 
+			        	sPermission = sPermissionRead;
+						break; 
+			        case 2: 
+			        	sPermission = sPermissionReadWrite;
+			            break; 
+			        case 3: 
+			        	sPermission = sPermissionReadWriteDelete;
+			            break;
+			        default: 
+			            System.out.println("keine Berechtigung"); 
+			        } 
 			    
 				// Eine leere Zeile anlegen.
 				Row NotePremissionRow = new Row(); 
-				
-				// Erste Spalte: NotePermissionId hinzuf�gen
-				NotePremissionRow.addColumn(new Column(""+np.getId()));
-				
-			    // Zweite Spalte: 
-				NotePremissionRow.addColumn(new Column(""+np.getPermission()));
-				
-				// dritte Spalte
+								
+				// erste Spalte
 				NotePremissionRow.addColumn(new Column(""+np.getNoteId()));
 				
-				//vierte Spalte
-				NotePremissionRow.addColumn(new Column(""+np.getUserId()));
+			    // Zweite Spalte: 
+				NotePremissionRow.addColumn(new Column(""+ sPermission));
+	
 
 			    // und schlie�lich die Zeile dem Report hinzuf�gen.
 				result.addRow(NotePremissionRow);
