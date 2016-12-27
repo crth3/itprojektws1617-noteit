@@ -115,7 +115,20 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException;
 
+	/**
+	 * 
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException;
+	
+	/**
+	 * 
+	 * @param noteId
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Note findNoteById(int noteId) throws IllegalArgumentException;
 
 	/**
 	 * 

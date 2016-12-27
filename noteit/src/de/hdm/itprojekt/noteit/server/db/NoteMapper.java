@@ -75,7 +75,7 @@ public class NoteMapper {
 				n.setText(rs.getString("content"));
 				n.setMaturityDate(rs.getTimestamp("maturity"));
 				n.setCreationDate(rs.getTimestamp("creationDate"));
-				n.setModificationDate(rs.getTimestamp("maturityDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
 				
 				n.setUserId(rs.getInt("User_userId"));
 				// Objekt zurückgeben

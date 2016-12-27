@@ -33,6 +33,7 @@ implements ReportService {
 	private String sPermissionRead = "Lesen";
 	private String sPermissionReadWrite = "Lesen & Schreiben";
 	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
+	private int noteId;
 	
 	/**
 	 * No Argument Kontstruktor
@@ -153,7 +154,7 @@ implements ReportService {
 			NotesSharingInformation result = new NotesSharingInformation();
 			
 			result
-			.setTitle("SharingInformationen zu einem Nutzer");
+			.setTitle("Freigaben von Notizen eines Nutzer");
 			
 			 // Imressum hinzuf�gen
 		    this.addImprint(result);
@@ -175,10 +176,9 @@ implements ReportService {
 		    header.addSubParagraph(new ParagraphSimple(u.getLastName() + ", "
 		        + u.getFirstName()));
 
-		    // Kundennummer aufnehmen
+		    // User aufnehmen
 		    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
-		    header.addSubParagraph(new ParagraphSimple("Name: " + u.getLastName()));
-		    header.addSubParagraph(new ParagraphSimple("Vorname: " + u.getFirstName()));
+		    
 		    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
 		    result.setHeaderData(header);
 		    
@@ -195,7 +195,9 @@ implements ReportService {
 		     * �berschriften ab.
 		     */
 		  
-		    headline.addColumn(new Column("Note-Nr."));
+		    headline.addColumn(new Column("Notiz-Nr."));
+		    headline.addColumn(new Column("Notiz-Titel"));
+		    headline.addColumn(new Column("Notiz"));
 		    headline.addColumn(new Column("Berechtigung"));
 
 		    // Hinzuf�gen der Kopfzeile
@@ -206,7 +208,8 @@ implements ReportService {
 					
 			for (NotePermission np : notePermissionlist) {
 				
-				 switch(np.getPermission()){ 
+				// Berechtigung zuweisen 
+				switch(np.getPermission()){ 
 			        case 1: 
 			        	sPermission = sPermissionRead;
 						break; 
@@ -226,7 +229,16 @@ implements ReportService {
 				// erste Spalte
 				NotePremissionRow.addColumn(new Column(""+np.getNoteId()));
 				
-			    // Zweite Spalte: 
+				// Note anhand der id finden
+				Note notes = this.notesAdministration.findNoteById(np.getNoteId());
+				
+				//zweite Spalte
+				NotePremissionRow.addColumn(new Column(""+notes.getTitle()));
+				
+				//dritte Spalte
+				NotePremissionRow.addColumn(new Column(""+notes.getText()));
+				
+			    // Vierte Spalte: 
 				NotePremissionRow.addColumn(new Column(""+ sPermission));
 	
 
