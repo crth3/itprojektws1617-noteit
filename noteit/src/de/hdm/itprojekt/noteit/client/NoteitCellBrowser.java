@@ -138,6 +138,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 				ShowNote.getAllPermittedUsersbyNoteID(selectionModelNote.getLastSelectedObject().getId());
 				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 			}
+			else {
+				ShowNote.tbNoteTitel.setText("");
+				ShowNote.tbNoteSubTitel.setText("");
+				ShowNote.content.setText("");
+				ShowNote.lblHeaderTitel.setText("Neue Notiz");
+			}
 			Homepage.showNoteView();
 		}
 
@@ -201,20 +207,20 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	}
 
-//	public static void addNote() {
-//		if (selectedNotebook == null) {
-//			Window.alert("kein Notebook ausgewählt");
-//		} else {
-//
-//			Note newNote = new Note();
-//			newNote.setId(400000);
-//			newNote.setTitle("Neue Notiz");
-//			newNote.setNotebookId(selectedNotebook.getId());
-//			// ShowNote.setNote(newNote);
-//			notesListDataProvider.getList().add(newNote);
-//			Window.alert("noteID" + newNote.getId());
-//		}
-//	}
+	public static void addNote() {
+		if (selectedNotebook == null) {
+			Window.alert("kein Notebook ausgewählt");
+		} else {
+
+			Note newNote = new Note();
+			newNote.setId(400000);
+			newNote.setTitle("Neue Notiz");
+			newNote.setNotebookId(selectedNotebook.getId());
+			// ShowNote.setNote(newNote);
+			notesListDataProvider.getList().add(newNote);
+			Window.alert("noteID" + newNote.getId());
+		}
+	}
 	
 	public static void getNotebookList(Notebook notebook){
 		
