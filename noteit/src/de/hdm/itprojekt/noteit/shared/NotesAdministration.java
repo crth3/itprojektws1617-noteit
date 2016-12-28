@@ -74,6 +74,17 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public void deleteNotebook(int notebookID, int userID) throws IllegalArgumentException;
 
+	/**
+	 * 
+	 * @param title
+	 * @param subtitle
+	 * @param text
+	 * @param date
+	 * @param u
+	 * @param source
+	 * @param notebookID
+	 * @return
+	 */
 	Note createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
 			int notebookID);
 
@@ -115,7 +126,20 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException;
 
+	/**
+	 * 
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException;
+	
+	/**
+	 * 
+	 * @param noteId
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Note findNoteById(int noteId) throws IllegalArgumentException;
 
 	/**
 	 * 
@@ -144,7 +168,15 @@ public interface NotesAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public User findUserByMail(String mail) throws IllegalArgumentException;
+	
 
+	
+	/**
+	 * 
+	 * @param userID
+	 * @param notebookID
+	 * @throws IllegalArgumentException
+	 */
 	void deleteAllNotesByNotebookID(int userID, int notebookID) throws IllegalArgumentException;
 
 	/**
@@ -182,7 +214,13 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
 	
-	
+	/**
+	 * 
+	 * @param mail
+	 * @param permissionID
+	 * @param noteID
+	 * @throws IllegalArgumentException
+	 */
 	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
 	
 	/**
@@ -202,5 +240,25 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public ArrayList<User> findAllUser() throws IllegalArgumentException;
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
 	public ArrayList<NotePermission> findNotePermissionByUserId(int userId) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public User findUserById(int userId) throws IllegalArgumentException;
+	
+	public ArrayList<Note> findNoteByUserId(int userId) throws IllegalArgumentException;
+	
+	public ArrayList<Note> findNoteByMaturity(Timestamp maturity) throws IllegalArgumentException;
+	public ArrayList<Note> findNoteByCreationDate(Timestamp creationDate) throws IllegalArgumentException;
+	public ArrayList<Note> findNoteByModificationDate(Timestamp modificationDate) throws IllegalArgumentException;
+	
 }
