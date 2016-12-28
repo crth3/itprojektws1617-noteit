@@ -237,6 +237,152 @@ public class NoteMapper {
 		return noteList;
 	}
 	
+	/**
+	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
+	 * anhand des Fälligkeitsdatum aus
+	 * @param maturity
+	 *            Eindeutiger Identifikator der Note in der Datenbank
+	 * @return Liste der Notes mit bestimmten Fälligkeitsdatum
+	 */
+	public ArrayList<Note> findNotesByMaturity(Timestamp maturity) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Note> noteList = new ArrayList<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note WHERE "
+							+ "maturity = '"
+							+ maturity
+							+"'");
+
+			while (rs.next()) {
+				Note n = new Note();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("maturity"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+							
+				System.out.println(rs);
+				
+				// Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			// Objekt zurückgeben
+			return noteList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
+	
+	/**
+	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
+	 * anhand des Erstellungsdatum aus
+	 * @param creationDate
+	 *            Eindeutiger Identifikator der Note in der Datenbank
+	 * @return Liste der Notes eines bestimmten Erstelldatum
+	 */
+	public ArrayList<Note> findNotesByCreationDate(Timestamp creationDate) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Note> noteList = new ArrayList<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note WHERE "
+							+ "creationDate = '"
+							+ creationDate
+							+"'");
+
+			while (rs.next()) {
+				Note n = new Note();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("maturity"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+							
+				System.out.println(rs);
+				
+				// Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			// Objekt zurückgeben
+			return noteList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
+	
+	/**
+	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
+	 * anhand des Modifikationsdatum aus
+	 * @param modificationDate
+	 *            Eindeutiger Identifikator der Note in der Datenbank
+	 * @return Liste der Notes eines bestimmten Modifikationsdatum
+	 */
+	public ArrayList<Note> findNotesByModificationDate(Timestamp modificationDate) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Note> noteList = new ArrayList<Note>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Note WHERE "
+							+ "modificationDate = '"
+							+ modificationDate
+							+"'");
+
+			while (rs.next()) {
+				Note n = new Note();
+				
+				n.setId(rs.getInt("noteId"));
+				n.setTitle(rs.getString("title"));
+				n.setSubTitle(rs.getString("subtitle"));
+				n.setText(rs.getString("content"));
+				n.setMaturityDate(rs.getTimestamp("maturity"));
+				n.setCreationDate(rs.getTimestamp("creationDate"));
+				n.setModificationDate(rs.getTimestamp("modificationDate"));
+				n.setNotebookId(rs.getInt("Notebook_notebookId"));
+				n.setUserId(rs.getInt("User_UserId"));
+							
+				System.out.println(rs);
+				
+				// Objekt der Liste hinzufügen
+				noteList.add(n);
+			}
+			// Objekt zurückgeben
+			return noteList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return noteList;
+	}
 	
 
 	/**
