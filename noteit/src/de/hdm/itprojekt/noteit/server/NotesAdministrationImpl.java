@@ -505,6 +505,10 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		return notesWithKeyword;
 	}
 	
+	public ArrayList<Note> findNoteByUserId(int userId) throws IllegalArgumentException {
+		return this.nMapper.findNotesByUser(userId);
+	}
+	
 	public Note findNoteById(int noteId) throws IllegalArgumentException {
 		return this.nMapper.findById(noteId);
 		

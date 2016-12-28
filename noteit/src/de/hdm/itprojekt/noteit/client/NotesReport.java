@@ -9,6 +9,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -67,26 +68,26 @@ public class NotesReport implements EntryPoint {
 		
  		vpReport = new VerticalPanel();
  		
- 		MenuBar menuBar = new MenuBar();
+// 		MenuBar menuBar = new MenuBar();
  		
  		
-		/*-------------Menu Commands User-------------*/
- 		
- 		Command showNotesGeneralInformation = new Command() {
-			public void execute() {
-				vpReport.clear();
-				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
-				vpReport.add(notesGeneralInformation);
-			}
-		};
-		
-		Command showNotesSharingInformation = new Command() {
-			public void execute() {
-				vpReport.clear();
-				NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
-				vpReport.add(notesSharingInformation);
-			}
-		};
+//		/*-------------Menu Commands User-------------*/
+// 		
+// 		Command showNotesGeneralInformation = new Command() {
+//			public void execute() {
+//				vpReport.clear();
+//				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
+//				vpReport.add(notesGeneralInformation);
+//			}
+//		};
+//		
+//		Command showNotesSharingInformation = new Command() {
+//			public void execute() {
+//				vpReport.clear();
+//				NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
+//				vpReport.add(notesSharingInformation);
+//			}
+//		};
 		
 		/*-------------Styles -------------*/
 
@@ -127,7 +128,7 @@ public class NotesReport implements EntryPoint {
 		
 		bSharing.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
-			
+						
 			contentPanel.remove(1);
 			contentPanel.clear();
 			NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
@@ -140,7 +141,9 @@ public class NotesReport implements EntryPoint {
 		bGeneral.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
+				contentPanel.remove(1);
 				contentPanel.clear();
+				
 				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
 				contentPanel.add(notesGeneralInformation);
 				}
