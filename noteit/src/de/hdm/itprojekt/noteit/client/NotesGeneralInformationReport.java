@@ -1,5 +1,6 @@
 package de.hdm.itprojekt.noteit.client;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -43,6 +44,9 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	private Button btnGenerate = new Button("Generate");
 	final User user = new User();
 	int userId;
+	Timestamp maturity;
+	Timestamp creationDate;
+	Timestamp modificationDate;
 
 		
 	public NotesGeneralInformationReport() {
@@ -143,7 +147,14 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 	//------Example-------
 	
+	maturity = Timestamp.valueOf("2016-12-30 00:00:00");
+	creationDate = Timestamp.valueOf("2016-12-05 00:00:00.0");
+	//modificationDate = Timestamp.valueOf("2016-12-30 00:00:00");
 	
+	
+	//maturity = null;
+	//creationDate = null;
+	modificationDate = null;
 	
 	
 	//------Example-------
@@ -153,7 +164,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	btnGenerate.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
 						
-			reportService.createReportNotesGeneralInformation(user, new AsyncCallback<NotesGeneralInformation>() {
+			reportService.createReportNotesGeneralInformation(user, maturity, creationDate, modificationDate, new AsyncCallback<NotesGeneralInformation>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
