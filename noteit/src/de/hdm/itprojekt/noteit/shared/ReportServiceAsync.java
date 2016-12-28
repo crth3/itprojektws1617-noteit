@@ -1,5 +1,7 @@
 package de.hdm.itprojekt.noteit.shared;
 
+import java.sql.Timestamp;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.itprojekt.noteit.client.NotesGeneralInformationReport;
@@ -13,8 +15,9 @@ public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createReportNotesGeneralInformation(AsyncCallback<NotesGeneralInformation> callback);
-
+	void createReportNotesGeneralInformation(User u, Timestamp maturity, Timestamp creationDate,
+			Timestamp modificationDate, AsyncCallback<NotesGeneralInformation> callback);	
+	
 	void createReportNotesSharingInformation(User u, AsyncCallback<NotesSharingInformation> callback);
 	
 }

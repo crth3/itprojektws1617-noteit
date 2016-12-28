@@ -80,6 +80,7 @@ public class Noteit implements EntryPoint {
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
 	final VerticalPanel showNote = new ShowNote();
+	
 
 	/**
 	 * Create new Labels
@@ -100,6 +101,7 @@ public class Noteit implements EntryPoint {
 	
 	
 	public void onModuleLoad() {
+		String value_URL = Window.Location.getParameter("URL");
 		
 		currentUser.setId(1);
 		currentUser.setFirstName("Max");
@@ -129,6 +131,8 @@ public class Noteit implements EntryPoint {
 		logoutPanel.add(zurueckButton);
 		vpBasisPanel.add(loginPanel);
 
+		
+		logger.log(Level.SEVERE, "URL Inhalt" + value_URL);
 		/**
 		 * Login Status mit Login service überprüfen. Client-side proxy
 		 * erstellen.

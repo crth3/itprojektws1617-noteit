@@ -150,8 +150,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 	public boolean isLeaf(Object value) {
 		// The leaf nodes are the songs, which are Strings.
-		if (value instanceof String) {
+		if (value instanceof Note) {
 			return true;
+		}else if(value instanceof Notebook){
+			if(((Notebook) value).getTitle() == ""){
+				return true;
+			}
 		}
 		return false;
 	}
