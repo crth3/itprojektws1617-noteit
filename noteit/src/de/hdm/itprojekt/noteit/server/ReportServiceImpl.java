@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
@@ -29,6 +28,12 @@ implements ReportService {
 	
 	private NotesAdministration notesAdministration = null;
 	private static final long serialVersionUID = 1L;
+	
+	private String sPermission = null;
+	private String sPermissionRead = "Lesen";
+	private String sPermissionReadWrite = "Lesen & Schreiben";
+	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
+	private int noteId;
 	
 	/**
 	 * No Argument Kontstruktor
@@ -136,7 +141,7 @@ implements ReportService {
 	}
 
 	@Override
-	public NotesSharingInformation createReportNotesSharingInformation(User u)
+	public NotesSharingInformation createReportNotesSharingInformation(User u) 
 			throws IllegalArgumentException {
 			if (this.getNotesAdministration() == null)
 			return null;
@@ -146,19 +151,37 @@ implements ReportService {
 			/*
 		     * Zun�chst legen wir uns einen leeren Report an.
 		     */
-			NotesSharingInformation notesSharingInformation = new NotesSharingInformation();
+			NotesSharingInformation result = new NotesSharingInformation();
 			
-			notesSharingInformation
-			.setTitle("SharingInformationen zu einem Nutzer");
+			result
+			.setTitle("Freigaben von Notizen eines Nutzer");
 			
 			 // Imressum hinzuf�gen
-		    this.addImprint(notesSharingInformation);
+		    this.addImprint(result);
 		    
 		    /*
 		     * Datum der Erstellung hinzuf�gen. new Date() erzeugt autom. einen
 		     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
 		     */
-		    notesSharingInformation.setCreated(new Date());
+		    result.setCreated(new Date());
+		    
+		    /*
+		     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+		     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
+		     * die Verwendung von ParagraphComposite.
+		     */
+		    ParagraphComposite header = new ParagraphComposite();
+
+		    // Name und Vorname des Kunden aufnehmen
+		    header.addSubParagraph(new ParagraphSimple(u.getLastName() + ", "
+		        + u.getFirstName()));
+
+		    // User aufnehmen
+		    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+		    
+		    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
+		    result.setHeaderData(header);
+		    
 		    
 		    /*
 		     * Zun�chst legen wir eine Kopfzeile f�r die Konto-Tabelle an.
@@ -171,44 +194,65 @@ implements ReportService {
 		     * aktuellen Kontostand. In der Kopfzeile legen wir also entsprechende
 		     * �berschriften ab.
 		     */
-		    headline.addColumn(new Column("NotePermission-Nr."));
-		    headline.addColumn(new Column("NotePermission"));
-		    headline.addColumn(new Column("Note-Nr."));
+		  
+		    headline.addColumn(new Column("Notiz-Nr."));
+		    headline.addColumn(new Column("Notiz-Titel"));
+		    headline.addColumn(new Column("Notiz"));
+		    headline.addColumn(new Column("Berechtigung"));
 
 		    // Hinzuf�gen der Kopfzeile
-		    notesSharingInformation.addRow(headline);
+		    result.addRow(headline);
 		    
 		    
 			ArrayList<NotePermission> notePermissionlist = this.notesAdministration.findNotePermissionByUserId(userId);
-			
+					
 			for (NotePermission np : notePermissionlist) {
+				
+				// Berechtigung zuweisen 
+				switch(np.getPermission()){ 
+			        case 1: 
+			        	sPermission = sPermissionRead;
+						break; 
+			        case 2: 
+			        	sPermission = sPermissionReadWrite;
+			            break; 
+			        case 3: 
+			        	sPermission = sPermissionReadWriteDelete;
+			            break;
+			        default: 
+			            System.out.println("keine Berechtigung"); 
+			        } 
 			    
 				// Eine leere Zeile anlegen.
 				Row NotePremissionRow = new Row(); 
-				
-				// Erste Spalte: NotePermissionId hinzuf�gen
-				NotePremissionRow.addColumn(new Column(""+np.getId()));
-				
-			    // Zweite Spalte: 
-				NotePremissionRow.addColumn(new Column(""+np.getPermission()));
-				
-				// dritte Spalte
+								
+				// erste Spalte
 				NotePremissionRow.addColumn(new Column(""+np.getNoteId()));
 				
-				//vierte Spalte
-				NotePremissionRow.addColumn(new Column(""+np.getUserId()));
+				// Note anhand der id finden
+				Note notes = this.notesAdministration.findNoteById(np.getNoteId());
+				
+				//zweite Spalte
+				NotePremissionRow.addColumn(new Column(""+notes.getTitle()));
+				
+				//dritte Spalte
+				NotePremissionRow.addColumn(new Column(""+notes.getText()));
+				
+			    // Vierte Spalte: 
+				NotePremissionRow.addColumn(new Column(""+ sPermission));
+	
 
 			    // und schlie�lich die Zeile dem Report hinzuf�gen.
-				notesSharingInformation.addRow(NotePremissionRow);
+				result.addRow(NotePremissionRow);
 			    }
 		    
 		    
 			/*
 		     * Zum Schluss m�ssen wir noch den fertigen Report zur�ckgeben.
 		     */    
-		return notesSharingInformation;
-		
+		return result;
 		
 	}
 	
 }
+	

@@ -129,6 +129,7 @@ public class NotesReport implements EntryPoint {
 		public void onClick(ClickEvent event) {
 			
 			contentPanel.remove(1);
+			contentPanel.clear();
 			NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
 			contentPanel.add(notesSharingInformation);
 			
@@ -139,10 +140,9 @@ public class NotesReport implements EntryPoint {
 		bGeneral.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				contentPanel.remove(1);
+				contentPanel.clear();
 				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
 				contentPanel.add(notesGeneralInformation);
-				
 				}
 			
 		});
@@ -155,13 +155,6 @@ public class NotesReport implements EntryPoint {
 	
 		RootPanel.get().add(vpReport);
 		
-		
 	
-		//RootPanel.get("Reporthead").add(vpReport);
-
-//		}
-		
-	
-//	
 		}
 	}

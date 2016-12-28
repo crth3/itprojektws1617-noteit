@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
@@ -39,6 +40,9 @@ private HorizontalPanel hp = new HorizontalPanel();
 private MultiWordSuggestOracle oracle;
 private SuggestBox sb;
 private Button btnGenerate = new Button("Generate");
+final User user = new User();
+int userId;
+
 	
 	public NotesSharingInformationReport() {
 		
@@ -56,9 +60,10 @@ private Button btnGenerate = new Button("Generate");
 				for (User user : result) {
 					
 					String username ="";
-					username = user.getFirstName() + " " + user.getLastName()
+					username = user.getId() +" " + user.getFirstName() + " " + user.getLastName()
 							+ " " + user.getMail();
 					oracle.add(username);
+					//Window.alert("Suggestion - userId" + userId);
 				}
 			}
 			
@@ -70,25 +75,59 @@ private Button btnGenerate = new Button("Generate");
 		});
 		
 		sb = new SuggestBox(oracle);
+		
+		
+		 sb.addSelectionHandler(new SelectionHandler<Suggestion>() {
+
+		        public void onSelection(SelectionEvent<Suggestion> event) {
+		        	
+
+		           	//ausgewählten Value recieven        	
+		            String selectedProperty =   ((SuggestBox)event.getSource()).getValue(); 
+		        		  
+		            // Alle Zeichen nach der UserId löschen
+		            String sfinalProperty = selectedProperty.split(" ")[0];
+		            
+		            // String in Integer umwandeln
+		            int ifinalProperty = Integer.parseInt(sfinalProperty);
+		            
+		            // userId zuweisen
+		            user.setId(ifinalProperty);
+		            userId = ifinalProperty;
+		            
+		            // UserObjekt befüllen
+		            notesAdministration.findUserById(userId, new AsyncCallback<User>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(User result) {
+							// TODO Auto-generated method stub
+							user.setFirstName(result.getFirstName());
+							user.setLastName(result.getLastName());
+						}
+		            	
+		            });
+		            
+		        }
+		    });
+
+		
 		hp.setStyleName("PanelBorder");
-		add(hp);	
+		add(hp);
+		add(contentPanel);
 		hp.add(sb);
+		hp.add(btnGenerate);
 	
-	hp.add(btnGenerate);
-	
-	
-	//---------------------------//
-	//Example
-	final User utest = new User();
-	
-	utest.setId(7);
-	
-	//--------------------------//
 	
 	btnGenerate.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
-			
-			reportService.createReportNotesSharingInformation(utest, new AsyncCallback<NotesSharingInformation>() {
+						
+			reportService.createReportNotesSharingInformation(user, new AsyncCallback<NotesSharingInformation>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -101,17 +140,14 @@ private Button btnGenerate = new Button("Generate");
 				@Override
 				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
-
-
 					
-					System.out.println("fehler: " + notesSharingInformation);
+					//hp.clear();
+					
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesSharingInformation;
-						writerreport.process(report);
+					writerreport.process(report);
 					add(new HTML(writerreport.getReportText()));
 					
-					Window.alert("writereport "+ writerreport.getReportText());
-
 				}
 			});
 			
