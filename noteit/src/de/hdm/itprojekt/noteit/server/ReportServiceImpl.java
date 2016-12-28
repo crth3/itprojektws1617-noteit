@@ -91,20 +91,37 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation()
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 
-		NotesGeneralInformation notesGeneralInformation = new NotesGeneralInformation();
+		NotesGeneralInformation result = new NotesGeneralInformation();
 
-		notesGeneralInformation
+		result
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
 						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
 
-		this.addImprint(notesGeneralInformation);
+		this.addImprint(result);
 
-		notesGeneralInformation.setCreated(new Date());
+		result.setCreated(new Date());
+		
+		 /*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
+	     * die Verwendung von ParagraphComposite.
+	     */
+	    ParagraphComposite header = new ParagraphComposite();
+
+	    // Name und Vorname des Kunden aufnehmen
+	    header.addSubParagraph(new ParagraphSimple(u.getLastName() + ", "
+	        + u.getFirstName()));
+
+	    // User aufnehmen
+	    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+	    
+	    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
+	    result.setHeaderData(header);
 		
 
 		/*
@@ -114,14 +131,14 @@ implements ReportService {
 
 		headline.addColumn(new Column("Notiz.-ID."));
 		headline.addColumn(new Column("Notiz"));
-		headline.addColumn(new Column("Notizbuch"));
+		headline.addColumn(new Column("Titel"));
 		headline.addColumn(new Column("Erstelldatum"));
 		headline.addColumn(new Column("Modifikationsdatum"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
-		notesGeneralInformation.addRow(headline);
+		result.addRow(headline);
 
-		ArrayList<Note> notes = this.notesAdministration.getAllNotes();
+		ArrayList<Note> notes = this.notesAdministration.findNoteByUserId(u.getId());
 
 		for (Note foundedNote : notes) {
 
@@ -129,15 +146,15 @@ implements ReportService {
 
 			noteRow.addColumn(new Column("" + foundedNote.getId()));
 			noteRow.addColumn(new Column("" + foundedNote.getTitle()));
-			noteRow.addColumn(new Column("" + foundedNote.getNotebookId())); // TODO in Notizbuch title ändern
+			noteRow.addColumn(new Column("" + foundedNote.getTitle())); 
 			noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
 			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
 
-			notesGeneralInformation.addRow(noteRow);
+			result.addRow(noteRow);
 		}
 
-		return notesGeneralInformation;
+		return result;
 	}
 
 	@Override

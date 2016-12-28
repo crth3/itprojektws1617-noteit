@@ -198,13 +198,13 @@ public class NoteMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Note INNER JOIN User ON Note.User_userId = User.userId WHERE "
+					.executeQuery("SELECT * FROM Note WHERE "
 							+ "User_userId = "
 							+ id);
 
 			while (rs.next()) {
 				Note n = new Note();
-				User creator = new User();
+//				User creator = new User();
 				
 				n.setId(rs.getInt("noteId"));
 				n.setTitle(rs.getString("title"));
@@ -216,11 +216,11 @@ public class NoteMapper {
 				n.setNotebookId(rs.getInt("Notebook_notebookId"));
 				n.setUserId(rs.getInt("User_UserId"));
 				
-				creator.setId(rs.getInt("userId"));
-				creator.setFirstName(rs.getString("firstName"));
-				creator.setLastName(rs.getString("lastName"));
+//				creator.setId(rs.getInt("userId"));
+//				creator.setFirstName(rs.getString("firstName"));
+//				creator.setLastName(rs.getString("lastName"));
 				
-				n.setCreator(creator);
+//				n.setCreator(creator);
 							
 				System.out.println(rs);
 				// Conversation Objekt der Liste hinzufügen
