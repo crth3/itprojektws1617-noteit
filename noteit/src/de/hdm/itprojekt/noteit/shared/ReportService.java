@@ -20,7 +20,7 @@ public interface ReportService extends RemoteService{
 	
 	public void init();
 	
-	public NotesGeneralInformation createReportNotesGeneralInformation();
+	public NotesGeneralInformation createReportNotesGeneralInformation(User u);
 	public NotesSharingInformation createReportNotesSharingInformation(User u);
 
 }

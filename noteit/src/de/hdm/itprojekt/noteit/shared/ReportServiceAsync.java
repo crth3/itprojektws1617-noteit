@@ -13,7 +13,7 @@ public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createReportNotesGeneralInformation(AsyncCallback<NotesGeneralInformation> callback);
+	void createReportNotesGeneralInformation(User u, AsyncCallback<NotesGeneralInformation> callback);
 
 	void createReportNotesSharingInformation(User u, AsyncCallback<NotesSharingInformation> callback);
 	

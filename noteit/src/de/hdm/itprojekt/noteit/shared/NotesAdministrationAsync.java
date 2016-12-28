@@ -69,4 +69,6 @@ public interface NotesAdministrationAsync {
 	void findNoteById(int noteId, AsyncCallback<Note> callback);
 
 	void findUserById(int userId, AsyncCallback<User> callback);
+
+	void findNoteByUserId(int userId, AsyncCallback<ArrayList<Note>> callback);
 }
