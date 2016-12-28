@@ -142,6 +142,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				ShowNote.tbNoteTitel.setText("");
 				ShowNote.tbNoteSubTitel.setText("");
 				ShowNote.content.setText("");
+				ShowNote.lblHeaderTitel.setText("Neue Notiz");
 			}
 			Homepage.showNoteView();
 		}
