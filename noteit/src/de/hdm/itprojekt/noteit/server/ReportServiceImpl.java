@@ -96,6 +96,8 @@ implements ReportService {
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
+		
+		int userId = u.getId();
 
 		NotesGeneralInformation result = new NotesGeneralInformation();
 
@@ -142,79 +144,51 @@ implements ReportService {
 
 		result.addRow(headline);
 
-		ArrayList<Note> notes = this.notesAdministration.findNoteByUserId(u.getId());
-		ArrayList<Note> maturityDates = this.notesAdministration.findNoteByMaturity(maturity);
 		ArrayList<Note> creationDates = this.notesAdministration.findNoteByCreationDate(creationDate);
 		ArrayList<Note> modificationDates = this.notesAdministration.findNoteByModificationDate(modificationDate);
+		Timestamp expectedTimestamp;
 		
-		
-		if (maturityDates != null) {
-			
-			for (Note foundedMaturity : maturityDates) {
+		if (userId!= 0) {
+			ArrayList<Note> notes = this.notesAdministration.findNoteByUserId(u.getId());
+			for (Note foundedNote : notes) {
+				
+				expectedTimestamp = foundedNote.getMaturityDate();
+					
+					System.out.println("userId: " + userId);
+					System.out.println("getUserID(): " + u.getId());
+					System.out.println("maturity: " + maturity);
+					System.out.println("foundedNoteMaturity: " + foundedNote.getMaturityDate());
+					
+					
+					if(userId == u.getId() & expectedTimestamp.equals(maturity)) {
+						
+						System.out.println("ich bin drin");
+					
+						Row noteRow = new Row();
+						noteRow.addColumn(new Column("" + foundedNote.getId()));
+						noteRow.addColumn(new Column("" + foundedNote.getTitle()));
+						noteRow.addColumn(new Column("" + foundedNote.getText())); 
+						noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
+						noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
+						noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
+						result.addRow(noteRow);
+					
+					}else if(userId == u.getId() & maturity == null){
+						System.out.println("do nothing");
+						
+						Row noteRow = new Row();
+						noteRow.addColumn(new Column("" + foundedNote.getId()));
+						noteRow.addColumn(new Column("" + foundedNote.getTitle()));
+						noteRow.addColumn(new Column("" + foundedNote.getText())); 
+						noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
+						noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
+						noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
+						result.addRow(noteRow);	
+					}
+				}
 
-				Row noteRow = new Row();
-
-				noteRow.addColumn(new Column("" + foundedMaturity.getId()));
-				noteRow.addColumn(new Column("" + foundedMaturity.getTitle()));
-				noteRow.addColumn(new Column("" + foundedMaturity.getTitle())); 
-				noteRow.addColumn(new Column("" + foundedMaturity.getCreationDate()));
-				noteRow.addColumn(new Column("" + foundedMaturity.getModificationDate()));
-				noteRow.addColumn(new Column("" + foundedMaturity.getMaturityDate()));
-
-				result.addRow(noteRow);
 			}
-			
-		}
-		
-if (creationDates != null) {
-			
-			for (Note foundedCreationDate : creationDates) {
-
-				Row noteRow = new Row();
-
-				noteRow.addColumn(new Column("" + foundedCreationDate.getId()));
-				noteRow.addColumn(new Column("" + foundedCreationDate.getTitle()));
-				noteRow.addColumn(new Column("" + foundedCreationDate.getTitle())); 
-				noteRow.addColumn(new Column("" + foundedCreationDate.getCreationDate()));
-				noteRow.addColumn(new Column("" + foundedCreationDate.getModificationDate()));
-				noteRow.addColumn(new Column("" + foundedCreationDate.getMaturityDate()));
-
-				result.addRow(noteRow);
-			}
-		}
-
-if (modificationDates != null) {
 	
-	for (Note foundedModificationDates : modificationDates) {
-
-		Row noteRow = new Row();
-
-		noteRow.addColumn(new Column("" + foundedModificationDates.getId()));
-		noteRow.addColumn(new Column("" + foundedModificationDates.getTitle()));
-		noteRow.addColumn(new Column("" + foundedModificationDates.getTitle())); 
-		noteRow.addColumn(new Column("" + foundedModificationDates.getCreationDate()));
-		noteRow.addColumn(new Column("" + foundedModificationDates.getModificationDate()));
-		noteRow.addColumn(new Column("" + foundedModificationDates.getMaturityDate()));
-
-		result.addRow(noteRow);
-	}
-}
-
-	
-		for (Note foundedNote : notes) {
-
-			Row noteRow = new Row();
-
-			noteRow.addColumn(new Column("" + foundedNote.getId()));
-			noteRow.addColumn(new Column("" + foundedNote.getTitle()));
-			noteRow.addColumn(new Column("" + foundedNote.getTitle())); 
-			noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
-			noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
-			noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
-
-			result.addRow(noteRow);
-		}
-
 		return result;
 	}
 
