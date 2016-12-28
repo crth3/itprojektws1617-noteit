@@ -513,6 +513,10 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		return this.nMapper.findById(noteId);
 		
 	}
+	
+	public ArrayList<Note> findNoteByMaturity(Timestamp maturity) throws IllegalArgumentException {
+		return this.nMapper.findNotesByMaturity(maturity);
+	}
 
 	@Override
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
@@ -652,6 +656,18 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	public User findUserById(int userId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.uMapper.findByID(userId);
+	}
+
+	@Override
+	public ArrayList<Note> findNoteByCreationDate(Timestamp creationDate) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.nMapper.findNotesByCreationDate(creationDate);
+	}
+
+	@Override
+	public ArrayList<Note> findNoteByModificationDate(Timestamp modificationDate) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.nMapper.findNotesByModificationDate(modificationDate);
 	}
 	
 

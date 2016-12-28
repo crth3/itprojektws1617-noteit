@@ -1,5 +1,6 @@
 package de.hdm.itprojekt.noteit.server;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -91,7 +92,7 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation(User u)
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u,  Timestamp maturity, Timestamp creationDate, Timestamp modificationDate)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
@@ -114,11 +115,14 @@ implements ReportService {
 	    ParagraphComposite header = new ParagraphComposite();
 
 	    // Name und Vorname des Kunden aufnehmen
+	    if (u.getId() != 0) {
 	    header.addSubParagraph(new ParagraphSimple(u.getLastName() + ", "
 	        + u.getFirstName()));
 
 	    // User aufnehmen
-	    header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+	    	header.addSubParagraph(new ParagraphSimple("User.-Nr.: " + u.getId()));
+	    	
+	    }
 	    
 	    // Hinzuf�gen der zusammengestellten Kopfdaten zu dem Report
 	    result.setHeaderData(header);
@@ -139,7 +143,64 @@ implements ReportService {
 		result.addRow(headline);
 
 		ArrayList<Note> notes = this.notesAdministration.findNoteByUserId(u.getId());
+		ArrayList<Note> maturityDates = this.notesAdministration.findNoteByMaturity(maturity);
+		ArrayList<Note> creationDates = this.notesAdministration.findNoteByCreationDate(creationDate);
+		ArrayList<Note> modificationDates = this.notesAdministration.findNoteByModificationDate(modificationDate);
+		
+		
+		if (maturityDates != null) {
+			
+			for (Note foundedMaturity : maturityDates) {
 
+				Row noteRow = new Row();
+
+				noteRow.addColumn(new Column("" + foundedMaturity.getId()));
+				noteRow.addColumn(new Column("" + foundedMaturity.getTitle()));
+				noteRow.addColumn(new Column("" + foundedMaturity.getTitle())); 
+				noteRow.addColumn(new Column("" + foundedMaturity.getCreationDate()));
+				noteRow.addColumn(new Column("" + foundedMaturity.getModificationDate()));
+				noteRow.addColumn(new Column("" + foundedMaturity.getMaturityDate()));
+
+				result.addRow(noteRow);
+			}
+			
+		}
+		
+if (creationDates != null) {
+			
+			for (Note foundedCreationDate : creationDates) {
+
+				Row noteRow = new Row();
+
+				noteRow.addColumn(new Column("" + foundedCreationDate.getId()));
+				noteRow.addColumn(new Column("" + foundedCreationDate.getTitle()));
+				noteRow.addColumn(new Column("" + foundedCreationDate.getTitle())); 
+				noteRow.addColumn(new Column("" + foundedCreationDate.getCreationDate()));
+				noteRow.addColumn(new Column("" + foundedCreationDate.getModificationDate()));
+				noteRow.addColumn(new Column("" + foundedCreationDate.getMaturityDate()));
+
+				result.addRow(noteRow);
+			}
+		}
+
+if (modificationDates != null) {
+	
+	for (Note foundedModificationDates : modificationDates) {
+
+		Row noteRow = new Row();
+
+		noteRow.addColumn(new Column("" + foundedModificationDates.getId()));
+		noteRow.addColumn(new Column("" + foundedModificationDates.getTitle()));
+		noteRow.addColumn(new Column("" + foundedModificationDates.getTitle())); 
+		noteRow.addColumn(new Column("" + foundedModificationDates.getCreationDate()));
+		noteRow.addColumn(new Column("" + foundedModificationDates.getModificationDate()));
+		noteRow.addColumn(new Column("" + foundedModificationDates.getMaturityDate()));
+
+		result.addRow(noteRow);
+	}
+}
+
+	
 		for (Note foundedNote : notes) {
 
 			Row noteRow = new Row();
