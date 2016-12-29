@@ -15,8 +15,8 @@ public interface ReportServiceAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createReportNotesGeneralInformation(User u, Timestamp maturity, Timestamp creationDate,
-			Timestamp modificationDate, AsyncCallback<NotesGeneralInformation> callback);	
+	void createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Timestamp maturity,
+			Timestamp creationDate, Timestamp modificationDate, AsyncCallback<NotesGeneralInformation> callback);	
 	
 	void createReportNotesSharingInformation(User u, AsyncCallback<NotesSharingInformation> callback);
 	

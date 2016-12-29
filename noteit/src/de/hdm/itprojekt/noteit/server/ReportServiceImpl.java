@@ -97,7 +97,7 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation(User u,  Timestamp maturity, Timestamp creationDate, Timestamp modificationDate)
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Timestamp maturity, Timestamp creationDate, Timestamp modificationDate)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
@@ -151,22 +151,53 @@ implements ReportService {
 		
 		
 		// Alle Notes aus der DB holen
-		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();
+		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();		
 		
 		 System.out.println("Size of list: " + allNotes.size());
-		 
 		 
 			if (userId != 0) {
 			// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
-					Note n = iterator.next();
+					Note user = iterator.next();
 					// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
-					if (userId != n.getUserId()) {
+					if (userId != user.getUserId()) {
 						 iterator.remove();
 						 System.out.println("Size of list after removed: " + allNotes.size());
 						}
 			 		}
-			}	 
+			}
+			
+			if (sKeywordNote != null) {
+				// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
+				 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note skn = iterator.next();
+						// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
+						
+						String content = skn.getText();
+						
+						if (content.toLowerCase().indexOf(sKeywordNote.toLowerCase()) == -1) {
+							System.out.println("found content:" + content);
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+							}
+				 		}
+				}
+			
+			if (sKeywordNotebook != null) {
+				// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
+				 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note sknb = iterator.next();
+						// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
+						
+						String content = sknb.getText();
+						
+						if (content.toLowerCase().indexOf(sKeywordNotebook.toLowerCase()) == -1) {
+							System.out.println("found content:" + content);
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+							}
+				 		}
+				}
 		 
 			if (maturity != null ) {
 				System.out.println("maturity: " +maturity);
