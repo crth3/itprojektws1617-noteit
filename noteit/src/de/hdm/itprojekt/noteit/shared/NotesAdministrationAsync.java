@@ -80,4 +80,6 @@ public interface NotesAdministrationAsync {
 
 	void getAllNotebooks(AsyncCallback<ArrayList<Notebook>> callback);
 
+	void findNotebookById(int notebookId, AsyncCallback<Notebook> callback);
+
 }
