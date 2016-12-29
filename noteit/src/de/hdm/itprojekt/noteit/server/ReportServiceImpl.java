@@ -98,12 +98,13 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Timestamp maturity, Timestamp creationDate, Timestamp modificationDate)
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Date maturity, Date creationDate, Date modificationDate)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 		
 		int userId = u.getId();
+		
 
 		NotesGeneralInformation result = new NotesGeneralInformation();
 
@@ -144,12 +145,12 @@ implements ReportService {
 		if (sKeywordNotebook != null) {
 		
 		headline.addColumn(new Column("Notebook.-ID."));
+		headline.addColumn(new Column("Notebook-Titel."));
 		
 		}
 
 		
 		headline.addColumn(new Column("Notiz.-ID."));
-		headline.addColumn(new Column("Notiz"));
 		headline.addColumn(new Column("Titel"));
 		headline.addColumn(new Column("Inhalt"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));

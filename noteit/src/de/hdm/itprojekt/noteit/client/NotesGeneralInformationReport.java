@@ -2,6 +2,7 @@ package de.hdm.itprojekt.noteit.client;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
@@ -11,6 +12,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -48,15 +50,18 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	private DateBox dbCreationDate = new DateBox();
 	private DateBox dbModificationDate = new DateBox();
 	
+
+	
 	final TextBox tbSearchNote = new TextBox();
+	final TextBox tbSearchNotebook = new TextBox();
 	private Button btnGenerate = new Button("Generate");
 	final User user = new User();
 	int userId;
 	String sKeywordNote; 
 	String sKeywordNotebook; 
-	Timestamp maturity;
-	Timestamp creationDate;
-	Timestamp modificationDate;
+	Date maturity;
+	Date creationDate;
+	Date modificationDate;
 
 		
 	public NotesGeneralInformationReport() {
@@ -89,11 +94,12 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		});
 		
 		
-		tbSearchNote.setStyleName("textbox");
-		tbSearchNote.getElement().setPropertyString("placeholder", "Suchen...");
-		tbSearchNote.setStylePrimaryName("tbSearchNote");
+		//tbSearchNote.setStyleName("textbox");
+		tbSearchNote.getElement().setPropertyString("placeholder", "Note-Titel suchen...");
+		tbSearchNotebook.getElement().setPropertyString("placeholder", "Notebook-Titel suchen...");
+		//tbSearchNote.setStylePrimaryName("tbSearchNote");
 
-		hp.add(tbSearchNote);
+
 				
 		sb = new SuggestBox(oracle);
 		
@@ -141,10 +147,60 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				NoteitCellBrowser.searchNoteByKeyword(user.getId(), event.getValue());
+				sKeywordNote =  event.getValue();
+				
+				System.out.println("skeywordnote: "+sKeywordNote);
 				
 			}
 		});
+		
+		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				sKeywordNotebook =  event.getValue();
+				
+				System.out.println("sKeywordNotebook: "+sKeywordNotebook);
+				
+			}
+		});
+		
+		dbMaturity.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				maturity =  event.getValue();
+				
+				System.out.println("maturity: "+maturity);
+				
+			}
+		});
+		
+		dbCreationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				creationDate =  event.getValue();
+				
+				System.out.println("creationDate: "+creationDate);
+				
+			}
+		});
+		
+		dbModificationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				modificationDate =  event.getValue();
+				
+				System.out.println("modificationDate: "+modificationDate);
+				
+			}
+		});
+		
+		dbMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		
 		
 		sb.getElement().setPropertyString("placeholder", "Nutzer suchen...");
@@ -152,7 +208,10 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		dbCreationDate.getElement().setPropertyString("placeholder", "Erstellungsdatum");
 		dbModificationDate.getElement().setPropertyString("placeholder", "Änderungsdatum");
 		hp.setStyleName("PanelBorder");
-		add(hp);	
+		add(hp);
+		
+		hp.add(tbSearchNote);
+		hp.add(tbSearchNotebook);
 		hp.add(sb);
 		hp.add(dbMaturity);
 		hp.add(dbCreationDate);
@@ -163,11 +222,11 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 	//------Example-------
 	
-	maturity = Timestamp.valueOf("2016-12-30 00:00:00");
+	//maturity = Timestamp.valueOf("2016-12-31 00:00:00");
 	//creationDate = Timestamp.valueOf("2016-12-14 00:00:00.0");
 	//modificationDate = Timestamp.valueOf("2016-12-22 00:00:00");
-		sKeywordNote = "Liste";
-		sKeywordNotebook = "einkauf";
+		//sKeywordNote = "Liste";
+		//sKeywordNotebook = "einkauf";
 	
 	//maturity = null;
 	//creationDate = null;
