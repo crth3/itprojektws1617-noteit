@@ -260,5 +260,6 @@ public interface NotesAdministration extends RemoteService {
 	public ArrayList<Note> findNoteByMaturity(Timestamp maturity) throws IllegalArgumentException;
 	public ArrayList<Note> findNoteByCreationDate(Timestamp creationDate) throws IllegalArgumentException;
 	public ArrayList<Note> findNoteByModificationDate(Timestamp modificationDate) throws IllegalArgumentException;
+	public ArrayList<Notebook> getAllNotebooks() throws IllegalArgumentException;
 	
 }
