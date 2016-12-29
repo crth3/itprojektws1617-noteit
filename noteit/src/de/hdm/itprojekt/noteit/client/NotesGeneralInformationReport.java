@@ -17,9 +17,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
@@ -40,6 +43,11 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	private HorizontalPanel hp = new HorizontalPanel();
 	private MultiWordSuggestOracle oracle;
 	private SuggestBox sb;
+	
+	private DateBox dbMaturity = new DateBox();
+	private DateBox dbCreationDate = new DateBox();
+	private DateBox dbModificationDate = new DateBox();
+	
 	final TextBox tbSearchNote = new TextBox();
 	private Button btnGenerate = new Button("Generate");
 	final User user = new User();
@@ -137,10 +145,16 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		});
 		
 		
-		
+		sb.getElement().setPropertyString("placeholder", "Nutzer suchen...");
+		dbMaturity.getElement().setPropertyString("placeholder", "Fälligkeit");
+		dbCreationDate.getElement().setPropertyString("placeholder", "Erstellungsdatum");
+		dbModificationDate.getElement().setPropertyString("placeholder", "Änderungsdatum");
 		hp.setStyleName("PanelBorder");
 		add(hp);	
 		hp.add(sb);
+		hp.add(dbMaturity);
+		hp.add(dbCreationDate);
+		hp.add(dbModificationDate);
 	
 	hp.add(btnGenerate);
 	
@@ -148,18 +162,19 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	//------Example-------
 	
 	maturity = Timestamp.valueOf("2016-12-30 00:00:00");
-	creationDate = Timestamp.valueOf("2016-12-05 00:00:00.0");
+//	creationDate = Timestamp.valueOf("2016-12-05 00:00:00.0");
 	//modificationDate = Timestamp.valueOf("2016-12-30 00:00:00");
 	
 	
 	//maturity = null;
 	//creationDate = null;
-	modificationDate = null;
-	
+//	modificationDate = null;
+//	
 	
 	//------Example-------
 
-		
+	RootPanel.get("content").add(contentPanel);
+	
 	
 	btnGenerate.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
@@ -175,6 +190,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 				@Override
 				public void onSuccess(NotesGeneralInformation notesGeneralInformation) {
 					// TODO Auto-generated method stub
+										
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesGeneralInformation;
 					writerreport.process(report);

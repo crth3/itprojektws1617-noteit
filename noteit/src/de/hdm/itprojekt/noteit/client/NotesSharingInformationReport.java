@@ -37,14 +37,21 @@ private ReportServiceAsync reportService = null;
 		
 static HorizontalPanel contentPanel = new HorizontalPanel();	
 private HorizontalPanel hp = new HorizontalPanel();
+private VerticalPanel vp = new VerticalPanel();
 private MultiWordSuggestOracle oracle;
 private SuggestBox sb;
 private Button btnGenerate = new Button("Generate");
 final User user = new User();
 int userId;
 
+
+public void onLoad() {
+	
+}
 	
 	public NotesSharingInformationReport() {
+		
+		
 		
 		oracle = new MultiWordSuggestOracle();
 		
@@ -74,7 +81,12 @@ int userId;
 			}
 		});
 		
+		Label lblInfo = new Label("test");
+		hp.add(lblInfo);
+		
 		sb = new SuggestBox(oracle);
+		sb.setLayoutData(ALIGN_LEFT);
+		sb.getElement().setPropertyString("placeholder", "Nutzer suchen...");
 		
 		
 		 sb.addSelectionHandler(new SelectionHandler<Suggestion>() {
@@ -140,9 +152,7 @@ int userId;
 				@Override
 				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
-					
-					//hp.clear();
-					
+														
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesSharingInformation;
 					writerreport.process(report);

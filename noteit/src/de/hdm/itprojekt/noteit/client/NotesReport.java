@@ -57,9 +57,8 @@ public class NotesReport implements EntryPoint {
 	VerticalPanel vpLeft = new VerticalPanel();
 	VerticalPanel vpRight = new VerticalPanel();
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-	
-	Button bSharing = new Button("Sharing Information");
-	Button bGeneral = new Button("General Information");
+	Button bGeneral = new Button("Allgemeine Informationen zu Notizen");
+	Button bSharing = new Button("Informationen zu Notizen und Berechtigungen");
 	
 	Label headlineLabel = new Label("NoteIt Report");
 	
@@ -96,8 +95,7 @@ public class NotesReport implements EntryPoint {
 		headlinePanel.setStylePrimaryName("headlinePanel");
 		contentPanel.setStylePrimaryName("contentPanel");
 		navPanel.setStylePrimaryName("navPanel");
-		vpLeft.setStylePrimaryName("vpLeft");
-		vpRight.setStylePrimaryName("vpRight");
+
 		
 		/*-------------Widgets-------------*/
 
@@ -111,25 +109,20 @@ public class NotesReport implements EntryPoint {
 		vpBasisPanel.setWidth("100%");
 		headlinePanel.setWidth("100%");
 		
+		bGeneral.setWidth("100%");
+		bSharing.setWidth("100%");
 		
-		navPanel.add(bSharing);
 		navPanel.add(bGeneral);
+		navPanel.add(bSharing);
 		
-		
-//		vpLeft.add(bSrhing);
-//		vpRight.add(sb2);
-
-		contentPanel.add(vpLeft);
-		contentPanel.add(vpRight);
+	
 
 			
-		RootPanel.get("Reporthead").add(vpReport);
 		RootPanel.get("Reporthead").add(vpBasisPanel);
 		
 		bSharing.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
-						
-			contentPanel.remove(1);
+			
 			contentPanel.clear();
 			NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
 			contentPanel.add(notesSharingInformation);
@@ -141,9 +134,7 @@ public class NotesReport implements EntryPoint {
 		bGeneral.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
-				contentPanel.remove(1);
 				contentPanel.clear();
-				
 				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
 				contentPanel.add(notesGeneralInformation);
 				}
@@ -155,9 +146,7 @@ public class NotesReport implements EntryPoint {
 		/**
 		 * MenuBar und Vertical Panel dem RootPanel hinzufügen
 		 */
-	
-		RootPanel.get().add(vpReport);
-		
+			
 	
 		}
 	}
