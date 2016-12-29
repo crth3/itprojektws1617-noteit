@@ -151,6 +151,7 @@ implements ReportService {
 		headline.addColumn(new Column("Notiz.-ID."));
 		headline.addColumn(new Column("Notiz"));
 		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Inhalt"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 		headline.addColumn(new Column("Erstelldatum"));
 		headline.addColumn(new Column("Modifikationsdatum"));
@@ -275,11 +276,15 @@ implements ReportService {
 		// Schleife für das hinzufügen der selektierten Notes zum Report
 		for (Note selectedNote : allNotes) {
 			
+			//aktuelles notebook objekt laden, um titel zu bekommen
+			Notebook n = this.notesAdministration.findNotebookById(selectedNote.getNotebookId());
+			
 			Row noteRow = new Row();
 			
 			if (sKeywordNotebook != null) {
 			
 			noteRow.addColumn(new Column("" + selectedNote.getNotebookId()));
+			noteRow.addColumn(new Column("" + n.getTitle()));
 
 			}
 			
