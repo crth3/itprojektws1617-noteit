@@ -166,8 +166,8 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	//maturity = Timestamp.valueOf("2016-12-30 00:00:00");
 	//creationDate = Timestamp.valueOf("2016-12-14 00:00:00.0");
 	//modificationDate = Timestamp.valueOf("2016-12-22 00:00:00");
-		sKeywordNote = "text";
-		//sKeywordNotebook = "test";
+		sKeywordNote = "Liste";
+		sKeywordNotebook = "einkauf";
 	
 	//maturity = null;
 	//creationDate = null;
