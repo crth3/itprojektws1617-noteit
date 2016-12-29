@@ -22,7 +22,7 @@ public interface ReportService extends RemoteService{
 	
 	public void init();
 	
-	public NotesGeneralInformation createReportNotesGeneralInformation(User u, Timestamp maturity, Timestamp creationDate, Timestamp modificationDate);
+	public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Timestamp maturity, Timestamp creationDate, Timestamp modificationDate);
 	public NotesSharingInformation createReportNotesSharingInformation(User u);
 
 }

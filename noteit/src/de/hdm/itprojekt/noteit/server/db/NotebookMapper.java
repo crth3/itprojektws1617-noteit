@@ -143,6 +143,49 @@ public class NotebookMapper {
 	}
 	
 	/**
+	 * Diese Methode gibt alle Notebooks, die zu einem User gehören
+	 * anhand der userId in einer Liste aus
+	 * 
+	 * @param id
+	 *            Eindeutiger Identifikator des Notebook in der Datenbank
+	 * @return Liste der Notebooks
+	 */
+	public ArrayList<Notebook> getAllNotebooks() {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Notebook> notebookList = new ArrayList<Notebook>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Notebook ");
+			
+			System.out.println("SELECT * FROM Notebook ");
+						while (rs.next()) {
+				Notebook nb = new Notebook();
+				
+				nb.setId(rs.getInt("notebookId"));
+				nb.setTitle(rs.getString("title"));
+				nb.setCreationDate(rs.getTimestamp("creationDate"));
+				nb.setUserId(rs.getInt("User_userId"));
+				
+		
+				System.out.println(rs);
+				// Notebook Objekt der Liste hinzufügen
+				notebookList.add(nb);
+			}
+			// Objekt zurückgeben
+			return notebookList;
+		}
+		// Error-Handlung
+		catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return notebookList;
+	}
+	
+	/**
 	 * Neues Notebook in der Datenbank anlegen.
 	 * 
 	 * @param nb Notebook Objekt, das in die Datenbank eingefügt werden soll
