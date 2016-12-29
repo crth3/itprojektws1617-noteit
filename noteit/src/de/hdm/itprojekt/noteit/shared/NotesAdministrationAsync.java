@@ -79,4 +79,5 @@ public interface NotesAdministrationAsync {
 	void findNoteByModificationDate(Timestamp modificationDate, AsyncCallback<ArrayList<Note>> callback);
 
 	void getAllNotebooks(AsyncCallback<ArrayList<Notebook>> callback);
+
 }
