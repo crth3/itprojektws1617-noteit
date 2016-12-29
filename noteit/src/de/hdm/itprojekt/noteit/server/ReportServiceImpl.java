@@ -2,9 +2,14 @@ package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.ibm.icu.text.DateFormat;
+import com.ibm.icu.text.SimpleDateFormat;
+import com.ibm.icu.util.BytesTrie.Iterator;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
@@ -143,55 +148,83 @@ implements ReportService {
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 
 		result.addRow(headline);
-
-		ArrayList<Note> creationDates = this.notesAdministration.findNoteByCreationDate(creationDate);
-		ArrayList<Note> modificationDates = this.notesAdministration.findNoteByModificationDate(modificationDate);
-		Timestamp expectedTimestamp;
 		
-		if (userId!= 0) {
-			ArrayList<Note> notes = this.notesAdministration.findNoteByUserId(u.getId());
-			for (Note foundedNote : notes) {
-				
-				expectedTimestamp = foundedNote.getMaturityDate();
-					
-					System.out.println("userId: " + userId);
-					System.out.println("getUserID(): " + u.getId());
-					System.out.println("maturity: " + maturity);
-					System.out.println("foundedNoteMaturity: " + foundedNote.getMaturityDate());
-					
-					
-					if(userId == u.getId() & expectedTimestamp.equals(maturity)) {
-						
-						System.out.println("ich bin drin");
-					
-						Row noteRow = new Row();
-						noteRow.addColumn(new Column("" + foundedNote.getId()));
-						noteRow.addColumn(new Column("" + foundedNote.getTitle()));
-						noteRow.addColumn(new Column("" + foundedNote.getText())); 
-						noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
-						noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
-						noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
-						result.addRow(noteRow);
-					
-					}else if(userId == u.getId() & maturity == null){
-						System.out.println("do nothing");
-						
-						Row noteRow = new Row();
-						noteRow.addColumn(new Column("" + foundedNote.getId()));
-						noteRow.addColumn(new Column("" + foundedNote.getTitle()));
-						noteRow.addColumn(new Column("" + foundedNote.getText())); 
-						noteRow.addColumn(new Column("" + foundedNote.getCreationDate()));
-						noteRow.addColumn(new Column("" + foundedNote.getModificationDate()));
-						noteRow.addColumn(new Column("" + foundedNote.getMaturityDate()));
-						result.addRow(noteRow);	
-					}
+		
+		// Alle Notes aus der DB holen
+		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();
+		
+		 System.out.println("Size of list: " + allNotes.size());
+		 
+		 
+			if (userId != 0) {
+			// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+					Note n = iterator.next();
+					// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
+					if (userId != n.getUserId()) {
+						 iterator.remove();
+						 System.out.println("Size of list after removed: " + allNotes.size());
+						}
+			 		}
+			}	 
+		 
+			if (maturity != null ) {
+				System.out.println("maturity: " +maturity);
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note m = iterator.next();
+						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						if (!m.getMaturityDate().equals(maturity)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}	
 				}
-
 			}
-	
-		return result;
-	}
+			
+			if (creationDate != null ) {
+				
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note c = iterator.next();
+						
+						
+						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						if (!c.getCreationDate().equals(creationDate)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}	
+				}
+			}
+			
+			if (modificationDate != null ) {
 
+				System.out.println("modificationDate: " +modificationDate);
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note mD = iterator.next();
+						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						if (!mD.getModificationDate().equals(modificationDate)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}
+				}
+			}
+		 	
+				
+		// Schleife für das hinzufügen der selektierten Notes zum Report
+		for (Note selectedNote : allNotes) {
+			
+			Row noteRow = new Row();
+			noteRow.addColumn(new Column("" + selectedNote.getId()));
+			noteRow.addColumn(new Column("" + selectedNote.getTitle()));
+			noteRow.addColumn(new Column("" + selectedNote.getText())); 
+			noteRow.addColumn(new Column("" + selectedNote.getCreationDate()));
+			noteRow.addColumn(new Column("" + selectedNote.getModificationDate()));
+			noteRow.addColumn(new Column("" + selectedNote.getMaturityDate()));
+			result.addRow(noteRow);	
+			
+		}	
+			return result;
+		}
+
+	
 	@Override
 	public NotesSharingInformation createReportNotesSharingInformation(User u) 
 			throws IllegalArgumentException {
