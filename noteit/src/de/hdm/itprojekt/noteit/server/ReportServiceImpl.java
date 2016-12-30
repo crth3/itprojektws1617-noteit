@@ -15,6 +15,7 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.NotePermission;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 import de.hdm.itprojekt.noteit.shared.report.Column;
 import de.hdm.itprojekt.noteit.shared.report.NotesGeneralInformation;
@@ -97,12 +98,13 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation(User u,  Timestamp maturity, Timestamp creationDate, Timestamp modificationDate)
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Date maturity, Date creationDate, Date modificationDate)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
 		
 		int userId = u.getId();
+		
 
 		NotesGeneralInformation result = new NotesGeneralInformation();
 
@@ -139,34 +141,77 @@ implements ReportService {
 		 * Ab hier erfolgt ein zeilenweises hinzufügen von Notiz-Informationen.
 		 */
 		Row headline = new Row();
+		
+		if (sKeywordNotebook != null) {
+		
+		headline.addColumn(new Column("Notebook.-ID."));
+		headline.addColumn(new Column("Notebook-Titel."));
+		
+		}
 
+		
 		headline.addColumn(new Column("Notiz.-ID."));
-		headline.addColumn(new Column("Notiz"));
 		headline.addColumn(new Column("Titel"));
+		headline.addColumn(new Column("Inhalt"));
+		headline.addColumn(new Column("Fälligkeitsdatum"));
 		headline.addColumn(new Column("Erstelldatum"));
 		headline.addColumn(new Column("Modifikationsdatum"));
-		headline.addColumn(new Column("Fälligkeitsdatum"));
 
 		result.addRow(headline);
 		
 		
 		// Alle Notes aus der DB holen
-		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();
+		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();		
+		ArrayList<Notebook> allNotebooks = this.notesAdministration.getAllNotebooks();	
 		
 		 System.out.println("Size of list: " + allNotes.size());
-		 
 		 
 			if (userId != 0) {
 			// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
-					Note n = iterator.next();
+					Note user = iterator.next();
 					// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
-					if (userId != n.getUserId()) {
+					if (userId != user.getUserId()) {
 						 iterator.remove();
 						 System.out.println("Size of list after removed: " + allNotes.size());
 						}
 			 		}
-			}	 
+			}
+			
+			if (sKeywordNote != null) {
+				// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
+				 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note skn = iterator.next();
+						// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
+						
+						String content = skn.getTitle();
+						
+						if (content.toLowerCase().indexOf(sKeywordNote.toLowerCase()) == -1) {
+							System.out.println("found content:" + content);
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+							}
+				 		}
+				}
+			
+			// checken welches Notebook, den gewünschten Titel enthält, wenn nicht aus ArrayList löschen.
+			if (sKeywordNotebook != null) {
+				// Schleife die Objekte aus der allNotes-ArrayList löscht, wenn diese nicht mit den Kriterien übereinstimmen
+				 for (java.util.Iterator<Notebook> iterator = allNotebooks.iterator(); iterator.hasNext();  ) {
+						Notebook sknb = iterator.next();
+						// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
+						
+						String content = sknb.getTitle();
+						
+						if (content.toLowerCase().indexOf(sKeywordNotebook.toLowerCase()) == -1) {
+							System.out.println("found content:" + content);
+							 iterator.remove();
+							 System.out.println("Size of NotebookList after removed: " + allNotebooks.size());
+							}
+				 		}
+				 
+				 
+				}
 		 
 			if (maturity != null ) {
 				System.out.println("maturity: " +maturity);
@@ -186,7 +231,7 @@ implements ReportService {
 						Note c = iterator.next();
 						
 						
-						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
 						if (!c.getCreationDate().equals(creationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
@@ -199,7 +244,7 @@ implements ReportService {
 				System.out.println("modificationDate: " +modificationDate);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note mD = iterator.next();
-						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
 						if (!mD.getModificationDate().equals(modificationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
@@ -207,17 +252,49 @@ implements ReportService {
 				}
 			}
 		 	
+			
+			// Notes die nicht das gewünschte Suchwort nach Notizbuchtiteln erhalten, löschen
+			 for (Notebook foundedNotebook : allNotebooks) {
+				 
+				 System.out.println("founded Notebook-ID: " +foundedNotebook.getId());
+				 
+				 if (sKeywordNotebook != null) {
+				
+				 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note nb = iterator.next();
+						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						 System.out.println("nb getNotebookId: " +nb.getNotebookId());
+						if (nb.getNotebookId() != foundedNotebook.getId()) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}	
+				} 
+				 
+			} 
+			 }
+			
 				
 		// Schleife für das hinzufügen der selektierten Notes zum Report
 		for (Note selectedNote : allNotes) {
 			
+			//aktuelles notebook objekt laden, um titel zu bekommen
+			Notebook n = this.notesAdministration.findNotebookById(selectedNote.getNotebookId());
+			
 			Row noteRow = new Row();
+			
+			if (sKeywordNotebook != null) {
+			
+			noteRow.addColumn(new Column("" + selectedNote.getNotebookId()));
+			noteRow.addColumn(new Column("" + n.getTitle()));
+
+			}
+			
 			noteRow.addColumn(new Column("" + selectedNote.getId()));
 			noteRow.addColumn(new Column("" + selectedNote.getTitle()));
 			noteRow.addColumn(new Column("" + selectedNote.getText())); 
+			noteRow.addColumn(new Column("" + selectedNote.getMaturityDate()));
 			noteRow.addColumn(new Column("" + selectedNote.getCreationDate()));
 			noteRow.addColumn(new Column("" + selectedNote.getModificationDate()));
-			noteRow.addColumn(new Column("" + selectedNote.getMaturityDate()));
 			result.addRow(noteRow);	
 			
 		}	

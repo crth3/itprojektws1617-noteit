@@ -669,6 +669,20 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return this.nMapper.findNotesByModificationDate(modificationDate);
 	}
+
+	@Override
+	public ArrayList<Notebook> getAllNotebooks() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.nbMapper.getAllNotebooks();
+	}
+
+	@Override
+	public Notebook findNotebookById(int notebookId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return this.nbMapper.findById(notebookId);	
+		
+	}
+	
 	
 
 }
