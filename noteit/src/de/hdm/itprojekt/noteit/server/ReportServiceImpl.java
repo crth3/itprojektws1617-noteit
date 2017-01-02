@@ -94,6 +94,11 @@ implements ReportService {
 	}
 	
 	
+	public static Timestamp getTimestamp(Date date) { 
+		return date == null ? null : new java.sql.Timestamp(date.getTime()); 
+		}
+
+	
 	/**
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
@@ -104,6 +109,11 @@ implements ReportService {
 			return null;
 		
 		int userId = u.getId();
+		
+		//-------------------- convert date to Timestamp ---------------------------
+		Timestamp tMaturity = getTimestamp(maturity);
+		Timestamp tCreationDate = getTimestamp(creationDate);
+		Timestamp tModificationDate = getTimestamp(modificationDate);
 		
 
 		NotesGeneralInformation result = new NotesGeneralInformation();
@@ -213,39 +223,40 @@ implements ReportService {
 				 
 				}
 		 
-			if (maturity != null ) {
-				System.out.println("maturity: " +maturity);
+			if (tMaturity != null ) {
+				System.out.println("maturity: " +tMaturity);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note m = iterator.next();
 						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
-						if (!m.getMaturityDate().equals(maturity)) {
+						if (!m.getMaturityDate().equals(tMaturity)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}	
 				}
 			}
 			
-			if (creationDate != null ) {
-				
+			if (tCreationDate != null ) {
+				System.out.println("creationDate: " +tCreationDate);
+
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note c = iterator.next();
 						
 						
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
-						if (!c.getCreationDate().equals(creationDate)) {
+						if (!c.getCreationDate().equals(tCreationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}	
 				}
 			}
 			
-			if (modificationDate != null ) {
+			if (tModificationDate != null ) {
 
-				System.out.println("modificationDate: " +modificationDate);
+				System.out.println("modificationDate: " +tModificationDate);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note mD = iterator.next();
 						// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
-						if (!mD.getModificationDate().equals(modificationDate)) {
+						if (!mD.getModificationDate().equals(tModificationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}
