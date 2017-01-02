@@ -143,6 +143,8 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	        
 	    });
 		
+		//-------------------- Value Change Handler's for search box ---------------------------
+
 		tbSearchNote.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 			@Override
@@ -198,11 +200,13 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 			}
 		});
 		
+		//-------------------- set DateBox Format ---------------------------
 		dbMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		dbCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		dbModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		
-		
+		//-------------------- set Placeholder ---------------------------
+
 		sb.getElement().setPropertyString("placeholder", "Nutzer suchen...");
 		dbMaturity.getElement().setPropertyString("placeholder", "Fälligkeit");
 		dbCreationDate.getElement().setPropertyString("placeholder", "Erstellungsdatum");
@@ -219,21 +223,6 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 	hp.add(btnGenerate);
 	
-	
-	//------Example-------
-	
-	//maturity = Timestamp.valueOf("2016-12-31 00:00:00");
-	//creationDate = Timestamp.valueOf("2016-12-14 00:00:00.0");
-	//modificationDate = Timestamp.valueOf("2016-12-22 00:00:00");
-		//sKeywordNote = "Liste";
-		//sKeywordNotebook = "einkauf";
-	
-	//maturity = null;
-	//creationDate = null;
-//	modificationDate = null;
-//	
-	
-	//------Example-------
 
 	RootPanel.get("content").add(contentPanel);
 	

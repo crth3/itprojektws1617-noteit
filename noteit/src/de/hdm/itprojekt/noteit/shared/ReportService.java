@@ -1,6 +1,5 @@
 package de.hdm.itprojekt.noteit.shared;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -23,7 +22,7 @@ public interface ReportService extends RemoteService{
 	
 	public void init();
 	
-	NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook,
+	public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook,
 			Date maturity, Date creationDate, Date modificationDate);
 	public NotesSharingInformation createReportNotesSharingInformation(User u);
 
