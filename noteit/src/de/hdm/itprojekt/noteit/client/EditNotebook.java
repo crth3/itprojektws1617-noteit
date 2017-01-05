@@ -177,6 +177,7 @@ public class EditNotebook extends VerticalPanel {
 									}else{
 										Window.alert("Der Nutzer mit der E-Mail `"+ tbNotebookShareMail.getText()+"` wurde nicht gefunden" );
 									}
+									
 								}
 
 								@Override
