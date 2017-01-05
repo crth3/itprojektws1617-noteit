@@ -74,8 +74,8 @@ public class EditNotebook extends VerticalPanel {
 
 	// modificationdate
 
-	@Override
-	protected void onLoad() {
+	protected void run() {
+		rootLogger.log(Level.SEVERE, "EditNotebook KLASSE");
 		
 		hpEditNotebook.setWidth("600px");
 		hpButtons.setWidth("300px");
@@ -223,8 +223,9 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				rootLogger.log(Level.SEVERE, "Button Event");
 				if (tbNotebookTitel.getText().length() > 0) {
-					
+					rootLogger.log(Level.SEVERE, "Button Event11");
 					notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(),
 							new AsyncCallback<Notebook>() {
 
@@ -238,7 +239,9 @@ public class EditNotebook extends VerticalPanel {
 								public void onSuccess(Notebook result) {
 									// TODO get all notebooks by user ID
 									lblHeaderTitel.setText(tbNotebookTitel.getText());
+									rootLogger.log(Level.SEVERE, "NB Speicher Button");
 									NoteitCellBrowser.getNotebookList(result);
+									
 								}
 							});
 				}else{

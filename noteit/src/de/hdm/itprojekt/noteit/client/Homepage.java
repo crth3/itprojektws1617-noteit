@@ -51,7 +51,8 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navRightPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
-	final static VerticalPanel editNotebook = new EditNotebook();
+	static VerticalPanel editNotebook = new EditNotebook();
+
 	
 	
 	
@@ -87,6 +88,9 @@ public class Homepage extends VerticalPanel {
 	
 
 	public void onLoad() {
+		((EditNotebook) editNotebook).run();
+		((ShowNote) showNote).run();
+		
 		getCurrentUser();
 		//CellBrowser
 				TreeViewModel model = new NoteitCellBrowser();
@@ -416,8 +420,10 @@ public class Homepage extends VerticalPanel {
 	
 	public static void editNotebookView(){
 		contentPanel.remove(1);
-		EditNotebook editNotebookView = new EditNotebook();
-		contentPanel.add(editNotebookView);
+		//EditNotebook editNotebookView = new EditNotebook();
+		contentPanel.add(editNotebook);
+		rootLogger.log(Level.SEVERE, "WIDGET");
+		
 	}
 	public static void showNoteView(){
 		contentPanel.remove(1);

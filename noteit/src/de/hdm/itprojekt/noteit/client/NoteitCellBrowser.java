@@ -223,8 +223,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 	
 	public static void getNotebookList(Notebook notebook){
-		
+		rootLogger.log(Level.SEVERE, "getNotebookList Methode");
 		notebooksListDataProvider.getList().add(notebook);
+		//notebooksListDataProvider.refresh();
 	}
 	public static void getNoteList(Note note){
 		notesListDataProvider.getList().add(note);
