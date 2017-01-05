@@ -121,8 +121,7 @@ implements ReportService {
 
 		result
 				.setTitle("Informationen über Titeln von Notizbüchern und Notizen, sowie "
-						+ "Erstell-, Modifikations-, und Fälligkeitsdaten,");
-
+						+ "Erstell-, Modifikations-, und Fälligkeitsdaten");
 		this.addImprint(result);
 
 		result.setCreated(new Date());
@@ -155,13 +154,13 @@ implements ReportService {
 		
 		if (sKeywordNotebook != null) {
 		
-		headline.addColumn(new Column("Notebook.-ID."));
-		headline.addColumn(new Column("Notebook-Titel."));
+		headline.addColumn(new Column("Notizbuch-ID"));
+		headline.addColumn(new Column("Notizbuch-Titel"));
 		
 		}
 
 		
-		headline.addColumn(new Column("Notiz.-ID."));
+		headline.addColumn(new Column("Notiz-ID"));
 		headline.addColumn(new Column("Titel"));
 		headline.addColumn(new Column("Inhalt"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
