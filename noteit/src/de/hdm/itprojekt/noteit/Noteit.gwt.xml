@@ -19,7 +19,7 @@
 <!-- add logging module -->
 <inherits name="com.google.gwt.logging.Logging"/>  
 <set-property name="gwt.logging.logLevel" value="SEVERE"/>  
-<set-property name="gwt.logging.enabled" value="FALSE"/>  
+<set-property name="gwt.logging.enabled" value="TRUE"/>  
 
   <!-- Other module inherits                                      -->
 

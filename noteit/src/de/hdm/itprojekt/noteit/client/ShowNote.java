@@ -82,8 +82,7 @@ public class ShowNote extends VerticalPanel {
 
 	// modificationdate
 
-	@Override
-	protected void onLoad() {
+	protected void run() {
 
 		vpLeft.setWidth("300px");
 		vpRight.setWidth("300px");
