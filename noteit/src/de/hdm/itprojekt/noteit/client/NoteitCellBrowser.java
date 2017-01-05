@@ -24,6 +24,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SetSelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
@@ -48,7 +49,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	private Notebook firstNotebook = new Notebook();
 
-	private final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
+	private static final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 
 	private static Logger rootLogger = Logger.getLogger("");
@@ -203,8 +204,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 
 	public static void deleteNotebook() {
-		notebooksListDataProvider.getList().remove(selectedNotebook.getId());
-
+		int newID = selectedNotebook.getId();
+		newID--;
+		Window.alert("neue id "+newID);
+		notebooksListDataProvider.getList().remove(selectedNotebook);
+		selectedNotebook.setId(newID);
+		selectionModelNotebook.setSelected(selectedNotebook, true);
 	}
 
 	public static void addNote() {
@@ -234,7 +239,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	public static void deleteNote() {
 		notesListDataProvider.getList().remove(selectedNote.getId());
-
+		
+		
 	}
+
 
 }
