@@ -656,28 +656,6 @@ public class NoteMapper {
 						+"';");  
 			}
 			
-			// Prüfen ob Verbindung zu NotePermission besteht, löschen wenn bestehend
-						ResultSet rs2 = stmt.executeQuery("SELECT * FROM NotePermission WHERE Note_noteId = '" + n.getId() +"';");
-						if(rs2.next()) {
-							
-							System.out.println("DELETE FROM NotePermission WHERE "
-									+ "Note_noteId = '" 
-									+ n.getId()
-									+ "'"
-									+ "AND "
-									+ "User_userId = '"
-									+ n.getUserId()
-									+"';");
-							
-							stmt.executeUpdate("DELETE FROM NotePermission WHERE "
-									+ "Note_noteId = '" 
-									+ n.getId()
-									+ "'"
-									+ "AND "
-									+ "User_userId = '"
-									+ n.getUserId()
-									+"';");
-						}
 					
 			// Note löschen - SQL Query ausführen
 			
