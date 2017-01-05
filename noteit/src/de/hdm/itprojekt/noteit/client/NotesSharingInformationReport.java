@@ -36,10 +36,19 @@ private final static NotesAdministrationAsync notesAdministration = GWT.create(N
 private ReportServiceAsync reportService = null;
 		
 static HorizontalPanel contentPanel = new HorizontalPanel();	
-private HorizontalPanel hp = new HorizontalPanel();
-private VerticalPanel vp = new VerticalPanel();
+private HorizontalPanel hpSearchPanel = new HorizontalPanel();
+private VerticalPanel vpSearchUser = new VerticalPanel();
+private VerticalPanel vpReport = new VerticalPanel();
+private VerticalPanel vpGenerate = new VerticalPanel();
+
 private MultiWordSuggestOracle oracle;
 private SuggestBox sb;
+
+Label lblSearchUser = new Label("Nutzersuche");
+
+//TODO Label ersetzen
+Label lblGenerate = new Label("Suchen...");
+
 private Button btnGenerate = new Button("Generate");
 final User user = new User();
 int userId;
@@ -81,12 +90,9 @@ public void onLoad() {
 			}
 		});
 		
-		Label lblInfo = new Label("test");
-		hp.add(lblInfo);
 		
 		sb = new SuggestBox(oracle);
 		sb.setLayoutData(ALIGN_LEFT);
-		sb.getElement().setPropertyString("placeholder", "Nutzer suchen...");
 		
 		
 		 sb.addSelectionHandler(new SelectionHandler<Suggestion>() {
@@ -128,12 +134,19 @@ public void onLoad() {
 		        }
 		    });
 
+		vpSearchUser.add(lblSearchUser);
+		vpSearchUser.add(sb);
 		
-		hp.setStyleName("PanelBorder");
-		add(hp);
-		add(contentPanel);
-		hp.add(sb);
-		hp.add(btnGenerate);
+		vpGenerate.add(lblGenerate);
+		vpGenerate.add(btnGenerate);
+		
+		hpSearchPanel.add(vpSearchUser);
+		hpSearchPanel.add(vpGenerate);
+		 
+		 
+
+		add(hpSearchPanel);
+		add(vpReport);
 	
 	
 	btnGenerate.addClickHandler(new ClickHandler() {
@@ -152,11 +165,12 @@ public void onLoad() {
 				@Override
 				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
-														
+					vpReport.clear();
+					
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesSharingInformation;
 					writerreport.process(report);
-					add(new HTML(writerreport.getReportText()));
+					vpReport.add(new HTML(writerreport.getReportText()));
 					
 				}
 			});
