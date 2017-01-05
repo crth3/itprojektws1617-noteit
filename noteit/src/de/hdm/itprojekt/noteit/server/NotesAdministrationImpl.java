@@ -2,11 +2,17 @@ package de.hdm.itprojekt.noteit.server;
 
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.time.DateUtils;
+
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.ibm.icu.text.SimpleDateFormat;
 
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
@@ -35,8 +41,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	Notebook nb;
 
 	private static final Logger log = Logger.getLogger(NotesAdministrationImpl.class.getName());
-
-	private Timestamp ts = new Timestamp(System.currentTimeMillis());
+	
+	
+	Timestamp ts = new Timestamp(System.currentTimeMillis());
+	
 
 	public void init() {
 		this.uMapper = UserMapper.userMapper();
@@ -52,7 +60,9 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		return "Hello, ";
 	}
+	
 
+	
 	/**
 	 * Standard Konstruktor
 	 * 
@@ -160,9 +170,13 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	 */
 	@Override
 	public Notebook createNotebook(String title, User creator) throws IllegalArgumentException {
+		
+		ts.setHours(0);
+		ts.setMinutes(0);
+		ts.setSeconds(0);
+		ts.setNanos(0);
 
 		
-		System.out.println("CreateNotebook user "+ ts);
 		nb = new Notebook();
 		nb.setUserId(creator.getId());
 		nb.setTitle(title);
@@ -292,10 +306,20 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	@Override
 	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source, int notebookID)
 			throws IllegalArgumentException {
+		
+		
+		
+		ts.setHours(0);
+		ts.setMinutes(0);
+		ts.setSeconds(0);
+		ts.setNanos(0);
 
 		System.out.println("User: "+ u);
 		System.out.println("UserID: "+u.getId());
-		ts.getTime();
+		System.out.println("Fälligkeitsdatum: "+maturity);
+		//System.out.println("DATE Parameter: "+today);
+		System.out.println("TIMESTAMP: "+ts);
+		//ts.getTime();
 		Note note = new Note();
 		note.setTitle(title);
 		note.setSubTitle(subtitle);
@@ -313,6 +337,12 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source, int notebookID, int noteID)
 			throws IllegalArgumentException {
 		System.out.println("ablaufdatum: " +maturity);
+		
+		ts.setHours(0);
+		ts.setMinutes(0);
+		ts.setSeconds(0);
+		ts.setNanos(0);
+		
 		Note note = new Note();
 		// note.setCreator(creatorID); //Int oder Objekt?
 		note.setId(noteID);
