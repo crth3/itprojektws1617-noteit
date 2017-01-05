@@ -233,16 +233,18 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		Logger logger = Logger.getLogger("NameOfYourLogger");
 		logger.log(Level.SEVERE, "in deleteNotebook");
 		
-		System.out.println("notebookID" + notebookID);
+		System.out.println("notebookID: " + notebookID);
 		
 		ArrayList<NotebookPermission> notebookPermissions = this.nbpMapper
 				.findNotebookPermissionByNotebookId(notebookID);
-		Notebook currentNotebook = new Notebook();
-		currentNotebook = this.nbMapper.findById(notebookID);
+		Notebook currentNotebook = this.nbMapper.findById(notebookID);
+		System.out.println("current notebook objekt: " + currentNotebook.getTitle());
+		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
+		System.out.println("current Notebook title: "+ currentNotebook.getTitle());
 		System.out.println("current Notebook.getUserId: " +currentNotebook.getUserId());
 		System.out.println("übergebene UserID: " + userID);
-		ArrayList<Note> allNotesByNotebookID = this.nMapper.findNotesByNotebookId(notebookID);
-
+		
+		System.out.println("notes list länge " + allNotesByNotebookID.size());
 		try {
 			// Wenn der selbe derdas Notebookerstellt hat, es löschen möchte
 			if (currentNotebook.getUserId() == userID) { 
