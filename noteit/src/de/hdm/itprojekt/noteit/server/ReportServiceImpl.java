@@ -1,6 +1,7 @@
 package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -8,7 +9,6 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.ibm.icu.text.DateFormat;
-import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.util.BytesTrie.Iterator;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
@@ -41,6 +41,7 @@ implements ReportService {
 	private String sPermissionReadWrite = "Lesen & Schreiben";
 	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
 	private int noteId;
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
 	 * No Argument Kontstruktor
@@ -92,12 +93,12 @@ implements ReportService {
 
 		r.setImprint(imprint);
 	}
-	
+		
 	
 	public static Timestamp getTimestamp(Date date) { 
 		return date == null ? null : new java.sql.Timestamp(date.getTime()); 
 		}
-
+	
 	
 	/**
 	 * Method to get a <code>Report</code> Object of all Notes by a user
@@ -227,11 +228,15 @@ implements ReportService {
 				System.out.println("maturity: " +tMaturity);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note m = iterator.next();
-						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
-						if (!m.getMaturityDate().equals(tMaturity)) {
+					//Null-Objekte löschen
+						if(m.getMaturityDate() == null) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
-						}	
+								// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+						} else if (!m.getMaturityDate().equals(tMaturity)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}
 				}
 			}
 			
@@ -255,8 +260,12 @@ implements ReportService {
 				System.out.println("modificationDate: " +tModificationDate);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note mD = iterator.next();
-						// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
-						if (!mD.getModificationDate().equals(tModificationDate)) {
+						//Null-Objekte löschen
+						if (mD.getModificationDate() == null) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
+						} else if (!mD.getModificationDate().equals(tModificationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}
@@ -300,12 +309,63 @@ implements ReportService {
 
 			}
 			
+			// Timestamp in Date umwandeln
+			Timestamp tsMaturity = selectedNote.getMaturityDate();			
+			Timestamp tsCreationDate = selectedNote.getCreationDate();		
+			Timestamp tsModificationdate = selectedNote.getModificationDate();			
+			
+			Date dateMaturity = tsMaturity;
+			Date dateCreationDate = tsMaturity;
+			Date dateModificationDate = tsMaturity;
+			
+			String stringMaturityDate = null;
+			String stringCreationDate= null;
+			String stringModificationDate = null;
+			
+			
+			
 			noteRow.addColumn(new Column("" + selectedNote.getId()));
 			noteRow.addColumn(new Column("" + selectedNote.getTitle()));
 			noteRow.addColumn(new Column("" + selectedNote.getText())); 
-			noteRow.addColumn(new Column("" + selectedNote.getMaturityDate()));
-			noteRow.addColumn(new Column("" + selectedNote.getCreationDate()));
-			noteRow.addColumn(new Column("" + selectedNote.getModificationDate()));
+			
+			if (dateMaturity != null) {
+				
+				// Date Format anpassen
+				stringMaturityDate = dateFormat.format(dateMaturity);
+				
+				//neues Date Format dem Report hinzufügen
+				noteRow.addColumn(new Column("" + stringMaturityDate));
+				
+			}else {
+				noteRow.addColumn(new Column("-" ));
+			}
+			
+			
+			if (dateCreationDate != null) {
+				
+				// Date Format anpassen
+				stringCreationDate = dateFormat.format(dateCreationDate);
+				
+				//neues Date Format dem Report hinzufügen
+				noteRow.addColumn(new Column("" + stringCreationDate));	
+				
+			}else {
+				noteRow.addColumn(new Column("-" ));
+			}
+			
+			if (dateModificationDate != null) {
+				
+				// Date Format anpassen
+				stringModificationDate = dateFormat.format(dateModificationDate);
+				
+				//neues Date Format dem Report hinzufügen
+				noteRow.addColumn(new Column("" + stringModificationDate));
+				
+			}else {
+				noteRow.addColumn(new Column("-" ));
+			}
+			
+			
 			result.addRow(noteRow);	
 			
 		}	
