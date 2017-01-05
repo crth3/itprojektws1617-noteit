@@ -234,7 +234,7 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser(), null, currentNote.getNotebookId(),
+								timestampe, Homepage.getCurrentUser(), null, Homepage.selectedNotebook.getId(),
 								new AsyncCallback<Note>() {
 
 									@Override
