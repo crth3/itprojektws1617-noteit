@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -58,6 +59,7 @@ public class Homepage extends VerticalPanel {
 	
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
+	
 
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("NotizbÃ¼cher");
@@ -84,6 +86,10 @@ public class Homepage extends VerticalPanel {
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
+
+	private static final ScheduledCommand Developer = null;
+
+
 	
 	
 
@@ -120,6 +126,7 @@ public class Homepage extends VerticalPanel {
 						settings.setGlassEnabled(true);
 					}
 				};
+				
 				Command logout = new Command() {
 					public void execute() {
 						Noteit.loginInfo.getLogoutUrl();
@@ -128,8 +135,15 @@ public class Homepage extends VerticalPanel {
 					}
 				};
 				
+				Command showHTML = new Command() {
+					public void execute() {
+						showHTML();
+					}
+				};
+				
 				MenuBar settings = new MenuBar(true);
 			    settings.addItem("Profil", settingDialog);
+			    settings.addItem("Developer", showHTML);
 			    settings.addItem("Abmelden", logout);
 				MenuBar menu = new MenuBar();
 			    menu.addItem(currentUser.getFirstName(), settings);
@@ -429,6 +443,10 @@ public class Homepage extends VerticalPanel {
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
 		
+	}
+	public static void showHTML(){
+		Window.alert("Fügen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gewünschten Website ein\n\n  "
+				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
 
