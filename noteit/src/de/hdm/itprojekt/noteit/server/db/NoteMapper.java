@@ -409,47 +409,101 @@ public class NoteMapper {
 				stmt = con.createStatement();
 				// SQL Query ausführen um Datensatz in DB zu schreiben
 				// Console - Ausgabe SQL Befehl
-				System.out
-						.println("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
-								+ "VALUES ('"
-								+ n.getId()
-								+ "', '"
-								+ n.getTitle()
-								+ "', '"
-								+ n.getSubTitle()
-								+ "', '"
-								+ n.getText()
-								+ "', '"
-								+ n.getMaturityDate()
-								+ "', '"
-								+ n.getCreationDate()
-								+ "', '"
-								+ n.getUserId()
-								+ "', '"
-								+ n.getNotebookId()
-								+ "');");
+				
+				if(n.getMaturityDate() != null) {
+					
+					
+					System.out.println("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
+							+ "VALUES ('"
+							+ n.getId()
+							+ "', '"
+							+ n.getTitle()
+							+ "', '"
+							+ n.getSubTitle()
+							+ "', '"
+							+ n.getText()
+							+ "', '"
+							+ n.getMaturityDate()
+							+ "', '"
+							+ n.getCreationDate()
+							+ "', '"
+							+ n.getUserId()
+							+ "', '"
+							+ n.getNotebookId()
+							+ "');");
+					
+					stmt.executeUpdate("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
+							+ "VALUES ('"
+							+ n.getId()
+							+ "', '"
+							+ n.getTitle()
+							+ "', '"
+							+ n.getSubTitle()
+							+ "', '"
+							+ n.getText()
+							+ "', '"
+							+ n.getMaturityDate()
+							+ "', '"
+							+ n.getCreationDate()
+							+ "', '"
+							+ n.getUserId()
+							+ "', '"
+							+ n.getNotebookId()
+							+ "');");
 
+				}
+				
+				if(n.getMaturityDate() == null) {
+					
+					
+					System.out.println("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
+							+ "VALUES ('"
+							+ n.getId()
+							+ "', '"
+							+ n.getTitle()
+							+ "', '"
+							+ n.getSubTitle()
+							+ "', '"
+							+ n.getText()
+							+ "', "
+							+ n.getMaturityDate()
+							+ ", '"
+							+ n.getCreationDate()
+							+ "', '"
+							+ n.getUserId()
+							+ "', '"
+							+ n.getNotebookId()
+							+ "');");
+					
+					
+					
+					stmt.executeUpdate("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
+							+ "VALUES ('"
+							+ n.getId()
+							+ "', '"
+							+ n.getTitle()
+							+ "', '"
+							+ n.getSubTitle()
+							+ "', '"
+							+ n.getText()
+							+ "', "
+							+ n.getMaturityDate()
+							+ ", '"
+							+ n.getCreationDate()
+							+ "', '"
+							+ n.getUserId()
+							+ "', '"
+							+ n.getNotebookId()
+							+ "');");
+					
+					
+				}
+					
+					
+				}
 		
-				stmt.executeUpdate("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
-						+ "VALUES ('"
-						+ n.getId()
-						+ "', '"
-						+ n.getTitle()
-						+ "', '"
-						+ n.getSubTitle()
-						+ "', '"
-						+ n.getText()
-						+ "', '"
-						+ n.getMaturityDate()
-						+ "', '"
-						+ n.getCreationDate()
-						+ "', '"
-						+ n.getUserId()
-						+ "', '"
-						+ n.getNotebookId()
-						+ "');");
 
-			}
+			
 		}
 		// Error Handling
 		catch (SQLException e) {
@@ -474,7 +528,9 @@ public class NoteMapper {
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-	
+			
+			
+			if(n.getMaturityDate() != null) {
 			System.out.println("UPDATE Note SET "
 					+ "title = '"
 					+ n.getTitle() 
@@ -513,6 +569,52 @@ public class NoteMapper {
 					+ "' "
 					+" WHERE noteId=" 
 					+ n.getId());
+			
+			}
+			
+			
+			if(n.getMaturityDate() == null) {
+				System.out.println("UPDATE Note SET "
+						+ "title = '"
+						+ n.getTitle() 
+						+ "',"
+						+ "subtitle = '"
+						+ n.getSubTitle() 
+						+ "',"
+						+ "content = '"
+						+ n.getText() 
+						+ "',"
+						+ "maturity = "
+						+ n.getMaturityDate() 
+						+ ","
+						+ "modificationDate = '"
+						+ n.getModificationDate() 
+						+ "' "
+						+" WHERE noteId=" 
+						+ n.getId());
+				
+
+				stmt.executeUpdate("UPDATE Note SET "
+						+ "title = '"
+						+ n.getTitle() 
+						+ "',"
+						+ "subtitle = '"
+						+ n.getSubTitle() 
+						+ "',"
+						+ "content = '"
+						+ n.getText() 
+						+ "',"
+						+ "maturity = "
+						+ n.getMaturityDate() 
+						+ ","
+						+ "modificationDate = '"
+						+ n.getModificationDate() 
+						+ "' "
+						+" WHERE noteId=" 
+						+ n.getId());
+				
+				}
+			
 			
 		}
 		
