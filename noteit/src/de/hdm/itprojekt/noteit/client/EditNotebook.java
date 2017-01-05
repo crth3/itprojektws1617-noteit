@@ -58,6 +58,7 @@ public class EditNotebook extends VerticalPanel {
 	static TextBox tbNotebookShareMail = new TextBox();
 
 	static Button btnNotebookSave = new Button("Speichern");
+	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("+");
 	static Button btnDeletePermission = new Button("x");
 	static CellList<User> clUser = new UserCellList().createUserCellList();
@@ -135,6 +136,7 @@ public class EditNotebook extends VerticalPanel {
 
 
 		hpButtons.add(btnNotebookSave);
+		hpButtons.add(btnNotebookDelete);
 
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
@@ -247,6 +249,29 @@ public class EditNotebook extends VerticalPanel {
 				}else{
 					Window.alert("Bitte vergebe einen Titel für dien Notizbuch");
 				}
+			}
+		});
+		
+		btnNotebookDelete.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			
+				notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(), new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						NoteitCellBrowser.deleteNotebook();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
 			}
 		});
 		
