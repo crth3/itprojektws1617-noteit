@@ -101,7 +101,8 @@ public class Noteit implements EntryPoint {
 	
 	
 	public void onModuleLoad() {
-		String value_URL = Window.Location.getParameter("URL");
+		
+		String value_URL = Window.Location.getParameter("url");
 		
 		currentUser.setId(1);
 		currentUser.setFirstName("Max");
