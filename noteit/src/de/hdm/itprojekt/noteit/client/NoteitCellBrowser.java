@@ -50,7 +50,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private Notebook firstNotebook = new Notebook();
 
 	private static final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
-	private final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
+	private static final  NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 
 	private static Logger rootLogger = Logger.getLogger("");
 
@@ -132,9 +132,10 @@ public class NoteitCellBrowser implements TreeViewModel {
 			return new DefaultNodeInfo<Note>(notesListDataProvider, new NoteCell(), selectionModelNote, null);
 		} else if (value instanceof Note) {
 
-			// selectionModelNote.setSelected(selectionModelNote.getSelectedObject(),
-			// true);
-			// ShowNote.setNote(selectionModelNote.getLastSelectedObject());
+			selectedNote = selectionModelNote.getLastSelectedObject();
+
+			
+			
 			if (((Note) value).getId() != 0) {
 				ShowNote.getAllPermittedUsersbyNoteID(selectionModelNote.getLastSelectedObject().getId());
 				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
@@ -227,6 +228,15 @@ public class NoteitCellBrowser implements TreeViewModel {
 		}
 	}
 	
+	public static void deleteNote() {
+		int newId = selectedNote.getId();
+		newId--;
+		Window.alert("neue id "+newId);
+		notesListDataProvider.getList().remove(selectedNote);
+		selectedNote.setId(newId);
+		selectionModelNote.setSelected(selectedNote, true);
+	}
+	
 	public static void getNotebookList(Notebook notebook){
 		rootLogger.log(Level.SEVERE, "getNotebookList Methode");
 		notebooksListDataProvider.getList().add(notebook);
@@ -237,11 +247,11 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	}
 
-	public static void deleteNote() {
-		notesListDataProvider.getList().remove(selectedNote.getId());
-		
-		
-	}
+//	public static void deleteNote() {
+//		notesListDataProvider.getList().remove(selectedNote.getId());
+//		
+//		
+//	}
 
 
 }
