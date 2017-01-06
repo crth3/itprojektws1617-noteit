@@ -216,7 +216,7 @@ package de.hdm.itprojekt.noteit.server.db;
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
 			System.out.println("dbconnection: " + con);
-			System.out.println("user: " + u.getFirstName() + u.getLastName());
+			System.out.println("user: " + u.getFirstName() + u.getLastName() + u.getMail());
 			
 			try {
 				// neues SQL Statement anlegen

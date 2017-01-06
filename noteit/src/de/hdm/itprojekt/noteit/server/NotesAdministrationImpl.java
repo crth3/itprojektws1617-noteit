@@ -71,11 +71,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	// TODO müssen wir hier einen User zurück geben?
 	@Override
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
-
+		
 		User user;
 		User u = null;
 
-		if (mail != null && firstName != null && lastName != null) {
+		if (mail != null) {
+			System.out.println("In der createUser");
 			user = new User();
 
 			user.setMail(mail);

@@ -136,36 +136,7 @@ public class Noteit implements EntryPoint {
 
 				loginInfo = result;
 				
-				if (loginInfo.isLoggedIn()) {
-					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!");
-					
-					notesAdministrationService.findUserByMail(loginInfo.getEmailAddress(), new AsyncCallback<User>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(User result) {
-							currentUser = result;
-							RootPanel.get().add(vpBasisPanel);
-							RootPanel.get("content").add(homepage);
-							
-						}
-					});
-					
-					
-					// RootPanel.get("head").add(headerPanel);
-
-					// Hier muss auf die Hompage-Steie verwiesen werden
-
-				} else {
-					logger.log(Level.SEVERE, "LOAD Login" + result.getEmailAddress());
-					loadLogin();
-				}
-
+	
 				final String mail = loginInfo.getEmailAddress();
 				notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
@@ -180,10 +151,10 @@ public class Noteit implements EntryPoint {
 							ImpressumPanel = new Impressum();
 
 						} else if (mail != null) {
-							logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
-
-							notesAdministrationService.createUser(mail, loginInfo.getFirstName(),
-									loginInfo.getLastName(), new AsyncCallback<User>() {
+							
+							logger.log(Level.SEVERE, "Neuen Nutzer anlegen-mail, vorname, nachname " + loginInfo.getEmailAddress()+loginInfo.getFirstName()+loginInfo.getLastName());
+						
+							notesAdministrationService.createUser(mail, loginInfo.getFirstName(), loginInfo.getLastName(), new AsyncCallback<User>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
@@ -194,13 +165,14 @@ public class Noteit implements EntryPoint {
 										@Override
 										public void onSuccess(User result) {
 											currentUser = result;
-											logger.log(Level.SEVERE, "RPC erfolgreich " + result);
+											logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
+											HomepagePanel = new Homepage();
+											ImpressumPanel = new Impressum();
 
 										}
 									});
-							logger.log(Level.SEVERE, "Nutzer in die DB geschrieben ");
-							HomepagePanel = new Homepage();
-							ImpressumPanel = new Impressum();
+							
+						
 
 						}
 
@@ -214,7 +186,38 @@ public class Noteit implements EntryPoint {
 				});
 				
 			
-			}
+				if (loginInfo.isLoggedIn() == true) {
+					
+					logger.log(Level.SEVERE, "MAIL: "+loginInfo.getEmailAddress());
+					
+					notesAdministrationService.findUserByMail(loginInfo.getEmailAddress(), new AsyncCallback<User>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(User result) {
+							logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!");
+							//logger.log(Level.SEVERE, "RESULT: "+result.getId());
+							//currentUser = result;
+							RootPanel.get().add(vpBasisPanel);
+							RootPanel.get("content").add(homepage);
+							
+						}
+					});
+					
+					
+					// RootPanel.get("head").add(headerPanel);
+
+					// Hier muss auf die Hompage-Steie verwiesen werden
+
+				} else {
+					logger.log(Level.SEVERE, "LOAD Login" + result.getEmailAddress());
+					loadLogin();
+				}}
 		});
 
 		// ClickHandler für Impressum Button
@@ -256,7 +259,7 @@ public class Noteit implements EntryPoint {
 	}
 
 	public static User getCurrentUser() {
-		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getFirstName());
+		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
 	}
 }
