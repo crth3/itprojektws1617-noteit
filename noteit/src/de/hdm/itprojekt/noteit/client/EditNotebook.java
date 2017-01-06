@@ -257,6 +257,8 @@ public class EditNotebook extends VerticalPanel {
 
 									}
 								});
+						
+						tbNotebookTitel.setText("");
 					} else {
 						notesAdmin.updateNotebook(tbNotebookTitel.getText(), currentNotebook.getId(),
 								Homepage.getCurrentUser().getId(), new AsyncCallback<Void>() {
@@ -332,8 +334,10 @@ public class EditNotebook extends VerticalPanel {
 			rbWrite.setVisible(false);
 			lblNotebookPermission.setVisible(false);
 			lblNotebookShare.setVisible(false);
+			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(true);
+			
 		} else if (currentNotebook.getId() == -1) {
 			vpNotebookShare.setVisible(false);
 			vpNotebookPermission.setVisible(false);
@@ -343,6 +347,7 @@ public class EditNotebook extends VerticalPanel {
 			rbWrite.setVisible(false);
 			lblNotebookPermission.setVisible(false);
 			lblNotebookShare.setVisible(false);
+			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(false);
 		} else {
@@ -354,6 +359,7 @@ public class EditNotebook extends VerticalPanel {
 			rbWrite.setVisible(true);
 			lblNotebookPermission.setVisible(true);
 			lblNotebookPermission.setVisible(true);
+			lblNotebookDate.setVisible(true);
 			btnNotebookDelete.setVisible(true);
 			btnNotebookSave.setVisible(true);
 		}
