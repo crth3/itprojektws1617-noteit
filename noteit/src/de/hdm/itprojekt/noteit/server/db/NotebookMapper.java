@@ -240,9 +240,19 @@ public class NotebookMapper {
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
-			System.out.println("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
+			System.out.println("UPDATE Notebook SET "
+					+ "title='" + nb.getTitle()
+					+ "', "
+					+ "modificationDate='"
+					+ nb.getModificationDate()
+					+"' WHERE notebookId="+nb.getId());
 	
-			stmt.executeUpdate("UPDATE Notebook SET title='" + nb.getTitle() +"' WHERE notebookId="+nb.getId());
+			stmt.executeUpdate("UPDATE Notebook SET "
+					+ "title='" + nb.getTitle()
+					+ "', "
+					+ "modificationDate='"
+					+ nb.getModificationDate()
+					+"' WHERE notebookId="+nb.getId());
 		}
 		// Error Handling
 		catch (SQLException e) {
