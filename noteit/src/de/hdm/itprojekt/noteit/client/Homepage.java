@@ -65,6 +65,7 @@ public class Homepage extends VerticalPanel {
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
 	Label lbheadlineNoteit = new Label("Noteit");
+	Label lbSortNotes = new Label("Notizen sortieren nach:");
 
 	// --------- Button -----------//
 //	Button btnAddNewNotebookOrNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
@@ -119,6 +120,16 @@ public class Homepage extends VerticalPanel {
 				final ListBox listBox1 = new ListBox();
 				listBox1.addItem("Notizbuch");
 				listBox1.addItem("Notiz");
+				
+				final ListBox lbSort = new ListBox();
+				lbSort.addItem("Erstelldatum: Absteigend");
+				lbSort.addItem("Erstelldatum: Aufsteigend");
+				lbSort.addItem("Änderungsdatum: Absteigend");
+				lbSort.addItem("Änderungsdatum: Aufsteigend");
+				lbSort.addItem("Fälligkeitsdatum: Absteigend");
+				lbSort.addItem("Fälligkeitsdatum: Aufsteigend");
+				
+				
 			      
 				Command settingDialog = new Command() {
 					public void execute() {
@@ -180,7 +191,9 @@ public class Homepage extends VerticalPanel {
 		navLeftPanel.add(listBox1);
 //		navLeftPanel.add(btnAddNewNotebookOrNoteButton);
 		navLeftPanel.add(tbSearchNotebook);
-		
+		navLeftPanel.add(lbSortNotes);
+		navLeftPanel.add(lbSort);
+		//TODO Sortierung in GUI implemntieren mit RPC
 		navRightPanel.add(menu);
 		
 		navPanel.add(navLeftPanel);
@@ -442,7 +455,7 @@ public class Homepage extends VerticalPanel {
 		
 	}
 	public static void showHTML(){
-		Window.alert("F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
+		Window.alert("F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
 				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
