@@ -606,8 +606,6 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 				nbpMapper.update(foundedNotebookPermission);
 				updated = true;
 				return true;
-			}else{
-				return true;
 			}
 		}
 		if (updated == false){
@@ -657,8 +655,6 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 				 System.out.println("Userpermission wurde geupdatet ");
 				npMapper.update(foundedNotePermission);
 				updated = true;
-				return true;
-			}else{
 				return true;
 			}
 		}
