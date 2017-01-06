@@ -393,9 +393,6 @@ public class ShowNote extends VerticalPanel {
 			lblNoteDate.setText("Erstellt am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(note.getTitle());
 
-		} else if (note.getMaturityDate() == null) {
-			dateBox.setValue(null);
-
 		} else {
 			Timestamp ts = note.getModificationDate();
 			Date date = new Date(ts.getTime());
@@ -403,6 +400,10 @@ public class ShowNote extends VerticalPanel {
 			lblNoteDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(note.getTitle());
 		}
+		
+		if (note.getMaturityDate() == null) {
+			dateBox.setValue(null);
+		} 
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());
