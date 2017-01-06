@@ -82,4 +82,16 @@ public interface NotesAdministrationAsync {
 
 	void findNotebookById(int notebookId, AsyncCallback<Notebook> callback);
 
+	void sortNotesByMaturityAsc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
+	void sortNotesCreationDateAsc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
+	void sortNotesCreationDateDesc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
+	void sortNotesMaturityDesc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
+	void sortNotesModificationDateAsc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
+	void sortNotesModificationDateDesc(int notebookID, AsyncCallback<ArrayList<Note>> callback);
+
 }

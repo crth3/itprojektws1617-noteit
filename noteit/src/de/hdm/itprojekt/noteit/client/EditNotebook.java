@@ -46,6 +46,7 @@ public class EditNotebook extends VerticalPanel {
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
 	static HorizontalPanel hpButtons = new HorizontalPanel();
 	static HorizontalPanel hpAddPermission = new HorizontalPanel();
+	HorizontalPanel hDialog = new HorizontalPanel();
 
 	static VerticalPanel vpLeft = new VerticalPanel();
 	static VerticalPanel vpRight = new VerticalPanel();
@@ -53,6 +54,8 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel vpNotebookShare = new VerticalPanel();
 	static VerticalPanel vpNotebookPermission = new VerticalPanel();
 	static VerticalPanel vpBackButton = new VerticalPanel();
+	VerticalPanel vDialog = new VerticalPanel();
+
 
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
@@ -67,6 +70,9 @@ public class EditNotebook extends VerticalPanel {
 	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("✔︎");
 	static Button btnDeletePermission = new Button("𐄂");
+	static Button btnNo = new Button("Nein");
+	static Button btnYes = new Button("Ja");
+	
 	static CellList<User> clUser = new UserCellList().createUserCellList();
 
 	static RadioButton rbRead = new RadioButton("permission", "lesen");
@@ -128,6 +134,12 @@ public class EditNotebook extends VerticalPanel {
 		vpLeft.add(rbDelete);
 		vpLeft.add(hpButtons);
 		vpRight.add(vpNotebookPermission);
+		
+		vDialog.setSpacing(10);
+		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		vDialog.add(hDialog);
+		hDialog.add(btnYes);
+		hDialog.add(btnNo);
 
 		/**
 		 * Create the Panel, Label and TextBox
@@ -287,26 +299,68 @@ public class EditNotebook extends VerticalPanel {
 
 		btnNotebookDelete.addClickHandler(new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
+public void onClick(ClickEvent event) {
+				
+				final DialogBox dlbQuestion = new DialogBox();
+				
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.show();
+				dlbQuestion.center();
 
-				notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
-						new AsyncCallback<Void>() {
+				int width = Window.getClientWidth()/ 2;
+	            int height = Window.getClientHeight()/ 2;
+	            dlbQuestion.setPopupPosition(width, height);
+	            dlbQuestion.show();
+	            
+	            
+	            btnYes.addClickHandler(new ClickHandler() {
+	    				
+	    				@Override
+	    				public void onClick(ClickEvent event) {
 
-							@Override
-							public void onSuccess(Void result) {
-								NoteitCellBrowser.deleteNotebook();
+	    					notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
+	    							new AsyncCallback<Void>() {
 
-							}
+	    								@Override
+	    								public void onSuccess(Void result) {
+	    									// Notebook Liste aktualisieren
+	    									NoteitCellBrowser.deleteNotebook();
+	    									
+	    									// DialogBox ausblenden
+	    				    				dlbQuestion.hide();	
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+	    								}
 
-							}
-						});
+	    								@Override
+	    								public void onFailure(Throwable caught) {
+	    									// TODO Auto-generated method stub
 
+	    								}
+	    							});
+
+	    				}
+	    				
+	            });
+	            
+	            
+	            btnNo.addClickHandler(new ClickHandler() {
+
+	    			public void onClick(ClickEvent event) {
+	    				
+	    				// DialogBox ausblenden
+	    				dlbQuestion.hide();	
+	
+	    			}
+	            });
+				       
+	            
 			}
+			
 		});
 
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
