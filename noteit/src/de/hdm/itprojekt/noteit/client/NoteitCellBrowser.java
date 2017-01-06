@@ -43,7 +43,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static ListDataProvider<Notebook> notebooksListDataProvider = new ListDataProvider<Notebook>();
 	private static ListDataProvider<Note> notesListDataProvider = new ListDataProvider<Note>();
 
-	private User currentUser = Noteit.currentUser;
+	private static User currentUser = Noteit.getCurrentUser();
 	private static Notebook selectedNotebook = new Notebook();
 	private static Note selectedNote = new Note();
 
@@ -53,14 +53,14 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static final  NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 
 	private static Logger rootLogger = Logger.getLogger("");
-
+	
 	/**
 	 * Get the {@link NodeInfo} that provides the children of the specified
 	 * value.
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-
+		rootLogger.log(Level.SEVERE,"currentUser vom CELLBROWSER: "+ currentUser.getMail() );
 		if (value == null) {
 			
 			// LEVEL 0.
