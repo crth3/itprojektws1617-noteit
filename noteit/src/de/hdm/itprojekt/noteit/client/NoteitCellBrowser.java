@@ -60,7 +60,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-		rootLogger.log(Level.SEVERE,"currentUser vom CELLBROWSER: "+ currentUser.getMail() );
+		rootLogger.log(Level.SEVERE,"currentUser vom CELLBROWSER: "+ currentUser.getId() );
 		if (value == null) {
 			
 			// LEVEL 0.
