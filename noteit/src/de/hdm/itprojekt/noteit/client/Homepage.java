@@ -94,10 +94,12 @@ public class Homepage extends VerticalPanel {
 	
 
 	public void onLoad() {
+		currentUser = Noteit.getCurrentUser();
+		
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		
-		getCurrentUser();
+	
 		//CellBrowser
 				TreeViewModel model = new NoteitCellBrowser();
 				CellBrowser cellBrowser = new CellBrowser(model, null);
@@ -297,13 +299,11 @@ public class Homepage extends VerticalPanel {
 
 	}
 	
-	public Homepage(){
-		
-	}
+
 	
-	public Homepage(User currentUser){
-		this.currentUser = currentUser;
-	}
+//	public Homepage(User currentUser){
+//		this.currentUser = currentUser;
+//	}
 	
 
 	public static void showCurrentNote(VerticalPanel vpShowNote){
@@ -425,10 +425,7 @@ public class Homepage extends VerticalPanel {
 	}
 	
 	public static User getCurrentUser(){
-		currentUser.setId(1);
-		currentUser.setFirstName("Max");
-		currentUser.setLastName("Mustermann");
-		currentUser.setMail("max@mustermann.de");
+
 		return currentUser;
 	}
 	
