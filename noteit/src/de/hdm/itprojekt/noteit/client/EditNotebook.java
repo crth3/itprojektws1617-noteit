@@ -1,6 +1,8 @@
 package de.hdm.itprojekt.noteit.client;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,6 +11,7 @@ import org.apache.tools.ant.taskdefs.Delete;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -55,6 +58,7 @@ public class EditNotebook extends VerticalPanel {
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
+	static Label lblNotebookDate = new Label();
 
 	static TextBox tbNotebookTitel = new TextBox();
 	static TextBox tbNotebookShareMail = new TextBox();
@@ -90,8 +94,11 @@ public class EditNotebook extends VerticalPanel {
 		hpHeader.setStyleName("headerDetailView");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		hpEditNotebook.setStyleName("showDetailContent");
+		lblNotebookDate.setStyleName("lblNoteDate");
 
 		hpHeader.add(lblHeaderTitel);
+		hpHeader.add(lblNotebookDate);
+		
 
 		rbRead.setValue(true);
 		hpAddPermission.add(rbRead);
@@ -228,6 +235,7 @@ public class EditNotebook extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				rootLogger.log(Level.SEVERE, "Button Event");
+
 				if (tbNotebookTitel.getText().length() > 0) {
 					rootLogger.log(Level.SEVERE, "Button Event11");
 					if (currentNotebook.getId() == 0) {
@@ -255,7 +263,10 @@ public class EditNotebook extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-										// TODO Auto-generated method stub
+										Timestamp ts = new Timestamp(System.currentTimeMillis());
+										Date date = new Date(ts.getTime());
+										DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+										lblNotebookDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
 
 									}
 
@@ -310,7 +321,7 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
-		lblHeaderTitel.setText(notebook.getTitle());
+
 		tbNotebookTitel.setText(notebook.getTitle());
 		if (currentNotebook.getId() == 0) {
 			vpNotebookShare.setVisible(false);
@@ -345,6 +356,21 @@ public class EditNotebook extends VerticalPanel {
 			lblNotebookPermission.setVisible(true);
 			btnNotebookDelete.setVisible(true);
 			btnNotebookSave.setVisible(true);
+		}
+
+		if (currentNotebook.getModificationDate() == null) {
+			Timestamp ts = currentNotebook.getCreationDate();
+			Date date = new Date(ts.getTime());
+			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+			lblNotebookDate.setText("Erstellt am: " + sdfmt.format(date));
+			lblHeaderTitel.setText(notebook.getTitle());
+
+		} else {
+			Timestamp ts = currentNotebook.getModificationDate();
+			Date date = new Date(ts.getTime());
+			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+			lblNotebookDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
+			lblHeaderTitel.setText(notebook.getTitle());
 		}
 
 	}

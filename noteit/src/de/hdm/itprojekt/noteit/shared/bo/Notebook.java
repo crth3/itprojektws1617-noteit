@@ -12,7 +12,8 @@ public class Notebook extends BusinessObjects {
 	private static final long serialVersionUID = 1L;
 	public int creatorID = 0;
 	private String title = "";
-	private Timestamp creationTimestamp;
+	private Timestamp creationDate;
+	private Timestamp modificationDate;
 	private boolean visible = false;
 	public User creator;
 	public Note note;
@@ -51,6 +52,22 @@ public class Notebook extends BusinessObjects {
 	 */
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	/**
+	 * 
+	 * @return modificationTimestamp
+	 */
+	public Timestamp getModificationDate() {
+		return modificationDate;
+	}
+	
+	/**
+	 * 
+	 * @param modificationTimestamp
+	 */
+	public void setModificationDate(Timestamp modificationDate) {
+		this.modificationDate = modificationDate;
 	}
 
 	/**
