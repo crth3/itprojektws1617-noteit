@@ -195,6 +195,7 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 		nb = new Notebook();
 		nb.setId(notebookID);
 		nb.setTitle(title);
+		nb.setModificationDate(ts);
 
 		Notebook notebook = this.nbMapper.findById(notebookID);
 		Logger logger = Logger.getLogger("NameOfYourLogger");

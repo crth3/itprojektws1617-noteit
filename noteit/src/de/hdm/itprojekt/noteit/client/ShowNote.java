@@ -157,7 +157,7 @@ public class ShowNote extends VerticalPanel {
 
 		vpNotePermission.add(lblNotePermission);
 		vpNotePermission.add(clUser);
-		
+
 		hpBtnPanel.setWidth("300px");
 		hpBtnPanel.add(btnSaveNote);
 		hpBtnPanel.add(btnDeleteNote);
@@ -233,12 +233,12 @@ public class ShowNote extends VerticalPanel {
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {
-						if(dateBox.getTextBox().getValue().length() > 0){
-						Window.alert("create Note" + currentNote.getId());
-						Date date = dateBox.getValue();
-						long time = date.getTime();
-						timestampe = new Timestamp(time);
-						}else{
+						if (dateBox.getTextBox().getValue().length() > 0) {
+							Window.alert("create Note" + currentNote.getId());
+							Date date = dateBox.getValue();
+							long time = date.getTime();
+							timestampe = new Timestamp(time);
+						} else {
 							timestampe = null;
 						}
 						notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
@@ -258,12 +258,12 @@ public class ShowNote extends VerticalPanel {
 									}
 								});
 					} else {
-						if(dateBox.getTextBox().getValue().length() > 0){
-						Window.alert("update Note");
-						Date date = dateBox.getValue();
-						long time = date.getTime();
-						timestampe = new Timestamp(time);
-						}else{
+						if (dateBox.getTextBox().getValue().length() > 0) {
+							Window.alert("update Note");
+							Date date = dateBox.getValue();
+							long time = date.getTime();
+							timestampe = new Timestamp(time);
+						} else {
 							timestampe = null;
 						}
 						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
@@ -292,46 +292,37 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
-		
+
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				
-						notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
-								new AsyncCallback<Void>() {
 
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
+				notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
+						new AsyncCallback<Void>() {
 
-									}
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
 
-									@Override
-									public void onSuccess(Void result) {
+							}
 
-										NoteitCellBrowser.deleteNote();
-								
-									}
-								});
-					
-				 
+							@Override
+							public void onSuccess(Void result) {
+
+								NoteitCellBrowser.deleteNote();
+
+							}
+						});
 
 			}
 		}
-		
-				
-				
-				
-				
-				
-				);
+
+		);
 
 		this.add(hpHeader);
 		this.add(hpShowNote);
 
 	}
-	
-
 
 	public static void showNote(Note note) {
 		currentNote = note;
@@ -341,13 +332,13 @@ public class ShowNote extends VerticalPanel {
 			Timestamp ts = note.getCreationDate();
 			Date date = new Date(ts.getTime());
 			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-			lblNoteDate.setText("Hinzugefügt am: " + sdfmt.format(date));
+			lblNoteDate.setText("Erstellt am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(note.getTitle());
 
-		} else if(note.getMaturityDate() == null){
-			 dateBox.setValue(null);
+		} else if (note.getMaturityDate() == null) {
+			dateBox.setValue(null);
 
-		}else{
+		} else {
 			Timestamp ts = note.getModificationDate();
 			Date date = new Date(ts.getTime());
 			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
@@ -357,7 +348,6 @@ public class ShowNote extends VerticalPanel {
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());
-		
 
 	}
 
