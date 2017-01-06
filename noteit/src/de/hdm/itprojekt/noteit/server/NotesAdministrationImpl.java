@@ -427,7 +427,7 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Notebook finalNotebook = new Notebook();
-		finalNotebook.setId(0);
+		finalNotebook.setId(-1);
 		finalNotebook.setUserId(0);
 		finalNotebook.setTitle("Für mich geteilte Notizen");
 		finalNotebook.setCreationDate(ts);

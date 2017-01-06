@@ -29,7 +29,7 @@ public class NotebookCell extends AbstractCell<Notebook> {
 		sb.appendHtmlConstant("<div>");
 		sb.appendHtmlConstant("<div style=\"margin: 5px ;margin: auto ;\">");
 		
-		if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0){
+		if(value.getUserId() != Homepage.getCurrentUser().getId() && value.getId() != 0 && value.getId() != -1){
 				
 			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
 		}else if(value.getTitle() == "" && value.getId() == 0){

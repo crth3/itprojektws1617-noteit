@@ -121,7 +121,6 @@ public class EditNotebook extends VerticalPanel {
 		vpLeft.add(rbDelete);
 		vpLeft.add(hpButtons);
 		vpRight.add(vpNotebookPermission);
-		
 
 		/**
 		 * Create the Panel, Label and TextBox
@@ -148,7 +147,6 @@ public class EditNotebook extends VerticalPanel {
 		/**
 		 * Erstellen oder bearbeiten von Freigaben RPC
 		 */
-		
 
 		btnAddPermission.addClickHandler(new ClickHandler() {
 
@@ -307,7 +305,6 @@ public class EditNotebook extends VerticalPanel {
 		//
 		// }
 		// });
-		
 
 	}
 
@@ -315,7 +312,41 @@ public class EditNotebook extends VerticalPanel {
 		currentNotebook = notebook;
 		lblHeaderTitel.setText(notebook.getTitle());
 		tbNotebookTitel.setText(notebook.getTitle());
-		
+		if (currentNotebook.getId() == 0) {
+			vpNotebookShare.setVisible(false);
+			vpNotebookPermission.setVisible(false);
+			hpAddPermission.setVisible(false);
+			rbDelete.setVisible(false);
+			rbRead.setVisible(false);
+			rbWrite.setVisible(false);
+			lblNotebookPermission.setVisible(false);
+			lblNotebookShare.setVisible(false);
+			btnNotebookDelete.setVisible(false);
+			btnNotebookSave.setVisible(true);
+		} else if (currentNotebook.getId() == -1) {
+			vpNotebookShare.setVisible(false);
+			vpNotebookPermission.setVisible(false);
+			hpAddPermission.setVisible(false);
+			rbDelete.setVisible(false);
+			rbRead.setVisible(false);
+			rbWrite.setVisible(false);
+			lblNotebookPermission.setVisible(false);
+			lblNotebookShare.setVisible(false);
+			btnNotebookDelete.setVisible(false);
+			btnNotebookSave.setVisible(false);
+		} else {
+			vpNotebookShare.setVisible(true);
+			vpNotebookPermission.setVisible(true);
+			hpAddPermission.setVisible(true);
+			rbDelete.setVisible(true);
+			rbRead.setVisible(true);
+			rbWrite.setVisible(true);
+			lblNotebookPermission.setVisible(true);
+			lblNotebookPermission.setVisible(true);
+			btnNotebookDelete.setVisible(true);
+			btnNotebookSave.setVisible(true);
+		}
+
 	}
 
 	public static void getAllPermittedUsersbyNotebookID(int notebookID) {
