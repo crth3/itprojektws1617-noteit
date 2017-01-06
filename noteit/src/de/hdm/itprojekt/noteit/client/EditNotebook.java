@@ -257,6 +257,8 @@ public class EditNotebook extends VerticalPanel {
 
 									}
 								});
+						
+						tbNotebookTitel.setText("");
 					} else {
 						notesAdmin.updateNotebook(tbNotebookTitel.getText(), currentNotebook.getId(),
 								Homepage.getCurrentUser().getId(), new AsyncCallback<Void>() {
