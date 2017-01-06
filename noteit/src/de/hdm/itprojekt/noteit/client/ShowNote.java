@@ -14,8 +14,11 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -68,6 +71,8 @@ public class ShowNote extends VerticalPanel {
 	static Button btnDeleteNote = new Button("Löschen");
 	static Button btnAddNotePermission = new Button("+");
 	static Button btnDeletePermission = new Button("x");
+	static Button btnNo = new Button("Nein");
+	static Button btnYes = new Button("Ja");
 
 	static RichTextArea content = new RichTextArea();
 
@@ -78,7 +83,13 @@ public class ShowNote extends VerticalPanel {
 	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
 	DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	static DateBox dateBox = new DateBox();
+	
+	VerticalPanel vDialog = new VerticalPanel();
+	HorizontalPanel hDialog = new HorizontalPanel();
+	
 
+	
+	
 	// Timestamp maturity = new Timestamp();
 
 	// Date maturity = new Date();
@@ -161,6 +172,13 @@ public class ShowNote extends VerticalPanel {
 		hpBtnPanel.setWidth("300px");
 		hpBtnPanel.add(btnSaveNote);
 		hpBtnPanel.add(btnDeleteNote);
+		
+		
+		vDialog.setSpacing(10);
+		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		vDialog.add(hDialog);
+		hDialog.add(btnYes);
+		hDialog.add(btnNo);
 
 		vpLeft.add(vpTitel);
 		vpLeft.add(hpNoteSubTitel);
@@ -296,24 +314,64 @@ public class ShowNote extends VerticalPanel {
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				
+				final DialogBox dlbQuestion = new DialogBox();
+				
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie die ausgewählte Notiz löschen möchten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.show();
+				dlbQuestion.center();
 
-				notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
-						new AsyncCallback<Void>() {
+				int width = Window.getClientWidth()/ 2;
+	            int height = Window.getClientHeight()/ 2;
+	            dlbQuestion.setPopupPosition(width, height);
+	            dlbQuestion.show();
+	            
+	            
+	            btnYes.addClickHandler(new ClickHandler() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+	    			public void onClick(ClickEvent event) {
+	    				
+	    				// Methode zum löschen der Note aufrufen
+	    				notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
+	    						new AsyncCallback<Void>() {
+	    
+	    							@Override
+	    							public void onFailure(Throwable caught) {
+	    								// TODO Auto-generated method stub
+	    
+	    							}
+	    
+	    							@Override
+	    							public void onSuccess(Void result) {
+	    								
+	    								// Noteliste aktualisieren
+	    								NoteitCellBrowser.deleteNote();
+	    
+	    							}
+	    						});		
+	    				// DialogBox ausblenden
+	    				dlbQuestion.hide();	
+	
+	    			}
+	            });
+	            
+	            
+	            btnNo.addClickHandler(new ClickHandler() {
 
-							}
-
-							@Override
-							public void onSuccess(Void result) {
-
-								NoteitCellBrowser.deleteNote();
-
-							}
-						});
-
+	    			public void onClick(ClickEvent event) {
+	    				
+	    				// DialogBox ausblenden
+	    				dlbQuestion.hide();	
+	
+	    			}
+	            });
+				       
+	            
 			}
 		}
 
