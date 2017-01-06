@@ -298,9 +298,14 @@ private static NotePermissionMapper notePermissionMapper = null;
 			// neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
+			System.out.println("DELETE FROM NotePermission "
+					+ "WHERE Note_noteID = " 
+					+ np.getNoteId());
+			
+			
 			stmt.executeUpdate("DELETE FROM NotePermission "
-					+ "WHERE notePermissionId = " 
-					+ np.getNotePermissionId());
+					+ "WHERE Note_noteID = " 
+					+ np.getNoteId());
 		}
 		// Error Handling
 		catch (SQLException e) {

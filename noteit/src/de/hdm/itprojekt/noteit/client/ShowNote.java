@@ -25,6 +25,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
+import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class ShowNote extends VerticalPanel {
@@ -37,6 +38,7 @@ public class ShowNote extends VerticalPanel {
 	static HorizontalPanel hpShowNote = new HorizontalPanel();
 	static HorizontalPanel hpHeader = new HorizontalPanel();
 	static HorizontalPanel hpAddPermission = new HorizontalPanel();
+	static HorizontalPanel hpBtnPanel = new HorizontalPanel();
 
 	static VerticalPanel vpLeft = new VerticalPanel();
 	static VerticalPanel vpRight = new VerticalPanel();
@@ -63,6 +65,7 @@ public class ShowNote extends VerticalPanel {
 	static TextBox tbNoteShareMail = new TextBox();
 
 	static Button btnSaveNote = new Button("Speichern");
+	static Button btnDeleteNote = new Button("Löschen");
 	static Button btnAddNotePermission = new Button("+");
 	static Button btnDeletePermission = new Button("x");
 
@@ -149,16 +152,21 @@ public class ShowNote extends VerticalPanel {
 		hpNoteMaturity.setWidth("300px");
 
 		hpBackButton.add(btnSaveNote);
+		hpBackButton.add(btnDeleteNote);
 		hpBackButton.setWidth("300px");
 
 		vpNotePermission.add(lblNotePermission);
 		vpNotePermission.add(clUser);
+		
+		hpBtnPanel.setWidth("300px");
+		hpBtnPanel.add(btnSaveNote);
+		hpBtnPanel.add(btnDeleteNote);
 
 		vpLeft.add(vpTitel);
 		vpLeft.add(hpNoteSubTitel);
 		vpLeft.add(hpNoteText);
 		vpLeft.add(hpNoteMaturity);
-		vpLeft.add(btnSaveNote);
+		vpLeft.add(hpBtnPanel);
 		vpRight.add(lblNoteShare);
 		vpRight.add(hpAddPermission);
 		vpRight.add(lblNoteShareRB);
@@ -284,11 +292,46 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
+		
+		btnDeleteNote.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				
+						notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
+								new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+
+										NoteitCellBrowser.deleteNote();
+								
+									}
+								});
+					
+				 
+
+			}
+		}
+		
+				
+				
+				
+				
+				
+				);
 
 		this.add(hpHeader);
 		this.add(hpShowNote);
 
 	}
+	
+
 
 	public static void showNote(Note note) {
 		currentNote = note;

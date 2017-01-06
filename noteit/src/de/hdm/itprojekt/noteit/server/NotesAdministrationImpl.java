@@ -362,16 +362,26 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
  */
 	@Override
 	public void deleteNote(int noteID, int userID) throws IllegalArgumentException {
+		
+		// ArrayList mit allen Permissions-Objekten einer Note laden
 		ArrayList<NotePermission> ArrayListNotePermission = this.npMapper.findNotePermissionByNoteId(noteID);
+		
+		//Objekt mit der gesuchten Note anhand der Id laden
 		Note note = this.nMapper.findById(noteID);
+		
 		System.out.println("input:"+noteID + "User"+userID+"db daten:"+note.getUserId());
+		
 		try {
+			// Prüfe ob die UserId der UserId der Note entspricht
 			if (note.getUserId() == userID) {
+				//Prüfe ob ArrayList Objekte enthält
 				if (ArrayListNotePermission != null) {
+					// Lösche jede Permission die in der ArrayList vorhanden ist
 					for (NotePermission foundNotePermission : ArrayListNotePermission) {
 						this.npMapper.delete(foundNotePermission);
 					}
 				}
+				// lösche die Note
 				this.nMapper.delete(note);
 			}
 
@@ -381,6 +391,8 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 						NotePermission currentPermission = foundNotePermission;
 						for (NotePermission foundNotePermission1 : ArrayListNotePermission) {
 							if (foundNotePermission1.getId() != currentPermission.getId()) {
+				
+								System.out.println("foundedNotePermission: " + foundNotePermission );
 								this.npMapper.delete(foundNotePermission1);
 							}
 
