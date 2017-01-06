@@ -75,11 +75,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	// TODO müssen wir hier einen User zurück geben?
 	@Override
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
-
+		
 		User user;
 		User u = null;
 
-		if (mail != null && firstName != null && lastName != null) {
+		if (mail != null) {
+			System.out.println("In der createUser");
 			user = new User();
 
 			user.setMail(mail);
@@ -427,7 +428,7 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Notebook finalNotebook = new Notebook();
-		finalNotebook.setId(0);
+		finalNotebook.setId(-1);
 		finalNotebook.setUserId(0);
 		finalNotebook.setTitle("Für mich geteilte Notizen");
 		finalNotebook.setCreationDate(ts);
@@ -606,8 +607,6 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 				nbpMapper.update(foundedNotebookPermission);
 				updated = true;
 				return true;
-			}else{
-				return true;
 			}
 		}
 		if (updated == false){
@@ -657,8 +656,6 @@ public ArrayList<User> findAllUser() throws IllegalArgumentException {
 				 System.out.println("Userpermission wurde geupdatet ");
 				npMapper.update(foundedNotePermission);
 				updated = true;
-				return true;
-			}else{
 				return true;
 			}
 		}

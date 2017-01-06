@@ -150,8 +150,8 @@ public class Noteit implements EntryPoint {
 						@Override
 						public void onSuccess(User result) {
 							currentUser = result;
-							RootPanel.get().add(vpBasisPanel);
-							RootPanel.get("content").add(homepage);
+							//RootPanel.get().add(vpBasisPanel);
+							//RootPanel.get("content").add(homepage);
 							
 						}
 					});
@@ -180,10 +180,10 @@ public class Noteit implements EntryPoint {
 							ImpressumPanel = new Impressum();
 
 						} else if (mail != null) {
-							logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
-
-							notesAdministrationService.createUser(mail, loginInfo.getFirstName(),
-									loginInfo.getLastName(), new AsyncCallback<User>() {
+							
+							logger.log(Level.SEVERE, "Neuen Nutzer anlegen-mail, vorname, nachname " + loginInfo.getEmailAddress()+loginInfo.getFirstName()+loginInfo.getLastName());
+						
+							notesAdministrationService.createUser(mail, loginInfo.getFirstName(), loginInfo.getLastName(), new AsyncCallback<User>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
@@ -194,11 +194,12 @@ public class Noteit implements EntryPoint {
 										@Override
 										public void onSuccess(User result) {
 											currentUser = result;
-											logger.log(Level.SEVERE, "RPC erfolgreich " + result);
+											logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
+											
 
 										}
 									});
-							logger.log(Level.SEVERE, "Nutzer in die DB geschrieben ");
+							
 							HomepagePanel = new Homepage();
 							ImpressumPanel = new Impressum();
 
