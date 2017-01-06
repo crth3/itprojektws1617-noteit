@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -49,8 +48,6 @@ public class Noteit implements EntryPoint {
 	 */
 	private final NotesAdministrationAsync notesAdministrationService = GWT.create(NotesAdministration.class);
 
-
-	
 	/**
 	 * Login-Widgets
 	 */
@@ -59,11 +56,11 @@ public class Noteit implements EntryPoint {
 	private static Label loginLabel = new Label(
 			"Please sign in to your Google Account to access the StockWatcher application.");
 	private static Anchor signInLink = new Anchor("Sign In");
-//	private Anchor signOutLink = new Anchor("Sign Out");
+	// private Anchor signOutLink = new Anchor("Sign Out");
 
 	public static User currentUser = new User();
 
-	Logger logger = Logger.getLogger("NameOfYourLogger");
+	static Logger logger = Logger.getLogger("NameOfYourLogger");
 
 	private Homepage HomepagePanel;
 	private Impressum ImpressumPanel;
@@ -71,16 +68,15 @@ public class Noteit implements EntryPoint {
 	/**
 	 * create new Panels
 	 */
-	
+
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-//	HorizontalPanel headerPanel = new HorizontalPanel();
+	// HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
 	final VerticalPanel homepage = new Homepage();
 	final VerticalPanel showNote = new ShowNote();
-	
 
 	/**
 	 * Create new Labels
@@ -97,18 +93,10 @@ public class Noteit implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	
-	
-	
+
 	public void onModuleLoad() {
-		
+
 		String value_URL = Window.Location.getParameter("url");
-		
-		currentUser.setId(1);
-		currentUser.setFirstName("Max");
-		currentUser.setLastName("Mustermann");
-		currentUser.setMail("max@mustermann.de");
-	
 
 		/**
 		 * Set the Style
@@ -122,7 +110,6 @@ public class Noteit implements EntryPoint {
 
 		homepage.setStylePrimaryName("homepage");
 
-
 		/**
 		 * add the widgets
 		 */
@@ -132,7 +119,6 @@ public class Noteit implements EntryPoint {
 		logoutPanel.add(zurueckButton);
 		vpBasisPanel.add(loginPanel);
 
-		
 		logger.log(Level.SEVERE, "URL Inhalt" + value_URL);
 		/**
 		 * Login Status mit Login service überprüfen. Client-side proxy
@@ -140,6 +126,7 @@ public class Noteit implements EntryPoint {
 		 */
 		// Check login status using login service.
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
 				logger.log(Level.SEVERE, "ERROR Login" + error);
@@ -148,8 +135,38 @@ public class Noteit implements EntryPoint {
 			public void onSuccess(LoginInfo result) {
 
 				loginInfo = result;
+				
+				if (loginInfo.isLoggedIn()) {
+					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!");
+					
+					notesAdministrationService.findUserByMail(loginInfo.getEmailAddress(), new AsyncCallback<User>() {
 
-				final String mail = result.getEmailAddress();
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(User result) {
+							currentUser = result;
+							RootPanel.get().add(vpBasisPanel);
+							RootPanel.get("content").add(homepage);
+							
+						}
+					});
+					
+					
+					// RootPanel.get("head").add(headerPanel);
+
+					// Hier muss auf die Hompage-Steie verwiesen werden
+
+				} else {
+					logger.log(Level.SEVERE, "LOAD Login" + result.getEmailAddress());
+					loadLogin();
+				}
+
+				final String mail = loginInfo.getEmailAddress();
 				notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
 					@Override
@@ -159,7 +176,7 @@ public class Noteit implements EntryPoint {
 							currentUser = result;
 							// SettingsPanel = new Settings(currentUser,
 							// loginInfo);
-							HomepagePanel = new Homepage(currentUser);
+							HomepagePanel = new Homepage();
 							ImpressumPanel = new Impressum();
 
 						} else if (mail != null) {
@@ -182,7 +199,7 @@ public class Noteit implements EntryPoint {
 										}
 									});
 							logger.log(Level.SEVERE, "Nutzer in die DB geschrieben ");
-							HomepagePanel = new Homepage(currentUser);
+							HomepagePanel = new Homepage();
 							ImpressumPanel = new Impressum();
 
 						}
@@ -195,19 +212,8 @@ public class Noteit implements EntryPoint {
 
 					}
 				});
-
-				if (loginInfo.isLoggedIn()) {
-					logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!!!!!!!!!!!! ");
-					RootPanel.get().add(vpBasisPanel);
-					RootPanel.get("content").add(homepage);
-//					RootPanel.get("head").add(headerPanel);
-
-					// Hier muss auf die Hompage-Steie verwiesen werden
-
-				} else {
-					logger.log(Level.SEVERE, "DONE Login" + result);
-					loadLogin();
-				}
+				
+			
 			}
 		});
 
@@ -231,47 +237,6 @@ public class Noteit implements EntryPoint {
 			}
 		});
 
-		
-
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
-
-		/**
-		 * 
-		 */
-		notesAdministrationService.findNoteByKeyword(1, "title", 1, new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				Logger logger = Logger.getLogger("NameOfYourLogger");
-				logger.log(Level.SEVERE, "on success Note by Keyword " + result.size());
-
-			}
-		});
-
 	}
 
 	public static void loadLogin() {
@@ -283,10 +248,15 @@ public class Noteit implements EntryPoint {
 	}
 
 	public static void setWelcomeName(String name) {
-//		welcomePanel.remove(welcomeLabel);
-//		x = name;
-//		
-//		welcomeLabel.setText("Wilkommen " + x);
-//		welcomePanel.add(welcomeLabel);
+		// welcomePanel.remove(welcomeLabel);
+		// x = name;
+		//
+		// welcomeLabel.setText("Wilkommen " + x);
+		// welcomePanel.add(welcomeLabel);
+	}
+
+	public static User getCurrentUser() {
+		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getFirstName());
+		return currentUser;
 	}
 }
