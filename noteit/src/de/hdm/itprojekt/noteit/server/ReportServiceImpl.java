@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.ibm.icu.text.DateFormat;
@@ -42,6 +44,8 @@ implements ReportService {
 	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
 	private int noteId;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static Logger rootLogger = Logger.getLogger("");
+
 	
 	/**
 	 * No Argument Kontstruktor
@@ -110,6 +114,8 @@ implements ReportService {
 			return null;
 		
 		int userId = u.getId();
+		rootLogger.log(Level.SEVERE, "userId: " + userId);
+
 		
 		//-------------------- convert date to Timestamp ---------------------------
 		Timestamp tMaturity = getTimestamp(maturity);
@@ -291,7 +297,10 @@ implements ReportService {
 				 
 			} 
 			 }
+		
+		if (allNotebooks.size() != 0 ) {
 			
+		
 				
 		// Schleife für das hinzufügen der selektierten Notes zum Report
 		for (Note selectedNote : allNotes) {
@@ -311,11 +320,11 @@ implements ReportService {
 			// Timestamp in Date umwandeln
 			Timestamp tsMaturity = selectedNote.getMaturityDate();			
 			Timestamp tsCreationDate = selectedNote.getCreationDate();		
-			Timestamp tsModificationdate = selectedNote.getModificationDate();			
+			Timestamp tsModificationDate = selectedNote.getModificationDate();			
 			
 			Date dateMaturity = tsMaturity;
-			Date dateCreationDate = tsMaturity;
-			Date dateModificationDate = tsMaturity;
+			Date dateCreationDate = tsCreationDate;
+			Date dateModificationDate = tsModificationDate;
 			
 			String stringMaturityDate = null;
 			String stringCreationDate= null;
@@ -367,7 +376,8 @@ implements ReportService {
 			
 			result.addRow(noteRow);	
 			
-		}	
+		}
+	}
 			return result;
 		}
 
