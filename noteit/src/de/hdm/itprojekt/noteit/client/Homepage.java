@@ -501,11 +501,8 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 
@@ -524,11 +521,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 
@@ -547,11 +540,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 
@@ -570,11 +559,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 
@@ -593,11 +578,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 
@@ -616,11 +597,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				Note addNote = new Note();
-				addNote.setId(0);
-				addNote.setTitle("");
-				result.add(0, addNote);
-				NoteitCellBrowser.notesListDataProvider.setList(result);
+				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
 

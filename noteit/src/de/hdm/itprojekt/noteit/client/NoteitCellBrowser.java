@@ -253,5 +253,13 @@ public class NoteitCellBrowser implements TreeViewModel {
 	//
 	//
 	// }
+	
+	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes){
+		Note addNote = new Note();
+		addNote.setId(0);
+		addNote.setTitle("");
+		sortedNotes.add(0, addNote);
+		notesListDataProvider.setList(sortedNotes);
+	}
 
 }

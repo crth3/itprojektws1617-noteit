@@ -54,7 +54,7 @@ public class Noteit implements EntryPoint {
 	public static LoginInfo loginInfo = null;
 	private static VerticalPanel loginPanel = new VerticalPanel();
 	private static Label loginLabel = new Label(
-			"Please sign in to your Google Account to access the StockWatcher application.");
+			"Melde dich mit deinem Google-Konto an um Noteit nutzen zu können.");
 	private static Anchor signInLink = new Anchor("Sign In");
 	// private Anchor signOutLink = new Anchor("Sign Out");
 

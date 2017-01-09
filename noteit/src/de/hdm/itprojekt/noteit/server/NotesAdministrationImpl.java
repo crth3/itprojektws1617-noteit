@@ -455,7 +455,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		System.out.println("nb id: " + notebookID);
 		System.out.println("usr id: " + userID);
 
-		if (notebookID == 0) {
+		if (notebookID == -1) {
 			if (notesPermission != null) {
 				for (NotePermission foundedNotePermission : notesPermission) {
 					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
