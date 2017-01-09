@@ -720,6 +720,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	// Absteigend sortieren nach Fälligkeitsdatum
 	@Override
 	public ArrayList<Note> sortNotesMaturityDesc(int notebookID) {
+		System.out.println("Absteigend sortieren nach Fälligkeitsdatum : " +notebookID);
 		ArrayList<Note> notesList = nMapper.findNotesByNotebookId(notebookID);
 		java.util.Collections.sort(notesList, new Comparator<Note>() {
 
@@ -732,7 +733,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 			}
 		});
-
+		System.out.println("Anzahl: " +notesList.size());
 		return notesList;
 
 	}

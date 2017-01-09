@@ -42,7 +42,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 public class Homepage extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
-	
+
 	private static Logger rootLogger = Logger.getLogger("");
 
 	// --------- Horizontal Panel -----------//
@@ -54,12 +54,8 @@ public class Homepage extends VerticalPanel {
 	final static VerticalPanel showNote = new ShowNote();
 	static VerticalPanel editNotebook = new EditNotebook();
 
-	
-	
-	
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
-	
 
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
@@ -68,7 +64,8 @@ public class Homepage extends VerticalPanel {
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
 
 	// --------- Button -----------//
-//	Button btnAddNewNotebookOrNoteButton = new Button("<img src='Images/plus.png'/ width=\"15\" height=\"15\">");
+	// Button btnAddNewNotebookOrNoteButton = new Button("<img
+	// src='Images/plus.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
 	final TextBox tbSearchNotebook = new TextBox();
@@ -79,10 +76,6 @@ public class Homepage extends VerticalPanel {
 	final NotebookCellList notebookCellList = new NotebookCellList();
 	static Notebook selectedNotebook = new Notebook();
 	static Note selectedNote = new Note();
-	
-	
-	
-    
 
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
@@ -90,80 +83,70 @@ public class Homepage extends VerticalPanel {
 
 	private static final ScheduledCommand Developer = null;
 
-
-	
-	
-
 	public void onLoad() {
 		currentUser = Noteit.getCurrentUser();
-		
+
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
-		
-	
-		//CellBrowser
-				TreeViewModel model = new NoteitCellBrowser();
-				CellBrowser cellBrowser = new CellBrowser(model, null);
-				
-				cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-			    cellBrowser.setHeight("500px");
-			    cellBrowser.setWidth("430px");
-			
-//			    dockPanel.add(headerPanel, DockPanel.NORTH);
-//			    dockPanel.add(new HTML("This is the first south component."), DockPanel.SOUTH);
-//				dockPanel.add(showNote, DockPanel.EAST);
-//				dockPanel.add(cellBrowser, DockPanel.WEST);
-				
-				contentPanel.add(cellBrowser);
-				contentPanel.add(editNotebook);
-				
-				final ListBox listBox1 = new ListBox();
-				listBox1.addItem("Notizbuch");
-				listBox1.addItem("Notiz");
-				
-				final ListBox lbSort = new ListBox();
-				lbSort.addItem("Erstelldatum: Absteigend");
-				lbSort.addItem("Erstelldatum: Aufsteigend");
-				lbSort.addItem("Änderungsdatum: Absteigend");
-				lbSort.addItem("Änderungsdatum: Aufsteigend");
-				lbSort.addItem("Fälligkeitsdatum: Absteigend");
-				lbSort.addItem("Fälligkeitsdatum: Aufsteigend");
-				
-				
-			      
-				Command settingDialog = new Command() {
-					public void execute() {
-						Settings settings = new Settings(currentUser);
-						settings.show();
-						settings.center();
-						settings.setGlassEnabled(true);
-					}
-				};
-				
-				Command logout = new Command() {
-					public void execute() {
-						Noteit.loginInfo.getLogoutUrl();
-						Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
-						Noteit.loadLogin();
-					}
-				};
-				
-				Command showHTML = new Command() {
-					public void execute() {
-						showHTML();
-					}
-				};
-				
-				MenuBar settings = new MenuBar(true);
-			    settings.addItem("Profil", settingDialog);
-			    settings.addItem("Developer", showHTML);
-			    settings.addItem("Abmelden", logout);
-				MenuBar menu = new MenuBar();
-			    menu.addItem(currentUser.getFirstName(), settings);
-			    
-			   
-				
-		
+
+		// CellBrowser
+		TreeViewModel model = new NoteitCellBrowser();
+		CellBrowser cellBrowser = new CellBrowser(model, null);
+
+		cellBrowser.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		cellBrowser.setHeight("500px");
+		cellBrowser.setWidth("430px");
+
+		// dockPanel.add(headerPanel, DockPanel.NORTH);
+		// dockPanel.add(new HTML("This is the first south component."),
+		// DockPanel.SOUTH);
+		// dockPanel.add(showNote, DockPanel.EAST);
+		// dockPanel.add(cellBrowser, DockPanel.WEST);
+
+		contentPanel.add(cellBrowser);
+		contentPanel.add(editNotebook);
+
+		final ListBox listBox1 = new ListBox();
+		listBox1.addItem("Notizbuch");
+		listBox1.addItem("Notiz");
+
+		final ListBox lbSort = new ListBox();
+		lbSort.addItem("Erstelldatum: Absteigend");
+		lbSort.addItem("Erstelldatum: Aufsteigend");
+		lbSort.addItem("Änderungsdatum: Absteigend");
+		lbSort.addItem("Änderungsdatum: Aufsteigend");
+		lbSort.addItem("Fälligkeitsdatum: Absteigend");
+		lbSort.addItem("Fälligkeitsdatum: Aufsteigend");
+
+		Command settingDialog = new Command() {
+			public void execute() {
+				Settings settings = new Settings(currentUser);
+				settings.show();
+				settings.center();
+				settings.setGlassEnabled(true);
+			}
+		};
+
+		Command logout = new Command() {
+			public void execute() {
+				Noteit.loginInfo.getLogoutUrl();
+				Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
+				Noteit.loadLogin();
+			}
+		};
+
+		Command showHTML = new Command() {
+			public void execute() {
+				showHTML();
+			}
+		};
+
+		MenuBar settings = new MenuBar(true);
+		settings.addItem("Profil", settingDialog);
+		settings.addItem("Developer", showHTML);
+		settings.addItem("Abmelden", logout);
+		MenuBar menu = new MenuBar();
+		menu.addItem(currentUser.getFirstName(), settings);
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -177,7 +160,7 @@ public class Homepage extends VerticalPanel {
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
 		tbSearchNotebook.setStyleName("textbox");
-//		btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
+		// btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment
 		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -189,13 +172,13 @@ public class Homepage extends VerticalPanel {
 		headlinePanel.setWidth("100%");
 		headlinePanel.add(lbheadlineNoteit);
 		navLeftPanel.add(listBox1);
-//		navLeftPanel.add(btnAddNewNotebookOrNoteButton);
+		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
 		navLeftPanel.add(tbSearchNotebook);
 		navLeftPanel.add(lbSortNotes);
 		navLeftPanel.add(lbSort);
-		//TODO Sortierung in GUI implemntieren mit RPC
+		// TODO Sortierung in GUI implemntieren mit RPC
 		navRightPanel.add(menu);
-		
+
 		navPanel.add(navLeftPanel);
 		navPanel.add(navRightPanel);
 
@@ -205,19 +188,14 @@ public class Homepage extends VerticalPanel {
 
 		tbSearchNotebook.getElement().setPropertyString("placeholder", "Suchen...");
 		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
-		
-
-
 
 		/**
 		 * add to the Panels
 		 */
-		
-		//navPanel.add(navNotebookPanel);
-//		navPanel.add(navNotesPanel);
-	//	contentPanel.add(contentNotesPanel);
-		
-		
+
+		// navPanel.add(navNotebookPanel);
+		// navPanel.add(navNotesPanel);
+		// contentPanel.add(contentNotesPanel);
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -229,21 +207,22 @@ public class Homepage extends VerticalPanel {
 				System.out.println("result" + result);
 				clNotebook.setRowData(result);
 				contentNotebookPanel.add(clNotebook);
-				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(),currentUser.getId() , new AsyncCallback<ArrayList<Note>>() {
+				notesAdmin.getAllNotesByNotebookID(result.get(0).getId(), currentUser.getId(),
+						new AsyncCallback<ArrayList<Note>>() {
 
-					@Override
-					public void onSuccess(ArrayList<Note> result) {
+							@Override
+							public void onSuccess(ArrayList<Note> result) {
 
-						clNote.setRowData(result);
-						contentNotesPanel.add(clNote);
-						
-					}
+								clNote.setRowData(result);
+								contentNotesPanel.add(clNote);
 
-					@Override
-					public void onFailure(Throwable caught) {
+							}
 
-					}
-				});
+							@Override
+							public void onFailure(Throwable caught) {
+
+							}
+						});
 			}
 
 			@Override
@@ -251,58 +230,114 @@ public class Homepage extends VerticalPanel {
 				System.out.println("Error" + caught);
 			}
 		});
-		
 
-//		btnAddNewNotebookOrNoteButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				if (listBox1.getSelectedItemText() == "Notiz") {
-//					if (selectedNotebook.getId() == 0) {
-//						Window.alert("in diesem Notizbuch können sie keine Notizen erstellen");
-//					} else
-//						NoteitCellBrowser.addNote();
-//				}else{
-//					NoteitCellBrowser.addNotebook();
-//				}
-//			}
-//		});
-		
-
-
-		
 		listBox1.addChangeHandler(new ChangeHandler() {
-			
+
 			@Override
 			public void onChange(ChangeEvent event) {
-				if(listBox1.getSelectedItemText() == "Notiz"){
+				if (listBox1.getSelectedItemText() == "Notiz") {
 					/**
-					 * Create the ChangeHandler for TextBox for Search Note Function.
+					 * Create the ChangeHandler for TextBox for Search Note
+					 * Function.
 					 */
 					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
 						@Override
 						public void onValueChange(ValueChangeEvent<String> event) {
 							NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
-							
+
 						}
 					});
-					
-					
-			      }else{
-			    	  /**
-			  		 * Create the ChangeHandler for TextBox for Search Notebook Function.
-			  		 */
-			  		tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-			  			@Override
-			  			public void onValueChange(ValueChangeEvent<String> event) {
-			  				NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-			  				
-			  			}
-			  		});
-			  		
-			  		
-			      }
-				
+				} else {
+					/**
+					 * Create the ChangeHandler for TextBox for Search Notebook
+					 * Function.
+					 */
+					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+
+						@Override
+						public void onValueChange(ValueChangeEvent<String> event) {
+							NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
+
+						}
+					});
+
+				}
+
+			}
+		});
+
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Fälligkeitsdatum: Absteigend") {
+					sortNotesMaturityDesc();
+				}
+
+			}
+		});
+		
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Fälligkeitsdatum: Aufsteigend") {
+					sortNotesMaturityAsc();
+				}
+
+			}
+		});
+		
+
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Änderungsdatum: Absteigend") {
+					sortNotesModificationDateDesc();
+				}
+
+			}
+		});
+		
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Änderungsdatum: Aufsteigend") {
+					sortNotesModificationDateAsc();
+				}
+
+			}
+		});
+		
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Erstelldatum: Absteigend") {
+					sortNotesCreationDesc();
+				}
+
+			}
+		});
+		
+		lbSort.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+
+				if (lbSort.getSelectedItemText() == "Erstelldatum: Aufsteigend") {
+					sortNotesCreationDateAsc();
+				}
+
 			}
 		});
 
@@ -311,28 +346,24 @@ public class Homepage extends VerticalPanel {
 		this.add(contentPanel);
 
 	}
-	
 
-	
-//	public Homepage(User currentUser){
-//		this.currentUser = currentUser;
-//	}
-	
+	// public Homepage(User currentUser){
+	// this.currentUser = currentUser;
+	// }
 
-	public static void showCurrentNote(VerticalPanel vpShowNote){
-		
+	public static void showCurrentNote(VerticalPanel vpShowNote) {
+
 		contentPanel.remove(1);
 		vpShowNote.setHeight("300px");
 		vpShowNote.setWidth("500px");
 		contentPanel.add(vpShowNote);
-		
-		
+
 	}
-	
-	public static void showNotes(){
+
+	public static void showNotes() {
 		contentPanel.remove(1);
 		contentPanel.add(contentNotesPanel);
-		
+
 	}
 
 	/**
@@ -344,25 +375,26 @@ public class Homepage extends VerticalPanel {
 		selectedNotebook = notebook;
 		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
-		notesAdmin.getAllNotesByNotebookID(notebook.getId(),getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
+		notesAdmin.getAllNotesByNotebookID(notebook.getId(), getCurrentUser().getId(),
+				new AsyncCallback<ArrayList<Note>>() {
 
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				System.out.println("result" + result);
+					@Override
+					public void onSuccess(ArrayList<Note> result) {
+						System.out.println("result" + result);
 
-				clNote.setRowData(result);
-			}
+						clNote.setRowData(result);
+					}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println("Error" + caught);
-			}
-		});
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println("Error" + caught);
+					}
+				});
 	};
-	
-	public static void setSelectedNote (Note note){
+
+	public static void setSelectedNote(Note note) {
 		selectedNote = note;
-		
+
 	}
 
 	public void searchNotebookByKeyword(int userID, String keyword) {
@@ -411,21 +443,21 @@ public class Homepage extends VerticalPanel {
 			}
 		});
 	}
-	public static void updateNotesCellList (int notebookId){
-		
+
+	public static void updateNotesCellList(int notebookId) {
+
 		notesAdmin.getAllNotesByNotebookID(notebookId, getCurrentUser().getId(), new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				
-				
+
 			}
 
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 				clNote.setRowCount(0);
 				clNote.setRowData(result);
-				
+
 			}
 		});
 	}
@@ -433,31 +465,171 @@ public class Homepage extends VerticalPanel {
 	public Notebook getSelectedNotebook() {
 		return selectedNotebook;
 	}
-	public static void setSelectedNotebook(Notebook selectedNotebook2){
-		selectedNotebook = selectedNotebook2;
+
+	public static void setSelectedNotebook(Notebook notebook) {
+		selectedNotebook = notebook;
 	}
-	
-	public static User getCurrentUser(){
+
+	public static User getCurrentUser() {
 
 		return currentUser;
 	}
-	
-	public static void editNotebookView(){
+
+	public static void editNotebookView() {
 		contentPanel.remove(1);
-		//EditNotebook editNotebookView = new EditNotebook();
+		// EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebook);
 		rootLogger.log(Level.SEVERE, "WIDGET");
-		
+
 	}
-	public static void showNoteView(){
+
+	public static void showNoteView() {
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
-		
+
 	}
-	public static void showHTML(){
+
+	public static void showHTML() {
 		Window.alert("F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
 				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
+	// absteigend sortieren nach Fälligkeitsdatum
+	public void sortNotesMaturityDesc() {
+		notesAdmin.sortNotesMaturityDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	// aufsteigend sortieren nach Fälligkeitsdatum
+	public void sortNotesMaturityAsc() {
+		notesAdmin.sortNotesByMaturityAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	// absteigend sortieren nach Erstelldatum
+	public void sortNotesCreationDesc() {
+		notesAdmin.sortNotesCreationDateDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	// aufsteigend sortieren nach Erstelldatum
+	public void sortNotesCreationDateAsc() {
+		notesAdmin.sortNotesCreationDateAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	// absteigend sortieren nach Änderungsdatum
+	public void sortNotesModificationDateDesc() {
+		notesAdmin.sortNotesModificationDateDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	// aufsteigend sortieren nach Änderungsdatum
+	public void sortNotesModificationDateAsc() {
+		notesAdmin.sortNotesModificationDateAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+
+				Note addNote = new Note();
+				addNote.setId(0);
+				addNote.setTitle("");
+				result.add(0, addNote);
+				NoteitCellBrowser.notesListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
 
 }

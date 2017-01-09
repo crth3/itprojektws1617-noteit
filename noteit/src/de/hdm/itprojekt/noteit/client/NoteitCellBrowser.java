@@ -41,7 +41,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
 	private static ListDataProvider<Notebook> notebooksListDataProvider = new ListDataProvider<Notebook>();
-	private static ListDataProvider<Note> notesListDataProvider = new ListDataProvider<Note>();
+	public static ListDataProvider<Note> notesListDataProvider = new ListDataProvider<Note>();
 
 	private static User currentUser = Noteit.getCurrentUser();
 	private static Notebook selectedNotebook = new Notebook();
@@ -60,11 +60,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-<<<<<<< HEAD
-		rootLogger.log(Level.SEVERE,"currentUser vom CELLBROWSER: "+ currentUser.getId() );
-=======
-		rootLogger.log(Level.SEVERE, "currentUser vom CELLBROWSER: " + currentUser.getMail());
->>>>>>> master
+
 		if (value == null) {
 
 			// LEVEL 0.

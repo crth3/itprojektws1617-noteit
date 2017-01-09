@@ -69,8 +69,8 @@ public class ShowNote extends VerticalPanel {
 
 	static Button btnSaveNote = new Button("Speichern");
 	static Button btnDeleteNote = new Button("Löschen");
-	static Button btnAddNotePermission = new Button("+");
-	static Button btnDeletePermission = new Button("x");
+	static Button btnAddNotePermission = new Button("✔︎");
+	static Button btnDeletePermission = new Button("𐄂");
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 
