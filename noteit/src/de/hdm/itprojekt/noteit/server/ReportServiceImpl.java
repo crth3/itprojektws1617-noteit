@@ -284,22 +284,27 @@ implements ReportService {
 				 System.out.println("founded Notebook-ID: " +foundedNotebook.getId());
 				 
 				 if (sKeywordNotebook != null) {
-				
+					
 				 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
-						Note nb = iterator.next();
+						Note n = iterator.next();
 						// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
-						 System.out.println("nb getNotebookId: " +nb.getNotebookId());
-						if (nb.getNotebookId() != foundedNotebook.getId()) {
+						 System.out.println("nb getNotebookId: " +n.getNotebookId());
+						if (n.getNotebookId() != foundedNotebook.getId() || allNotebooks.size() == 0) {
 							 iterator.remove();
-							 System.out.println("Size of list after removed: " + allNotes.size());
+							 System.out.println("Size of noteList after removed when Keyword Search: " + allNotes.size());
 						}	
 				} 
 				 
 			} 
-			 }
-		
-		if (allNotebooks.size() != 0 ) {
+				 
+	}
+		// Wenn Notebook Titel nicht gefunden wurde, keine Notes ausgeben
+		if (allNotebooks.size() == 0) {
 			
+			allNotes.removeAll(allNotes);
+			
+		}
+					
 		
 				
 		// Schleife für das hinzufügen der selektierten Notes zum Report
@@ -377,7 +382,7 @@ implements ReportService {
 			result.addRow(noteRow);	
 			
 		}
-	}
+	
 			return result;
 		}
 

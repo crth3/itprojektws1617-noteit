@@ -287,10 +287,19 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 					
 					vpReport.clear();
 					
+					// Reportausgabe
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesGeneralInformation;
 					writerreport.process(report);
 					vpReport.add(new HTML(writerreport.getReportText()));
+					
+					// Suchkriterien zurücksetzen
+					 sKeywordNote = null; 
+					 sKeywordNotebook = null; 
+					 maturity = null;
+					 creationDate = null;
+					 modificationDate = null;
+					
 				}
 
 				
