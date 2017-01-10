@@ -58,9 +58,12 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	private MultiWordSuggestOracle oracle;
 	private SuggestBox sb;
 	
-	private DateBox dbMaturity = new DateBox();
-	private DateBox dbCreationDate = new DateBox();
-	private DateBox dbModificationDate = new DateBox();
+	private DateBox dbFromMaturity = new DateBox();
+	private DateBox dbFromCreationDate = new DateBox();
+	private DateBox dbFromModificationDate = new DateBox();
+	private DateBox dbToMaturity = new DateBox();
+	private DateBox dbToCreationDate = new DateBox();
+	private DateBox dbToModificationDate = new DateBox();
 	
 	Label lblSearchNoteTitle = new Label("Notiz-Titel");
 	Label lblSearchNotebookTitle = new Label("Notizbuch-Titel");
@@ -68,6 +71,8 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	Label lblMaturity = new Label("Fälligkeitsdatum");
 	Label lblCreationDate = new Label("Erstellungsdatum");
 	Label lblModificationDate = new Label("Änderungsdatum");
+	Label lblFrom= new Label("von ");
+	Label lblTo = new Label("bis ");
 	
 	//TODO Label ersetzen
 	Label lblButton = new Label("Suchen...");
@@ -77,13 +82,17 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	final TextBox tbSearchNote = new TextBox();
 	final TextBox tbSearchNotebook = new TextBox();
 	private Button btnGenerate = new Button("Generate");
+	private Button btnReset = new Button("Reset");
 	final User user = new User();
 	int userId;
 	String sKeywordNote; 
 	String sKeywordNotebook; 
-	Date maturity;
-	Date creationDate;
-	Date modificationDate;
+	Date fromMaturity;
+	Date fromCreationDate;
+	Date fromModificationDate;
+	Date toMaturity;
+	Date toCreationDate;
+	Date toModificationDate;
 
 		
 	public NotesGeneralInformationReport() {
@@ -185,43 +194,79 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 			}
 		});
 		
-		dbMaturity.addValueChangeHandler(new ValueChangeHandler<Date>() {
+		dbFromMaturity.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				maturity =  event.getValue();
+				fromMaturity =  event.getValue();
 				
-				System.out.println("maturity: "+maturity);
+				System.out.println("fromMaturity: "+fromMaturity);
 				
 			}
 		});
 		
-		dbCreationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+		dbToMaturity.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				creationDate =  event.getValue();
+				toMaturity =  event.getValue();
 				
-				System.out.println("creationDate: "+creationDate);
+				System.out.println("toMaturity: "+toMaturity);
 				
 			}
 		});
 		
-		dbModificationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+		dbFromCreationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Date> event) {
-				modificationDate =  event.getValue();
+				fromCreationDate =  event.getValue();
 				
-				System.out.println("modificationDate: "+modificationDate);
+				System.out.println("fromCreationDate: "+fromCreationDate);
+				
+			}
+		});
+		
+		dbToCreationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				toCreationDate =  event.getValue();
+				
+				System.out.println("toCreationDate: "+toCreationDate);
+				
+			}
+		});
+		
+		dbFromModificationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				fromModificationDate =  event.getValue();
+				
+				System.out.println("fromModificationDate: "+fromModificationDate);
+				
+			}
+		});
+		
+		dbToModificationDate.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				toModificationDate =  event.getValue();
+				
+				System.out.println("toModificationDate: "+toModificationDate);
 				
 			}
 		});
 		
 		//-------------------- set DateBox Format ---------------------------
-		dbMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
-		dbCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
-		dbModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbFromMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbFromCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbFromModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbToMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbToCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		dbToModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		
 		
 		//-------------------- set Panels ---------------------------
@@ -238,22 +283,27 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		vpSearchUser.add(sb);
 		
 		vpSearchMaturity.add(lblMaturity);
-		vpSearchMaturity.add(dbMaturity);
+		vpSearchMaturity.add(dbFromMaturity);
+		vpSearchMaturity.add(dbToMaturity);
 		
 		vpSearchCreationDate.add(lblCreationDate);
-		vpSearchCreationDate.add(dbCreationDate);
+		vpSearchCreationDate.add(dbFromCreationDate);
+		vpSearchCreationDate.add(dbToCreationDate);
 		
 		vpSearchModificationdate.add(lblModificationDate);
-		vpSearchModificationdate.add(dbModificationDate);
+		vpSearchModificationdate.add(dbFromModificationDate);
+		vpSearchModificationdate.add(dbToModificationDate);
 		
 		lblButton.setVisible(false);
 		vpGenerate.add(lblButton);
 		vpGenerate.add(btnGenerate);
+		vpGenerate.add(btnReset);
 		
 
 		add(hpSearch);
 		add(vpReport);
-
+		
+		
 				
 		hpSearch.add(vpSearchNote);
 		hpSearch.add(vpSearchNotebook);
@@ -268,12 +318,26 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 		
 	//RootPanel.get("content").add(contentPanel);
-	
-	
+
+	btnReset.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				vpReport.clear();
+				hpSearch.clear();
+				NotesGeneralInformationReport notesGeneralInformationReport = new NotesGeneralInformationReport();
+				hpSearch.add(notesGeneralInformationReport);
+				
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	btnGenerate.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
 						
-			reportService.createReportNotesGeneralInformation(user, sKeywordNote, sKeywordNotebook, maturity, creationDate, modificationDate, new AsyncCallback<NotesGeneralInformation>() {
+			reportService.createReportNotesGeneralInformation(user, sKeywordNote, sKeywordNotebook, fromMaturity, toMaturity, fromCreationDate, toCreationDate, fromModificationDate, toModificationDate, new AsyncCallback<NotesGeneralInformation>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -292,14 +356,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 					final	ReportSimple report = notesGeneralInformation;
 					writerreport.process(report);
 					vpReport.add(new HTML(writerreport.getReportText()));
-					
-					// Suchkriterien zurücksetzen
-					 sKeywordNote = null; 
-					 sKeywordNotebook = null; 
-					 maturity = null;
-					 creationDate = null;
-					 modificationDate = null;
-					
+					 	
 				}
 
 				

@@ -43,6 +43,7 @@ implements ReportService {
 	private String sPermissionReadWrite = "Lesen & Schreiben";
 	private String sPermissionReadWriteDelete = "Lesen, Schreiben & Löschen";
 	private int noteId;
+	boolean bPermission;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static Logger rootLogger = Logger.getLogger("");
 
@@ -108,7 +109,8 @@ implements ReportService {
 	 * Method to get a <code>Report</code> Object of all Notes by a user
 	 */
 	@Override
-		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Date maturity, Date creationDate, Date modificationDate)
+		public NotesGeneralInformation createReportNotesGeneralInformation(User u, String sKeywordNote, String sKeywordNotebook, Date fromMaturity, Date toMaturity, 
+				Date fromCreationDate, Date toCreationDate, Date fromModificationDate, Date toModificationDate)
 			throws IllegalArgumentException {
 		if (this.getNotesAdministration() == null)
 			return null;
@@ -118,9 +120,12 @@ implements ReportService {
 
 		
 		//-------------------- convert date to Timestamp ---------------------------
-		Timestamp tMaturity = getTimestamp(maturity);
-		Timestamp tCreationDate = getTimestamp(creationDate);
-		Timestamp tModificationDate = getTimestamp(modificationDate);
+		Timestamp tFromMaturity = getTimestamp(fromMaturity);
+		Timestamp tFromCreationDate = getTimestamp(fromCreationDate);
+		Timestamp tFromModificationDate = getTimestamp(fromModificationDate);
+		Timestamp tToMaturity = getTimestamp(toMaturity);
+		Timestamp tToCreationDate = getTimestamp(toCreationDate);
+		Timestamp tToModificationDate = getTimestamp(toModificationDate);
 		
 
 		NotesGeneralInformation result = new NotesGeneralInformation();
@@ -228,41 +233,76 @@ implements ReportService {
 				 
 				 
 				}
-		 
-			if (tMaturity != null ) {
-				System.out.println("maturity: " +tMaturity);
+			
+			// Wenn ein vonDatum oder bisDatum eingegeben wurde, dann in Schleife
+			if (tFromMaturity != null) {
+				System.out.println("tFromMaturity: " +tFromMaturity);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note m = iterator.next();
-					//Null-Objekte löschen
+						// Wenn ein Objekt Wert null in der DB hat, Objekt löschen
 						if(m.getMaturityDate() == null) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
-								// Wenn das Objekt nicht der gesuchten getMaturityDate entspricht, löschen
-						} else if (!m.getMaturityDate().equals(tMaturity)) {
+						} 
+						 // Wenn ein Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+							else if (m.getMaturityDate().before(tFromMaturity)) {
 							 iterator.remove();
+							 System.out.println("haaaaaaaaaaaaaaaaaaaallo");
 							 System.out.println("Size of list after removed: " + allNotes.size());
-						}
+						} 
 				}
 			}
 			
-			if (tCreationDate != null ) {
-				System.out.println("creationDate: " +tCreationDate);
+			if (tToMaturity != null) {
+				System.out.println("tToMaturity: " +tToMaturity);
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note m = iterator.next();
+						// Wenn ein Objekt Wert null in der DB hat, Objekt löschen
+						if(m.getMaturityDate() == null) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						} 
+						 // Wenn ein Objekt nicht der gesuchten getMaturityDate entspricht, löschen
+							else if (m.getMaturityDate().after(tToMaturity)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						} 
+				}
+			}
+			
+			if (tFromCreationDate != null ) {
+				System.out.println("fromCreationDate: " +tFromCreationDate);
 
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note c = iterator.next();
 						
 						
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
-						if (!c.getCreationDate().equals(tCreationDate)) {
+						if (c.getCreationDate().before(tFromCreationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}	
 				}
 			}
 			
-			if (tModificationDate != null ) {
+			if (tToCreationDate != null ) {
+				System.out.println("tToCreationDate: " +tToCreationDate);
 
-				System.out.println("modificationDate: " +tModificationDate);
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note c = iterator.next();
+						
+						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
+						if (c.getCreationDate().after(tToCreationDate)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}	
+				}
+			}
+			
+			
+			if (tFromModificationDate != null ) {
+
+				System.out.println("modificationDate: " +tFromModificationDate);
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note mD = iterator.next();
 						//Null-Objekte löschen
@@ -270,7 +310,24 @@ implements ReportService {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
-						} else if (!mD.getModificationDate().equals(tModificationDate)) {
+						} else if (mD.getModificationDate().before(tFromModificationDate)) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+						}
+				}
+			}
+			
+			if (tToModificationDate != null ) {
+
+				System.out.println("tToModificationDate: " +tToModificationDate);
+			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
+						Note mD = iterator.next();
+						//Null-Objekte löschen
+						if (mD.getModificationDate() == null) {
+							 iterator.remove();
+							 System.out.println("Size of list after removed: " + allNotes.size());
+								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
+						} else if (mD.getModificationDate().after(tToModificationDate)) {
 							 iterator.remove();
 							 System.out.println("Size of list after removed: " + allNotes.size());
 						}
@@ -388,12 +445,14 @@ implements ReportService {
 
 	
 	@Override
-	public NotesSharingInformation createReportNotesSharingInformation(User u) 
+	public NotesSharingInformation createReportNotesSharingInformation(User u, int permission) 
 			throws IllegalArgumentException {
 			if (this.getNotesAdministration() == null)
 			return null;
 			
 			int userId = u.getId();
+			
+			System.out.println("Selected Permission: "+permission);
 			
 			/*
 		     * Zun�chst legen wir uns einen leeren Report an.
@@ -454,6 +513,12 @@ implements ReportService {
 			ArrayList<NotePermission> notePermissionlist = this.notesAdministration.findNotePermissionByUserId(userId);
 					
 			for (NotePermission np : notePermissionlist) {
+
+				if (np.getPermission() == permission) {
+					bPermission = true;
+				}else {
+					bPermission = false;
+				}
 				
 				// Berechtigung zuweisen 
 				switch(np.getPermission()){ 
@@ -490,7 +555,11 @@ implements ReportService {
 	
 
 			    // und schlie�lich die Zeile dem Report hinzuf�gen.
-				result.addRow(NotePremissionRow);
+				
+				if (bPermission == true || permission == 0) {
+					result.addRow(NotePremissionRow);
+				}
+				
 			    }
 		    
 		    

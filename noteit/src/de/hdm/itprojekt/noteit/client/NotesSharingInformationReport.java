@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -38,13 +39,19 @@ private ReportServiceAsync reportService = null;
 static HorizontalPanel contentPanel = new HorizontalPanel();	
 private HorizontalPanel hpSearchPanel = new HorizontalPanel();
 private VerticalPanel vpSearchUser = new VerticalPanel();
+private VerticalPanel vpList = new VerticalPanel();
+
 private VerticalPanel vpReport = new VerticalPanel();
 private VerticalPanel vpGenerate = new VerticalPanel();
 
+
+
 private MultiWordSuggestOracle oracle;
 private SuggestBox sb;
+private ListBox lbPermission = new ListBox();
 
 Label lblSearchUser = new Label("Nutzersuche");
+Label lblPermission = new Label("Berechtigung");
 
 //TODO Label ersetzen
 Label lblGenerate = new Label("Suchen...");
@@ -52,6 +59,9 @@ Label lblGenerate = new Label("Suchen...");
 private Button btnGenerate = new Button("Generate");
 final User user = new User();
 int userId;
+String sPermission;
+int permission;
+
 
 
 public void onLoad() {
@@ -133,26 +143,53 @@ public void onLoad() {
 		            
 		        }
 		    });
+		 
+		// Setzen der Auswahl-Optionen
+		lbPermission.addItem("------");
+		lbPermission.addItem("Lesen");
+		lbPermission.addItem("Lesen / Bearbeiten");
+		lbPermission.addItem("Lesen / Bearbeiten / Löschen");
+		
+		// Zeige alle Optionenn an
+		lbPermission.setVisibleItemCount(4);
 
 		vpSearchUser.add(lblSearchUser);
 		vpSearchUser.add(sb);
+		
+		vpList.add(lblPermission);
+		vpList.add(lbPermission);
 		
 		vpGenerate.add(lblGenerate);
 		vpGenerate.add(btnGenerate);
 		
 		hpSearchPanel.add(vpSearchUser);
+		hpSearchPanel.add(vpList);
 		hpSearchPanel.add(vpGenerate);
 		 
 		 
 
 		add(hpSearchPanel);
 		add(vpReport);
+		
+		
 	
 	
 	btnGenerate.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
-						
-			reportService.createReportNotesSharingInformation(user, new AsyncCallback<NotesSharingInformation>() {
+			
+			// Get ausgewählte Berechtigung
+			if (lbPermission.getSelectedItemText() == "------") {
+				permission = 0;
+			}else if (lbPermission.getSelectedItemText() == "Lesen"){
+				permission = 1;				
+			}else if (lbPermission.getSelectedItemText() == "Lesen / Bearbeiten"){
+				permission = 2;				
+			}else if (lbPermission.getSelectedItemText() == "Lesen / Bearbeiten / Löschen"){
+				permission = 3;				
+			}
+			
+							
+			reportService.createReportNotesSharingInformation(user, permission, new AsyncCallback<NotesSharingInformation>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -165,6 +202,7 @@ public void onLoad() {
 				@Override
 				public void onSuccess(NotesSharingInformation notesSharingInformation) {
 					// TODO Auto-generated method stub
+	
 					vpReport.clear();
 					
 					HTMLReportWriter writerreport = new HTMLReportWriter();
