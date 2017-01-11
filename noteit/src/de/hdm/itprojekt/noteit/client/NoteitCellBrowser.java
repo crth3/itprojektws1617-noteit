@@ -219,5 +219,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 		sortedNotes.add(0, addNote);
 		notesListDataProvider.setList(sortedNotes);
 	}
+	
+	public static Note getSelectedNote(){
+		return selectedNote;
+	}
 
 }

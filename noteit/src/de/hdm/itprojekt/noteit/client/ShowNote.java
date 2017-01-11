@@ -69,8 +69,8 @@ public class ShowNote extends VerticalPanel {
 
 	static Button btnSaveNote = new Button("Speichern");
 	static Button btnDeleteNote = new Button("Löschen");
-	static Button btnAddNotePermission = new Button("✔︎");
-	static Button btnDeletePermission = new Button("𐄂");
+	static Button btnAddNotePermission = new Button("+");
+	static Button btnDeletePermission = new Button("�");
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 
@@ -245,9 +245,9 @@ public class ShowNote extends VerticalPanel {
 		});
 
 		btnSaveNote.addClickHandler(new ClickHandler() {
-
+			
 			public void onClick(ClickEvent event) {
-
+				currentNote = NoteitCellBrowser.getSelectedNote();
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {
@@ -314,6 +314,7 @@ public class ShowNote extends VerticalPanel {
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				currentNote = NoteitCellBrowser.getSelectedNote();
 				
 				final DialogBox dlbQuestion = new DialogBox();
 				
