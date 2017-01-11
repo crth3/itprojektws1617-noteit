@@ -62,6 +62,9 @@ public class EditNotebook extends VerticalPanel {
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
 	static Label lblNotebookDate = new Label();
+	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für dieses Notizbuch beschränkt sich auf nur auf das Lesen.");
+	static Label lblPermissionInformationWrite = new Label("Du kannst dieses Notizbuch bearbeiten");
+	static Label lblPermissionInformationDelete = new Label("Du hast volle Berechtigung für dieses Notizbuch");
 
 	static TextBox tbNotebookTitel = new TextBox();
 	static TextBox tbNotebookShareMail = new TextBox();
@@ -125,6 +128,11 @@ public class EditNotebook extends VerticalPanel {
 		vpNotebookPermission.add(lblNotebookPermission);
 		vpNotebookPermission.add(clUser);
 
+		
+		lblPermissionInformationWrite.setVisible(false);
+		lblPermissionInformationDelete.setVisible(false);
+		lblPermissionInformationRead.setVisible(false);
+		
 		vpLeft.add(lblNotebookTitel);
 		vpLeft.add(tbNotebookTitel);
 		vpLeft.add(lblNotebookShare);
@@ -133,6 +141,9 @@ public class EditNotebook extends VerticalPanel {
 		vpLeft.add(rbWrite);
 		vpLeft.add(rbDelete);
 		vpLeft.add(hpButtons);
+		vpLeft.add(lblPermissionInformationRead);
+		vpLeft.add(lblPermissionInformationWrite);
+		vpLeft.add(lblPermissionInformationDelete);
 		vpRight.add(vpNotebookPermission);
 		
 		vDialog.setSpacing(10);
@@ -431,6 +442,38 @@ public void onClick(ClickEvent event) {
 			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 			lblNotebookDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(notebook.getTitle());
+		}
+		
+		if(currentNotebook.getPermissionID()==1){
+			btnNotebookSave.setEnabled(false);
+			btnNotebookDelete.setEnabled(false);
+			btnAddPermission.setEnabled(false);
+			btnDeletePermission.setEnabled(false);
+			lblPermissionInformationWrite.setVisible(false);
+			lblPermissionInformationDelete.setVisible(false);
+			lblPermissionInformationRead.setVisible(true);
+		}else if(currentNotebook.getPermissionID()==2){
+			btnNotebookSave.setEnabled(true);
+			btnAddPermission.setEnabled(true);
+			btnDeletePermission.setEnabled(true);
+			btnNotebookDelete.setEnabled(false);
+			lblPermissionInformationWrite.setVisible(true);
+			lblPermissionInformationDelete.setVisible(false);
+			lblPermissionInformationRead.setVisible(false);
+		}else{
+			btnNotebookSave.setEnabled(true);
+			btnNotebookDelete.setEnabled(true);
+			btnAddPermission.setEnabled(true);
+			btnDeletePermission.setEnabled(true);
+			if(currentNotebook.getPermissionID()==3){
+				lblPermissionInformationWrite.setVisible(false);
+				lblPermissionInformationDelete.setVisible(true);
+				lblPermissionInformationRead.setVisible(false);
+			}else{
+				lblPermissionInformationWrite.setVisible(false);
+				lblPermissionInformationDelete.setVisible(false);
+				lblPermissionInformationRead.setVisible(false);
+			}
 		}
 
 	}

@@ -11,6 +11,7 @@ public class Notebook extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
 	public int creatorID = 0;
+	private int permissionID;
 	private String title = "";
 	private Timestamp creationDate;
 	private Timestamp modificationDate;
@@ -130,6 +131,14 @@ public class Notebook extends BusinessObjects {
 	 */
 	public void setNote(Note note) {
 		this.note = note;
+	}
+
+	public int getPermissionID() {
+		return permissionID;
+	}
+
+	public void setPermissionID(int permissionID) {
+		this.permissionID = permissionID;
 	}
 
 }

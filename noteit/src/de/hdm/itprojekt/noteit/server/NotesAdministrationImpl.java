@@ -420,22 +420,25 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public ArrayList<Notebook> getAllNotebooksByUserID(int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		Notebook finalNotebook = new Notebook();
-		finalNotebook.setId(-1);
-		finalNotebook.setUserId(0);
-		finalNotebook.setTitle("Für mich geteilte Notizen");
-		finalNotebook.setCreationDate(ts);
+		Notebook tempForMeSharedNotebook = new Notebook();
+		tempForMeSharedNotebook.setId(-1);
+		tempForMeSharedNotebook.setUserId(0);
+		tempForMeSharedNotebook.setTitle("Für mich geteilte Notizen");
+		tempForMeSharedNotebook.setCreationDate(ts);
 
 		ArrayList<Notebook> createdNotebooks = new ArrayList<Notebook>();
-		createdNotebooks.add(finalNotebook);
+		createdNotebooks.add(tempForMeSharedNotebook);
 
 		ArrayList<Notebook> allNotebooks = this.nbMapper.findNotebooksByUserID(userID);
 		ArrayList<NotebookPermission> sharedNotebooks = this.nbpMapper.findNotebookPermissionByUserId(userID);
 		for (Notebook foundedNotebooks : allNotebooks) {
 			createdNotebooks.add(foundedNotebooks);
 		}
+		//freigegebene Notizen dem Notizbuch hinzufügen
 		for (NotebookPermission foundedNotebookPermission : sharedNotebooks) {
-			createdNotebooks.add(nbMapper.findById(foundedNotebookPermission.getNotebookId()));
+			Notebook permittedNotebook = nbMapper.findById(foundedNotebookPermission.getNotebookId());
+			permittedNotebook.setPermissionID(foundedNotebookPermission.getPermission());
+			createdNotebooks.add(permittedNotebook);
 		}
 
 		return createdNotebooks;
