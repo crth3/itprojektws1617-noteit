@@ -300,6 +300,7 @@ public class ShowNote extends VerticalPanel {
 										Date date = new Date(ts.getTime());
 										DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 										lblNoteDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
+										NoteitCellBrowser.updateNotes();
 
 									}
 								});

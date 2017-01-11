@@ -193,6 +193,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 		notesListDataProvider.getList().remove(selectedNote);
 		selectedNote.setId(newId);
 		selectionModelNote.setSelected(selectedNote, true);
+		
 	}
 
 	public static void getNotebookList(Notebook notebook) {
@@ -222,6 +223,36 @@ public class NoteitCellBrowser implements TreeViewModel {
 	
 	public static Note getSelectedNote(){
 		return selectedNote;
+	}
+	
+	public static void updateNotes(){
+		notesListDataProvider.getList().clear();
+		// LEVEL 1.
+		// We want the children of the notebook. Return the notes.
+			Note addNote = new Note();
+			addNote.setId(0);
+			addNote.setTitle("");
+			notesListDataProvider.getList().add(addNote);
+
+		
+		notesAdmin.getAllNotesByNotebookID(selectedNotebook.getId(), currentUser.getId(),
+				new AsyncCallback<ArrayList<Note>>() {
+
+					@Override
+					public void onSuccess(ArrayList<Note> result) {
+
+						for (Note note : result) {
+							notesListDataProvider.getList().add(note);
+						}
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 	}
 
 }
