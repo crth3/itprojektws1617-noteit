@@ -58,6 +58,9 @@ public class ShowNote extends VerticalPanel {
 	static Label lblNoteSubTitel = new Label("Subtitel");
 	static Label lblNoteText = new Label("Deine Notiz");
 	static Label lblNoteMaturity = new Label("Fälligkeitsdatum");
+	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für diese Notiz beschränkt sich auf das Lesen.");
+	static Label lblPermissionInformationWrite = new Label("Deine Berechtigung für diese Notiz beschränkt sich auf das Bearbeiten.");
+	static Label lblPermissionInformationDelete = new Label("Du hast volle Berechtigung für diese Notiz");
 
 	static Label lblNotePermission = new Label();
 	static Label lblNoteShare = new Label("Notiz Teilen mit:");
@@ -70,7 +73,7 @@ public class ShowNote extends VerticalPanel {
 	static Button btnSaveNote = new Button("Speichern");
 	static Button btnDeleteNote = new Button("Löschen");
 	static Button btnAddNotePermission = new Button("+");
-	static Button btnDeletePermission = new Button("�");
+	static Button btnDeletePermission = new Button("�");
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 
@@ -124,6 +127,10 @@ public class ShowNote extends VerticalPanel {
 		hpAddPermission.add(btnAddNotePermission);
 		hpAddPermission.add(btnDeletePermission);
 		hpAddPermission.setSpacing(0);
+		
+		lblPermissionInformationWrite.setVisible(false);
+		lblPermissionInformationDelete.setVisible(false);
+		lblPermissionInformationRead.setVisible(false);
 
 		hpHeader.add(lblHeaderTitel);
 		hpHeader.add(lblNoteDate);
@@ -185,6 +192,10 @@ public class ShowNote extends VerticalPanel {
 		vpLeft.add(hpNoteText);
 		vpLeft.add(hpNoteMaturity);
 		vpLeft.add(hpBtnPanel);
+		vpLeft.add(lblPermissionInformationRead);
+		vpLeft.add(lblPermissionInformationWrite);
+		vpLeft.add(lblPermissionInformationDelete);
+		
 		vpRight.add(lblNoteShare);
 		vpRight.add(hpAddPermission);
 		vpRight.add(lblNoteShareRB);
@@ -406,6 +417,39 @@ public class ShowNote extends VerticalPanel {
 		if (note.getMaturityDate() == null) {
 			dateBox.setValue(null);
 		} 
+		
+		if(currentNote.getPermissionID() == 1){
+			
+			btnSaveNote.setEnabled(false);
+			btnDeleteNote.setEnabled(false);
+			btnAddNotePermission.setEnabled(false);
+			btnDeletePermission.setEnabled(false);
+			lblPermissionInformationWrite.setVisible(false);
+			lblPermissionInformationDelete.setVisible(false);
+			lblPermissionInformationRead.setVisible(true);
+		}else if(currentNote.getPermissionID() == 2){
+			btnSaveNote.setEnabled(true);
+			btnDeleteNote.setEnabled(false);
+			btnAddNotePermission.setEnabled(true);
+			btnDeletePermission.setEnabled(true);
+			lblPermissionInformationWrite.setVisible(true);
+			lblPermissionInformationDelete.setVisible(false);
+			lblPermissionInformationRead.setVisible(false);
+		}else{
+			btnSaveNote.setEnabled(true);
+			btnDeleteNote.setEnabled(true);
+			btnAddNotePermission.setEnabled(true);
+			btnDeletePermission.setEnabled(true);
+			if(currentNote.getPermissionID()==3){
+				lblPermissionInformationWrite.setVisible(false);
+				lblPermissionInformationDelete.setVisible(true);
+				lblPermissionInformationRead.setVisible(false);
+			}else{
+				lblPermissionInformationWrite.setVisible(false);
+				lblPermissionInformationDelete.setVisible(false);
+				lblPermissionInformationRead.setVisible(false);
+			}
+		}
 		tbNoteTitel.setText(note.getTitle());
 		tbNoteSubTitel.setText(note.getSubTitle());
 		content.setText(note.getText());

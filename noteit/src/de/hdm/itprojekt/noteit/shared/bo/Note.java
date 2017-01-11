@@ -11,6 +11,7 @@ public class Note extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
 	private int noteID = 0;
+	private int permissionID;
 	private String title = "";
 	private String subTitle = "";
 	private String text = "";
@@ -200,6 +201,14 @@ public class Note extends BusinessObjects {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public int getPermissionID() {
+		return permissionID;
+	}
+
+	public void setPermissionID(int permissionID) {
+		this.permissionID = permissionID;
 	}
 
 }

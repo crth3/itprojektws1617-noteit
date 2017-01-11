@@ -459,9 +459,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		System.out.println("usr id: " + userID);
 
 		if (notebookID == -1) {
+			//Notebook "Für mich geteilte Noitzen"
 			if (notesPermission != null) {
 				for (NotePermission foundedNotePermission : notesPermission) {
-					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+					System.out.println("NotePermission ID "+ foundedNotePermission.getPermission());
+					Note permittedNote = this.nMapper.findById(foundedNotePermission.getNoteId());
+					permittedNote.setPermissionID(foundedNotePermission.getPermission());
+					allFoundedNotes.add(permittedNote);
+					
 					System.out.println(
 							"Notiz titel: " + this.nMapper.findById(foundedNotePermission.getNoteId()).getTitle());
 				}
@@ -470,7 +475,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		} else if (this.nbMapper.findById(notebookID).getUserId() != userID) {
 			if (notesPermission != null) {
 				for (NotePermission foundedNotePermission : notesPermission) {
-					allFoundedNotes.add(this.nMapper.findById(foundedNotePermission.getNoteId()));
+					System.out.println("NotePermission ID "+ foundedNotePermission.getPermission());
+					Note permittedNote = this.nMapper.findById(foundedNotePermission.getNoteId());
+					permittedNote.setPermissionID(foundedNotePermission.getPermission());
+					allFoundedNotes.add(permittedNote);
 				}
 			}
 
