@@ -1,31 +1,14 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.util.log.Log;
-
-import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.cellview.client.CellBrowser;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.NoSelectionModel;
-import com.google.gwt.view.client.ProvidesKey;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SetSelectionModel;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
@@ -46,8 +29,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static User currentUser = Noteit.getCurrentUser();
 	private static Notebook selectedNotebook = new Notebook();
 	private static Note selectedNote = new Note();
-
-	private Notebook firstNotebook = new Notebook();
 
 	private static final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private static final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
@@ -109,8 +90,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				addNote.setId(0);
 				addNote.setTitle("");
 				notesListDataProvider.getList().add(addNote);
-				
-				
+
 			}
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
@@ -197,13 +177,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 		});
 	}
 
-	public static void addNotebook() {
-		Notebook newNotebook = new Notebook();
-		newNotebook.setId(400000);
-		newNotebook.setTitle("Neues Notebook");
-		notebooksListDataProvider.getList().add(newNotebook);
-	}
-
 	public static void deleteNotebook() {
 		int newID = selectedNotebook.getId();
 		newID--;
@@ -211,21 +184,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 		notebooksListDataProvider.getList().remove(selectedNotebook);
 		selectedNotebook.setId(newID);
 		selectionModelNotebook.setSelected(selectedNotebook, true);
-	}
-
-	public static void addNote() {
-		if (selectedNotebook == null) {
-			Window.alert("kein Notebook ausgewählt");
-		} else {
-
-			Note newNote = new Note();
-			newNote.setId(400000);
-			newNote.setTitle("Neue Notiz");
-			newNote.setNotebookId(selectedNotebook.getId());
-			// ShowNote.setNote(newNote);
-			notesListDataProvider.getList().add(newNote);
-			Window.alert("noteID" + newNote.getId());
-		}
 	}
 
 	public static void deleteNote() {
@@ -253,8 +211,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 	//
 	//
 	// }
-	
-	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes){
+
+	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes) {
 		Note addNote = new Note();
 		addNote.setId(0);
 		addNote.setTitle("");
