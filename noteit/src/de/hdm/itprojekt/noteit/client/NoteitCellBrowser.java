@@ -46,12 +46,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			// LEVEL 0.
 			// We passed null as the root value. Return the notebooks.
-			Notebook addNotebook = new Notebook();
-			addNotebook.setId(0);
-			addNotebook.setTitle("");
-			selectionModelNotebook.isSelected(addNotebook);
-
-			notebooksListDataProvider.getList().add(addNotebook);
+			addCreateNewNotebookButton();
 			notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
 				@Override
@@ -150,6 +145,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
+				
 				notebooksListDataProvider.setList(result);
 			}
 
@@ -253,6 +249,15 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 					}
 				});
+	}
+	
+	public static void addCreateNewNotebookButton(){
+		Notebook addNotebook = new Notebook();
+		addNotebook.setId(0);
+		addNotebook.setTitle("");
+		selectionModelNotebook.isSelected(addNotebook);
+
+		notebooksListDataProvider.getList().add(addNotebook);
 	}
 
 }

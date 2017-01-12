@@ -12,6 +12,9 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.CellBrowser;
@@ -24,12 +27,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
@@ -83,11 +88,12 @@ public class Homepage extends VerticalPanel {
 
 	private static final ScheduledCommand Developer = null;
 
+	@SuppressWarnings("deprecation")
 	public void onLoad() {
 		currentUser = Noteit.getCurrentUser();
 
 		((EditNotebook) editNotebook).run();
-		((ShowNote) showNote).run();
+		
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -97,19 +103,13 @@ public class Homepage extends VerticalPanel {
 		cellBrowser.setHeight("500px");
 		cellBrowser.setWidth("430px");
 
-		// dockPanel.add(headerPanel, DockPanel.NORTH);
-		// dockPanel.add(new HTML("This is the first south component."),
-		// DockPanel.SOUTH);
-		// dockPanel.add(showNote, DockPanel.EAST);
-		// dockPanel.add(cellBrowser, DockPanel.WEST);
-
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
 
 		final ListBox listBox1 = new ListBox();
 		listBox1.addItem("Notizbuch");
 		listBox1.addItem("Notiz");
-
+		
 		final ListBox lbSort = new ListBox();
 		lbSort.addItem("Erstelldatum: Absteigend");
 		lbSort.addItem("Erstelldatum: Aufsteigend");
@@ -189,13 +189,6 @@ public class Homepage extends VerticalPanel {
 		tbSearchNotebook.getElement().setPropertyString("placeholder", "Suchen...");
 		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
 
-		/**
-		 * add to the Panels
-		 */
-
-		// navPanel.add(navNotebookPanel);
-		// navPanel.add(navNotesPanel);
-		// contentPanel.add(contentNotesPanel);
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -230,43 +223,47 @@ public class Homepage extends VerticalPanel {
 				System.out.println("Error" + caught);
 			}
 		});
-
-		listBox1.addChangeHandler(new ChangeHandler() {
-
+		
+		
+		tbSearchNotebook.addKeyDownHandler(new KeyDownHandler() {
+			
 			@Override
-			public void onChange(ChangeEvent event) {
-				if (listBox1.getSelectedItemText() == "Notiz") {
-					/**
-					 * Create the ChangeHandler for TextBox for Search Note
-					 * Function.
-					 */
-					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+			public void onKeyDown(KeyDownEvent event) {
+				if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
+					if (listBox1.getSelectedItemText() == "Notiz") {
+						/**
+						 * Create the ChangeHandler for TextBox for Search Note
+						 * Function.
+						 */
+						tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
 
-						@Override
-						public void onValueChange(ValueChangeEvent<String> event) {
-							NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
+							@Override
+							public void onValueChange(ValueChangeEvent<String> event) {
+								NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
 
-						}
-					});
+							}
+						});
 
-				} else {
-					/**
-					 * Create the ChangeHandler for TextBox for Search Notebook
-					 * Function.
-					 */
-					tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+					} else if(listBox1.getSelectedItemText() == "Notizbuch") {
+						/**
+						 * Create the ChangeHandler for TextBox for Search Notebook
+						 * Function.
+						 */
+						tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
+							
+							@Override
+							public void onValueChange(ValueChangeEvent<String> event) {
+								NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
+								
+							}
+						});
 
-						@Override
-						public void onValueChange(ValueChangeEvent<String> event) {
-							NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-
-						}
-					});
-
+					}
 				}
-
+				
 			}
 		});
+		
 
 		lbSort.addChangeHandler(new ChangeHandler() {
 
@@ -344,25 +341,6 @@ public class Homepage extends VerticalPanel {
 		this.add(headlinePanel);
 		this.add(navPanel);
 		this.add(contentPanel);
-
-	}
-
-	// public Homepage(User currentUser){
-	// this.currentUser = currentUser;
-	// }
-
-	public static void showCurrentNote(VerticalPanel vpShowNote) {
-
-		contentPanel.remove(1);
-		vpShowNote.setHeight("300px");
-		vpShowNote.setWidth("500px");
-		contentPanel.add(vpShowNote);
-
-	}
-
-	public static void showNotes() {
-		contentPanel.remove(1);
-		contentPanel.add(contentNotesPanel);
 
 	}
 
@@ -484,6 +462,7 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void showNoteView() {
+		((ShowNote) showNote).run();
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
 
