@@ -46,6 +46,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			// LEVEL 0.
 			// We passed null as the root value. Return the notebooks.
+			
 			addCreateNewNotebookButton();
 			notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
@@ -80,13 +81,14 @@ public class NoteitCellBrowser implements TreeViewModel {
 			notesListDataProvider.getList().clear();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
-			if (((Notebook) value).getId() != 0 && ((Notebook) value).getId() != -1) {
+			if (((Notebook) value).getId() != 0 && ((Notebook) value).getId() != -1 && ((Notebook) value).getPermissionID() != 1) {
 				Note addNote = new Note();
 				addNote.setId(0);
 				addNote.setTitle("");
 				notesListDataProvider.getList().add(addNote);
 
 			}
+			Window.alert("permssion: "+((Notebook) value).getPermissionID());
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
 
