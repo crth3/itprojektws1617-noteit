@@ -88,7 +88,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				notesListDataProvider.getList().add(addNote);
 
 			}
-			Window.alert("permssion: "+((Notebook) value).getPermissionID());
+			
 			notesAdmin.getAllNotesByNotebookID(((Notebook) value).getId(), currentUser.getId(),
 					new AsyncCallback<ArrayList<Note>>() {
 
