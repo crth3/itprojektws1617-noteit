@@ -457,6 +457,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		System.out.println("getAllNotesByNotebookID");
 		System.out.println("nb id: " + notebookID);
 		System.out.println("usr id: " + userID);
+		
+		
+		for(NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByNotebookId(notebookID)){
+			// Alles Notizen ausgeben für einen Notizbuch dass für einen Nutzer freigeben wurde
+			if(foundedNotebookPermission.getUserId() == userID){
+				return nMapper.findNotesByNotebookId(notebookID);
+			}
+		}
 
 		if (notebookID == -1) {
 			//Notebook "Für mich geteilte Noitzen"
@@ -488,9 +496,11 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 				}
 			}
 			return sharedNotes;
-		} else {
-
-			return currentNotes;
+		}else {
+			
+				return currentNotes;
+			
+			
 		}
 
 	}
