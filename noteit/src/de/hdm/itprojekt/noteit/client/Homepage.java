@@ -58,6 +58,7 @@ public class Homepage extends VerticalPanel {
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
 	static VerticalPanel editNotebook = new EditNotebook();
+	Settings settings = new Settings();
 
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
@@ -94,6 +95,8 @@ public class Homepage extends VerticalPanel {
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
+		((Settings) settings).run();
+		
 		
 
 		// CellBrowser
@@ -121,10 +124,9 @@ public class Homepage extends VerticalPanel {
 
 		Command settingDialog = new Command() {
 			public void execute() {
-				Settings settings = new Settings(currentUser);
-				settings.show();
-				settings.center();
-				settings.setGlassEnabled(true);
+				
+				contentPanel.remove(1);
+				contentPanel.add(settings);
 			}
 		};
 
