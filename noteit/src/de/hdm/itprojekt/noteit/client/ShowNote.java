@@ -260,6 +260,7 @@ public class ShowNote extends VerticalPanel {
 			
 			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
+				Window.alert("ID: "+currentNote.getId());
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {

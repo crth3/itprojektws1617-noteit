@@ -93,6 +93,7 @@ public class Homepage extends VerticalPanel {
 		currentUser = Noteit.getCurrentUser();
 
 		((EditNotebook) editNotebook).run();
+		((ShowNote) showNote).run();
 		
 
 		// CellBrowser
@@ -462,7 +463,6 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void showNoteView() {
-		((ShowNote) showNote).run();
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
 
