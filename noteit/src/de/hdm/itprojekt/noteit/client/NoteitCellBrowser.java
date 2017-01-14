@@ -29,6 +29,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static User currentUser = Noteit.getCurrentUser();
 	private static Notebook selectedNotebook = new Notebook();
 	private static Note selectedNote = new Note();
+	
+	private static Notebook addNotebook = new Notebook();
+	private static Note addNote = new Note();
 
 	private static final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private static final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
@@ -145,6 +148,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 
 	public static void searchNotebookByKeyword(int userID, String keyword) {
+		
+		
 
 		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
 
@@ -215,9 +220,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 	// }
 
 	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes) {
-		Note addNote = new Note();
-		addNote.setId(0);
-		addNote.setTitle("");
+		
+//		addNote.setId(0);
+//		addNote.setTitle("");
 		sortedNotes.add(0, addNote);
 		notesListDataProvider.setList(sortedNotes);
 	}
@@ -230,9 +235,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 		notesListDataProvider.getList().clear();
 		// LEVEL 1.
 		// We want the children of the notebook. Return the notes.
-			Note addNote = new Note();
-			addNote.setId(0);
-			addNote.setTitle("");
+//			Note addNote = new Note();
+//			addNote.setId(0);
+//			addNote.setTitle("");
 			notesListDataProvider.getList().add(addNote);
 
 		
@@ -257,7 +262,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 	
 	public static void addCreateNewNotebookButton(){
-		Notebook addNotebook = new Notebook();
+		
 		addNotebook.setId(0);
 		addNotebook.setTitle("");
 		selectionModelNotebook.isSelected(addNotebook);
