@@ -71,8 +71,8 @@ public class EditNotebook extends VerticalPanel {
 
 	static Button btnNotebookSave = new Button("Fertig");
 	static Button btnNotebookDelete = new Button("Löschen");
-	static Button btnAddPermission = new Button("✔︎");
-	static Button btnDeletePermission = new Button("𐄂");
+	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
+	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 	

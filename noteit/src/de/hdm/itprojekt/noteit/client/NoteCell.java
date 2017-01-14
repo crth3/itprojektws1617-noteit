@@ -36,7 +36,7 @@ public class NoteCell extends AbstractCell<Note> {
 		if(value.getUserId() != Homepage.getCurrentUser().getId()&&value.getId() != 0){
 
 			
-			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
+			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"12\" height=\"12\">");
 			
 		}else if(value.getTitle() == "" && value.getId() == 0){
 			sb.appendHtmlConstant("<img src='Images/button_add.png'/ width=\"25\" height=\"25\">");
