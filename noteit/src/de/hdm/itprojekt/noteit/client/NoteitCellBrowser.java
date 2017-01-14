@@ -112,6 +112,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 		} else if (value instanceof Note) {
 
 			selectedNote = selectionModelNote.getLastSelectedObject();
+			Window.alert("ID"+ selectedNote.getId());
 
 			if (((Note) value).getId() != 0) {
 				ShowNote.setCurrentNotebook(selectedNotebook);
