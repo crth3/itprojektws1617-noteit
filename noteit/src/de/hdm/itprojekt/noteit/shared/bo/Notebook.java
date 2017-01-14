@@ -133,10 +133,18 @@ public class Notebook extends BusinessObjects {
 		this.note = note;
 	}
 
+	/**
+	 * Ausgabe der Berechtigung für dieses Notizbuch
+	 * @return
+	 */
 	public int getPermissionID() {
 		return permissionID;
 	}
 
+	/**
+	 * Setzen der Berechtigung für dieses Notizbuch
+	 * @param permissionID
+	 */
 	public void setPermissionID(int permissionID) {
 		this.permissionID = permissionID;
 	}

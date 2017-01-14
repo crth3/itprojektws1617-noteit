@@ -114,8 +114,10 @@ public class NoteitCellBrowser implements TreeViewModel {
 			selectedNote = selectionModelNote.getLastSelectedObject();
 
 			if (((Note) value).getId() != 0) {
+				ShowNote.setCurrentNotebook(selectedNotebook);
 				ShowNote.getAllPermittedUsersbyNoteID(selectionModelNote.getLastSelectedObject().getId());
 				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
+				
 			} else {
 				ShowNote.tbNoteTitel.setText("");
 				ShowNote.tbNoteSubTitel.setText("");

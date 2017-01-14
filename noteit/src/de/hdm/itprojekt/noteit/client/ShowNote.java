@@ -80,6 +80,7 @@ public class ShowNote extends VerticalPanel {
 	static RichTextArea content = new RichTextArea();
 
 	static Note currentNote = new Note();
+	static Notebook currentNotebook = new Notebook();
 
 	static RadioButton rbRead = new RadioButton("permission", "lesen");
 	static RadioButton rbWrite = new RadioButton("permission", "bearbeiten");
@@ -418,7 +419,7 @@ public class ShowNote extends VerticalPanel {
 			dateBox.setValue(null);
 		} 
 		
-		if(currentNote.getPermissionID() == 1){
+		if(currentNote.getPermissionID() == 1 || currentNotebook.getPermissionID() == 1){
 			
 			btnSaveNote.setEnabled(false);
 			btnDeleteNote.setEnabled(false);
@@ -427,7 +428,7 @@ public class ShowNote extends VerticalPanel {
 			lblPermissionInformationWrite.setVisible(false);
 			lblPermissionInformationDelete.setVisible(false);
 			lblPermissionInformationRead.setVisible(true);
-		}else if(currentNote.getPermissionID() == 2){
+		}else if(currentNote.getPermissionID() == 2 || currentNotebook.getPermissionID() == 2){
 			btnSaveNote.setEnabled(true);
 			btnDeleteNote.setEnabled(false);
 			btnAddNotePermission.setEnabled(true);
@@ -440,7 +441,7 @@ public class ShowNote extends VerticalPanel {
 			btnDeleteNote.setEnabled(true);
 			btnAddNotePermission.setEnabled(true);
 			btnDeletePermission.setEnabled(true);
-			if(currentNote.getPermissionID()==3){
+			if(currentNote.getPermissionID()==3 || currentNotebook.getPermissionID() == 3){
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(true);
 				lblPermissionInformationRead.setVisible(false);
@@ -495,5 +496,10 @@ public class ShowNote extends VerticalPanel {
 		}
 
 	};
+	
+	public static void setCurrentNotebook(Notebook notebook){
+		currentNotebook = notebook;
+	}
+	
 
 }
