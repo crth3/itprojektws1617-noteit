@@ -138,7 +138,7 @@ public class Noteit implements EntryPoint {
 
 				if (loginInfo.isLoggedIn() == true) {
 
-					logger.log(Level.SEVERE, "noch eingeloggt: " + loginInfo.getEmailAddress());
+					logger.log(Level.SEVERE, "bei Google eingeloggt: " + loginInfo.getEmailAddress());
 
 					notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
@@ -172,7 +172,7 @@ public class Noteit implements EntryPoint {
 											@Override
 											public void onSuccess(User result) {
 												currentUser = result;
-												logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
+												logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser.getMail()+ " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
 												ImpressumPanel = new Impressum();
