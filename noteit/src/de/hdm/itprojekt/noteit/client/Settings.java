@@ -89,7 +89,7 @@ public class Settings extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Homepage homepage = new Homepage();
+				//Homepage homepage = new Homepage();
 
 				Homepage.contentPanel.remove(1);
 				Homepage.contentPanel.setHeight("300px");
@@ -116,7 +116,7 @@ public class Settings extends VerticalPanel {
 							// noch genauso funktionieren?
 							@Override
 							public void onSuccess(Void result) {
-								VerticalPanel homepage = new Homepage();
+							//	VerticalPanel homepage = new Homepage();
 								Noteit.setWelcomeName(tbFirstName.getText());
 								currentUser.setFirstName(tbFirstName.getText());
 								currentUser.setFirstName(tbFirstName.getText());
