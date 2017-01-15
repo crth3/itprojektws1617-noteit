@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.appengine.api.search.query.QueryParser.value_return;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -18,6 +19,7 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
@@ -96,7 +98,9 @@ public class Homepage extends VerticalPanel {
 	
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
-		// currentUser = Noteit.getCurrentUser();
+		
+		String url = Noteit.getValue_URL();
+		Window.alert("URL vorhanden!" + url);
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
@@ -351,6 +355,7 @@ public class Homepage extends VerticalPanel {
 		this.add(headlinePanel);
 		this.add(navPanel);
 		this.add(contentPanel);
+		
 
 	}
 	

@@ -14,6 +14,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
@@ -52,6 +53,7 @@ public class Noteit implements EntryPoint {
 	 * Login-Widgets
 	 */
 	public static LoginInfo loginInfo = null;
+	public final static String value_URL = Window.Location.getParameter("url");
 	private static VerticalPanel loginPanel = new VerticalPanel();
 	private static Label loginLabel = new Label("Melde dich mit deinem Google-Konto an um Noteit nutzen zu können.");
 	private static Anchor signInLink = new Anchor("Sign In");
@@ -91,11 +93,21 @@ public class Noteit implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-
+	 private static Storage stockStore = null;
 	public void onModuleLoad() {
 
-		String value_URL = Window.Location.getParameter("url");
-
+		 
+		  stockStore = Storage.getSessionStorageIfSupported();
+		  
+		  if (stockStore != null){
+			  if(value_URL != null){
+				  stockStore.setItem("url", value_URL);
+				  logger.log(Level.SEVERE, "URL in Storage geschrieben " + value_URL);
+			  }
+			  
+		  }
+		  
+		  
 		/**
 		 * Set the Style
 		 */
@@ -150,9 +162,7 @@ public class Noteit implements EntryPoint {
 								HomepagePanel = new Homepage(result);
 								ImpressumPanel = new Impressum();
 								RootPanel.get().add(HomepagePanel);
-								RootPanel.get().add(ImpressumPanel);	
-						
-						
+								RootPanel.get().add(ImpressumPanel);
 
 							} else if (mail != null) {
 
@@ -172,7 +182,8 @@ public class Noteit implements EntryPoint {
 											@Override
 											public void onSuccess(User result) {
 												currentUser = result;
-												logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser.getMail()+ " " + currentUser.getFirstName());
+												logger.log(Level.SEVERE, "Neuen Nutzer angelegt "
+														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
 												ImpressumPanel = new Impressum();
@@ -192,8 +203,6 @@ public class Noteit implements EntryPoint {
 
 						}
 					});
-					
-				
 
 				} else {
 					logger.log(Level.SEVERE, "LOAD Login");
@@ -224,6 +233,12 @@ public class Noteit implements EntryPoint {
 		});
 
 	}
+
+	public static String getValue_URL() {
+		String url = stockStore.getItem(stockStore.key(0));
+		 return url;
+	}
+
 
 	public static void loadLogin() {
 		// Assemble login panel.

@@ -31,6 +31,7 @@ import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
+
 public class ShowNote extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
