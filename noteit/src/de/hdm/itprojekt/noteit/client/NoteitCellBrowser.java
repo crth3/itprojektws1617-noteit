@@ -115,7 +115,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 		} else if (value instanceof Note) {
 
 			selectedNote = selectionModelNote.getLastSelectedObject();
-			Window.alert("ID"+ selectedNote.getId());
+	
 
 			if (((Note) value).getId() != 0) {
 				ShowNote.setCurrentNotebook(selectedNotebook);
@@ -186,7 +186,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	public static void deleteNotebook() {
 		int newID = selectedNotebook.getId();
 		newID--;
-		Window.alert("neue id " + newID);
+
 		notebooksListDataProvider.getList().remove(selectedNotebook);
 		selectedNotebook.setId(newID);
 		selectionModelNotebook.setSelected(selectedNotebook, true);
@@ -195,7 +195,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	public static void deleteNote() {
 		int newId = selectedNote.getId();
 		newId--;
-		Window.alert("neue id " + newId);
+
 		notesListDataProvider.getList().remove(selectedNote);
 		selectedNote.setId(newId);
 		selectionModelNote.setSelected(selectedNote, true);

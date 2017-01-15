@@ -89,9 +89,13 @@ public class Homepage extends VerticalPanel {
 
 	private static final ScheduledCommand Developer = null;
 
+	public Homepage(User cU) {
+		currentUser = cU;
+	}
+
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
-		currentUser = Noteit.getCurrentUser();
+		//currentUser = Noteit.getCurrentUser();
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();

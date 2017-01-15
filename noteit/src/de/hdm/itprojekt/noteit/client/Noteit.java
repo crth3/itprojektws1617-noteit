@@ -53,8 +53,7 @@ public class Noteit implements EntryPoint {
 	 */
 	public static LoginInfo loginInfo = null;
 	private static VerticalPanel loginPanel = new VerticalPanel();
-	private static Label loginLabel = new Label(
-			"Melde dich mit deinem Google-Konto an um Noteit nutzen zu können.");
+	private static Label loginLabel = new Label("Melde dich mit deinem Google-Konto an um Noteit nutzen zu können.");
 	private static Anchor signInLink = new Anchor("Sign In");
 	// private Anchor signOutLink = new Anchor("Sign Out");
 
@@ -75,7 +74,6 @@ public class Noteit implements EntryPoint {
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
 	final HorizontalPanel logoutPanel = new HorizontalPanel();
-	final VerticalPanel homepage = new Homepage();
 	final VerticalPanel showNote = new ShowNote();
 
 	/**
@@ -108,7 +106,7 @@ public class Noteit implements EntryPoint {
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
-		homepage.setStylePrimaryName("homepage");
+		// homepage.setStylePrimaryName("homepage");
 
 		/**
 		 * add the widgets
@@ -126,7 +124,7 @@ public class Noteit implements EntryPoint {
 		 */
 		// Check login status using login service.
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		
+
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
 				logger.log(Level.SEVERE, "ERROR Login" + error);
@@ -135,89 +133,74 @@ public class Noteit implements EntryPoint {
 			public void onSuccess(LoginInfo result) {
 
 				loginInfo = result;
-				
-	
+
 				final String mail = loginInfo.getEmailAddress();
-				notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
-					@Override
-					public void onSuccess(User result) {
-						if (result != null) {
-							logger.log(Level.SEVERE, "Nutzer gefunden: " + result);
-							currentUser = result;
-							// SettingsPanel = new Settings(currentUser,
-							// loginInfo);
-							HomepagePanel = new Homepage();
-							ImpressumPanel = new Impressum();
-
-						} else if (mail != null) {
-							
-							logger.log(Level.SEVERE, "Neuen Nutzer anlegen-mail, vorname, nachname " + loginInfo.getEmailAddress()+loginInfo.getFirstName()+loginInfo.getLastName());
-						
-							notesAdministrationService.createUser(mail, loginInfo.getFirstName(), loginInfo.getLastName(), new AsyncCallback<User>() {
-
-										@Override
-										public void onFailure(Throwable caught) {
-											logger.log(Level.SEVERE, "RPC Fehler " + caught);
-
-										}
-
-										@Override
-										public void onSuccess(User result) {
-											currentUser = result;
-											logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
-											HomepagePanel = new Homepage();
-											ImpressumPanel = new Impressum();
-
-										}
-									});
-							
-						
-
-						}
-
-					}
-
-					@Override
-					public void onFailure(Throwable caught) {
-						logger.log(Level.SEVERE, "Error Login: " + caught);
-
-					}
-				});
-				
-			
 				if (loginInfo.isLoggedIn() == true) {
-					
-					logger.log(Level.SEVERE, "MAIL: "+loginInfo.getEmailAddress());
-					
-					notesAdministrationService.findUserByMail(loginInfo.getEmailAddress(), new AsyncCallback<User>() {
 
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
+					logger.log(Level.SEVERE, "noch eingeloggt: " + loginInfo.getEmailAddress());
+
+					notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
 						@Override
 						public void onSuccess(User result) {
-							logger.log(Level.SEVERE, "IS LOGGED IN!!!!!!!");
-							//logger.log(Level.SEVERE, "RESULT: "+result.getId());
-							//currentUser = result;
-							RootPanel.get().add(vpBasisPanel);
-							RootPanel.get("content").add(homepage);
-							
+							if (result != null) {
+								logger.log(Level.SEVERE, "Nutzer gefunden: " + result);
+								currentUser = result;
+								HomepagePanel = new Homepage(result);
+								ImpressumPanel = new Impressum();
+								RootPanel.get().add(HomepagePanel);
+								RootPanel.get().add(ImpressumPanel);	
+						
+						
+
+							} else if (mail != null) {
+
+								logger.log(Level.SEVERE,
+										"Neuen Nutzer anlegen-mail, vorname, nachname " + loginInfo.getEmailAddress()
+												+ loginInfo.getFirstName() + loginInfo.getLastName());
+
+								notesAdministrationService.createUser(mail, loginInfo.getFirstName(),
+										loginInfo.getLastName(), new AsyncCallback<User>() {
+
+											@Override
+											public void onFailure(Throwable caught) {
+												logger.log(Level.SEVERE, "RPC Fehler " + caught);
+
+											}
+
+											@Override
+											public void onSuccess(User result) {
+												currentUser = result;
+												logger.log(Level.SEVERE, "Neuen Nutzer angelegt " + currentUser);
+												currentUser = result;
+												HomepagePanel = new Homepage(result);
+												ImpressumPanel = new Impressum();
+												RootPanel.get().add(HomepagePanel);
+												RootPanel.get().add(ImpressumPanel);
+
+											}
+										});
+
+							}
+
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							logger.log(Level.SEVERE, "Error Login: " + caught);
+
 						}
 					});
 					
-					
-					// RootPanel.get("head").add(headerPanel);
-
-					// Hier muss auf die Hompage-Steie verwiesen werden
+				
 
 				} else {
-					logger.log(Level.SEVERE, "LOAD Login" + result.getEmailAddress());
+					logger.log(Level.SEVERE, "LOAD Login");
 					loadLogin();
-				}}
+				}
+
+			}
 		});
 
 		// ClickHandler für Impressum Button
