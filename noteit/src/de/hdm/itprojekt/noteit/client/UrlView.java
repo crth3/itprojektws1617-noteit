@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -26,7 +27,14 @@ public class UrlView extends DialogBox {
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 
 	Label label = new Label("Verfuegbare Notebooks:");
-	TextBox url = new TextBox();
+	static Label lblUrl = new Label("Url");
+	static Label lblNoteTitel = new Label("Titel");
+	static Label lblNoteDate = new Label();
+	static Label lblNoteSubTitel = new Label("Subtitel");
+	static Label lblNoteText = new Label("Deine Notiz");
+	static Label lblNoteMaturity = new Label("Fälligkeitsdatum");
+	
+	TextArea url = new TextArea();
 	TextBox titel = new TextBox();
 	TextBox subtitel = new TextBox();
 	ListBox lbNotebook = new ListBox();
@@ -43,9 +51,10 @@ public class UrlView extends DialogBox {
 
 		// DialogBox is a SimplePanel, so you have to set its widget
 		// property to whatever you want its contents to be.
-		Button ok = new Button("Speichern");
-		ok.addClickHandler(new ClickHandler() {
+		Button btnSave = new Button("Speichern");
+		btnSave.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+			//	notesAdmin.createNote(titel.getText(), null, url.getText(), date, u, source, notebookID, callback);
 				UrlView.this.hide();
 			}
 		});
@@ -77,10 +86,14 @@ public class UrlView extends DialogBox {
 		panel.setSpacing(10);
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-		panel.add(url);
+		
+		panel.add(lblNoteTitel);
+		panel.add(titel);
 		panel.add(label);
 		panel.add(lbNotebook);
-		panel.add(ok);
+		panel.add(lblUrl);
+		panel.add(url);
+		panel.add(btnSave);
 
 		setWidget(panel);
 
