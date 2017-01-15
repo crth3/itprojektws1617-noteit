@@ -235,8 +235,8 @@ public class Noteit implements EntryPoint {
 	}
 
 	public static String getValue_URL() {
-		String url = stockStore.getItem(stockStore.key(0));
-		 return url;
+		return stockStore.getItem(stockStore.key(0));
+		
 	}
 
 

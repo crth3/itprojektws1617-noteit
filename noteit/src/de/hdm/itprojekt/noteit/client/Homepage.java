@@ -100,11 +100,12 @@ public class Homepage extends VerticalPanel {
 	public void onLoad() {
 		
 		String url = Noteit.getValue_URL();
-		Window.alert("URL vorhanden!" + url);
+		
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
+	
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -356,7 +357,10 @@ public class Homepage extends VerticalPanel {
 		this.add(navPanel);
 		this.add(contentPanel);
 		
-
+	if(url != null){
+		UrlView dialogBox = new UrlView();
+		dialogBox.show();
+	}
 	}
 	
 
