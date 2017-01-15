@@ -264,52 +264,5 @@ public interface NotesAdministration extends RemoteService {
 	public ArrayList<Notebook> getAllNotebooks() throws IllegalArgumentException;
 	
 	public Notebook findNotebookById(int notebookId) throws IllegalArgumentException;
-	
-	/**
-	 * Absteigend sortieren nach Fälligkeitsdatum
-	 * @param notebookID
-	 * @return
-	 */
-	public ArrayList<Note> sortNotesMaturityDesc(int notebookID) throws IllegalArgumentException;
-	
-	/**
-	 * Aufsteigend sortieren nach Fälligkeitsdatum
-	 * @param notebookID
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Note> sortNotesByMaturityAsc(int notebookID) throws IllegalArgumentException;
-	
-	/**
-	 * Absteigend sortieren nach Erstelldatum
-	 * @param notebookID
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Note> sortNotesCreationDateDesc(int notebookID) throws IllegalArgumentException;
-	
-	/**
-	 * Aufsteigend sortieren nach Erstelldatum
-	 * @param notebookID
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Note> sortNotesCreationDateAsc(int notebookID) throws IllegalArgumentException;
-	
-	/**
-	 * Absteigend sortieren nach Änderungsdatum
-	 * @param notebookID
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Note> sortNotesModificationDateDesc(int notebookID) throws IllegalArgumentException;
-	
-	/**
-	 * Aufsteigend sortieren nach Änderungsdatum
-	 * @param notebookID
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Note> sortNotesModificationDateAsc(int notebookID) throws IllegalArgumentException;
-	
+		
 }
