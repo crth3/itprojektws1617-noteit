@@ -30,7 +30,7 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
-import de.hdm.itprojekt.noteit.client.Notification;
+
 
 public class ShowNote extends VerticalPanel {
 
