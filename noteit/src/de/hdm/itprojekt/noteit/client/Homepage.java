@@ -76,7 +76,7 @@ public class Homepage extends VerticalPanel {
 	// src='Images/plus.png'/ width=\"15\" height=\"15\">");
 
 	// --------- Text Box -----------//
-	final TextBox tbSearchNotebook = new TextBox();
+	final TextBox tbSearch = new TextBox();
 
 	// --------- Noteit Class -----------//
 	static User currentUser = new User();
@@ -93,6 +93,7 @@ public class Homepage extends VerticalPanel {
 		currentUser = cU;
 	}
 
+	
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
 		// currentUser = Noteit.getCurrentUser();
@@ -112,11 +113,22 @@ public class Homepage extends VerticalPanel {
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
 
-		final ListBox listBox1 = new ListBox();
+		final ListBox listBox1 = new ListBox(){
+	        @Override
+	        public void setSelectedIndex(int index) {
+	            super.setSelectedIndex(index);
+	        }
+	    };
 		listBox1.addItem("Notizbuch");
 		listBox1.addItem("Notiz");
+		
 
-		final ListBox lbSort = new ListBox();
+		final ListBox lbSort = new ListBox(){
+	        @Override
+	        public void setSelectedIndex(int index) {
+	            super.setSelectedIndex(index);
+	        }
+	    };
 		lbSort.addItem("Erstelldatum: Absteigend");
 		lbSort.addItem("Erstelldatum: Aufsteigend");
 		lbSort.addItem("Änderungsdatum: Absteigend");
@@ -154,6 +166,11 @@ public class Homepage extends VerticalPanel {
 		final String image = "<img src='Images/user.png' height='20px' width='20px'/>";
 
 		SafeHtml addActivityImagePath = new SafeHtml() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String asString() {
 				return image;
@@ -173,7 +190,7 @@ public class Homepage extends VerticalPanel {
 		navPanel.setStylePrimaryName("navPanel");
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
-		tbSearchNotebook.setStyleName("textbox");
+		tbSearch.setStyleName("textbox");
 		// btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment
@@ -187,7 +204,7 @@ public class Homepage extends VerticalPanel {
 		headlinePanel.add(lbheadlineNoteit);
 		navLeftPanel.add(listBox1);
 		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
-		navLeftPanel.add(tbSearchNotebook);
+		navLeftPanel.add(tbSearch);
 		navLeftPanel.add(lbSortNotes);
 		navLeftPanel.add(lbSort);
 		// TODO Sortierung in GUI implemntieren mit RPC
@@ -200,8 +217,8 @@ public class Homepage extends VerticalPanel {
 		 * create the TextBox for Notebook Search, and include it to the Panel
 		 */
 
-		tbSearchNotebook.getElement().setPropertyString("placeholder", "Suchen...");
-		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
+		tbSearch.getElement().setPropertyString("placeholder", "Suchen...");
+		tbSearch.setStylePrimaryName("tbSearchNotebook");
 
 		/**
 		 * Add all notebooks at start to the panel
@@ -236,39 +253,22 @@ public class Homepage extends VerticalPanel {
 				System.out.println("Error" + caught);
 			}
 		});
-
-		tbSearchNotebook.addKeyDownHandler(new KeyDownHandler() {
+		tbSearch.addKeyDownHandler(new KeyDownHandler() {
 
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					if (listBox1.getSelectedItemText() == "Notiz") {
 						/**
-						 * Create the ChangeHandler for TextBox for Search Note
-						 * Function.
+						 * Search Note Function.
 						 */
-						tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-							@Override
-							public void onValueChange(ValueChangeEvent<String> event) {
-								NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), event.getValue());
-
-							}
-						});
+						NoteitCellBrowser.searchNoteByKeyword(currentUser.getId(), tbSearch.getValue());
 
 					} else if (listBox1.getSelectedItemText() == "Notizbuch") {
 						/**
-						 * Create the ChangeHandler for TextBox for Search
-						 * Notebook Function.
+						 * Search Notebook Function.
 						 */
-						tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-							@Override
-							public void onValueChange(ValueChangeEvent<String> event) {
-								NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-
-							}
-						});
+						NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), tbSearch.getValue());
 
 					}
 				}
@@ -353,6 +353,7 @@ public class Homepage extends VerticalPanel {
 		this.add(contentPanel);
 
 	}
+	
 
 	/**
 	 * set all notes from selected notebook

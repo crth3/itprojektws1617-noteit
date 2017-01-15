@@ -1,6 +1,7 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,7 +86,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
 			if (((Notebook) value).getId() != 0 && ((Notebook) value).getId() != -1 && ((Notebook) value).getPermissionID() != 1) {
-				Note addNote = new Note();
+				
 				addNote.setId(0);
 				addNote.setTitle("");
 				notesListDataProvider.getList().add(addNote);
@@ -149,38 +150,52 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	public static void searchNotebookByKeyword(int userID, String keyword) {
 		
-		
+		ArrayList<Notebook> searchedNotebooks = new ArrayList<Notebook>();
 
-		notesAdmin.findNotebooksByKeyword(userID, keyword, new AsyncCallback<ArrayList<Notebook>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Notebook> result) {
-				
-				notebooksListDataProvider.setList(result);
+		if (keyword != "") {
+			// Notizbuch in aktueller NotebookList durchsuchen
+			for (Notebook foundedNotebook : notebooksListDataProvider.getList()) {
+				String title = foundedNotebook.getTitle().toLowerCase();
+				if (title.contains(keyword)) {
+					searchedNotebooks.add(foundedNotebook);
+				}
 			}
+			notebooksListDataProvider.setList(searchedNotebooks);
+		}else{
+			updateNotebooks();	
+		}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println("Error find notebook " + caught);
-
-			}
-		});
 	}
 
 	public static void searchNoteByKeyword(int userID, String keyword) {
 		rootLogger.log(Level.SEVERE,
 				"userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
-		notesAdmin.findNoteByKeyword(userID, keyword, selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+		ArrayList<Note> searchedNote = new ArrayList<Note>();
 
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-				notesListDataProvider.setList(result);
+		if (keyword != "") {
+			// Notizbuch in aktueller NotebookList durchsuchen
+			for (Note foundedNote : notesListDataProvider.getList()) {
+				String title = foundedNote.getTitle().toLowerCase();
+				if (title.contains(keyword)) {
+					searchedNote.add(foundedNote);
+				}
 			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
+			notesListDataProvider.setList(searchedNote);
+		}else{
+			updateNotes();
+		}
+		
+//		notesAdmin.findNoteByKeyword(userID, keyword, selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
+//
+//			@Override
+//			public void onSuccess(ArrayList<Note> result) {
+//				notesListDataProvider.setList(result);
+//			}
+//
+//			@Override
+//			public void onFailure(Throwable caught) {
+//			}
+//		});
 	}
 
 	public static void deleteNotebook() {
@@ -233,23 +248,13 @@ public class NoteitCellBrowser implements TreeViewModel {
 	
 	public static void updateNotes(){
 		notesListDataProvider.getList().clear();
-		// LEVEL 1.
-		// We want the children of the notebook. Return the notes.
-//			Note addNote = new Note();
-//			addNote.setId(0);
-//			addNote.setTitle("");
-			notesListDataProvider.getList().add(addNote);
-
-		
 		notesAdmin.getAllNotesByNotebookID(selectedNotebook.getId(), currentUser.getId(),
 				new AsyncCallback<ArrayList<Note>>() {
 
 					@Override
 					public void onSuccess(ArrayList<Note> result) {
-
-						for (Note note : result) {
-							notesListDataProvider.getList().add(note);
-						}
+						result.add(0, addNote);
+						notesListDataProvider.setList(result);
 
 					}
 
@@ -259,6 +264,25 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 					}
 				});
+	}
+	
+	public static void updateNotebooks(){
+		notebooksListDataProvider.getList().clear();
+		notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
+
+			@Override
+			public void onSuccess(ArrayList<Notebook> result) {
+				result.add(0, addNotebook);
+				notebooksListDataProvider.setList(result);
+
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 	
 	public static void addCreateNewNotebookButton(){
