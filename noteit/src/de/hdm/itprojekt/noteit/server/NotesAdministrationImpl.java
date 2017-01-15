@@ -72,17 +72,17 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
 		
-		User user;
-		User u = null;
+		
+		
 
 		if (mail != null) {
 			System.out.println("In der createUser");
-			user = new User();
+			User user = new User();
 
 			user.setMail(mail);
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
-			u = this.uMapper.insert(user);
+			User u = this.uMapper.insert(user);
 			return u;
 			// try {
 			// user.setMail(mail);

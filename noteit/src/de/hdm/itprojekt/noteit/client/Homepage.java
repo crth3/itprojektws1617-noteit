@@ -17,6 +17,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
@@ -27,6 +28,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -87,21 +89,17 @@ public class Homepage extends VerticalPanel {
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
 
-	private static final ScheduledCommand Developer = null;
-
 	public Homepage(User cU) {
 		currentUser = cU;
 	}
 
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
-		//currentUser = Noteit.getCurrentUser();
+		// currentUser = Noteit.getCurrentUser();
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
-		
-		
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -117,7 +115,7 @@ public class Homepage extends VerticalPanel {
 		final ListBox listBox1 = new ListBox();
 		listBox1.addItem("Notizbuch");
 		listBox1.addItem("Notiz");
-		
+
 		final ListBox lbSort = new ListBox();
 		lbSort.addItem("Erstelldatum: Absteigend");
 		lbSort.addItem("Erstelldatum: Aufsteigend");
@@ -128,7 +126,7 @@ public class Homepage extends VerticalPanel {
 
 		Command settingDialog = new Command() {
 			public void execute() {
-				
+
 				contentPanel.remove(1);
 				contentPanel.add(settings);
 			}
@@ -153,7 +151,16 @@ public class Homepage extends VerticalPanel {
 		settings.addItem("Developer", showHTML);
 		settings.addItem("Abmelden", logout);
 		MenuBar menu = new MenuBar();
-		menu.addItem(currentUser.getFirstName(), settings);
+		final String image = "<img src='Images/user.png' height='20px' width='20px'/>";
+
+		SafeHtml addActivityImagePath = new SafeHtml() {
+			@Override
+			public String asString() {
+				return image;
+			}
+		};
+
+		menu.addItem(addActivityImagePath, settings);
 
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
@@ -196,7 +203,6 @@ public class Homepage extends VerticalPanel {
 		tbSearchNotebook.getElement().setPropertyString("placeholder", "Suchen...");
 		tbSearchNotebook.setStylePrimaryName("tbSearchNotebook");
 
-
 		/**
 		 * Add all notebooks at start to the panel
 		 */
@@ -230,13 +236,12 @@ public class Homepage extends VerticalPanel {
 				System.out.println("Error" + caught);
 			}
 		});
-		
-		
+
 		tbSearchNotebook.addKeyDownHandler(new KeyDownHandler() {
-			
+
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					if (listBox1.getSelectedItemText() == "Notiz") {
 						/**
 						 * Create the ChangeHandler for TextBox for Search Note
@@ -251,26 +256,25 @@ public class Homepage extends VerticalPanel {
 							}
 						});
 
-					} else if(listBox1.getSelectedItemText() == "Notizbuch") {
+					} else if (listBox1.getSelectedItemText() == "Notizbuch") {
 						/**
-						 * Create the ChangeHandler for TextBox for Search Notebook
-						 * Function.
+						 * Create the ChangeHandler for TextBox for Search
+						 * Notebook Function.
 						 */
 						tbSearchNotebook.addValueChangeHandler(new ValueChangeHandler<String>() {
-							
+
 							@Override
 							public void onValueChange(ValueChangeEvent<String> event) {
 								NoteitCellBrowser.searchNotebookByKeyword(currentUser.getId(), event.getValue());
-								
+
 							}
 						});
 
 					}
 				}
-				
+
 			}
 		});
-		
 
 		lbSort.addChangeHandler(new ChangeHandler() {
 
@@ -283,7 +287,7 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		lbSort.addChangeHandler(new ChangeHandler() {
 
 			@Override
@@ -295,7 +299,6 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
 
 		lbSort.addChangeHandler(new ChangeHandler() {
 
@@ -308,7 +311,7 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		lbSort.addChangeHandler(new ChangeHandler() {
 
 			@Override
@@ -320,7 +323,7 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		lbSort.addChangeHandler(new ChangeHandler() {
 
 			@Override
@@ -332,7 +335,7 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		lbSort.addChangeHandler(new ChangeHandler() {
 
 			@Override
@@ -475,8 +478,9 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void showHTML() {
-		Window.alert("F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
-				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
+		Window.alert(
+				"F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
+						+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
 	// absteigend sortieren nach Fälligkeitsdatum
@@ -486,7 +490,6 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Note> result) {
 
-				
 				NoteitCellBrowser.setNotesListDataProvider(result);
 
 			}
