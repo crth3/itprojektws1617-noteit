@@ -160,7 +160,7 @@ public class Homepage extends VerticalPanel {
 
 		MenuBar settings = new MenuBar(true);
 		settings.addItem("Profil", settingDialog);
-		settings.addItem("Developer", showHTML);
+		settings.addItem("Entwickler", showHTML);
 		settings.addItem("Abmelden", logout);
 		MenuBar menu = new MenuBar();
 		final String image = "<img src='Images/user.png' height='20px' width='20px'/>";
@@ -480,122 +480,43 @@ public class Homepage extends VerticalPanel {
 
 	public static void showHTML() {
 		Window.alert(
-				"F�gen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gew�nschten Website ein\n\n  "
+				"Fügen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gewünschten Website ein\n\n  "
 						+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
 	// absteigend sortieren nach Fälligkeitsdatum
 	public void sortNotesMaturityDesc() {
-		notesAdmin.sortNotesMaturityDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesMaturityDesc(selectedNotebook.getId());
 	}
 
 	// aufsteigend sortieren nach Fälligkeitsdatum
 	public void sortNotesMaturityAsc() {
-		notesAdmin.sortNotesByMaturityAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesByMaturityAsc(selectedNotebook.getId());
+		
 	}
 
 	// absteigend sortieren nach Erstelldatum
 	public void sortNotesCreationDesc() {
-		notesAdmin.sortNotesCreationDateDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesCreationDateDesc(selectedNotebook.getId());
+		
 	}
 
 	// aufsteigend sortieren nach Erstelldatum
 	public void sortNotesCreationDateAsc() {
-		notesAdmin.sortNotesCreationDateAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesCreationDateAsc(selectedNotebook.getId());
+		
 	}
 
 	// absteigend sortieren nach Änderungsdatum
 	public void sortNotesModificationDateDesc() {
-		notesAdmin.sortNotesModificationDateDesc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesModificationDateDesc(selectedNotebook.getId());
+		
 	}
 
 	// aufsteigend sortieren nach Änderungsdatum
 	public void sortNotesModificationDateAsc() {
-		notesAdmin.sortNotesModificationDateAsc(selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-
-			@Override
-			public void onSuccess(ArrayList<Note> result) {
-
-				NoteitCellBrowser.setNotesListDataProvider(result);
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
+		
 	}
 
 }

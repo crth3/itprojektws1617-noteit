@@ -1,6 +1,7 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -293,5 +294,142 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 		notebooksListDataProvider.getList().add(addNotebook);
 	}
+	
+	
+	
+		// Absteigend sortieren nach Fälligkeitsdatum
+		public static void sortNotesMaturityDesc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
 
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getMaturityDate() == null || o2.getMaturityDate() == null)
+						return 0;
+					return o2.getMaturityDate().compareTo(o1.getMaturityDate());
+
+				}
+			});
+			notesListDataProvider.setList(notesList);
+
+		}
+		
+		// Aufsteigend sortieren nach Fälligkeitsdatum
+		public static void sortNotesByMaturityAsc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
+
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getMaturityDate() == null || o2.getMaturityDate() == null)
+						return 0;
+					return o1.getMaturityDate().compareTo(o2.getMaturityDate());
+
+				}
+			});
+
+			notesListDataProvider.setList(notesList);
+
+		}
+		
+		// Absteigend sortieren nach Erstelldatum
+
+		public static void sortNotesCreationDateDesc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
+
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getCreationDate() == null || o2.getCreationDate() == null)
+						return 0;
+					return o2.getCreationDate().compareTo(o1.getCreationDate());
+
+				}
+			});
+
+			notesListDataProvider.setList(notesList);
+
+		}
+
+		// Aufsteigend sortieren nach Erstelldatum
+		public static void sortNotesCreationDateAsc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
+
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getCreationDate() == null || o2.getCreationDate() == null)
+						return 0;
+					return o1.getCreationDate().compareTo(o2.getCreationDate());
+
+				}
+			});
+
+			notesListDataProvider.setList(notesList);
+
+		}
+		
+		// Absteigend sortieren nach Änderungsdatum
+
+		public static void sortNotesModificationDateDesc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
+
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getModificationDate() == null || o2.getModificationDate() == null)
+						return 0;
+					return o2.getModificationDate().compareTo(o1.getModificationDate());
+
+				}
+			});
+
+			notesListDataProvider.setList(notesList);
+
+		}
+
+		// Aufsteigend sortieren nach Änderungsdatum
+
+		public static void sortNotesModificationDateAsc(int notebookID) {
+			ArrayList<Note> notesList = new ArrayList<>();
+			for (Note note : notesListDataProvider.getList()) {
+				notesList.add(note);
+			}
+			java.util.Collections.sort(notesList, new Comparator<Note>() {
+
+				@Override
+				public int compare(Note o1, Note o2) {
+					// TODO Auto-generated method stub
+					if (o1.getModificationDate() == null || o2.getModificationDate() == null)
+						return 0;
+					return o1.getModificationDate().compareTo(o2.getModificationDate());
+
+				}
+			});
+
+			notesListDataProvider.setList(notesList);
+
+		}
+
+		
 }
