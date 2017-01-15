@@ -269,7 +269,18 @@ package de.hdm.itprojekt.noteit.server.db;
 						u.getLastName() 
 						+ "', emailAddress = '" 
 						+ u.getMail() 
-						+ "', WHERE userId = " 
+						+ "' WHERE userId = " 
+						+ u.getId());
+				
+				
+				System.out.println("UPDATE User "
+						+ "SET firstName = '" 
+						+ u.getFirstName() 
+						+ "', lastName = '" +
+						u.getLastName() 
+						+ "', emailAddress = '" 
+						+ u.getMail() 
+						+ "' WHERE userId = " 
 						+ u.getId());
 			}
 			// Error Handling
