@@ -59,8 +59,11 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel navPanel = new HorizontalPanel();
 	HorizontalPanel navLeftPanel = new HorizontalPanel();
 	HorizontalPanel navRightPanel = new HorizontalPanel();
+	HorizontalPanel footerPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
+	VerticalPanel impressum = new Impressum();
+	
 	static VerticalPanel editNotebook = new EditNotebook();
 	Settings settings = new Settings();
 
@@ -70,8 +73,11 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
+	 final String strURL = "http://www.yahoo.com";
 	Label lbheadlineNoteit = new Label("Noteit");
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
+	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved.");
+	Button lblImpressum = new Button("Impressum");
 
 	// --------- Button -----------//
 	// Button btnAddNewNotebookOrNoteButton = new Button("<img
@@ -105,7 +111,10 @@ public class Homepage extends VerticalPanel {
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
-	
+		((Impressum) impressum).run();
+		
+
+		
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -187,6 +196,7 @@ public class Homepage extends VerticalPanel {
 		lbheadlineNotebookLabel.setStylePrimaryName("headlineNotebookLabel");
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
 		lbheadlineNoteit.setStyleName("lbheadlineNoteit");
+		copyright.setStyleName("lblCopyright");
 		// Style Names
 		headlinePanel.setStyleName("headlinePanel");
 		navLeftPanel.setStylePrimaryName("navLeftPanel");
@@ -196,6 +206,8 @@ public class Homepage extends VerticalPanel {
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
 		tbSearch.setStyleName("textbox");
+		footerPanel.setStylePrimaryName("footerPanel");
+		lblImpressum.setStylePrimaryName("lblImpressum");
 		// btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment
@@ -212,6 +224,9 @@ public class Homepage extends VerticalPanel {
 		navLeftPanel.add(tbSearch);
 		navLeftPanel.add(lbSortNotes);
 		navLeftPanel.add(lbSort);
+		
+		footerPanel.add(lblImpressum);
+		footerPanel.add(copyright);
 		// TODO Sortierung in GUI implemntieren mit RPC
 		navRightPanel.add(menu);
 
@@ -352,10 +367,21 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-
+		lblImpressum.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				contentPanel.remove(1);
+				// EditNotebook editNotebookView = new EditNotebook();
+				contentPanel.add(impressum);
+				
+			}
+		});
+		
+		
 		this.add(headlinePanel);
 		this.add(navPanel);
 		this.add(contentPanel);
+		this.add(footerPanel);
 		
 	if(url != null){
 		UrlView dialogBox = new UrlView();

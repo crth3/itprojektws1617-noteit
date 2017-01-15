@@ -64,7 +64,6 @@ public class Noteit implements EntryPoint {
 	static Logger logger = Logger.getLogger("NameOfYourLogger");
 
 	private Homepage HomepagePanel;
-	private Impressum ImpressumPanel;
 
 	/**
 	 * create new Panels
@@ -87,7 +86,6 @@ public class Noteit implements EntryPoint {
 	 * Create new Buttons
 	 */
 	Button btnLogOut = new Button("Logout");
-	Button impressumButton = new Button("Impressum");
 	Button zurueckButton = new Button("Zurück");
 
 	/**
@@ -115,6 +113,7 @@ public class Noteit implements EntryPoint {
 		headlineLabel.setStylePrimaryName("headlineLabel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
+		
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
@@ -125,9 +124,10 @@ public class Noteit implements EntryPoint {
 		 */
 		headlinePanel.add(headlineLabel);
 		logoutPanel.add(btnLogOut);
-		logoutPanel.add(impressumButton);
 		logoutPanel.add(zurueckButton);
 		vpBasisPanel.add(loginPanel);
+		
+		
 
 		logger.log(Level.SEVERE, "URL Inhalt" + value_URL);
 		/**
@@ -160,9 +160,7 @@ public class Noteit implements EntryPoint {
 								logger.log(Level.SEVERE, "Nutzer gefunden: " + result);
 								currentUser = result;
 								HomepagePanel = new Homepage(result);
-								ImpressumPanel = new Impressum();
 								RootPanel.get().add(HomepagePanel);
-								RootPanel.get().add(ImpressumPanel);
 
 							} else if (mail != null) {
 
@@ -186,9 +184,8 @@ public class Noteit implements EntryPoint {
 														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
-												ImpressumPanel = new Impressum();
+//												ImpressumPanel = new Impressum();
 												RootPanel.get().add(HomepagePanel);
-												RootPanel.get().add(ImpressumPanel);
 
 											}
 										});
@@ -209,16 +206,6 @@ public class Noteit implements EntryPoint {
 					loadLogin();
 				}
 
-			}
-		});
-
-		// ClickHandler für Impressum Button
-		impressumButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				VerticalPanel impressum = new Impressum();
-
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(impressum);
 			}
 		});
 
