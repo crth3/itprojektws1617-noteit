@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Window;
 
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
@@ -19,6 +20,8 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 public class NoteCell extends AbstractCell<Note> {
 	
 	Timestamp ts;
+	Timestamp ts1 = new Timestamp(System.currentTimeMillis());
+	Date date;
 	
 
 	@Override
@@ -46,12 +49,26 @@ public class NoteCell extends AbstractCell<Note> {
 		
 		if(value.getMaturityDate() != null){
 			
-	        
 			sb.appendHtmlConstant("<br>");
 			Date date = new Date(ts.getTime());
 			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-			sb.appendHtmlConstant("<span class=\"dffasfs" +"\">");
-			sb.appendEscaped("Fällig am: "+ sdfmt.format(date));
+			ts1.setHours(0);
+			ts1.setMinutes(0);
+			ts1.setSeconds(0);
+			ts1.setNanos(0);
+			//Wenn Das fälligkeit datum vor dem heutigen war, wird die schrift rot gesetzt
+			if(value.getMaturityDate().before(ts1)){
+				sb.appendHtmlConstant("<span class=\"dateBefore" +"\">");
+				sb.appendEscaped("Abgelaufen: "+ sdfmt.format(date));
+			}else if(value.getMaturityDate().after(ts1)){
+				sb.appendHtmlConstant("<span class=\"dffasfs" +"\">");
+				sb.appendEscaped("Fällig am: "+ sdfmt.format(date));
+			}else{
+				sb.appendHtmlConstant("<span class=\"dateToday" +"\">");
+				sb.appendEscaped("Heute fällig: "+ sdfmt.format(date));
+			}
+			
+
 			sb.appendHtmlConstant("</span>");
 		}
 		sb.appendHtmlConstant("</div>");

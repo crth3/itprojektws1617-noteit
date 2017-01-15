@@ -115,6 +115,13 @@ height: 30px;
 margin-bottom: 20px;
 }
 span.dffasfs{
-	color: #9199a1
+	color: #9199a1;
 }
+span.dateBefore{
+	color: red;
+}
+span.dateToday{
+	color: green;
+}
+
 
