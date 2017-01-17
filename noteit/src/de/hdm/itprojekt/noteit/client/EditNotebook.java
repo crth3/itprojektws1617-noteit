@@ -299,7 +299,7 @@ public class EditNotebook extends VerticalPanel {
 										Date date = new Date(ts.getTime());
 										DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
 										lblNotebookDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
-
+										NoteitCellBrowser.updateNotebooks();
 									}
 
 									@Override
