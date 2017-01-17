@@ -71,6 +71,8 @@ public class UrlView extends DialogBox {
 							@Override
 							public void onSuccess(Note result) {
 								NoteitCellBrowser.getNoteList(result);
+								Noteit.deleteStorage();
+								
 
 							}
 						});
