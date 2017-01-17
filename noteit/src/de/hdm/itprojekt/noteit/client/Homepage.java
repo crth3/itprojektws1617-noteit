@@ -358,7 +358,7 @@ public class Homepage extends VerticalPanel {
 		this.add(contentPanel);
 		
 	if(url != null){
-		UrlView dialogBox = new UrlView();
+		UrlView dialogBox = new UrlView(currentUser);
 		dialogBox.show();
 	}
 	}
