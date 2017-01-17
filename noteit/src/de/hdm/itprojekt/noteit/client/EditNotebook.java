@@ -282,6 +282,7 @@ public class EditNotebook extends VerticalPanel {
 								});
 						
 						tbNotebookTitel.setText("");
+						tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 					} else {
 						notesAdmin.updateNotebook(tbNotebookTitel.getText(), currentNotebook.getId(),
 								Homepage.getCurrentUser().getId(), new AsyncCallback<Void>() {
@@ -375,6 +376,7 @@ public void onClick(ClickEvent event) {
 		});
 
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
+		tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 		// btnAddPermission.addClickHandler(new ClickHandler() {
 		//
 		// @Override

@@ -56,7 +56,7 @@ public class ShowNote extends VerticalPanel {
 	static Label lblHeaderTitel = new Label();
 	static Label lblNoteTitel = new Label("Titel");
 	static Label lblNoteDate = new Label();
-	static Label lblNoteSubTitel = new Label("Subtitel");
+	static Label lblNoteSubTitel = new Label("Untertitel");
 	static Label lblNoteText = new Label("Deine Notiz");
 	static Label lblNoteMaturity = new Label("Fälligkeitsdatum");
 	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für diese Notiz beschränkt sich auf das Lesen.");
@@ -119,10 +119,12 @@ public class ShowNote extends VerticalPanel {
 		vpRight.setStyleName("vpRightDetailContent");
 		hpAddPermission.setStyleName("vpAddPermissionNotebook");
 		lblNoteDate.setStyleName("lblNoteDate");
+		vpLeft.setStyleName("vpLeftNote");
+		vpRight.setStyleName("vpRightNote");
 
-		tbNoteTitel.setStyleName("textbox");
-		tbNoteSubTitel.setStyleName("textbox");
-		dateBox.setStyleName("textbox");
+//		tbNoteTitel.setStyleName("textbox");
+//		tbNoteSubTitel.setStyleName("textbox");
+//		dateBox.setStyleName("textbox");
 
 		rbRead.setValue(true);
 		hpAddPermission.add(tbNoteShareMail);
@@ -142,6 +144,7 @@ public class ShowNote extends VerticalPanel {
 		 */
 
 		// vpTitel.add(lblNoteTitel);
+		vpTitel.add(lblNoteTitel);
 		vpTitel.add(tbNoteTitel);
 		vpTitel.setWidth("300px");
 
@@ -150,6 +153,7 @@ public class ShowNote extends VerticalPanel {
 		 */
 
 		// hpNoteSubTitel.add(lblNoteSubTitel);
+		hpNoteSubTitel.add(lblNoteSubTitel);
 		hpNoteSubTitel.add(tbNoteSubTitel);
 		hpNoteSubTitel.setWidth("300px");
 
@@ -168,6 +172,7 @@ public class ShowNote extends VerticalPanel {
 		}
 
 		// hpNoteMaturity.add(lblNoteMaturity);
+		hpNoteMaturity.add(lblNoteMaturity);
 		hpNoteMaturity.add(dateBox);
 		hpNoteMaturity.setWidth("300px");
 
@@ -403,6 +408,25 @@ public class ShowNote extends VerticalPanel {
 		Window.alert("id"+note.getId());
 		currentNote = note;
 		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
+		Window.alert("ID "+currentNote.getId());
+		if(currentNote.getId() == 0){
+			lblNoteShare.setVisible(false);
+			hpAddPermission.setVisible(false);
+			lblNoteShareRB.setVisible(false);
+			lblNoteShareRB.setVisible(false);
+			rbRead.setVisible(false);
+			rbWrite.setVisible(false);
+			rbDelete.setVisible(false);
+		}else{
+			
+			lblNoteShare.setVisible(true);
+			hpAddPermission.setVisible(true);
+			lblNoteShareRB.setVisible(true);
+			lblNoteShareRB.setVisible(true);
+			rbRead.setVisible(true);
+			rbWrite.setVisible(true);
+			rbDelete.setVisible(true);
+		}
 
 		if (note.getModificationDate() == null) {
 			Timestamp ts = note.getCreationDate();
