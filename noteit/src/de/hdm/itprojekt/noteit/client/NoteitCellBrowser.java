@@ -91,6 +91,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				addNote.setId(0);
 				addNote.setTitle("");
+				addNote.setSubTitle("");
+				addNote.setText("");
 				notesListDataProvider.getList().add(addNote);
 
 			}
@@ -125,8 +127,8 @@ public class NoteitCellBrowser implements TreeViewModel {
 				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 
 			} else {
-				ShowNote.setCurrentNotebook(selectedNotebook);
-				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
+			//	ShowNote.setCurrentNotebook(selectedNotebook);
+			//	ShowNote.showNote(addNote);
 
 				ShowNote.tbNoteTitel.setText("");
 				ShowNote.tbNoteSubTitel.setText("");
