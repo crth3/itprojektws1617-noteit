@@ -247,4 +247,8 @@ public class Noteit implements EntryPoint {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
 	}
+	
+	public static void deleteStorage(){
+		stockStore.clear();
+	}
 }

@@ -125,6 +125,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
 
 			} else {
+				ShowNote.setCurrentNotebook(selectedNotebook);
+				ShowNote.showNote(selectionModelNote.getLastSelectedObject());
+
 				ShowNote.tbNoteTitel.setText("");
 				ShowNote.tbNoteSubTitel.setText("");
 				ShowNote.content.setText("");
