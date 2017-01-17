@@ -61,6 +61,7 @@ public class EditNotebook extends VerticalPanel {
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
+	static Label lblNotebookShareRB = new Label("Berechtigung festlegen:");
 	static Label lblNotebookDate = new Label();
 	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für dieses Notizbuch beschränkt sich auf nur auf das Lesen.");
 	static Label lblPermissionInformationWrite = new Label("Deine Berechtigung für dieses Notizbuch beschränkt sich auf das Bearbeiten");
@@ -69,7 +70,7 @@ public class EditNotebook extends VerticalPanel {
 	static TextBox tbNotebookTitel = new TextBox();
 	static TextBox tbNotebookShareMail = new TextBox();
 
-	static Button btnNotebookSave = new Button("Fertig");
+	static Button btnNotebookSave = new Button("Speichern");
 	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
@@ -104,6 +105,8 @@ public class EditNotebook extends VerticalPanel {
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		hpEditNotebook.setStyleName("showDetailContent");
 		lblNotebookDate.setStyleName("lblNoteDate");
+		vpLeft.setStyleName("vpLeft");
+		vpRight.setStyleName("vpRight");
 
 		hpHeader.add(lblHeaderTitel);
 		hpHeader.add(lblNotebookDate);
@@ -119,7 +122,8 @@ public class EditNotebook extends VerticalPanel {
 
 		vpTitle.add(lblNotebookTitel);
 		vpTitle.add(tbNotebookTitel);
-
+		
+		hpAddPermission.add(lblNotebookShare);
 		hpAddPermission.add(tbNotebookShareMail);
 		hpAddPermission.add(btnAddPermission);
 		hpAddPermission.add(btnDeletePermission);
@@ -135,15 +139,17 @@ public class EditNotebook extends VerticalPanel {
 		
 		vpLeft.add(lblNotebookTitel);
 		vpLeft.add(tbNotebookTitel);
-		vpLeft.add(lblNotebookShare);
-		vpLeft.add(hpAddPermission);
-		vpLeft.add(rbRead);
-		vpLeft.add(rbWrite);
-		vpLeft.add(rbDelete);
 		vpLeft.add(hpButtons);
 		vpLeft.add(lblPermissionInformationRead);
 		vpLeft.add(lblPermissionInformationWrite);
 		vpLeft.add(lblPermissionInformationDelete);
+		
+		vpRight.add(lblNotebookShare);
+		vpRight.add(hpAddPermission);
+		vpRight.add(lblNotebookShareRB);
+		vpRight.add(rbRead);
+		vpRight.add(rbWrite);
+		vpRight.add(rbDelete);
 		vpRight.add(vpNotebookPermission);
 		
 		vDialog.setSpacing(10);
@@ -401,6 +407,7 @@ public void onClick(ClickEvent event) {
 			rbWrite.setVisible(false);
 			lblNotebookPermission.setVisible(false);
 			lblNotebookShare.setVisible(false);
+			lblNotebookShareRB.setVisible(false);
 			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(true);
@@ -414,6 +421,7 @@ public void onClick(ClickEvent event) {
 			rbWrite.setVisible(false);
 			lblNotebookPermission.setVisible(false);
 			lblNotebookShare.setVisible(false);
+			lblNotebookShareRB.setVisible(false);
 			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(false);
@@ -421,9 +429,11 @@ public void onClick(ClickEvent event) {
 			vpNotebookShare.setVisible(true);
 			vpNotebookPermission.setVisible(true);
 			hpAddPermission.setVisible(true);
+			lblNotebookShareRB.setVisible(true);
 			rbDelete.setVisible(true);
 			rbRead.setVisible(true);
 			rbWrite.setVisible(true);
+			lblNotebookShare.setVisible(true);
 			lblNotebookPermission.setVisible(true);
 			lblNotebookPermission.setVisible(true);
 			lblNotebookDate.setVisible(true);

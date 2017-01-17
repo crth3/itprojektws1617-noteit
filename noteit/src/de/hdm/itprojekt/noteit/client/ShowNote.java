@@ -119,8 +119,8 @@ public class ShowNote extends VerticalPanel {
 		vpRight.setStyleName("vpRightDetailContent");
 		hpAddPermission.setStyleName("vpAddPermissionNotebook");
 		lblNoteDate.setStyleName("lblNoteDate");
-		vpLeft.setStyleName("vpLeftNote");
-		vpRight.setStyleName("vpRightNote");
+		vpLeft.setStyleName("vpLeft");
+		vpRight.setStyleName("vpRight");
 
 //		tbNoteTitel.setStyleName("textbox");
 //		tbNoteSubTitel.setStyleName("textbox");
@@ -405,10 +405,9 @@ public class ShowNote extends VerticalPanel {
 	}
 
 	public static void showNote(Note note) {
-		Window.alert("id"+note.getId());
+	
 		currentNote = note;
-		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
-		Window.alert("ID "+currentNote.getId());
+
 		if(currentNote.getId() == 0){
 			lblNoteShare.setVisible(false);
 			hpAddPermission.setVisible(false);

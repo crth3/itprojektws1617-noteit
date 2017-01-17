@@ -5,6 +5,7 @@ import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagin
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -51,7 +52,7 @@ public class UserCellList extends Widget {
 				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
-		final SingleSelectionModel<User> userSelectionModel = new SingleSelectionModel<User>(
+		final NoSelectionModel<User> userSelectionModel = new NoSelectionModel<User>(
 				userKeyProvider);
 		userCellList.setSelectionModel(userSelectionModel);
 		userSelectionModel
@@ -59,9 +60,9 @@ public class UserCellList extends Widget {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						// contactForm.setContact(selectionModel.getSelectedObject());
 						
-						SelectedUser = userSelectionModel.getSelectedObject();
-						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
-						ShowNote.setSelectedUserPermissionInTextbox(userSelectionModel.getSelectedObject());
+						SelectedUser = userSelectionModel.getLastSelectedObject();
+						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
+						ShowNote.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
 					}
 				});
 

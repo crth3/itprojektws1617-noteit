@@ -28,7 +28,7 @@ td {
 	width: 1280px;
 }
 .footerPanel{
-	width: 1054px;
+	width: 1070px;
 	background-color: #90A4AE;
 	padding: 8px;
 }
@@ -58,6 +58,21 @@ td {
 
 .headlinePanel {
 	background-color: #607D8B;
+}
+.com-google-gwt-user-cellview-client-CellList-Style-cellListKeyboardSelectedItem{
+	background-color: #90A4AE !important;
+	color: white
+}
+
+table.vpLeft{
+	padding-right: 8px;
+border-right: 1px solid #90A4AE;
+height: 490px
+}
+
+table.vpRight{
+	padding-left: 8px;
+	
 }
 
 
