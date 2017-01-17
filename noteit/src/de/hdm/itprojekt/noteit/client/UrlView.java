@@ -45,7 +45,7 @@ public class UrlView extends DialogBox {
 
 	public UrlView(User currentUser) {
 		// Set the dialog box's caption.
-		setText("Bitte wählen Sie das Ziel-Notizbuch");
+		setText("Notiz erstellen");
 		url.setPixelSize(400, 20);
 		// Enable animation.
 		setAnimationEnabled(true);
