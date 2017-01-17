@@ -405,6 +405,7 @@ public class ShowNote extends VerticalPanel {
 	}
 
 	public static void showNote(Note note) {
+		Window.alert("id"+note.getId());
 		currentNote = note;
 		rootLogger.log(Level.SEVERE, "objekt: " + note.getTitle());
 		Window.alert("ID "+currentNote.getId());
