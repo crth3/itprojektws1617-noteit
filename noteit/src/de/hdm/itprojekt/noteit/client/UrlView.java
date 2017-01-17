@@ -21,7 +21,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
+import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
+import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class UrlView extends DialogBox {
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
@@ -33,13 +35,15 @@ public class UrlView extends DialogBox {
 	static Label lblNoteSubTitel = new Label("Subtitel");
 	static Label lblNoteText = new Label("Deine Notiz");
 	static Label lblNoteMaturity = new Label("FÃ¤lligkeitsdatum");
-	
+
 	TextArea url = new TextArea();
 	TextBox titel = new TextBox();
 	TextBox subtitel = new TextBox();
 	ListBox lbNotebook = new ListBox();
 
-	public UrlView() {
+	ArrayList<Integer> idList = new ArrayList<Integer>();
+
+	public UrlView(User currentUser) {
 		// Set the dialog box's caption.
 		setText("Bitte wählen Sie das Ziel-Notizbuch");
 		url.setPixelSize(400, 20);
@@ -54,21 +58,43 @@ public class UrlView extends DialogBox {
 		Button btnSave = new Button("Speichern");
 		btnSave.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-			//	notesAdmin.createNote(titel.getText(), null, url.getText(), date, u, source, notebookID, callback);
+				notesAdmin.createNote(titel.getText(), "", url.getText(),
+						null, Homepage.getCurrentUser(), null, getNotebookId(lbNotebook.getSelectedIndex()),
+						new AsyncCallback<Note>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onSuccess(Note result) {
+								NoteitCellBrowser.getNoteList(result);
+
+							}
+						});
 				UrlView.this.hide();
 			}
 		});
-
 		notesAdmin.getAllNotebooksByUserID(Homepage.getCurrentUser().getId(), new AsyncCallback<ArrayList<Notebook>>() {
 
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
+				idList.clear();
+				int i = 0;
 				for (Notebook notebook : result) {
+					if (notebook.getUserId() == Homepage.getCurrentUser().getId()) {
 
-					lbNotebook.addItem(notebook.getTitle());
+						lbNotebook.addItem(notebook.getTitle());
+						// Window.alert("Item Count " +
+						// lbNotebook.getItemCount() + notebook.getId());
+						idList.add(i, notebook.getId());
+						i++;
+					}
+
 				}
 
-				lbNotebook.removeItem(0);
 			}
 
 			@Override
@@ -86,7 +112,6 @@ public class UrlView extends DialogBox {
 		panel.setSpacing(10);
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-		
 		panel.add(lblNoteTitel);
 		panel.add(titel);
 		panel.add(label);
@@ -97,6 +122,11 @@ public class UrlView extends DialogBox {
 
 		setWidget(panel);
 
+	}
+
+	private Integer getNotebookId(int lbID) {
+		return idList.get(lbID);
+		//Window.alert("Notebook ID " + (idList.get(lbID)));
 	}
 
 }
