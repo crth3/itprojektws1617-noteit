@@ -457,6 +457,8 @@ public void onClick(ClickEvent event) {
 		}
 		
 		if(currentNotebook.getPermissionID()==1){
+			
+			Window.alert("permission Notebook: " +currentNotebook.getPermissionID());
 			btnNotebookSave.setEnabled(false);
 			btnNotebookDelete.setEnabled(false);
 			btnAddPermission.setEnabled(false);
@@ -464,6 +466,9 @@ public void onClick(ClickEvent event) {
 			lblPermissionInformationWrite.setVisible(false);
 			lblPermissionInformationDelete.setVisible(false);
 			lblPermissionInformationRead.setVisible(true);
+			
+			btnAddPermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
+			btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
 		}else if(currentNotebook.getPermissionID()==2){
 			btnNotebookSave.setEnabled(true);
 			btnAddPermission.setEnabled(true);
@@ -472,11 +477,16 @@ public void onClick(ClickEvent event) {
 			lblPermissionInformationWrite.setVisible(true);
 			lblPermissionInformationDelete.setVisible(false);
 			lblPermissionInformationRead.setVisible(false);
+			
+			btnAddPermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
+			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 		}else{
 			btnNotebookSave.setEnabled(true);
 			btnNotebookDelete.setEnabled(true);
 			btnAddPermission.setEnabled(true);
 			btnDeletePermission.setEnabled(true);
+			btnAddPermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
+			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 			if(currentNotebook.getPermissionID()==3){
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(true);
