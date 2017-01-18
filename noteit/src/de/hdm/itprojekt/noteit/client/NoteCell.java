@@ -42,7 +42,7 @@ public class NoteCell extends AbstractCell<Note> {
 			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"12\" height=\"12\">");
 			
 		}else if(value.getTitle() == "" && value.getId() == 0){
-			sb.appendHtmlConstant("<img src='Images/button_add.png'/ width=\"25\" height=\"25\">");
+			sb.appendHtmlConstant("<img class='addImage' src='Images/button_add.png'/ width=\"25\" height=\"25\">" + "<span class='addImageText'/>Notiz</span>");
 			
 		}
 		sb.appendEscaped(" "+value.getTitle());
