@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,8 +23,6 @@ public class Settings extends VerticalPanel {
 	static VerticalPanel vpSettingsPanel = new VerticalPanel();
 
 	User currentUser = new User();
-
-	
 
 	/**
 	 * Create the Label
@@ -52,52 +51,52 @@ public class Settings extends VerticalPanel {
 
 	protected void run() {
 
+		this.setStyleName("vpLeft");
+		this.setWidth("600px");
+
 		currentUser = Homepage.getCurrentUser();
+
+	
 		// currentUser.setFirstName("Kim");
-		vpSettingsPanel.setWidth("600px");
 		vpSettingsPanel.add(lbFirstName);
 		vpSettingsPanel.add(tbFirstName);
 		vpSettingsPanel.add(lbLastName);
 		vpSettingsPanel.add(tbLastName);
 		vpSettingsPanel.add(lbEmail);
 		vpSettingsPanel.add(lbAusgabeEmail);
-		vpSettingsPanel.add(hpButtonPanel);
+		
 		hpButtonPanel.add(btnAbrrechenButton);
 		hpButtonPanel.add(btnSichernButton);
+		vpSettingsPanel.add(hpButtonPanel);
 
+		
+	
 		tbFirstName.setText(currentUser.getFirstName());
 		tbLastName.setText(currentUser.getLastName());
 		lbAusgabeEmail.setText(currentUser.getMail());
 
-		this.add(lbFirstName);
-		this.add(tbFirstName);
-		this.add(lbLastName);
-		this.add(tbLastName);
-		this.add(lbEmail);
-		this.add(lbAusgabeEmail);
+		this.add(vpSettingsPanel);
+		
 
 		// Wenn ich nur das ButtonPanel add, sind die Buttons nachher im Browser
-		// nach Rechts verzogen. Hier müsste man dann es dann durch css anpassen
-		// oder wir lassen die Buttons untereinander erscheinen.Wie möchtest du das haben?
-		//this.add(hpButtonPanel);
-		
-		
-		this.add(btnAbrrechenButton);
-		this.add(btnSichernButton);
+		// nach Rechts verzogen. Hier müsste man dann es dann durch css
+		// anpassen
+		// oder wir lassen die Buttons untereinander erscheinen.Wie möchtest du
+		// das haben?
+		// this.add(hpButtonPanel);
 
 		btnAbrrechenButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				//Homepage homepage = new Homepage();
+				// Homepage homepage = new Homepage();
 
-				Homepage.contentPanel.remove(1);
-				Homepage.contentPanel.setHeight("300px");
-				Homepage.contentPanel.setWidth("500px");
+				Homepage.showNoteView();
 
 				// Hier muss rein, dass die Homepage Klasse wieder geladen wird.
 
-				// wenn das mit drin ist, lädt er das das ContentPanel nicht mal
+				// wenn das mit drin ist, lädt er das das ContentPanel nicht
+				// mal
 				// mehr leer rein.
 				// Homepage.contentPanel.add(homepage);
 
@@ -108,18 +107,17 @@ public class Settings extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.updateUser(currentUser.getId(), currentUser.getMail(), currentUser.getFirstName(),
-						currentUser.getLastName(), new AsyncCallback<Void>() {
+				notesAdmin.updateUser(currentUser.getId(), currentUser.getMail(), tbFirstName.getText(),
+						tbLastName.getText(), new AsyncCallback<Void>() {
 
 							// Das hat damals noch geklappt als wir es an der
 							// HDM gecodet haben, Müsste das nicht eigentlich
 							// noch genauso funktionieren?
 							@Override
 							public void onSuccess(Void result) {
-							//	VerticalPanel homepage = new Homepage();
-								Noteit.setWelcomeName(tbFirstName.getText());
-								currentUser.setFirstName(tbFirstName.getText());
-								currentUser.setFirstName(tbFirstName.getText());
+								// VerticalPanel homepage = new Homepage();
+								Window.alert("Eingaben erfolgreich gespeichert");
+								Homepage.showNoteView();
 							}
 
 							@Override

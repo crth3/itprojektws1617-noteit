@@ -65,7 +65,7 @@ public class Homepage extends VerticalPanel {
 	VerticalPanel impressum = new Impressum();
 	
 	static VerticalPanel editNotebook = new EditNotebook();
-	Settings settings = new Settings();
+	static Settings settings = new Settings();
 
 	final HorizontalPanel contentNotebookPanel = new HorizontalPanel();
 	final static HorizontalPanel contentNotesPanel = new HorizontalPanel();
@@ -503,8 +503,13 @@ public class Homepage extends VerticalPanel {
 		contentPanel.remove(1);
 		// EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebook);
-		rootLogger.log(Level.SEVERE, "WIDGET");
 
+
+	}
+	
+	public static void settingsView(){
+		contentPanel.remove(1);
+		contentPanel.add(settings);
 	}
 
 	public static void showNoteView() {
