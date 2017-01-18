@@ -329,6 +329,31 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
+		
+		btnUnsubcribe.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Noteid: "+NoteitCellBrowser.getSelectedNote().getId()+ "userid "+Homepage.getCurrentUser().getId());
+				notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getId(), NoteitCellBrowser.getSelectedNote().getPermissionID(), NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						Window.alert("success!");
+						
+						
+					}
+				});
+				
+			}
+		});
+		
 
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
@@ -402,12 +427,13 @@ public class ShowNote extends VerticalPanel {
 	public static void showNote(Note note) {
 
 		currentNote = note;
-
+		
 		if (currentNote.getPermissionID() > 0) {
 			hpBtnPanel.add(btnSaveNote);
 			hpBtnPanel.add(btnUnsubcribe);
 			hpBtnPanel.add(btnDeleteNote);
 		} else {
+			hpBtnPanel.clear();
 			hpBtnPanel.add(btnSaveNote);
 			hpBtnPanel.add(btnDeleteNote);
 		}

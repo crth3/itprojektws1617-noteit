@@ -182,14 +182,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	@Override
 	public void updateNotebook(String title, Notebook nb, int userId) throws IllegalArgumentException {
 
-		if(nb.getPermissionID()<2){
+		if (nb.getPermissionID() < 2) {
 
 			nb.setTitle(title);
 			nb.setModificationDate(ts);
 		}
 
-
-		
 	}
 
 	/**
@@ -615,10 +613,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID)
+	public void deleteUserNotebookPermission(int userId, int permissionID, int notebookID)
 			throws IllegalArgumentException {
-		User u = uMapper.findByEmail(mail);
-		for (NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByUserId(u.getId())) {
+		
+		for (NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByNotebookId(notebookID)) {
 			if (foundedNotebookPermission.getNotebookId() == notebookID) {
 				nbpMapper.delete(foundedNotebookPermission);
 			}
@@ -679,8 +677,17 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void deleteUserNotePermission(int userId, int permissionID, int noteID) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void deleteUserNotePermission(int userId, int permission, int noteID) throws IllegalArgumentException {
+
+		ArrayList<NotePermission> notePermissions = npMapper.findNotePermissionByNoteId(noteID);
+
+		for (NotePermission notePermission : notePermissions) {
+
+			if (notePermission.getUserId() == userId) {
+				npMapper.delete(notePermission);
+			}
+		}
+	
 
 	}
 
