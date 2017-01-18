@@ -56,15 +56,16 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel vpBackButton = new VerticalPanel();
 	VerticalPanel vDialog = new VerticalPanel();
 
-
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
 	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
 	static Label lblNotebookShareRB = new Label("Berechtigung festlegen:");
 	static Label lblNotebookDate = new Label();
-	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für dieses Notizbuch beschränkt sich auf nur auf das Lesen.");
-	static Label lblPermissionInformationWrite = new Label("Deine Berechtigung für dieses Notizbuch beschränkt sich auf das Bearbeiten");
+	static Label lblPermissionInformationRead = new Label(
+			"Deine Berechtigung für dieses Notizbuch beschränkt sich auf nur auf das Lesen.");
+	static Label lblPermissionInformationWrite = new Label(
+			"Deine Berechtigung für dieses Notizbuch beschränkt sich auf das Bearbeiten");
 	static Label lblPermissionInformationDelete = new Label("Du hast volle Berechtigung für dieses Notizbuch");
 
 	static TextBox tbNotebookTitel = new TextBox();
@@ -76,7 +77,7 @@ public class EditNotebook extends VerticalPanel {
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
-	
+
 	static CellList<User> clUser = new UserCellList().createUserCellList();
 
 	static RadioButton rbRead = new RadioButton("permission", "lesen");
@@ -110,7 +111,6 @@ public class EditNotebook extends VerticalPanel {
 
 		hpHeader.add(lblHeaderTitel);
 		hpHeader.add(lblNotebookDate);
-		
 
 		rbRead.setValue(true);
 		hpAddPermission.add(rbRead);
@@ -122,7 +122,7 @@ public class EditNotebook extends VerticalPanel {
 
 		vpTitle.add(lblNotebookTitel);
 		vpTitle.add(tbNotebookTitel);
-		
+
 		hpAddPermission.add(lblNotebookShare);
 		hpAddPermission.add(tbNotebookShareMail);
 		hpAddPermission.add(btnAddPermission);
@@ -132,18 +132,17 @@ public class EditNotebook extends VerticalPanel {
 		vpNotebookPermission.add(lblNotebookPermission);
 		vpNotebookPermission.add(clUser);
 
-		
 		lblPermissionInformationWrite.setVisible(false);
 		lblPermissionInformationDelete.setVisible(false);
 		lblPermissionInformationRead.setVisible(false);
-		
+
 		vpLeft.add(lblNotebookTitel);
 		vpLeft.add(tbNotebookTitel);
 		vpLeft.add(hpButtons);
 		vpLeft.add(lblPermissionInformationRead);
 		vpLeft.add(lblPermissionInformationWrite);
 		vpLeft.add(lblPermissionInformationDelete);
-		
+
 		vpRight.add(lblNotebookShare);
 		vpRight.add(hpAddPermission);
 		vpRight.add(lblNotebookShareRB);
@@ -151,7 +150,7 @@ public class EditNotebook extends VerticalPanel {
 		vpRight.add(rbWrite);
 		vpRight.add(rbDelete);
 		vpRight.add(vpNotebookPermission);
-		
+
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vDialog.add(hDialog);
@@ -286,11 +285,11 @@ public class EditNotebook extends VerticalPanel {
 
 									}
 								});
-						
+
 						tbNotebookTitel.setText("");
 						tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 					} else {
-						notesAdmin.updateNotebook(tbNotebookTitel.getText(), currentNotebook.getId(),
+						notesAdmin.updateNotebook(tbNotebookTitel.getText(), currentNotebook,
 								Homepage.getCurrentUser().getId(), new AsyncCallback<Void>() {
 
 									@Override
@@ -317,10 +316,10 @@ public class EditNotebook extends VerticalPanel {
 
 		btnNotebookDelete.addClickHandler(new ClickHandler() {
 
-public void onClick(ClickEvent event) {
-				
+			public void onClick(ClickEvent event) {
+
 				final DialogBox dlbQuestion = new DialogBox();
-				
+
 				dlbQuestion.setAnimationEnabled(true);
 				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten?");
 				dlbQuestion.setWidth("300px");
@@ -330,55 +329,52 @@ public void onClick(ClickEvent event) {
 				dlbQuestion.show();
 				dlbQuestion.center();
 
-				int width = Window.getClientWidth()/ 2;
-	            int height = Window.getClientHeight()/ 2;
-	            dlbQuestion.setPopupPosition(width, height);
-	            dlbQuestion.show();
-	            
-	            
-	            btnYes.addClickHandler(new ClickHandler() {
-	    				
-	    				@Override
-	    				public void onClick(ClickEvent event) {
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
 
-	    					notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
-	    							new AsyncCallback<Void>() {
+				btnYes.addClickHandler(new ClickHandler() {
 
-	    								@Override
-	    								public void onSuccess(Void result) {
-	    									// Notebook Liste aktualisieren
-	    									NoteitCellBrowser.deleteNotebook();
-	    									
-	    									// DialogBox ausblenden
-	    				    				dlbQuestion.hide();	
+					@Override
+					public void onClick(ClickEvent event) {
 
-	    								}
+						notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
+								new AsyncCallback<Void>() {
 
-	    								@Override
-	    								public void onFailure(Throwable caught) {
-	    									// TODO Auto-generated method stub
+									@Override
+									public void onSuccess(Void result) {
+										// Notebook Liste aktualisieren
+										NoteitCellBrowser.deleteNotebook();
 
-	    								}
-	    							});
+										// DialogBox ausblenden
+										dlbQuestion.hide();
 
-	    				}
-	    				
-	            });
-	            
-	            
-	            btnNo.addClickHandler(new ClickHandler() {
+									}
 
-	    			public void onClick(ClickEvent event) {
-	    				
-	    				// DialogBox ausblenden
-	    				dlbQuestion.hide();	
-	
-	    			}
-	            });
-				       
-	            
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+
+					}
+
+				});
+
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
 			}
-			
+
 		});
 
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
@@ -456,10 +452,9 @@ public void onClick(ClickEvent event) {
 			lblNotebookDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(notebook.getTitle());
 		}
-		
-		if(currentNotebook.getPermissionID()==1){
-			
-			Window.alert("permission Notebook: " +currentNotebook.getPermissionID());
+
+		if (currentNotebook.getPermissionID() == 1) {
+
 			btnNotebookSave.setEnabled(false);
 			btnNotebookDelete.setEnabled(false);
 			btnAddPermission.setEnabled(false);
@@ -467,10 +462,10 @@ public void onClick(ClickEvent event) {
 			lblPermissionInformationWrite.setVisible(false);
 			lblPermissionInformationDelete.setVisible(false);
 			lblPermissionInformationRead.setVisible(true);
-			
+
 			btnAddPermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
-		}else if(currentNotebook.getPermissionID()==2){
+		} else if (currentNotebook.getPermissionID() == 2) {
 			btnNotebookSave.setEnabled(true);
 			btnAddPermission.setEnabled(true);
 			btnDeletePermission.setEnabled(true);
@@ -478,21 +473,21 @@ public void onClick(ClickEvent event) {
 			lblPermissionInformationWrite.setVisible(true);
 			lblPermissionInformationDelete.setVisible(false);
 			lblPermissionInformationRead.setVisible(false);
-			
+
 			btnAddPermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-		}else{
+		} else {
 			btnNotebookSave.setEnabled(true);
 			btnNotebookDelete.setEnabled(true);
 			btnAddPermission.setEnabled(true);
 			btnDeletePermission.setEnabled(true);
 			btnAddPermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-			if(currentNotebook.getPermissionID()==3){
+			if (currentNotebook.getPermissionID() == 3) {
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(true);
 				lblPermissionInformationRead.setVisible(false);
-			}else{
+			} else {
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(false);
 				lblPermissionInformationRead.setVisible(false);

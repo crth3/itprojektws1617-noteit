@@ -54,17 +54,7 @@ public interface NotesAdministration extends RemoteService {
 
 	Notebook createNotebook(String title, User creator);
 
-	// TODO Übergabeparmater für Berechtigungen überarbeiten evtl ein Objekt
-	// -> auch bei update Note hinzufügen
-	/**
-	 * 
-	 * @param title
-	 * @param notebookID
-	 * @param userId
-	 * @param permission
-	 * @throws IllegalArgumentException
-	 */
-	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException;
+	void updateNotebook(String title, Notebook currentNotebook, int userId);
 
 	/**
 	 * 
@@ -88,19 +78,8 @@ public interface NotesAdministration extends RemoteService {
 	Note createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
 			int notebookID);
 
-	// TODO Übergabeparmeter für Berechtigungen siehe Notebook
-	/**
-	 * 
-	 * @param title
-	 * @param subtitle
-	 * @param text
-	 * @param maturity
-	 * @param editorID
-	 * @param source
-	 * @throws IllegalArgumentException
-	 */
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
-			int notebookID, int noteID) throws IllegalArgumentException;
+	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
+			int notebookID, Note currentNote);
 
 	/**
 	 * 

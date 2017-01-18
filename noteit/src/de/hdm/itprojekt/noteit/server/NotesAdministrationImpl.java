@@ -71,9 +71,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	// TODO müssen wir hier einen User zurück geben?
 	@Override
 	public User createUser(String mail, String firstName, String lastName) throws IllegalArgumentException {
-		
-		
-		
 
 		if (mail != null) {
 			System.out.println("In der createUser");
@@ -183,37 +180,16 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 * Berechtigung des Nutzers ob er bearbeiten darf
 	 */
 	@Override
-	public void updateNotebook(String title, int notebookID, int userId) throws IllegalArgumentException {
+	public void updateNotebook(String title, Notebook nb, int userId) throws IllegalArgumentException {
 
-		nb = new Notebook();
-		nb.setId(notebookID);
-		nb.setTitle(title);
-		nb.setModificationDate(ts);
+		if(nb.getPermissionID()<2){
 
-		Notebook notebook = this.nbMapper.findById(notebookID);
-		Logger logger = Logger.getLogger("NameOfYourLogger");
-		logger.log(Level.SEVERE, "in updateNotebook  " + notebook.getTitle());
-
-		// Überprüfen der Berechtigung zum bearbeiten
-		if (notebook.getUserId() == userId) {
-			this.nbMapper.edit(nb);
-			logger.log(Level.SEVERE, "SUCCESS");
-		} else {
-			ArrayList<NotebookPermission> notebookPermissionList = this.nbpMapper
-					.findNotebookPermissionByNotebookId(notebookID);
-			for (NotebookPermission findResult : notebookPermissionList) {
-				if (findResult.getUserId() == userId) {
-					if (findResult.getPermission() > 1) {
-						this.nbMapper.edit(nb);
-						logger.log(Level.SEVERE, "SUCCESS");
-					} else {
-						logger.log(Level.SEVERE, "ERROR: keine Berechtigung");
-					}
-				}
-
-			}
-
+			nb.setTitle(title);
+			nb.setModificationDate(ts);
 		}
+
+
+		
 	}
 
 	/**
@@ -268,7 +244,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			} else if (notebookPermissions != null && currentNotebook.getUserId() != userID) {
 				for (NotebookPermission foundedNotebookPermission : notebookPermissions) {
 					if (userID == foundedNotebookPermission.getUserId()) {
-						// wenn Berechtigung für den übergebenen User 3 ist, der
+						// wenn Berechtigung für den übergebenen User 3 ist,
+						// der
 						// das Notebook löschen möchte
 						if (foundedNotebookPermission.getPermission() == 3) {
 							// Wenn das Notizbuch noch Notizen enthält
@@ -288,7 +265,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 							System.out.println("Lösche Notebook");
 							this.nbMapper.delete(currentNotebook);
 						}
-						System.out.println("Notebook Permission kann aufgrund der Berechtigung nicht gelöscht werden ");
+						System.out
+								.println("Notebook Permission kann aufgrund der Berechtigung nicht gelöscht werden ");
 					}
 				}
 			}
@@ -328,7 +306,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 	@Override
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
-			int notebookID, int noteID) throws IllegalArgumentException {
+			int notebookID, Note note) throws IllegalArgumentException {
 		System.out.println("ablaufdatum: " + maturity);
 
 		ts.setHours(0);
@@ -336,19 +314,19 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ts.setSeconds(0);
 		ts.setNanos(0);
 
-		Note note = new Note();
 		// note.setCreator(creatorID); //Int oder Objekt?
-		note.setId(noteID);
-		note.setTitle(title);
-		note.setSubTitle(subtitle);
-		note.setText(text);
-		note.setMaturityDate(maturity);
-		note.setSource(source);
-		note.setModificationDate(ts);
-		note.setNotebookId(notebookID);
-		// note.setUserId(creator.getId());
-		this.nMapper.update(note);
+		if (note.getPermissionID() < 2) {
 
+			note.setTitle(title);
+			note.setSubTitle(subtitle);
+			note.setText(text);
+			note.setMaturityDate(maturity);
+			note.setSource(source);
+			note.setModificationDate(ts);
+			note.setNotebookId(notebookID);
+			// note.setUserId(creator.getId());
+			this.nMapper.update(note);
+		}
 	}
 
 	/**
@@ -370,7 +348,8 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			if (note.getUserId() == userID) {
 				// Prüfe ob ArrayList Objekte enthält
 				if (ArrayListNotePermission != null) {
-					// Lösche jede Permission die in der ArrayList vorhanden ist
+					// Lösche jede Permission die in der ArrayList vorhanden
+					// ist
 					for (NotePermission foundNotePermission : ArrayListNotePermission) {
 						this.npMapper.delete(foundNotePermission);
 					}
@@ -434,7 +413,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		for (Notebook foundedNotebooks : allNotebooks) {
 			createdNotebooks.add(foundedNotebooks);
 		}
-		//freigegebene Notizen dem Notizbuch hinzufügen
+		// freigegebene Notizen dem Notizbuch hinzufügen
 		for (NotebookPermission foundedNotebookPermission : sharedNotebooks) {
 			Notebook permittedNotebook = nbMapper.findById(foundedNotebookPermission.getNotebookId());
 			permittedNotebook.setPermissionID(foundedNotebookPermission.getPermission());
@@ -451,56 +430,60 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public ArrayList<Note> getAllNotesByNotebookID(int notebookID, int userID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		ArrayList<Note> currentNotes = this.nMapper.findNotesByNotebookId(notebookID);
+
 		ArrayList<NotePermission> notesPermission = this.npMapper.findNotePermissionByUserId(userID);
+
 		ArrayList<Note> allFoundedNotes = new ArrayList<Note>();
+
 		ArrayList<Note> sharedNotes = new ArrayList<Note>();
-		System.out.println("getAllNotesByNotebookID");
-		System.out.println("nb id: " + notebookID);
-		System.out.println("usr id: " + userID);
-		
-		
-		for(NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByNotebookId(notebookID)){
-			// Alles Notizen ausgeben für einen Notizbuch dass für einen Nutzer freigeben wurde
-			if(foundedNotebookPermission.getUserId() == userID){
-				return nMapper.findNotesByNotebookId(notebookID);
+
+		for (NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByNotebookId(notebookID)) {
+			// Alles Notizen ausgeben für einen Notizbuch dass für einen
+			// Nutzer freigeben wurde
+			if (foundedNotebookPermission.getUserId() == userID) {
+
+				allFoundedNotes = nMapper.findNotesByNotebookId(notebookID);
+
+				for (Note note : allFoundedNotes) {
+					for (NotePermission foundedNotePermission : notesPermission) {
+						if (note.getId() == foundedNotePermission.getNoteId()) {
+							note.setPermissionID(foundedNotePermission.getPermission());
+						}
+					}
+				}
+
+				return allFoundedNotes;
+
 			}
 		}
 
 		if (notebookID == -1) {
-			//Notebook "Für mich geteilte Noitzen"
+			// Notebook "Für mich geteilte Noitzen"
 			if (notesPermission != null) {
+
 				for (NotePermission foundedNotePermission : notesPermission) {
-					System.out.println("NotePermission ID "+ foundedNotePermission.getPermission());
+
+					System.out.println("NotePermission ID " + foundedNotePermission.getPermission());
+
 					Note permittedNote = this.nMapper.findById(foundedNotePermission.getNoteId());
+
 					permittedNote.setPermissionID(foundedNotePermission.getPermission());
+
 					allFoundedNotes.add(permittedNote);
-					
+
 					System.out.println(
 							"Notiz titel: " + this.nMapper.findById(foundedNotePermission.getNoteId()).getTitle());
 				}
 			}
 			return allFoundedNotes;
-		} else if (this.nbMapper.findById(notebookID).getUserId() != userID) {
-			if (notesPermission != null) {
-				for (NotePermission foundedNotePermission : notesPermission) {
-					System.out.println("NotePermission ID "+ foundedNotePermission.getPermission());
-					Note permittedNote = this.nMapper.findById(foundedNotePermission.getNoteId());
-					permittedNote.setPermissionID(foundedNotePermission.getPermission());
-					allFoundedNotes.add(permittedNote);
-				}
-			}
 
-			for (Note foundedNote : allFoundedNotes) {
-				if (foundedNote.getNotebookId() == notebookID) {
-					sharedNotes.add(foundedNote);
-				}
-			}
-			return sharedNotes;
-		}else {
-			
-				return currentNotes;
-			
-			
+		} else {
+			/**
+			 * Wenn der User Verfasser ist und keine freigegebenen Notizen im
+			 * Notizbuch hat
+			 */
+			return currentNotes;
+
 		}
 
 	}

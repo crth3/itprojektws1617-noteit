@@ -31,7 +31,6 @@ import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
-
 public class ShowNote extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
@@ -59,8 +58,10 @@ public class ShowNote extends VerticalPanel {
 	static Label lblNoteSubTitel = new Label("Untertitel");
 	static Label lblNoteText = new Label("Deine Notiz");
 	static Label lblNoteMaturity = new Label("Fälligkeitsdatum");
-	static Label lblPermissionInformationRead = new Label("Deine Berechtigung für diese Notiz beschränkt sich auf das Lesen.");
-	static Label lblPermissionInformationWrite = new Label("Deine Berechtigung für diese Notiz beschränkt sich auf das Bearbeiten.");
+	static Label lblPermissionInformationRead = new Label(
+			"Deine Berechtigung für diese Notiz beschränkt sich auf das Lesen.");
+	static Label lblPermissionInformationWrite = new Label(
+			"Deine Berechtigung für diese Notiz beschränkt sich auf das Bearbeiten.");
 	static Label lblPermissionInformationDelete = new Label("Du hast volle Berechtigung für diese Notiz");
 
 	static Label lblNotePermission = new Label();
@@ -88,13 +89,10 @@ public class ShowNote extends VerticalPanel {
 	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
 	DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 	static DateBox dateBox = new DateBox();
-	
+
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
-	
 
-	
-	
 	// Timestamp maturity = new Timestamp();
 
 	// Date maturity = new Date();
@@ -122,16 +120,16 @@ public class ShowNote extends VerticalPanel {
 		vpLeft.setStyleName("vpLeft");
 		vpRight.setStyleName("vpRight");
 
-//		tbNoteTitel.setStyleName("textbox");
-//		tbNoteSubTitel.setStyleName("textbox");
-//		dateBox.setStyleName("textbox");
+		// tbNoteTitel.setStyleName("textbox");
+		// tbNoteSubTitel.setStyleName("textbox");
+		// dateBox.setStyleName("textbox");
 
 		rbRead.setValue(true);
 		hpAddPermission.add(tbNoteShareMail);
 		hpAddPermission.add(btnAddNotePermission);
 		hpAddPermission.add(btnDeletePermission);
 		hpAddPermission.setSpacing(0);
-		
+
 		lblPermissionInformationWrite.setVisible(false);
 		lblPermissionInformationDelete.setVisible(false);
 		lblPermissionInformationRead.setVisible(false);
@@ -186,8 +184,7 @@ public class ShowNote extends VerticalPanel {
 		hpBtnPanel.setWidth("300px");
 		hpBtnPanel.add(btnSaveNote);
 		hpBtnPanel.add(btnDeleteNote);
-		
-		
+
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vDialog.add(hDialog);
@@ -202,7 +199,7 @@ public class ShowNote extends VerticalPanel {
 		vpLeft.add(lblPermissionInformationRead);
 		vpLeft.add(lblPermissionInformationWrite);
 		vpLeft.add(lblPermissionInformationDelete);
-		
+
 		vpRight.add(lblNoteShare);
 		vpRight.add(hpAddPermission);
 		vpRight.add(lblNoteShareRB);
@@ -213,7 +210,6 @@ public class ShowNote extends VerticalPanel {
 
 		hpShowNote.add(vpLeft);
 		hpShowNote.add(vpRight);
-		
 
 		/**
 		 * Erstellen oder bearbeiten von Freigaben RPC
@@ -264,10 +260,10 @@ public class ShowNote extends VerticalPanel {
 		});
 
 		btnSaveNote.addClickHandler(new ClickHandler() {
-			
+
 			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
-				Window.alert("ID: "+currentNote.getId());
+				Window.alert("ID: " + currentNote.getId());
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {
@@ -306,7 +302,7 @@ public class ShowNote extends VerticalPanel {
 						}
 						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
 								timestampe, Homepage.getCurrentUser().getId(), null, currentNote.getNotebookId(),
-								currentNote.getId(), new AsyncCallback<Void>() {
+								currentNote, new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -336,9 +332,9 @@ public class ShowNote extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
-				
+
 				final DialogBox dlbQuestion = new DialogBox();
-				
+
 				dlbQuestion.setAnimationEnabled(true);
 				dlbQuestion.setText("Sind sie sicher, dass Sie die ausgewählte Notiz löschen möchten?");
 				dlbQuestion.setWidth("300px");
@@ -348,53 +344,49 @@ public class ShowNote extends VerticalPanel {
 				dlbQuestion.show();
 				dlbQuestion.center();
 
-				int width = Window.getClientWidth()/ 2;
-	            int height = Window.getClientHeight()/ 2;
-	            dlbQuestion.setPopupPosition(width, height);
-	            dlbQuestion.show();
-	            
-	            
-	            btnYes.addClickHandler(new ClickHandler() {
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
 
-	    			public void onClick(ClickEvent event) {
-	    				
-	    				// Methode zum löschen der Note aufrufen
-	    				notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
-	    						new AsyncCallback<Void>() {
-	    
-	    							@Override
-	    							public void onFailure(Throwable caught) {
-	    								// TODO Auto-generated method stub
-	    
-	    							}
-	    
-	    							@Override
-	    							public void onSuccess(Void result) {
-	    								
-	    								// Noteliste aktualisieren
-	    								NoteitCellBrowser.deleteNote();
-	    							
-	    
-	    							}
-	    						});		
-	    				// DialogBox ausblenden
-	    				dlbQuestion.hide();	
-	
-	    			}
-	            });
-	            
-	            
-	            btnNo.addClickHandler(new ClickHandler() {
+				btnYes.addClickHandler(new ClickHandler() {
 
-	    			public void onClick(ClickEvent event) {
-	    				
-	    				// DialogBox ausblenden
-	    				dlbQuestion.hide();	
-	
-	    			}
-	            });
-				       
-	            
+					public void onClick(ClickEvent event) {
+
+						// Methode zum löschen der Note aufrufen
+						notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
+								new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+
+										// Noteliste aktualisieren
+										NoteitCellBrowser.deleteNote();
+
+									}
+								});
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
 			}
 		}
 
@@ -406,10 +398,10 @@ public class ShowNote extends VerticalPanel {
 	}
 
 	public static void showNote(Note note) {
-	
+
 		currentNote = note;
 
-		if(currentNote.getId() == 0 ){
+		if (currentNote.getId() == 0) {
 			lblNoteShare.setVisible(false);
 			hpAddPermission.setVisible(false);
 			lblNoteShareRB.setVisible(false);
@@ -418,8 +410,8 @@ public class ShowNote extends VerticalPanel {
 			rbRead.setVisible(false);
 			rbWrite.setVisible(false);
 			rbDelete.setVisible(false);
-		}else{
-			
+		} else {
+
 			lblNoteShare.setVisible(true);
 			hpAddPermission.setVisible(true);
 			lblNoteShareRB.setVisible(true);
@@ -445,14 +437,14 @@ public class ShowNote extends VerticalPanel {
 			lblNoteDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
 			lblHeaderTitel.setText(note.getTitle());
 		}
-		
+
 		if (note.getMaturityDate() == null) {
 			dateBox.setValue(null);
-		} 
-		
-		if(currentNote.getPermissionID() == 1 || currentNotebook.getPermissionID() == 1){
-			Window.alert("permission Note: " +currentNote.getPermissionID());
-			Window.alert("permission Notebook: " +currentNotebook.getPermissionID());
+		}
+
+		if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
+				|| currentNote.getPermissionID() == 1) {
+
 			btnSaveNote.setEnabled(false);
 			btnDeleteNote.setEnabled(false);
 			btnAddNotePermission.setEnabled(false);
@@ -462,7 +454,9 @@ public class ShowNote extends VerticalPanel {
 			lblPermissionInformationRead.setVisible(true);
 			btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
-		}else if(currentNote.getPermissionID() == 2 || currentNotebook.getPermissionID() == 2){
+		} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
+				|| currentNote.getPermissionID() == 2) {
+
 			btnSaveNote.setEnabled(true);
 			btnDeleteNote.setEnabled(false);
 			btnAddNotePermission.setEnabled(true);
@@ -472,18 +466,22 @@ public class ShowNote extends VerticalPanel {
 			lblPermissionInformationRead.setVisible(false);
 			btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-		}else{
+		} else {
 			btnSaveNote.setEnabled(true);
 			btnDeleteNote.setEnabled(true);
 			btnAddNotePermission.setEnabled(true);
 			btnDeletePermission.setEnabled(true);
 			btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-			if(currentNote.getPermissionID()==3 || currentNotebook.getPermissionID() == 3){
+
+			if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
+					|| currentNote.getPermissionID() == 3) {
+
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(true);
 				lblPermissionInformationRead.setVisible(false);
-			}else{
+			} else {
+
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(false);
 				lblPermissionInformationRead.setVisible(false);
@@ -534,12 +532,12 @@ public class ShowNote extends VerticalPanel {
 		}
 
 	};
-	
-	public static void setCurrentNotebook(Notebook notebook){
+
+	public static void setCurrentNotebook(Notebook notebook) {
 		currentNotebook = notebook;
 	}
-	
-	public static void setPermissionPanelInvisible(){
+
+	public static void setPermissionPanelInvisible() {
 		lblNoteShare.setVisible(false);
 		hpAddPermission.setVisible(false);
 		lblNoteShareRB.setVisible(false);
@@ -550,6 +548,5 @@ public class ShowNote extends VerticalPanel {
 		rbWrite.setVisible(false);
 		rbDelete.setVisible(false);
 	}
-	
 
 }

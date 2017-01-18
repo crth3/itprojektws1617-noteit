@@ -39,10 +39,10 @@ public interface NotesAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,int notebookID, int noteID,
+	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,int notebookID, Note currentNote,
 			AsyncCallback<Void> callback);
 
-	void updateNotebook(String title, int notebookID, int userId, AsyncCallback<Void> callback);
+	void updateNotebook(String title, Notebook currentNotebook, int userId, AsyncCallback<Void> callback);
 
 	void findUserByMail(String mail, AsyncCallback<User> callback);
 
