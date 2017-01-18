@@ -67,12 +67,16 @@ td {
 table.vpLeft{
 	padding-right: 8px;
 border-right: 1px solid #90A4AE;
-height: 490px
+height: 473px
 }
 
 table.vpRight{
 	padding-left: 8px;
 	
+}
+
+.button.gwt-Button{
+	margin-right: 10px !important;
 }
 
 img.addImage{

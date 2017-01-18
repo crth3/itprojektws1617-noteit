@@ -213,6 +213,7 @@ public class ShowNote extends VerticalPanel {
 
 		hpShowNote.add(vpLeft);
 		hpShowNote.add(vpRight);
+		
 
 		/**
 		 * Erstellen oder bearbeiten von Freigaben RPC
@@ -408,11 +409,12 @@ public class ShowNote extends VerticalPanel {
 	
 		currentNote = note;
 
-		if(currentNote.getId() == 0){
+		if(currentNote.getId() == 0 ){
 			lblNoteShare.setVisible(false);
 			hpAddPermission.setVisible(false);
 			lblNoteShareRB.setVisible(false);
-			lblNoteShareRB.setVisible(false);
+			lblNotePermission.setVisible(false);
+			vpNotePermission.setVisible(false);
 			rbRead.setVisible(false);
 			rbWrite.setVisible(false);
 			rbDelete.setVisible(false);
@@ -422,6 +424,8 @@ public class ShowNote extends VerticalPanel {
 			hpAddPermission.setVisible(true);
 			lblNoteShareRB.setVisible(true);
 			lblNoteShareRB.setVisible(true);
+			lblNotePermission.setVisible(true);
+			vpNotePermission.setVisible(true);
 			rbRead.setVisible(true);
 			rbWrite.setVisible(true);
 			rbDelete.setVisible(true);
@@ -533,6 +537,18 @@ public class ShowNote extends VerticalPanel {
 	
 	public static void setCurrentNotebook(Notebook notebook){
 		currentNotebook = notebook;
+	}
+	
+	public static void setPermissionPanelInvisible(){
+		lblNoteShare.setVisible(false);
+		hpAddPermission.setVisible(false);
+		lblNoteShareRB.setVisible(false);
+		lblNoteShareRB.setVisible(false);
+		lblNotePermission.setVisible(false);
+		vpNotePermission.setVisible(false);
+		rbRead.setVisible(false);
+		rbWrite.setVisible(false);
+		rbDelete.setVisible(false);
 	}
 	
 
