@@ -33,7 +33,7 @@ public class NotebookCell extends AbstractCell<Notebook> {
 				
 			sb.appendHtmlConstant("<img src='Images/person_share.png'/ width=\"10\" height=\"10\">");
 		}else if(value.getTitle() == "" && value.getId() == 0){
-			sb.appendHtmlConstant("<img src='Images/button_add.png'/ width=\"30\" height=\"30\">");
+			sb.appendHtmlConstant("<img class='addImage' src='Images/button_add.png'/ width=\"28\" height=\"28\">" + "<span class='addImageText'/>Notizbuch</span>");
 		}
 		
 		sb.appendEscaped(" "+ value.getTitle());
