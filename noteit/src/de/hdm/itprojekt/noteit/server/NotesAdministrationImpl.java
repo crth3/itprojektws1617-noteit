@@ -679,7 +679,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException {
+	public void deleteUserNotePermission(int userId, int permissionID, int noteID) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
