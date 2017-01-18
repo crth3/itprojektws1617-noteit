@@ -73,6 +73,10 @@ public class UrlView extends DialogBox {
 		btnSave.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
+				if(tbNoteTitel.getText().length() > 0){
+					
+				
+				
 				if (dateBox.getTextBox().getValue().length() > 0) {
 					Date date = dateBox.getValue();
 					long time = date.getTime();
@@ -100,7 +104,7 @@ public class UrlView extends DialogBox {
 						});
 				UrlView.this.hide();
 			}
-		});
+			}});
 		
 		btnAbort.addClickHandler(new ClickHandler() {
 			
