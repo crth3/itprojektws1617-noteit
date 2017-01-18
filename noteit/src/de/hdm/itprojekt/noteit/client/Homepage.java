@@ -74,11 +74,13 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
-	final String strURL = "http://www.yahoo.com";
 	Label lbheadlineNoteit = new Label("Noteit");
+	Label lbheadlineIn = new Label(" in ");
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
-	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved.");
+	Label lbRefreshNotebooks = new Label("Notizbücherliste neu laden:");
+	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved. Beta v1");
 	Button lblImpressum = new Button("Impressum");
+	Button btnRefreshNotebooks = new Button("<img src='Images/button_refresh.png'/ width=\"10\" height=\"10\">");
 
 	// --------- Button -----------//
 	// Button btnAddNewNotebookOrNoteButton = new Button("<img
@@ -209,6 +211,8 @@ public class Homepage extends VerticalPanel {
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		navPanel.setStylePrimaryName("navPanel");
+		lbSortNotes.setStyleName("lbSortNotes");
+		lbRefreshNotebooks.setStyleName("lbSortNotes");
 		navRightPanel.setStyleName("menu");
 		contentPanel.setStylePrimaryName("contentPanel");
 		tbSearch.setStyleName("textbox");
@@ -225,16 +229,19 @@ public class Homepage extends VerticalPanel {
 		contentPanel.setWidth("100%");
 		headlinePanel.setWidth("100%");
 		headlinePanel.add(lbheadlineNoteit);
+		navLeftPanel.add(tbSearch);
+		navLeftPanel.add(lbheadlineIn);
 		navLeftPanel.add(listBox1);
 		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
-		navLeftPanel.add(tbSearch);
+		
 		navLeftPanel.add(lbSortNotes);
 		navLeftPanel.add(lbSort);
-
+		navLeftPanel.add(lbRefreshNotebooks);
+		navLeftPanel.add(btnRefreshNotebooks);
 		footerPanel.add(lblImpressum);
 		footerPanel.add(copyright);
 		// TODO Sortierung in GUI implemntieren mit RPC
-		navRightPanel.add(btnRefresh);
+		
 		navRightPanel.add(menu);
 
 		navPanel.add(navLeftPanel);
@@ -464,6 +471,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
 				clNotebook.setRowData(result);
+				NoteitCellBrowser.updateNotebooks();
 			}
 
 			@Override
