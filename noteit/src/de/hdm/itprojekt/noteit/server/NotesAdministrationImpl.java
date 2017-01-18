@@ -116,7 +116,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public void deleteUser(User user) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		Logger logger = Logger.getLogger("NameOfYourLogger");
-		logger.log(Level.SEVERE, "User Löschen");
+		logger.log(Level.SEVERE, "User "+user.getMail()+ " wird gelöscht");
 		
 		ArrayList<NotebookPermission> userNotebookPermissions = this.nbpMapper.findNotebookPermissionByUserId(user.getId());
 		ArrayList<NotePermission> userNotePermissions = this.npMapper.findNotePermissionByUserId(user.getId());
