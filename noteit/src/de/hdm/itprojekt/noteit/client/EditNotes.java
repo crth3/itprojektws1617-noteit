@@ -182,7 +182,7 @@ public class EditNotes extends DialogBox {
 		btnUpdateNote.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), taUpdateNoteText.getText(), timestampe, currentUser.getId(), "keine quelle", currentNotebook.getId(), currentNote.getId(), new AsyncCallback<Void>() {
+				notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), taUpdateNoteText.getText(), timestampe, currentUser.getId(), "keine quelle", currentNotebook.getId(), currentNote, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
