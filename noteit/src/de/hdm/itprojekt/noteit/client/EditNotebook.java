@@ -411,7 +411,8 @@ public void onClick(ClickEvent event) {
 			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(true);
-			
+			lblHeaderTitel.setText("Neues Notizbuch");
+			tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 		} else if (currentNotebook.getId() == -1) {
 			vpNotebookShare.setVisible(false);
 			vpNotebookPermission.setVisible(false);

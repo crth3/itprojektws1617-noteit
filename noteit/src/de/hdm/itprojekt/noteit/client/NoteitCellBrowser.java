@@ -79,6 +79,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectedNotebook);
+			
 			EditNotebook.getAllPermittedUsersbyNotebookID(selectedNotebook.getId());
 			Homepage.setSelectedNotebook(selectedNotebook);
 
@@ -93,6 +94,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				addNote.setTitle("");
 				addNote.setSubTitle("");
 				addNote.setText("");
+				
 				notesListDataProvider.getList().add(addNote);
 
 			}
@@ -134,6 +136,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 				ShowNote.tbNoteSubTitel.setText("");
 				ShowNote.content.setText("");
 				ShowNote.dateBox.setValue(null);
+				ShowNote.setPermissionPanelInvisible();
 				ShowNote.lblHeaderTitel.setText("Neue Notiz");
 			}
 			Homepage.showNoteView();
