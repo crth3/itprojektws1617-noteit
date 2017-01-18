@@ -35,6 +35,7 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -63,7 +64,7 @@ public class Homepage extends VerticalPanel {
 	static HorizontalPanel contentPanel = new HorizontalPanel();
 	final static VerticalPanel showNote = new ShowNote();
 	VerticalPanel impressum = new Impressum();
-	
+
 	static VerticalPanel editNotebook = new EditNotebook();
 	static Settings settings = new Settings();
 
@@ -73,7 +74,7 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
-	 final String strURL = "http://www.yahoo.com";
+	final String strURL = "http://www.yahoo.com";
 	Label lbheadlineNoteit = new Label("Noteit");
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
 	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved.");
@@ -101,20 +102,15 @@ public class Homepage extends VerticalPanel {
 		currentUser = cU;
 	}
 
-	
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
-		
+
 		String url = Noteit.getValue_URL();
-		
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
 		((Impressum) impressum).run();
-		
-
-		
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -127,22 +123,21 @@ public class Homepage extends VerticalPanel {
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
 
-		final ListBox listBox1 = new ListBox(){
-	        @Override
-	        public void setSelectedIndex(int index) {
-	            super.setSelectedIndex(index);
-	        }
-	    };
+		final ListBox listBox1 = new ListBox() {
+			@Override
+			public void setSelectedIndex(int index) {
+				super.setSelectedIndex(index);
+			}
+		};
 		listBox1.addItem("Notizbuch");
 		listBox1.addItem("Notiz");
-		
 
-		final ListBox lbSort = new ListBox(){
-	        @Override
-	        public void setSelectedIndex(int index) {
-	            super.setSelectedIndex(index);
-	        }
-	    };
+		final ListBox lbSort = new ListBox() {
+			@Override
+			public void setSelectedIndex(int index) {
+				super.setSelectedIndex(index);
+			}
+		};
 		lbSort.addItem("Erstelldatum: Absteigend");
 		lbSort.addItem("Erstelldatum: Aufsteigend");
 		lbSort.addItem("Änderungsdatum: Absteigend");
@@ -172,13 +167,24 @@ public class Homepage extends VerticalPanel {
 			}
 		};
 
+		PushButton btnRefresh = new PushButton(new Image("Images/Refresh.png"));
+	//	btnRefresh.setHeight("20px");
+		
+		btnRefresh.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				updateNotebookCellList(currentUser.getId());
+				
+			}
+		});
+
 		MenuBar settings = new MenuBar(true);
 		settings.addItem("Profil", settingDialog);
 		settings.addItem("Entwickler", showHTML);
 		settings.addItem("Abmelden", logout);
 		MenuBar menu = new MenuBar();
 		final String image = "<img src='Images/user.png' height='20px' width='20px'/>";
-
 		SafeHtml addActivityImagePath = new SafeHtml() {
 			/**
 			 * 
@@ -224,10 +230,11 @@ public class Homepage extends VerticalPanel {
 		navLeftPanel.add(tbSearch);
 		navLeftPanel.add(lbSortNotes);
 		navLeftPanel.add(lbSort);
-		
+
 		footerPanel.add(lblImpressum);
 		footerPanel.add(copyright);
 		// TODO Sortierung in GUI implemntieren mit RPC
+		navRightPanel.add(btnRefresh);
 		navRightPanel.add(menu);
 
 		navPanel.add(navLeftPanel);
@@ -369,26 +376,24 @@ public class Homepage extends VerticalPanel {
 		});
 		lblImpressum.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+
 				contentPanel.remove(1);
 				// EditNotebook editNotebookView = new EditNotebook();
 				contentPanel.add(impressum);
-				
+
 			}
 		});
-		
-		
+
 		this.add(headlinePanel);
 		this.add(navPanel);
 		this.add(contentPanel);
 		this.add(footerPanel);
-		
-	if(url != null){
-		UrlView dialogBox = new UrlView(currentUser);
-		dialogBox.show();
+
+		if (url != null) {
+			UrlView dialogBox = new UrlView(currentUser);
+			dialogBox.show();
+		}
 	}
-	}
-	
 
 	/**
 	 * set all notes from selected notebook
@@ -504,10 +509,9 @@ public class Homepage extends VerticalPanel {
 		// EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebook);
 
-
 	}
-	
-	public static void settingsView(){
+
+	public static void settingsView() {
 		contentPanel.remove(1);
 		contentPanel.add(settings);
 	}
@@ -519,9 +523,8 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void showHTML() {
-		Window.alert(
-				"Fügen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gewünschten Website ein\n\n  "
-						+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
+		Window.alert("Fügen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gewünschten Website ein\n\n  "
+				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
 	}
 
 	// absteigend sortieren nach Fälligkeitsdatum
@@ -532,31 +535,31 @@ public class Homepage extends VerticalPanel {
 	// aufsteigend sortieren nach Fälligkeitsdatum
 	public void sortNotesMaturityAsc() {
 		NoteitCellBrowser.sortNotesByMaturityAsc(selectedNotebook.getId());
-		
+
 	}
 
 	// absteigend sortieren nach Erstelldatum
 	public void sortNotesCreationDesc() {
 		NoteitCellBrowser.sortNotesCreationDateDesc(selectedNotebook.getId());
-		
+
 	}
 
 	// aufsteigend sortieren nach Erstelldatum
 	public void sortNotesCreationDateAsc() {
 		NoteitCellBrowser.sortNotesCreationDateAsc(selectedNotebook.getId());
-		
+
 	}
 
 	// absteigend sortieren nach Änderungsdatum
 	public void sortNotesModificationDateDesc() {
 		NoteitCellBrowser.sortNotesModificationDateDesc(selectedNotebook.getId());
-		
+
 	}
 
 	// aufsteigend sortieren nach Änderungsdatum
 	public void sortNotesModificationDateAsc() {
 		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
-		
+
 	}
 
 }
