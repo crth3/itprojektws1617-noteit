@@ -185,22 +185,9 @@ public interface NotesAdministration extends RemoteService {
 	 */
 	public boolean setUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
 	
-	/**
-	 * deleteUserNotebookPermission
-	 * @param mail
-	 * @param permissionID
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteUserNotebookPermission(String mail, int permissionID, int notebookID) throws IllegalArgumentException;
+	void deleteUserNotebookPermission(int userId, int permissionID, int notebookID);
 	
-	/**
-	 * 
-	 * @param mail
-	 * @param permissionID
-	 * @param noteID
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteUserNotePermission(String mail, int permissionID, int noteID) throws IllegalArgumentException;
+	void deleteUserNotePermission(int userId, int permissionID, int noteID);
 	
 	/**
 	 * set User Note Permission

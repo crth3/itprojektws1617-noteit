@@ -72,7 +72,8 @@ public class EditNotebook extends VerticalPanel {
 	static TextBox tbNotebookShareMail = new TextBox();
 
 	static Button btnNotebookSave = new Button("Speichern");
-	static Button btnNotebookDelete = new Button("Löschen");
+	static Button btnUnsubcribe = new Button("Deabonnieren");
+	static Button btnNotebookDelete = new Button("L�schen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 	static Button btnNo = new Button("Nein");
@@ -168,8 +169,7 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-		hpButtons.add(btnNotebookSave);
-		hpButtons.add(btnNotebookDelete);
+	
 
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
@@ -235,7 +235,7 @@ public class EditNotebook extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
 					Window.alert("Abfrage ob die Freigabe wirklich gelöscht werden soll");
-					notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
+					notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getId(),
 							Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
 							new AsyncCallback<Void>() {
 
@@ -311,6 +311,28 @@ public class EditNotebook extends VerticalPanel {
 				} else {
 					Window.alert("Bitte vergebe einen Titel für dien Notizbuch");
 				}
+			}
+		});
+		
+		btnUnsubcribe.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getId(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
 			}
 		});
 
@@ -392,6 +414,17 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
+		Window.alert("permission" + currentNotebook.getPermissionID());
+		if(currentNotebook.getPermissionID()>0 && currentNotebook.getId() != 0){
+			hpButtons.add(btnNotebookSave);
+			hpButtons.add(btnUnsubcribe);
+			hpButtons.add(btnNotebookDelete);
+			
+		}else{
+			hpButtons.clear();
+			hpButtons.add(btnNotebookSave);
+			hpButtons.add(btnNotebookDelete);
+		}
 
 		tbNotebookTitel.setText(notebook.getTitle());
 		if (currentNotebook.getId() == 0) {

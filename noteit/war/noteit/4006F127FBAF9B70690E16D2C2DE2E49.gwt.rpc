@@ -1,0 +1,19 @@
+@FinalFields, false
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+de.hdm.itprojekt.noteit.shared.NotesAdministration, false, false, false, false, _, 2960281898
+de.hdm.itprojekt.noteit.shared.bo.BusinessObjects, true, false, true, false, de.hdm.itprojekt.noteit.shared.bo.BusinessObjects/2740001118, 2740001118
+de.hdm.itprojekt.noteit.shared.bo.Note, true, true, true, true, de.hdm.itprojekt.noteit.shared.bo.Note/333628877, 333628877
+de.hdm.itprojekt.noteit.shared.bo.NotePermission, true, true, false, false, de.hdm.itprojekt.noteit.shared.bo.NotePermission/2786433083, 2786433083
+de.hdm.itprojekt.noteit.shared.bo.Notebook, true, true, true, true, de.hdm.itprojekt.noteit.shared.bo.Notebook/1371975892, 1371975892
+de.hdm.itprojekt.noteit.shared.bo.User, true, true, true, true, de.hdm.itprojekt.noteit.shared.bo.User/4158233287, 4158233287
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
+java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.sql.Timestamp, true, true, true, true, java.sql.Timestamp/3040052672, 3040052672
+java.util.ArrayList, true, true, false, false, java.util.ArrayList/4159755760, 4159755760
+java.util.Date, true, false, true, false, java.util.Date/3385151746, 3385151746

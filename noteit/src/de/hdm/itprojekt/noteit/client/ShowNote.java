@@ -73,6 +73,7 @@ public class ShowNote extends VerticalPanel {
 	static TextBox tbNoteShareMail = new TextBox();
 
 	static Button btnSaveNote = new Button("Speichern");
+	static Button btnUnsubcribe = new Button("Deabonnieren");
 	static Button btnDeleteNote = new Button("Löschen");
 	static Button btnAddNotePermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
@@ -182,8 +183,9 @@ public class ShowNote extends VerticalPanel {
 		vpNotePermission.add(clUser);
 
 		hpBtnPanel.setWidth("300px");
-		hpBtnPanel.add(btnSaveNote);
-		hpBtnPanel.add(btnDeleteNote);
+		// hpBtnPanel.add(btnSaveNote);
+		// hpBtnPanel.add(btnUnsubcribe);
+		// hpBtnPanel.add(btnDeleteNote);
 
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -327,6 +329,31 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
+		
+		btnUnsubcribe.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert("Noteid: "+NoteitCellBrowser.getSelectedNote().getId()+ "userid "+Homepage.getCurrentUser().getId());
+				notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getId(), NoteitCellBrowser.getSelectedNote().getPermissionID(), NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						Window.alert("success!");
+						
+						
+					}
+				});
+				
+			}
+		});
+		
 
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
@@ -400,6 +427,16 @@ public class ShowNote extends VerticalPanel {
 	public static void showNote(Note note) {
 
 		currentNote = note;
+		
+		if (currentNote.getPermissionID() > 0) {
+			hpBtnPanel.add(btnSaveNote);
+			hpBtnPanel.add(btnUnsubcribe);
+			hpBtnPanel.add(btnDeleteNote);
+		} else {
+			hpBtnPanel.clear();
+			hpBtnPanel.add(btnSaveNote);
+			hpBtnPanel.add(btnDeleteNote);
+		}
 
 		if (currentNote.getId() == 0) {
 			lblNoteShare.setVisible(false);
