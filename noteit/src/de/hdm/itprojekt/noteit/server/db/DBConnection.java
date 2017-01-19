@@ -13,7 +13,6 @@ import com.google.appengine.api.utils.SystemProperty;
 public class DBConnection {
 
     private static Connection con = null;
-
     private static String googleUrl = "jdbc:google:mysql://noteit-id:europe-west1:noteit-db/noteit-db?user=root&password=noteit";
     private static String localUrl = "jdbc:mysql://104.199.44.232:3306/noteit-db?user=root&password=noteit";
 	private static Properties info = new Properties();
