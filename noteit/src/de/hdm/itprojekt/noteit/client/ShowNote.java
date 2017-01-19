@@ -260,6 +260,29 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
+		
+		btnDeletePermission.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				currentNote = NoteitCellBrowser.getSelectedNote();
+				notesAdmin.deleteUserNotePermission(tbNoteShareMail.getText(),currentNote.getPermissionID(), currentNote.getId(), new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+			}
+		});
 
 		btnSaveNote.addClickHandler(new ClickHandler() {
 
@@ -335,7 +358,7 @@ public class ShowNote extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.alert("Noteid: "+NoteitCellBrowser.getSelectedNote().getId()+ "userid "+Homepage.getCurrentUser().getId());
-				notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getId(), NoteitCellBrowser.getSelectedNote().getPermissionID(), NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
+				notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getMail(), NoteitCellBrowser.getSelectedNote().getPermissionID(), NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
