@@ -637,7 +637,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		
 		for (NotebookPermission foundedNotebookPermission : nbpMapper.findNotebookPermissionByNotebookId(notebookID)) {
 			if (foundedNotebookPermission.getNotebookId() == notebookID) {
-				nbpMapper.delete(foundedNotebookPermission);
+				if(foundedNotebookPermission.getUserId() == userId){
+					nbpMapper.delete(foundedNotebookPermission);
+				}
+				
 			}
 		}
 	}
