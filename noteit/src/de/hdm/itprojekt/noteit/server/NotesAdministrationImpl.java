@@ -700,7 +700,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 	@Override
 	public void deleteUserNotePermission(String mail, int permission, int noteID) throws IllegalArgumentException {
-
+		System.out.println("Mail: " + mail);
 		User user = uMapper.findByEmail(mail);
 		ArrayList<NotePermission> notePermissions = npMapper.findNotePermissionByNoteId(noteID);
 

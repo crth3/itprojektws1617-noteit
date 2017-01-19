@@ -73,7 +73,7 @@ public class EditNotebook extends VerticalPanel {
 
 	static Button btnNotebookSave = new Button("Speichern");
 	static Button btnUnsubcribe = new Button("Deabonnieren");
-	static Button btnNotebookDelete = new Button("Löschen");
+	static Button btnNotebookDelete = new Button("Lï¿½schen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 	static Button btnNo = new Button("Nein");
@@ -414,7 +414,6 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
-		Window.alert("permission" + currentNotebook.getPermissionID());
 		if(currentNotebook.getPermissionID()>0 && currentNotebook.getId() != 0){
 			hpButtons.add(btnNotebookSave);
 			hpButtons.add(btnUnsubcribe);
