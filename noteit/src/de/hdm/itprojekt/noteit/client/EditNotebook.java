@@ -73,7 +73,7 @@ public class EditNotebook extends VerticalPanel {
 
 	static Button btnNotebookSave = new Button("Speichern");
 	static Button btnUnsubcribe = new Button("Deabonnieren");
-	static Button btnNotebookDelete = new Button("L�schen");
+	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 	static Button btnNo = new Button("Nein");
@@ -106,6 +106,7 @@ public class EditNotebook extends VerticalPanel {
 		hpHeader.setStyleName("headerDetailView");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		hpEditNotebook.setStyleName("showDetailContent");
+		lblNotebookPermission.setStyleName("lblPermissionText");
 		lblNotebookDate.setStyleName("lblNoteDate");
 		vpLeft.setStyleName("vpLeft");
 		vpRight.setStyleName("vpRight");

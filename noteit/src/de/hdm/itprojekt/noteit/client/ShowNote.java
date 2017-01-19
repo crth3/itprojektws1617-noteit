@@ -114,6 +114,7 @@ public class ShowNote extends VerticalPanel {
 
 		hpHeader.setStyleName("headerDetailView");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
+		lblNotePermission.setStyleName("lblPermissionText");
 		hpShowNote.setStyleName("showDetailContent");
 		vpRight.setStyleName("vpRightDetailContent");
 		hpAddPermission.setStyleName("vpAddPermissionNotebook");
