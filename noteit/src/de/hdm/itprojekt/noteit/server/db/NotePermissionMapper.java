@@ -88,20 +88,24 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * 	 
 	 * */
 	public ArrayList<NotePermission> findNotePermissionByNoteId(int id) {
-
+		// Datenbank-Verbindung öffnen
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<NotePermission> notePermissionList = new ArrayList<NotePermission>();
 
 		try {
+			// Neues SQL - Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL - Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM NotePermission "
 							+ "INNER JOIN Note "
 							+ "ON NotePermission.Note_noteId = Note.noteId "
 							+ "WHERE Note_noteId = "
 							+ id);
-
+			// Bei Treffer
 			while (rs.next()) {
+				// Neue Objekte anlegen				
 				NotePermission np = new NotePermission();
 				Note n = new Note();
 				
@@ -123,7 +127,7 @@ private static NotePermissionMapper notePermissionMapper = null;
 				np.setNote(n);
 							
 				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
+				// NotePermission Objekt der Liste hinzufügen
 				notePermissionList.add(np);
 			}
 			// Objekt zurückgeben
@@ -147,43 +151,38 @@ private static NotePermissionMapper notePermissionMapper = null;
 	 * 	 
 	 * */
 	public ArrayList<NotePermission> findNotePermissionByUserId(int id) {
-		
-		System.out.println("userId: " +id);
-
+		// Datenbank-Verbindung öffnen
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<NotePermission> notePermissionList = new ArrayList<NotePermission>();
 
 		try {
+			// Neues SQL - Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL - Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM NotePermission "
 							+ "INNER JOIN User "
 							+ "ON NotePermission.User_userId = User.userId "
 							+ "WHERE User_userId = "
 							+ id);
-
+			// Bei Treffer
 			while (rs.next()) {
+				// Neues Objekt anlegen
 				NotePermission np = new NotePermission();
-				//User u = new User();
-				
+			
 				np.setId(rs.getInt("notePermissionId"));
 				np.setPermission(rs.getInt("permission"));
 				np.setNoteId(rs.getInt("Note_noteId"));
 				np.setUserId(rs.getInt("User_userId"));
 				
-				System.out.println("ID: " + np.getId());
-				System.out.println("permission: " + np.getPermission());
-				System.out.println("noteid" + np.getNoteId());
-				System.out.println("userId: " + np.getUserId());
-				
-				//u.setId(rs.getInt("userId"));
-				//u.setFirstName(rs.getString("firstName"));
-				//u.setLastName(rs.getString("lastName"));
-				
-				//np.setUser(u);
-				
+				System.out.println("Id: " + np.getId());
+				System.out.println("Permission: " + np.getPermission());
+				System.out.println("Noteid" + np.getNoteId());
+				System.out.println("UserId: " + np.getUserId());
+						
 				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
+				// NotePermission Objekt der Liste hinzufügen
 				notePermissionList.add(np);
 			}
 			// Objekt zurückgeben

@@ -103,10 +103,13 @@ public class NotebookMapper {
 	public ArrayList<Notebook> findNotebooksByUserID(int id) {
 
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<Notebook> notebookList = new ArrayList<Notebook>();
 
 		try {
+			// Neues SQL Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Notebook "
 							+ "WHERE "
@@ -117,7 +120,8 @@ public class NotebookMapper {
 					+ "WHERE "
 					+ "Notebook.User_userId = "
 					+ id);
-
+			
+			//ArrayList mit Notebook-Objekten eines Users füllen
 			while (rs.next()) {
 				Notebook nb = new Notebook();
 				
@@ -153,15 +157,20 @@ public class NotebookMapper {
 	public ArrayList<Notebook> getAllNotebooks() {
 
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<Notebook> notebookList = new ArrayList<Notebook>();
 
 		try {
+			// Neues SQL-Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL - Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Notebook ");
 			
 			System.out.println("SELECT * FROM Notebook ");
-						while (rs.next()) {
+				
+			// ArrayList mit allen Notebook-Objekten füllen
+			while (rs.next()) {
 				Notebook nb = new Notebook();
 				
 				nb.setId(rs.getInt("notebookId"));
@@ -207,6 +216,17 @@ public class NotebookMapper {
 				stmt = con.createStatement();
 				// SQL Query ausführen um Datensatz in DB zu schreiben
 				stmt.executeUpdate("INSERT INTO Notebook (notebookId, title, creationDate, User_userId) " +
+						"VALUES (" 
+						+ nb.getId() 
+						+ ", '" 
+						+ nb.getTitle() 
+						+ "', '" 
+						+ nb.getCreationDate() 
+						+ "', '" 
+						+ nb.getUserId() 
+						+"')");
+				
+				System.out.println("INSERT INTO Notebook (notebookId, title, creationDate, User_userId) " +
 						"VALUES (" 
 						+ nb.getId() 
 						+ ", '" 
@@ -276,6 +296,9 @@ public class NotebookMapper {
 			Statement stmt = con.createStatement();
 			// SQL Query ausführen
 			stmt.executeUpdate("DELETE FROM Notebook WHERE notebookId = " + nb.getId());
+			
+			System.out.println("DELETE FROM Notebook WHERE notebookId = " + nb.getId());
+
 		}
 		// Error Handling
 		catch (SQLException e) {

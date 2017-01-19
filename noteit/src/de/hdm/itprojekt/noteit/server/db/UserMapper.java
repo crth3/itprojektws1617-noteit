@@ -5,10 +5,6 @@ package de.hdm.itprojekt.noteit.server.db;
 	import java.sql.SQLException;
 	import java.sql.Statement;
 	import java.util.ArrayList;
-	import java.util.logging.Level;
-	import java.util.logging.Logger;
-
-	
 	import de.hdm.itprojekt.noteit.shared.bo.User;
 
 	/**
@@ -26,8 +22,6 @@ package de.hdm.itprojekt.noteit.server.db;
 	 */
 
 	public class UserMapper {
-		
-		private static Logger rootLogger = Logger.getLogger("");
 		
 		private static UserMapper userMapper = null;
 		
@@ -104,7 +98,7 @@ package de.hdm.itprojekt.noteit.server.db;
 		public ArrayList<User> findByName(String firstName, String lastName) {
 			// Datenbankverbindung 
 			Connection con = DBConnection.connection();
-			// Ergebnisvektor anlegen
+			//Ergebnis-ArrayList anlegen
 			ArrayList<User> result = new ArrayList<User>();
 			
 			try {
@@ -177,7 +171,7 @@ package de.hdm.itprojekt.noteit.server.db;
 		public ArrayList<User> findAllUser() {
 			// Datenbankverbindung öffnen
 			Connection con = DBConnection.connection();
-			// Ergebnisvektor anlegen
+			//Ergebnis-ArrayList anlegen
 			ArrayList<User> result = new ArrayList<User>();
 			
 			try {
@@ -230,6 +224,18 @@ package de.hdm.itprojekt.noteit.server.db;
 					stmt = con.createStatement();
 					// SQL Query ausführen um Datensatz in DB zu schreiben
 					stmt.executeUpdate("INSERT INTO User (userId, firstName, lastName, emailAddress) " +
+							"VALUES "
+							+ "('" 
+							+ u.getId() 
+							+ "', '" 
+							+ u.getFirstName() 
+							+ "', '" 
+							+ u.getLastName() 
+							+ "', '" 
+							+ u.getMail() 
+							+ "')");	
+					
+					System.out.println("INSERT INTO User (userId, firstName, lastName, emailAddress) " +
 							"VALUES "
 							+ "('" 
 							+ u.getId() 
