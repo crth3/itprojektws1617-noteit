@@ -225,6 +225,6 @@ public interface NotesAdministration extends RemoteService {
 	
 	public ArrayList<Notebook> getAllNotebooks() throws IllegalArgumentException;
 	
-	public Notebook findNotebookById(int notebookId) throws IllegalArgumentException;
+	public Notebook findNotebookById(int notebookId);
 		
 }
