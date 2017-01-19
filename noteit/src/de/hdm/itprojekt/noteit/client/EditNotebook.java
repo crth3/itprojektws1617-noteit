@@ -235,7 +235,7 @@ public class EditNotebook extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
 					Window.alert("Abfrage ob die Freigabe wirklich gelöscht werden soll");
-					notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getId(),
+					notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
 							Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
 							new AsyncCallback<Void>() {
 
@@ -318,7 +318,7 @@ public class EditNotebook extends VerticalPanel {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getId(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+				notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
