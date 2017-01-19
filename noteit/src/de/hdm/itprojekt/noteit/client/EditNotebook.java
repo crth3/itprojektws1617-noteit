@@ -330,7 +330,7 @@ public class EditNotebook extends VerticalPanel {
 					@Override
 					public void onSuccess(Void result) {
 						// TODO Auto-generated method stub
-						
+						NoteitCellBrowser.updateNotebooks();
 					}
 				});
 				

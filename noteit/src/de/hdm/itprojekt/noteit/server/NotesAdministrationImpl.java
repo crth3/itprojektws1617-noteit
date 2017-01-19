@@ -205,7 +205,10 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 			nb.setTitle(title);
 			nb.setModificationDate(ts);
+			this.nbMapper.edit(nb);
 		}
+		
+		
 
 	}
 
