@@ -601,6 +601,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		System.out.println("permissionID: " + permissionID);
 		User user = uMapper.findByEmail(mail);
 		if (user == null) {
+			// return user nicht vorhanden
 			System.out.println("user nicht vorhanden");
 			return false;
 		} else {
@@ -609,24 +610,21 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		ArrayList<NotebookPermission> NotebookPermissions = nbpMapper.findNotebookPermissionByNotebookId(notebookID);
 		NotebookPermission nbp = new NotebookPermission();
-		boolean updated = false;
 
 		nbp.setPermission(permissionID);
 		nbp.setUserId(user.getId());
 		nbp.setNotebookId(notebookID);
+		// wenn der nutzer schon eine Permission hat, wird diese gelöscht
 		for (NotebookPermission foundedNotebookPermission : NotebookPermissions) {
-			if (user.getId() == foundedNotebookPermission.getUserId()
-					&& permissionID != foundedNotebookPermission.getPermission()) {
-
-				foundedNotebookPermission.setPermission(permissionID);
-				nbpMapper.update(foundedNotebookPermission);
-				updated = true;
-				return true;
+			if (user.getId() == foundedNotebookPermission.getUserId()) {
+				System.out.println("Update Note Permission. Permission gelöscht");
+				nbpMapper.delete(foundedNotebookPermission);
 			}
 		}
-		if (updated == false) {
-			nbpMapper.insert(nbp);
-		}
+		
+		//Neue Userpermission anlegen
+		nbpMapper.insert(nbp);
+		System.out.println("User notebook permission wurde erstellt ");
 		return true;
 
 	}
@@ -660,26 +658,22 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 		ArrayList<NotePermission> notePermissions = npMapper.findNotePermissionByNoteId(noteID);
 		NotePermission np = new NotePermission();
-		boolean updated = false;
 
 		np.setPermission(permissionID);
 		np.setUserId(user.getId());
 		np.setNoteId(noteID);
+		// wenn der nutzer schon eine Permission hat, wird diese gelöscht
 		for (NotePermission foundedNotePermission : notePermissions) {
-			if (user.getId() == foundedNotePermission.getUserId()
-					&& permissionID != foundedNotePermission.getPermission()) {
-
-				foundedNotePermission.setPermission(permissionID);
-				System.out.println("Userpermission wurde geupdatet ");
-				npMapper.update(foundedNotePermission);
-				updated = true;
-				return true;
+			if (user.getId() == foundedNotePermission.getUserId()) {
+				System.out.println("Update Note Permission. Permission gelöscht");
+				npMapper.delete(foundedNotePermission);
 			}
 		}
-		if (updated == false) {
-			npMapper.insert(np);
-			System.out.println("Userpermission wurde erstellt ");
-		}
+
+		//Neue Userpermission anlegen
+		npMapper.insert(np);
+		System.out.println("User note permission wurde erstellt ");
+
 		return true;
 	}
 
