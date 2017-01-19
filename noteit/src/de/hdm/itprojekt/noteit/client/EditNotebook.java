@@ -319,18 +319,56 @@ public class EditNotebook extends VerticalPanel {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+				
+				
+				
+				final DialogBox dlbQuestion = new DialogBox();
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch deabonnieren möchten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.center();
+
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
+
+				btnYes.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// Methode zum löschen der Note aufrufen
+						notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								// TODO Auto-generated method stub
+								NoteitCellBrowser.updateNotebooks();
+							}
+						});
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
 					}
+				});
 
-					@Override
-					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
-						NoteitCellBrowser.updateNotebooks();
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
 					}
 				});
 				
