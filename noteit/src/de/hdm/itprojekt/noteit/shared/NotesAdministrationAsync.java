@@ -72,12 +72,6 @@ public interface NotesAdministrationAsync {
 
 	void findNoteByUserId(int userId, AsyncCallback<ArrayList<Note>> callback);
 
-	void findNoteByMaturity(Timestamp maturity, AsyncCallback<ArrayList<Note>> callback);
-
-	void findNoteByCreationDate(Timestamp creationDate, AsyncCallback<ArrayList<Note>> callback);
-
-	void findNoteByModificationDate(Timestamp modificationDate, AsyncCallback<ArrayList<Note>> callback);
-
 	void getAllNotebooks(AsyncCallback<ArrayList<Notebook>> callback);
 
 	void findNotebookById(int notebookId, AsyncCallback<Notebook> callback);

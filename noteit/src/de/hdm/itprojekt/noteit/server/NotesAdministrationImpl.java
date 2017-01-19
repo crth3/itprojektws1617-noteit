@@ -18,7 +18,6 @@ import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookMapper;
 import de.hdm.itprojekt.noteit.server.db.NotebookPermissionMapper;
-import de.hdm.itprojekt.noteit.server.db.SourceMapper;
 import de.hdm.itprojekt.noteit.server.db.UserMapper;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
@@ -34,7 +33,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	private UserMapper uMapper = null;
 	private NoteMapper nMapper = null;
 	private NotebookMapper nbMapper = null;
-	private SourceMapper sMapper = null;
 	private NotePermissionMapper npMapper = null;
 	private NotebookPermissionMapper nbpMapper = null;
 
@@ -48,7 +46,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		this.uMapper = UserMapper.userMapper();
 		this.nMapper = NoteMapper.noteMapper();
 		this.nbMapper = NotebookMapper.notebookMapper();
-		this.sMapper = SourceMapper.sourceMapper();
 		this.npMapper = NotePermissionMapper.notePermissionMapper();
 		this.nbpMapper = NotebookPermissionMapper.notebookPermissionMapper();
 
@@ -576,9 +573,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 
 	}
 
-	public ArrayList<Note> findNoteByMaturity(Timestamp maturity) throws IllegalArgumentException {
-		return this.nMapper.findNotesByMaturity(maturity);
-	}
 
 	@Override
 	public ArrayList<Note> getAllNotes() throws IllegalArgumentException {
@@ -723,17 +717,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		return this.uMapper.findByID(userId);
 	}
 
-	@Override
-	public ArrayList<Note> findNoteByCreationDate(Timestamp creationDate) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return this.nMapper.findNotesByCreationDate(creationDate);
-	}
 
-	@Override
-	public ArrayList<Note> findNoteByModificationDate(Timestamp modificationDate) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return this.nMapper.findNotesByModificationDate(modificationDate);
-	}
 
 	@Override
 	public ArrayList<Notebook> getAllNotebooks() throws IllegalArgumentException {
