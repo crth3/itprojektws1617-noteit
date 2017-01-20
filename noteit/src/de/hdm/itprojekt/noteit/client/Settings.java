@@ -52,7 +52,7 @@ public class Settings extends VerticalPanel {
 	 * Create the Button
 	 */
 	Button btnAbrrechenButton = new Button("Abbrechen");
-	Button btnSichernButton = new Button("Sichern");
+	Button btnSichernButton = new Button("Speichern");
 	Button btnDeleteAccount = new Button("Profil löschen");
 	
 	static Button btnNo = new Button("Nein");
