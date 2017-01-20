@@ -65,6 +65,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	private DateBox dbToCreationDate = new DateBox();
 	private DateBox dbToModificationDate = new DateBox();
 	
+	
 	Label lblSearchNoteTitle = new Label("Notiz-Titel");
 	Label lblSearchNotebookTitle = new Label("Notizbuch-Titel");
 	Label lblUserSearch = new Label("Nutzersuche");
@@ -267,6 +268,16 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 		dbToMaturity.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		dbToCreationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
 		dbToModificationDate.setFormat(new DateBox.DefaultFormat(DateTimeFormat.getShortDateFormat()));
+		
+		
+		//-------------------- set Placeholder ---------------------------
+		dbFromMaturity.getElement().setPropertyString("placeholder", "von");
+		dbFromCreationDate.getElement().setPropertyString("placeholder", "von");
+		dbFromModificationDate.getElement().setPropertyString("placeholder", "von");
+		dbToMaturity.getElement().setPropertyString("placeholder", "bis");
+		dbToCreationDate.getElement().setPropertyString("placeholder", "bis");
+		dbToModificationDate.getElement().setPropertyString("placeholder", "bis");
+		
 		
 		
 		//-------------------- set Panels ---------------------------
