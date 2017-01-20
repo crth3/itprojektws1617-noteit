@@ -546,7 +546,7 @@ public class Homepage extends VerticalPanel {
 
 	public static void showHTML() {
 		Window.alert("Fügen Sie den nachfolgenden HTML Code in den <Body> Bereich Ihrer gewünschten Website ein\n\n  "
-				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://127.0.0.1:8888/Noteit.html?url=' + self.location\">\n</p>\n</form>");
+				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://1-dot-noteit-id.appspot.com?url=' + self.location\">\n</p>\n</form>");
 	}
 
 	// absteigend sortieren nach Fälligkeitsdatum
