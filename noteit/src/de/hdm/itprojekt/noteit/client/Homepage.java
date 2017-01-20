@@ -101,13 +101,15 @@ public class Homepage extends VerticalPanel {
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
-
+	
 	public Homepage(User cU) {
 		currentUser = cU;
 	}
 
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
+		
+		
 
 		String url = Noteit.getValue_URL();
 
@@ -128,6 +130,10 @@ public class Homepage extends VerticalPanel {
 
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
+		
+		if (Noteit.isNew() == true) {
+		settingsView();
+		}
 
 		final ListBox listBox1 = new ListBox() {
 			@Override
@@ -416,10 +422,11 @@ public class Homepage extends VerticalPanel {
 			UrlView dialogBox = new UrlView(currentUser);
 			dialogBox.show();
 		}
-		
+	
 		if(currentUser.getFirstName() == "null" || currentUser.getLastName() == "null" || currentUser.getFirstName()== "" || currentUser.getLastName()==""){			
 			settingsView();
 		};
+		
 	}
 
 	/**

@@ -87,6 +87,8 @@ public class Noteit implements EntryPoint {
 	 */
 	Button btnLogOut = new Button("Logout");
 	Button zurueckButton = new Button("Zurück");
+	
+	static boolean isNew = false;
 
 	/**
 	 * This is the entry point method.
@@ -181,7 +183,9 @@ public class Noteit implements EntryPoint {
 														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
-
+												
+												isNew = true;
+												
 												// ImpressumPanel = new
 												// Impressum();
 												RootPanel.get().add(HomepagePanel);
@@ -244,6 +248,10 @@ public class Noteit implements EntryPoint {
 	public static User getCurrentUser() {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
+	}
+	
+	public static boolean isNew() {
+		return isNew;
 	}
 
 	public static void deleteStorage() {
