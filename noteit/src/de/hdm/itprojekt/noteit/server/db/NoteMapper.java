@@ -100,18 +100,22 @@ public class NoteMapper {
 	 * @return Liste der Notes in einem Notebook
 	 */
 	public ArrayList<Note> findNotesByNotebookId(int id) {
-
+		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<Note> noteList = new ArrayList<Note>();
-
+		
 		try {
+			// Neues SQL-Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL - Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Note WHERE "
 							+ "Notebook_notebookId = "
 							+ id);
-
+			// Bei Treffer
 			while (rs.next()) {
+				// Neues Note Objekt anlegen
 				Note n = new Note();
 				
 				n.setId(rs.getInt("noteId"));
@@ -125,7 +129,7 @@ public class NoteMapper {
 				n.setUserId(rs.getInt("User_UserId"));
 		
 				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
+				// Note Objekt der Liste hinzufügen
 				noteList.add(n);
 			}
 			// Objekt zurückgeben
@@ -145,16 +149,20 @@ public class NoteMapper {
 	 * @return Liste aller Notizen
 	 */
 	public ArrayList<Note> findAllNotes() {
-
+		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<Note> noteList = new ArrayList<Note>();
 
 		try {
+			// Neues SQL - Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Note");
-
+			// Bei Treffer
 			while (rs.next()) {
+				// Neues Note-Objekt anlegen
 				Note n = new Note();
 				
 				n.setId(rs.getInt("noteId"));
@@ -168,7 +176,7 @@ public class NoteMapper {
 				n.setUserId(rs.getInt("User_UserId"));
 		
 				
-				// Conversation Objekt der Liste hinzufügen
+				// Note Objekt der Liste hinzufügen
 				noteList.add(n);
 			}
 			System.out.println("Report: Anzal aller Notizen: " + noteList.size());
@@ -191,73 +199,22 @@ public class NoteMapper {
 	 * @return Liste der Notes eines bestimmten users
 	 */
 	public ArrayList<Note> findNotesByUser(int id) {
-
+		// Datenbankverbindung öffnen
 		Connection con = DBConnection.connection();
+		//Ergebnis-ArrayList anlegen
 		ArrayList<Note> noteList = new ArrayList<Note>();
 
 		try {
+			// Neues SQL - Statement anlegen
 			Statement stmt = con.createStatement();
+			// SQL - Query ausführen
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Note WHERE "
 							+ "User_userId = "
 							+ id);
-
+			// Bei Treffer
 			while (rs.next()) {
-				Note n = new Note();
-//				User creator = new User();
-				
-				n.setId(rs.getInt("noteId"));
-				n.setTitle(rs.getString("title"));
-				n.setSubTitle(rs.getString("subtitle"));
-				n.setText(rs.getString("content"));
-				n.setMaturityDate(rs.getTimestamp("maturity"));
-				n.setCreationDate(rs.getTimestamp("creationDate"));
-				n.setModificationDate(rs.getTimestamp("modificationDate"));
-				n.setNotebookId(rs.getInt("Notebook_notebookId"));
-				n.setUserId(rs.getInt("User_UserId"));
-				
-//				creator.setId(rs.getInt("userId"));
-//				creator.setFirstName(rs.getString("firstName"));
-//				creator.setLastName(rs.getString("lastName"));
-				
-//				n.setCreator(creator);
-							
-				System.out.println(rs);
-				// Conversation Objekt der Liste hinzufügen
-				noteList.add(n);
-			}
-			// Objekt zurückgeben
-			return noteList;
-		}
-		// Error-Handlung
-		catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-		return noteList;
-	}
-	
-	/**
-	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
-	 * anhand des Fälligkeitsdatum aus
-	 * @param maturity
-	 *            Eindeutiger Identifikator der Note in der Datenbank
-	 * @return Liste der Notes mit bestimmten Fälligkeitsdatum
-	 */
-	public ArrayList<Note> findNotesByMaturity(Timestamp maturity) {
-
-		Connection con = DBConnection.connection();
-		ArrayList<Note> noteList = new ArrayList<Note>();
-
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Note WHERE "
-							+ "maturity = '"
-							+ maturity
-							+"'");
-
-			while (rs.next()) {
+				// Neues Note Objekt anlegen
 				Note n = new Note();
 				
 				n.setId(rs.getInt("noteId"));
@@ -271,8 +228,7 @@ public class NoteMapper {
 				n.setUserId(rs.getInt("User_UserId"));
 							
 				System.out.println(rs);
-				
-				// Objekt der Liste hinzufügen
+				// Note Objekt der Liste hinzufügen
 				noteList.add(n);
 			}
 			// Objekt zurückgeben
@@ -286,105 +242,6 @@ public class NoteMapper {
 		return noteList;
 	}
 	
-	/**
-	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
-	 * anhand des Erstellungsdatum aus
-	 * @param creationDate
-	 *            Eindeutiger Identifikator der Note in der Datenbank
-	 * @return Liste der Notes eines bestimmten Erstelldatum
-	 */
-	public ArrayList<Note> findNotesByCreationDate(Timestamp creationDate) {
-
-		Connection con = DBConnection.connection();
-		ArrayList<Note> noteList = new ArrayList<Note>();
-
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Note WHERE "
-							+ "creationDate = '"
-							+ creationDate
-							+"'");
-
-			while (rs.next()) {
-				Note n = new Note();
-				
-				n.setId(rs.getInt("noteId"));
-				n.setTitle(rs.getString("title"));
-				n.setSubTitle(rs.getString("subtitle"));
-				n.setText(rs.getString("content"));
-				n.setMaturityDate(rs.getTimestamp("maturity"));
-				n.setCreationDate(rs.getTimestamp("creationDate"));
-				n.setModificationDate(rs.getTimestamp("modificationDate"));
-				n.setNotebookId(rs.getInt("Notebook_notebookId"));
-				n.setUserId(rs.getInt("User_UserId"));
-							
-				System.out.println(rs);
-				
-				// Objekt der Liste hinzufügen
-				noteList.add(n);
-			}
-			// Objekt zurückgeben
-			return noteList;
-		}
-		// Error-Handlung
-		catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-		return noteList;
-	}
-	
-	/**
-	 * Diese Methode gibt alle Notes, die an einem bestimmten Tag fällig sind, 
-	 * anhand des Modifikationsdatum aus
-	 * @param modificationDate
-	 *            Eindeutiger Identifikator der Note in der Datenbank
-	 * @return Liste der Notes eines bestimmten Modifikationsdatum
-	 */
-	public ArrayList<Note> findNotesByModificationDate(Timestamp modificationDate) {
-
-		Connection con = DBConnection.connection();
-		ArrayList<Note> noteList = new ArrayList<Note>();
-
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Note WHERE "
-							+ "modificationDate = '"
-							+ modificationDate
-							+"'");
-
-			while (rs.next()) {
-				Note n = new Note();
-				
-				n.setId(rs.getInt("noteId"));
-				n.setTitle(rs.getString("title"));
-				n.setSubTitle(rs.getString("subtitle"));
-				n.setText(rs.getString("content"));
-				n.setMaturityDate(rs.getTimestamp("maturity"));
-				n.setCreationDate(rs.getTimestamp("creationDate"));
-				n.setModificationDate(rs.getTimestamp("modificationDate"));
-				n.setNotebookId(rs.getInt("Notebook_notebookId"));
-				n.setUserId(rs.getInt("User_UserId"));
-							
-				System.out.println(rs);
-				
-				// Objekt der Liste hinzufügen
-				noteList.add(n);
-			}
-			// Objekt zurückgeben
-			return noteList;
-		}
-		// Error-Handlung
-		catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-		return noteList;
-	}
-	
-
 	/**
 	 * Neue Note in der Datenbank anlegen.
 	 * 
@@ -408,7 +265,6 @@ public class NoteMapper {
 				// neues SQL Statement
 				stmt = con.createStatement();
 				// SQL Query ausführen um Datensatz in DB zu schreiben
-				// Console - Ausgabe SQL Befehl
 				
 				if(n.getMaturityDate() != null) {
 					
@@ -455,7 +311,6 @@ public class NoteMapper {
 				
 				if(n.getMaturityDate() == null) {
 					
-					
 					System.out.println("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
 							+ "VALUES ('"
 							+ n.getId()
@@ -474,8 +329,6 @@ public class NoteMapper {
 							+ "', '"
 							+ n.getNotebookId()
 							+ "');");
-					
-					
 					
 					stmt.executeUpdate("INSERT INTO Note (noteId, title, subtitle, content, maturity, creationDate, User_userId, Notebook_notebookId) "
 							+ "VALUES ('"
@@ -496,20 +349,16 @@ public class NoteMapper {
 							+ n.getNotebookId()
 							+ "');");
 					
-					
 				}
 					
-					
 				}
-		
-
 			
 		}
 		// Error Handling
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		// Note Objekt zurückgeben
 		return n;
 	}
 
@@ -638,34 +487,15 @@ public class NoteMapper {
 
 		try {
 			// neues SQL Statement anlegen
-			Statement stmt = con.createStatement();
-			
-			// Source Verküpfung löschen 
-			// Prüfen ob Verbindung zu Source besteht, löschen wenn bestehend
-			ResultSet rs1 = stmt.executeQuery("SELECT * FROM Source WHERE Note_noteId = '" + n.getId() +"';");
-			if(rs1.next()) {
-				
-				System.out.println("DELETE FROM Note WHERE "
-						+ "Note_noteId = '" 
-						+ n.getId() 
-						+"';");
-				
-				stmt.executeUpdate("DELETE FROM Note WHERE "
-						+ "Note_noteId = '" 
-						+ n.getId() 
-						+"';");  
-			}
-			
-					
+			Statement stmt = con.createStatement();			
 			// Note löschen - SQL Query ausführen
-			
-						System.out.println("DELETE FROM Note WHERE "
-								+ "noteId = "
-								+ n.getId());
-			
 					stmt.executeUpdate("DELETE FROM Note WHERE "
 					+ "noteId = "
 					+ n.getId());
+					
+					System.out.println("DELETE FROM Note WHERE "
+							+ "noteId = "
+							+ n.getId());
 		}
 		// Error Handling
 		catch (SQLException e) {

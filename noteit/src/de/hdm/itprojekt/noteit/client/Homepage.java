@@ -59,6 +59,8 @@ public class Homepage extends VerticalPanel {
 	HorizontalPanel headlinePanel = new HorizontalPanel();
 	HorizontalPanel navPanel = new HorizontalPanel();
 	HorizontalPanel navLeftPanel = new HorizontalPanel();
+	HorizontalPanel navLeft2Panel = new HorizontalPanel();
+	HorizontalPanel navLeft3Panel = new HorizontalPanel();
 	HorizontalPanel navRightPanel = new HorizontalPanel();
 	HorizontalPanel footerPanel = new HorizontalPanel();
 	static HorizontalPanel contentPanel = new HorizontalPanel();
@@ -74,12 +76,13 @@ public class Homepage extends VerticalPanel {
 	// --------- Label -----------//
 	Label lbheadlineNotebookLabel = new Label("Notizbücher");
 	Label lbheadlineNotesLabel = new Label("Notizen");
-	final String strURL = "http://www.yahoo.com";
 	Label lbheadlineNoteit = new Label("Noteit");
+	Label lblRefreshNotebooks = new Label("Notizbücher aktualiseren: ");
+	Label lblSearchTextIN = new Label(" in ");
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
 	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved.");
 	Button lblImpressum = new Button("Impressum");
-
+	PushButton btnRefresh = new PushButton(new Image("Images/Refresh.png"));
 	// --------- Button -----------//
 	// Button btnAddNewNotebookOrNoteButton = new Button("<img
 	// src='Images/plus.png'/ width=\"15\" height=\"15\">");
@@ -167,15 +170,13 @@ public class Homepage extends VerticalPanel {
 			}
 		};
 
-		PushButton btnRefresh = new PushButton(new Image("Images/Refresh.png"));
-	//	btnRefresh.setHeight("20px");
 		
 		btnRefresh.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				updateNotebookCellList(currentUser.getId());
-				
+//				updateNotebookCellList(currentUser.getId());
+				NoteitCellBrowser.updateNotebooks();
 			}
 		});
 
@@ -206,6 +207,8 @@ public class Homepage extends VerticalPanel {
 		// Style Names
 		headlinePanel.setStyleName("headlinePanel");
 		navLeftPanel.setStylePrimaryName("navLeftPanel");
+		navLeft2Panel.setStylePrimaryName("navLeftPanel");
+		navLeft3Panel.setStylePrimaryName("navLeftPanel");
 		contentNotebookPanel.setStylePrimaryName("contentNotebookPanel");
 		contentNotesPanel.setStylePrimaryName("contentNotesPanel");
 		navPanel.setStylePrimaryName("navPanel");
@@ -225,19 +228,24 @@ public class Homepage extends VerticalPanel {
 		contentPanel.setWidth("100%");
 		headlinePanel.setWidth("100%");
 		headlinePanel.add(lbheadlineNoteit);
-		navLeftPanel.add(listBox1);
-		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
 		navLeftPanel.add(tbSearch);
-		navLeftPanel.add(lbSortNotes);
-		navLeftPanel.add(lbSort);
+		navLeftPanel.add(lblSearchTextIN);
+		navLeftPanel.add(listBox1);
+		navLeft2Panel.add(lbSortNotes);
+		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
+
+		navLeft2Panel.add(lbSort);
+		navLeft3Panel.add(lblRefreshNotebooks);
+		navLeft3Panel.add(btnRefresh);
 
 		footerPanel.add(lblImpressum);
 		footerPanel.add(copyright);
 		// TODO Sortierung in GUI implemntieren mit RPC
-		navRightPanel.add(btnRefresh);
 		navRightPanel.add(menu);
 
 		navPanel.add(navLeftPanel);
+		navPanel.add(navLeft2Panel);
+		navPanel.add(navLeft3Panel);
 		navPanel.add(navRightPanel);
 
 		/**
@@ -464,6 +472,7 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
 				clNotebook.setRowData(result);
+				Window.alert("update");
 			}
 
 			@Override
