@@ -82,6 +82,7 @@ public class Homepage extends VerticalPanel {
 	Label lbSortNotes = new Label("Notizen sortieren nach:");
 	Label copyright = new Label("Copyright © 2017 Noteit. All rights reserved.");
 	Button lblImpressum = new Button("Impressum");
+	Button btnReportGen = new Button("Report Generator");
 	PushButton btnRefresh = new PushButton(new Image("Images/Refresh.png"));
 	// --------- Button -----------//
 	// Button btnAddNewNotebookOrNoteButton = new Button("<img
@@ -217,6 +218,7 @@ public class Homepage extends VerticalPanel {
 		tbSearch.setStyleName("textbox");
 		footerPanel.setStylePrimaryName("footerPanel");
 		lblImpressum.setStylePrimaryName("lblImpressum");
+		btnReportGen.setStylePrimaryName("lblImpressum");
 		// btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
 		// Alignment
@@ -237,8 +239,10 @@ public class Homepage extends VerticalPanel {
 		navLeft2Panel.add(lbSort);
 		navLeft3Panel.add(lblRefreshNotebooks);
 		navLeft3Panel.add(btnRefresh);
-
+		
+		
 		footerPanel.add(lblImpressum);
+		footerPanel.add(btnReportGen);
 		footerPanel.add(copyright);
 		// TODO Sortierung in GUI implemntieren mit RPC
 		navRightPanel.add(menu);
@@ -389,6 +393,15 @@ public class Homepage extends VerticalPanel {
 				// EditNotebook editNotebookView = new EditNotebook();
 				contentPanel.add(impressum);
 
+			}
+		});
+		
+		btnReportGen.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.open("http://1-dot-noteit-id.appspot.com/NoteitReport.html", "_blank", "");
+				
 			}
 		});
 
