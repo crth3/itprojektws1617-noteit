@@ -546,20 +546,32 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void editNotebookView() {
-		contentPanel.remove(1);
+		
+		if(contentPanel.getWidgetCount() == 2){
+			contentPanel.remove(1);
+		}
 		// EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebook);
 
 	}
 
 	public static void settingsView() {
-		contentPanel.remove(1);
+		if(contentPanel.getWidgetCount() == 2){
+			contentPanel.remove(1);
+		}
 		contentPanel.add(settings);
 	}
 
 	public static void showNoteView() {
-		contentPanel.remove(1);
+		if(contentPanel.getWidgetCount() == 2){
+			contentPanel.remove(1);
+		}
+//			
+//			Window.alert("attach");
+		
 		contentPanel.add(showNote);
+		
+		
 
 	}
 	
@@ -607,6 +619,10 @@ public class Homepage extends VerticalPanel {
 	public void sortNotesModificationDateAsc() {
 		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
 
+	}
+	
+	public static void hideView(){
+		contentPanel.remove(1);
 	}
 
 }

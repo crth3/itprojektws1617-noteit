@@ -498,7 +498,7 @@ public class ShowNote extends VerticalPanel {
 
 										// Noteliste aktualisieren
 										NoteitCellBrowser.updateNotes();
-										
+										Homepage.hideView();
 
 									}
 								});

@@ -407,10 +407,11 @@ public class EditNotebook extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										// Notebook Liste aktualisieren
-										NoteitCellBrowser.deleteNotebook();
+										NoteitCellBrowser.updateNotebooks();
 
 										// DialogBox ausblenden
 										dlbQuestion.hide();
+										Homepage.hideView();
 
 									}
 
@@ -480,6 +481,7 @@ public class EditNotebook extends VerticalPanel {
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(true);
 			lblHeaderTitel.setText("Neues Notizbuch");
+			tbNotebookTitel.setReadOnly(false);
 			tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 		} else if (currentNotebook.getId() == -1) {
 			vpNotebookShare.setVisible(false);
@@ -494,6 +496,7 @@ public class EditNotebook extends VerticalPanel {
 			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(false);
+			tbNotebookTitel.setReadOnly(true);
 		} else {
 			vpNotebookShare.setVisible(true);
 			vpNotebookPermission.setVisible(true);
@@ -508,6 +511,7 @@ public class EditNotebook extends VerticalPanel {
 			lblNotebookDate.setVisible(true);
 			btnNotebookDelete.setVisible(true);
 			btnNotebookSave.setVisible(true);
+			tbNotebookTitel.setReadOnly(false);
 		}
 
 		if (currentNotebook.getModificationDate() == null) {
