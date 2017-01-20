@@ -170,8 +170,6 @@ public class EditNotebook extends VerticalPanel {
 		 * Create the Panel, Label and TextBox
 		 */
 
-	
-
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
 		// hpEditNotebook.add(vpNotebookPermission);
@@ -198,32 +196,32 @@ public class EditNotebook extends VerticalPanel {
 					permissionID = 3;
 				}
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-					if(Homepage.getCurrentUser().getMail() != tbNotebookShareMail.getText()){
-					notesAdmin.setUserNotebookPermission(tbNotebookShareMail.getText(), permissionID,
-							currentNotebook.getId(), new AsyncCallback<Boolean>() {
+					if (Homepage.getCurrentUser().getMail() != tbNotebookShareMail.getText()) {
+						notesAdmin.setUserNotebookPermission(tbNotebookShareMail.getText(), permissionID,
+								currentNotebook.getId(), new AsyncCallback<Boolean>() {
 
-								@Override
-								public void onSuccess(Boolean result) {
-									if (result == true) {
-										tbNotebookShareMail.setText("");
-										tbNotebookShareMail.getElement().setPropertyString("placeholder",
-												"nutzer@noteit.de");
-										rbRead.setValue(true);
-										getAllPermittedUsersbyNotebookID(currentNotebook.getId());
-									} else {
-										Window.alert("Der Nutzer mit der E-Mail `" + tbNotebookShareMail.getText()
-												+ "` wurde nicht gefunden");
+									@Override
+									public void onSuccess(Boolean result) {
+										if (result == true) {
+											tbNotebookShareMail.setText("");
+											tbNotebookShareMail.getElement().setPropertyString("placeholder",
+													"nutzer@noteit.de");
+											rbRead.setValue(true);
+											getAllPermittedUsersbyNotebookID(currentNotebook.getId());
+										} else {
+											Window.alert("Der Nutzer mit der E-Mail `" + tbNotebookShareMail.getText()
+													+ "` wurde nicht gefunden");
+										}
+
 									}
 
-								}
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
-
-								}
-							});
-					}else{
+									}
+								});
+					} else {
 						Window.alert("Sie können sich nicht selbst freigeben!");
 					}
 				} else {
@@ -284,7 +282,7 @@ public class EditNotebook extends VerticalPanel {
 									@Override
 									public void onSuccess(Notebook result) {
 										// TODO get all notebooks by user ID
-										lblHeaderTitel.setText(tbNotebookTitel.getText());
+
 										rootLogger.log(Level.SEVERE, "NB Speicher Button");
 										NoteitCellBrowser.getNotebookList(result);
 
@@ -318,14 +316,12 @@ public class EditNotebook extends VerticalPanel {
 				}
 			}
 		});
-		
+
 		btnUnsubcribe.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				
-				
+
 				final DialogBox dlbQuestion = new DialogBox();
 
 				dlbQuestion.setAnimationEnabled(true);
@@ -346,20 +342,21 @@ public class EditNotebook extends VerticalPanel {
 					public void onClick(ClickEvent event) {
 
 						// Methode zum löschen der Note aufrufen
-						notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(), currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+						notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(),
+								currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-							@Override
-							public void onSuccess(Void result) {
-								// TODO Auto-generated method stub
-								NoteitCellBrowser.updateNotebooks();
-							}
-						});
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										// TODO Auto-generated method stub
+										NoteitCellBrowser.updateNotebooks();
+									}
+								});
 						// DialogBox ausblenden
 						dlbQuestion.hide();
 
@@ -375,7 +372,7 @@ public class EditNotebook extends VerticalPanel {
 
 					}
 				});
-				
+
 			}
 		});
 
@@ -457,12 +454,12 @@ public class EditNotebook extends VerticalPanel {
 
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
-		if(currentNotebook.getPermissionID()>0 && currentNotebook.getId() != 0){
+		if (currentNotebook.getPermissionID() > 0 && currentNotebook.getId() != 0) {
 			hpButtons.add(btnNotebookSave);
 			hpButtons.add(btnUnsubcribe);
 			hpButtons.add(btnNotebookDelete);
-			
-		}else{
+
+		} else {
 			hpButtons.clear();
 			hpButtons.add(btnNotebookSave);
 			hpButtons.add(btnNotebookDelete);
