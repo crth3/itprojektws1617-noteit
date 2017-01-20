@@ -168,17 +168,19 @@ tr .headerPanel {
 	float: right;
 	color: #9199a1;
 }
-input.gwt-TextBox, input.gwt-DateBox{
+input.gwt-TextBox, input.gwt-DateBox, input.gwt-SuggestBox{
 border: 0px;
 border-bottom: 1px solid #90A4AE;
 height: 30px;
 margin-bottom: 20px;
 padding-left:0px
 }
+
+
 input:focus, textarea:focus {
     outline: none;
 }
-input.gwt-TextBox:focus, input.gwt-DateBox:focus{
+input.gwt-TextBox:focus, input.gwt-DateBox:focus, input.gwt-SuggestBox:focus{
 
 
 border-bottom: 1px solid #3a4b54;

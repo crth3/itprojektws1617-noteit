@@ -1,6 +1,5 @@
 package de.hdm.itprojekt.noteit.client;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,24 +7,16 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
-import de.hdm.itprojekt.noteit.shared.bo.User;
 
 
 /**
@@ -51,42 +42,19 @@ public class NotesReport implements EntryPoint {
 
 	private HorizontalPanel headlinePanel = new HorizontalPanel();
 	HorizontalPanel headerPanel = new HorizontalPanel();
-	private VerticalPanel vpReport;
-	static HorizontalPanel contentPanel = new HorizontalPanel();
+	private VerticalPanel vpReport = new VerticalPanel();
+	HorizontalPanel contentPanel = new HorizontalPanel();
 	HorizontalPanel navPanel = new HorizontalPanel();
 	VerticalPanel vpLeft = new VerticalPanel();
 	VerticalPanel vpRight = new VerticalPanel();
 	VerticalPanel vpBasisPanel = new VerticalPanel();
 	Button bGeneral = new Button("Allgemeine Informationen zu Notizen");
-	Button bSharing = new Button("Informationen zu Notizen und Berechtigungen");
-	
+	Button bSharing = new Button("Informationen zu Notizen und Berechtigungen eines Nutzers");
 	Label headlineLabel = new Label("NoteIt Report");
 	
 	@Override
 	public void onModuleLoad() {
-		
- 		vpReport = new VerticalPanel();
- 		
-// 		MenuBar menuBar = new MenuBar();
- 		
- 		
-//		/*-------------Menu Commands User-------------*/
-// 		
-// 		Command showNotesGeneralInformation = new Command() {
-//			public void execute() {
-//				vpReport.clear();
-//				NotesGeneralInformationReport notesGeneralInformation = new NotesGeneralInformationReport();
-//				vpReport.add(notesGeneralInformation);
-//			}
-//		};
-//		
-//		Command showNotesSharingInformation = new Command() {
-//			public void execute() {
-//				vpReport.clear();
-//				NotesSharingInformationReport notesSharingInformation = new NotesSharingInformationReport();
-//				vpReport.add(notesSharingInformation);
-//			}
-//		};
+		 		
 		
 		/*-------------Styles -------------*/
 
@@ -97,6 +65,16 @@ public class NotesReport implements EntryPoint {
 		navPanel.setStylePrimaryName("navPanel");
 
 		
+		/*-----------------Width-------------*/
+		
+		navPanel.setWidth("100%");
+		vpBasisPanel.setWidth("100%");
+		headlinePanel.setWidth("100%");
+		headerPanel.setWidth("100%");
+		contentPanel.setWidth("100%");
+		bGeneral.setWidth("100%");
+		bSharing.setWidth("100%");
+		
 		/*-------------Widgets-------------*/
 
 		headlinePanel.add(headlineLabel);
@@ -104,19 +82,8 @@ public class NotesReport implements EntryPoint {
 		vpBasisPanel.add(headerPanel);
 		vpBasisPanel.add(navPanel);
 		vpBasisPanel.add(contentPanel);
-		logger.log(Level.SEVERE, "test");
-		navPanel.setWidth("100%");
-		vpBasisPanel.setWidth("100%");
-		headlinePanel.setWidth("100%");
-		
-		bGeneral.setWidth("100%");
-		bSharing.setWidth("100%");
-		
 		navPanel.add(bGeneral);
 		navPanel.add(bSharing);
-		
-	
-
 			
 		RootPanel.get("Reporthead").add(vpBasisPanel);
 		
@@ -140,12 +107,6 @@ public class NotesReport implements EntryPoint {
 				}
 			
 		});
-		
-	
-		
-		/**
-		 * MenuBar und Vertical Panel dem RootPanel hinzufügen
-		 */
 			
 	
 		}
