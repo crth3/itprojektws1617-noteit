@@ -233,6 +233,7 @@ public class ShowNote extends VerticalPanel {
 					permissionID = 3;
 				}
 				if (tbNoteShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+					if(Homepage.getCurrentUser().getMail() != tbNoteShareMail.getText()){
 					notesAdmin.setUserNotePermission(tbNoteShareMail.getText(), permissionID, currentNote.getId(),
 							new AsyncCallback<Boolean>() {
 
@@ -256,6 +257,9 @@ public class ShowNote extends VerticalPanel {
 
 								}
 							});
+					}else{
+						Window.alert("Sie können sich nicht selbst freigeben!");
+					}
 				} else {
 					Window.alert("Bitte gebe eine E-Mail-Adresse an!");
 					// clUser.setRowData(userList);
