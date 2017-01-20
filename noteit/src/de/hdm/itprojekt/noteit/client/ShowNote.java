@@ -184,11 +184,11 @@ public class ShowNote extends VerticalPanel {
 		vpNotePermission.add(clUser);
 
 		hpBtnPanel.setWidth("300px");
-		 hpBtnPanel.add(btnSaveNote);
-		 hpBtnPanel.add(btnUnsubcribe);
-		 hpBtnPanel.add(btnDeleteNote);
-		 btnUnsubcribe.setVisible(false);
-		 btnDeleteNote.setVisible(false);
+		hpBtnPanel.add(btnSaveNote);
+		hpBtnPanel.add(btnUnsubcribe);
+		hpBtnPanel.add(btnDeleteNote);
+		btnUnsubcribe.setVisible(false);
+		btnDeleteNote.setVisible(false);
 
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -263,7 +263,6 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
-		
 
 		btnSaveNote.addClickHandler(new ClickHandler() {
 
@@ -293,6 +292,10 @@ public class ShowNote extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Note result) {
+										tbNoteSubTitel.setText("");
+										tbNoteTitel.setText("");
+										content.setText("");
+
 										NoteitCellBrowser.getNoteList(result);
 
 									}
@@ -333,9 +336,9 @@ public class ShowNote extends VerticalPanel {
 
 			}
 		});
-		
+
 		btnDeletePermission.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				final DialogBox dlbQuestion = new DialogBox();
@@ -357,20 +360,21 @@ public class ShowNote extends VerticalPanel {
 
 					public void onClick(ClickEvent event) {
 
-						notesAdmin.deleteUserNotePermission(tbNoteShareMail.getText(), currentNote.getPermissionID(), currentNote.getId(), new AsyncCallback<Void>() {
-							
-							@Override
-							public void onSuccess(Void result) {
-								getAllPermittedUsersbyNoteID(currentNote.getId());
-								
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
-						});
+						notesAdmin.deleteUserNotePermission(tbNoteShareMail.getText(), currentNote.getPermissionID(),
+								currentNote.getId(), new AsyncCallback<Void>() {
+
+									@Override
+									public void onSuccess(Void result) {
+										getAllPermittedUsersbyNoteID(currentNote.getId());
+
+									}
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+								});
 						// DialogBox ausblenden
 						dlbQuestion.hide();
 
@@ -386,18 +390,17 @@ public class ShowNote extends VerticalPanel {
 
 					}
 				});
-				
+
 			}
 		});
-		
+
 		btnUnsubcribe.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Noteid: "+NoteitCellBrowser.getSelectedNote().getId()+ "userid "+Homepage.getCurrentUser().getId());
-				
-				
-				
+				Window.alert("Noteid: " + NoteitCellBrowser.getSelectedNote().getId() + "userid "
+						+ Homepage.getCurrentUser().getId());
+
 				final DialogBox dlbQuestion = new DialogBox();
 
 				dlbQuestion.setAnimationEnabled(true);
@@ -418,21 +421,22 @@ public class ShowNote extends VerticalPanel {
 					public void onClick(ClickEvent event) {
 
 						// Methode zum löschen der Note aufrufen
-						notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getMail(), NoteitCellBrowser.getSelectedNote().getPermissionID(), NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
+						notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getMail(),
+								NoteitCellBrowser.getSelectedNote().getPermissionID(),
+								NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-							@Override
-							public void onSuccess(Void result) {
-								Window.alert("success!");
-								
-								
-							}
-						});
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										Window.alert("success!");
+
+									}
+								});
 						// DialogBox ausblenden
 						dlbQuestion.hide();
 
@@ -449,10 +453,8 @@ public class ShowNote extends VerticalPanel {
 					}
 				});
 
-				
 			}
 		});
-		
 
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
@@ -526,7 +528,7 @@ public class ShowNote extends VerticalPanel {
 	public static void showNote(Note note) {
 
 		currentNote = note;
-		
+
 		if (currentNote.getPermissionID() > 0) {
 			btnSaveNote.setVisible(true);
 			btnUnsubcribe.setVisible(true);

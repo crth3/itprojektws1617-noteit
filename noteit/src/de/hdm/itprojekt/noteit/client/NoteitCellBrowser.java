@@ -46,7 +46,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
-
+		
 		if (value == null) {
 
 			// LEVEL 0.
@@ -57,6 +57,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 				@Override
 				public void onSuccess(ArrayList<Notebook> result) {
+					
 					for (Notebook notebook : result) {
 						notebooksListDataProvider.getList().add(notebook);
 
@@ -76,14 +77,15 @@ public class NoteitCellBrowser implements TreeViewModel {
 					null);
 
 		} else if (value instanceof Notebook) {
+			
+			Homepage.editNotebookView();
 
 			selectedNotebook = selectionModelNotebook.getLastSelectedObject();
 			EditNotebook.setNotebook(selectedNotebook);
 
 			EditNotebook.getAllPermittedUsersbyNotebookID(selectedNotebook.getId());
 			Homepage.setSelectedNotebook(selectedNotebook);
-
-			Homepage.editNotebookView();
+			
 			notesListDataProvider.getList().clear();
 			// LEVEL 1.
 			// We want the children of the notebook. Return the notes.
