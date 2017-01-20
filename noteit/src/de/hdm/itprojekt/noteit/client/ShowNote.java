@@ -272,12 +272,12 @@ public class ShowNote extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
-				Window.alert("ID: " + currentNote.getId());
+				
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {
 						if (dateBox.getTextBox().getValue().length() > 0) {
-							Window.alert("create Note" + currentNote.getId());
+							
 							Date date = dateBox.getValue();
 							long time = date.getTime();
 							timestampe = new Timestamp(time);
@@ -299,6 +299,7 @@ public class ShowNote extends VerticalPanel {
 										tbNoteSubTitel.setText("");
 										tbNoteTitel.setText("");
 										content.setText("");
+										dateBox.setValue(null);
 
 										NoteitCellBrowser.getNoteList(result);
 
