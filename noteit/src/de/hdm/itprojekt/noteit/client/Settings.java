@@ -44,7 +44,7 @@ public class Settings extends VerticalPanel {
 	 * Create the Panel
 	 */
 	HorizontalPanel hpButtonPanel = new HorizontalPanel();
-	
+
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
 
@@ -54,7 +54,7 @@ public class Settings extends VerticalPanel {
 	Button btnAbrrechenButton = new Button("Abbrechen");
 	Button btnSichernButton = new Button("Speichern");
 	Button btnDeleteAccount = new Button("Profil löschen");
-	
+
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 
@@ -70,7 +70,7 @@ public class Settings extends VerticalPanel {
 		vDialog.add(hDialog);
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
-	
+
 		// currentUser.setFirstName("Kim");
 		vpSettingsPanel.add(lbFirstName);
 		vpSettingsPanel.add(tbFirstName);
@@ -78,20 +78,29 @@ public class Settings extends VerticalPanel {
 		vpSettingsPanel.add(tbLastName);
 		vpSettingsPanel.add(lbEmail);
 		vpSettingsPanel.add(lbAusgabeEmail);
-		
+
 		hpButtonPanel.add(btnAbrrechenButton);
 		hpButtonPanel.add(btnSichernButton);
 		hpButtonPanel.add(btnDeleteAccount);
 		vpSettingsPanel.add(hpButtonPanel);
 
+		
+			if (currentUser.getFirstName() == "null") {
+				tbFirstName.setText("");
+			}else{
+				tbFirstName.setText(currentUser.getFirstName());
+			}
+			if (currentUser.getLastName() == "null") {
+				tbLastName.setText("");
+			}else{
+				tbLastName.setText(currentUser.getLastName());
+			}
 
-	
-		tbFirstName.setText(currentUser.getFirstName());
-		tbLastName.setText(currentUser.getLastName());
-		lbAusgabeEmail.setText(currentUser.getMail());
+			lbAusgabeEmail.setText(currentUser.getMail());
+		
+			
 
 		this.add(vpSettingsPanel);
-		
 
 		// Wenn ich nur das ButtonPanel add, sind die Buttons nachher im Browser
 		// nach Rechts verzogen. Hier müsste man dann es dann durch css
@@ -143,15 +152,13 @@ public class Settings extends VerticalPanel {
 						});
 			}
 		});
-		
+
 		btnDeleteAccount.addClickHandler(new ClickHandler() {
-			
-			
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				
+
 				final DialogBox dlbQuestion = new DialogBox();
 
 				dlbQuestion.setAnimationEnabled(true);
@@ -172,21 +179,21 @@ public class Settings extends VerticalPanel {
 					public void onClick(ClickEvent event) {
 
 						notesAdmin.deleteUser(currentUser, new AsyncCallback<Void>() {
-							
+
 							@Override
 							public void onSuccess(Void result) {
-								
+
 								Noteit.loginInfo.getLogoutUrl();
 								Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
 								Window.alert("Ihr Profil wurde gelöscht");
 								Noteit.loadLogin();
-								
+
 							}
-							
+
 							@Override
 							public void onFailure(Throwable caught) {
 								// TODO Auto-generated method stub
-								
+
 							}
 						});
 						// DialogBox ausblenden
@@ -204,12 +211,7 @@ public class Settings extends VerticalPanel {
 
 					}
 				});
-				
-				
-				
-				
-				
-				
+
 			}
 		});
 
