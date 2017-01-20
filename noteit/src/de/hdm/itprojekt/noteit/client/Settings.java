@@ -35,12 +35,6 @@ public class Settings extends VerticalPanel {
 	Label lbAusgabeEmail = new Label("");
 
 	/**
-	 * Create the Textbox
-	 */
-	TextBox tbFirstName = new TextBox();
-	TextBox tbLastName = new TextBox();
-
-	/**
 	 * Create the Panel
 	 */
 	HorizontalPanel hpButtonPanel = new HorizontalPanel();
@@ -71,11 +65,7 @@ public class Settings extends VerticalPanel {
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
 
-		// currentUser.setFirstName("Kim");
-		vpSettingsPanel.add(lbFirstName);
-		vpSettingsPanel.add(tbFirstName);
-		vpSettingsPanel.add(lbLastName);
-		vpSettingsPanel.add(tbLastName);
+		
 		vpSettingsPanel.add(lbEmail);
 		vpSettingsPanel.add(lbAusgabeEmail);
 
@@ -85,19 +75,7 @@ public class Settings extends VerticalPanel {
 		vpSettingsPanel.add(hpButtonPanel);
 
 		
-			if (currentUser.getFirstName() == "null") {
-				tbFirstName.setText("");
-			}else{
-				tbFirstName.setText(currentUser.getFirstName());
-			}
-			if (currentUser.getLastName() == "null") {
-				tbLastName.setText("");
-			}else{
-				tbLastName.setText(currentUser.getLastName());
-			}
-
-			lbAusgabeEmail.setText(currentUser.getMail());
-		
+					
 			
 
 		this.add(vpSettingsPanel);
@@ -109,112 +87,7 @@ public class Settings extends VerticalPanel {
 		// das haben?
 		// this.add(hpButtonPanel);
 
-		btnAbrrechenButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				// Homepage homepage = new Homepage();
-
-				Homepage.showNoteView();
-
-				// Hier muss rein, dass die Homepage Klasse wieder geladen wird.
-
-				// wenn das mit drin ist, lädt er das das ContentPanel nicht
-				// mal
-				// mehr leer rein.
-				// Homepage.contentPanel.add(homepage);
-
-			}
-		});
-
-		btnSichernButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				notesAdmin.updateUser(currentUser.getId(), currentUser.getMail(), tbFirstName.getText(),
-						tbLastName.getText(), new AsyncCallback<Void>() {
-
-							// Das hat damals noch geklappt als wir es an der
-							// HDM gecodet haben, Müsste das nicht eigentlich
-							// noch genauso funktionieren?
-							@Override
-							public void onSuccess(Void result) {
-								// VerticalPanel homepage = new Homepage();
-								Window.alert("Eingaben erfolgreich gespeichert");
-								Homepage.showNoteView();
-							}
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-						});
-			}
-		});
-
-		btnDeleteAccount.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
-				final DialogBox dlbQuestion = new DialogBox();
-
-				dlbQuestion.setAnimationEnabled(true);
-				dlbQuestion.setText("Sind sie sicher, dass Sie ihr Profil löschen möchten?");
-				dlbQuestion.setWidth("300px");
-				dlbQuestion.setWidget(vDialog);
-				dlbQuestion.setModal(true);
-				dlbQuestion.setGlassEnabled(true);
-				dlbQuestion.center();
-
-				int width = Window.getClientWidth() / 2;
-				int height = Window.getClientHeight() / 2;
-				dlbQuestion.setPopupPosition(width, height);
-				dlbQuestion.show();
-
-				btnYes.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						notesAdmin.deleteUser(currentUser, new AsyncCallback<Void>() {
-
-							@Override
-							public void onSuccess(Void result) {
-
-								Noteit.loginInfo.getLogoutUrl();
-								Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
-								Window.alert("Ihr Profil wurde gelöscht");
-								Noteit.loadLogin();
-
-							}
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-						});
-						// DialogBox ausblenden
-						dlbQuestion.hide();
-
-					}
-				});
-
-				btnNo.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						// DialogBox ausblenden
-						dlbQuestion.hide();
-
-					}
-				});
-
-			}
-		});
-
+	
 	}
 
 }
