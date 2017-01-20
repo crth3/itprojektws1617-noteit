@@ -265,7 +265,7 @@ implements ReportService {
 								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
 						 // Wenn ein Objekt nicht der gesuchten getMaturityDate entspricht, löschen
-							else if (m.getMaturityDate().after(tToMaturity)) {
+							else if (m.getMaturityDate().after(tToMaturity) && !m.getMaturityDate().equals(tToMaturity)) {
 							 iterator.remove();
 								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
@@ -277,7 +277,6 @@ implements ReportService {
 
 			 for (java.util.Iterator<Note> iterator = allNotes.iterator(); iterator.hasNext();  ) {
 						Note c = iterator.next();
-						
 						
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
 						if (c.getCreationDate().before(tFromCreationDate)) {
@@ -294,7 +293,7 @@ implements ReportService {
 						Note c = iterator.next();
 						
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
-						if (c.getCreationDate().after(tToCreationDate)) {
+						if (c.getCreationDate().after(tToCreationDate) && !c.getCreationDate().equals(tToCreationDate)) {
 							 iterator.remove();
 								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}	
@@ -329,7 +328,7 @@ implements ReportService {
 							 iterator.remove();
 								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
-						} else if (mD.getModificationDate().after(tToModificationDate)) {
+						} else if (mD.getModificationDate().after(tToModificationDate) && !mD.getModificationDate().equals(tToModificationDate)) {
 							 iterator.remove();
 								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}
