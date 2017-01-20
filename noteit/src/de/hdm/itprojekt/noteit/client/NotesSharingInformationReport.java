@@ -86,7 +86,7 @@ public void onLoad() {
 				for (User user : result) {
 					
 					String username ="";
-					username = user.getId() +" " + user.getFirstName() + " " + user.getLastName()
+					username = user.getFirstName() + " " + user.getLastName()
 							+ " " + user.getMail();
 					oracle.add(username);
 					//Window.alert("Suggestion - userId" + userId);
@@ -105,44 +105,41 @@ public void onLoad() {
 		sb.setLayoutData(ALIGN_LEFT);
 		
 		
-		 sb.addSelectionHandler(new SelectionHandler<Suggestion>() {
+		sb.addSelectionHandler(new SelectionHandler<Suggestion>() {
 
-		        public void onSelection(SelectionEvent<Suggestion> event) {
-		        	
+	        public void onSelection(SelectionEvent<Suggestion> event) {
+	        	
 
-		           	//ausgewählten Value recieven        	
-		            String selectedProperty =   ((SuggestBox)event.getSource()).getValue(); 
-		        		  
-		            // Alle Zeichen nach der UserId löschen
-		            String sfinalProperty = selectedProperty.split(" ")[0];
-		            
-		            // String in Integer umwandeln
-		            int ifinalProperty = Integer.parseInt(sfinalProperty);
-		            
-		            // userId zuweisen
-		            user.setId(ifinalProperty);
-		            userId = ifinalProperty;
-		            
-		            // UserObjekt befüllen
-		            notesAdministration.findUserById(userId, new AsyncCallback<User>() {
+	           	//ausgewählten Value recieven        	
+	            String selectedProperty =   ((SuggestBox)event.getSource()).getValue(); 
+	            	        		  
+	            // Split, damit Emailadresse übrig bleibt
+	            String sfinalProperty = selectedProperty.split(" ")[2];
+	            
+	            String mail = sfinalProperty;
+	            
+	            notesAdministration.findUserByMail(mail, new AsyncCallback<User>() {
 
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
 
-						@Override
-						public void onSuccess(User result) {
-							// TODO Auto-generated method stub
-							user.setFirstName(result.getFirstName());
-							user.setLastName(result.getLastName());
-						}
-		            	
-		            });
-		            
-		        }
-		    });
+					@Override
+					public void onSuccess(User result) {
+						// TODO Auto-generated method stub
+						user.setId(result.getId());
+						user.setFirstName(result.getFirstName());
+						user.setLastName(result.getLastName());						
+					}
+	            	
+	            });
+	            
+	            
+	        }
+	        
+	    });
 		 
 		// Setzen der Auswahl-Optionen
 		lbPermission.addItem("------");
