@@ -42,6 +42,15 @@ td {
 	padding: 3%;
 }
 
+.lblWelcome {
+	font-family: 'Marck Script', cursive;
+	text-align: center;
+	color: #90A4AE;
+	font-size: 4rem;
+	font-weight: 700;
+	padding: 3%;
+}
+
 .lblImpressum{
 	padding: 8px;
 }

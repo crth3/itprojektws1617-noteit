@@ -67,6 +67,7 @@ public class Homepage extends VerticalPanel {
 	final static VerticalPanel showNote = new ShowNote();
 	VerticalPanel impressum = new Impressum();
 
+	static VerticalPanel welcome = new Welcome();
 	static VerticalPanel editNotebook = new EditNotebook();
 	static Settings settings = new Settings();
 
@@ -110,13 +111,14 @@ public class Homepage extends VerticalPanel {
 	public void onLoad() {
 		
 		
-
 		String url = Noteit.getValue_URL();
 
 		((EditNotebook) editNotebook).run();
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
 		((Impressum) impressum).run();
+		((Welcome) welcome).run();
+		
 		
 
 
@@ -133,6 +135,10 @@ public class Homepage extends VerticalPanel {
 		
 		if (Noteit.isNew() == true) {
 		settingsView();
+		}
+		
+		if(currentUser.getId() != 0){
+			WelcomeView();			
 		}
 
 		final ListBox listBox1 = new ListBox() {
@@ -555,6 +561,12 @@ public class Homepage extends VerticalPanel {
 		contentPanel.remove(1);
 		contentPanel.add(showNote);
 
+	}
+	
+	public static void WelcomeView() {
+		contentPanel.remove(1);
+		contentPanel.add(welcome);
+		
 	}
 
 	public static void showHTML() {

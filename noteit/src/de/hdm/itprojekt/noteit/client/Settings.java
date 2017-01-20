@@ -83,7 +83,7 @@ public class Settings extends VerticalPanel {
 		hpButtonPanel.add(btnSichernButton);
 		hpButtonPanel.add(btnDeleteAccount);
 		vpSettingsPanel.add(hpButtonPanel);
-
+		
 		
 			if (currentUser.getFirstName() == "null") {
 				tbFirstName.setText("");
@@ -141,7 +141,8 @@ public class Settings extends VerticalPanel {
 							public void onSuccess(Void result) {
 								// VerticalPanel homepage = new Homepage();
 								Window.alert("Eingaben erfolgreich gespeichert");
-								Homepage.showNoteView();
+								//Homepage.showNoteView();
+								Homepage.WelcomeView();
 							}
 
 							@Override
