@@ -86,7 +86,7 @@ public void onLoad() {
 				for (User user : result) {
 					
 					String username ="";
-					username = user.getId() +" " + user.getFirstName() + " " + user.getLastName()
+					username = user.getFirstName() + " " + user.getLastName()
 							+ " " + user.getMail();
 					oracle.add(username);
 					//Window.alert("Suggestion - userId" + userId);
