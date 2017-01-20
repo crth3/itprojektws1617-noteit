@@ -25,6 +25,7 @@ public class Settings extends VerticalPanel {
 	static VerticalPanel vpSettingsPanel = new VerticalPanel();
 
 	User currentUser = new User();
+	public String userFirstName;
 
 	/**
 	 * Create the Label
@@ -142,7 +143,9 @@ public class Settings extends VerticalPanel {
 								// VerticalPanel homepage = new Homepage();
 								Window.alert("Eingaben erfolgreich gespeichert");
 								//Homepage.showNoteView();
+								
 								Homepage.WelcomeView();
+
 							}
 
 							@Override
@@ -151,6 +154,7 @@ public class Settings extends VerticalPanel {
 
 							}
 						});
+
 			}
 		});
 
@@ -215,7 +219,9 @@ public class Settings extends VerticalPanel {
 
 			}
 		});
+		
 
 	}
+	
 
 }

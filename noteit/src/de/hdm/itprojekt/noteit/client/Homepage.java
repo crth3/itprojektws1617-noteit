@@ -137,7 +137,7 @@ public class Homepage extends VerticalPanel {
 		settingsView();
 		}
 		
-		if(currentUser.getId() != 0){
+		if(currentUser.getId() != 0 && Noteit.isNew() == false){
 			WelcomeView();			
 		}
 
@@ -566,12 +566,7 @@ public class Homepage extends VerticalPanel {
 		if(contentPanel.getWidgetCount() == 2){
 			contentPanel.remove(1);
 		}
-//			
-//			Window.alert("attach");
-		
-		contentPanel.add(showNote);
-		
-		
+		contentPanel.add(showNote);		
 
 	}
 	
