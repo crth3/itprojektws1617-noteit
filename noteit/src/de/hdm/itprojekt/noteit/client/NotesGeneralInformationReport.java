@@ -111,7 +111,9 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 				for (User user : result) {
 					
 					String username ="";
-					username = user.getId() +" " + user.getFirstName() + " " + user.getLastName()
+					username = 
+//					user.getId() +" " + 
+					user.getFirstName() + " " + user.getLastName()
 							+ " " + user.getMail();
 					oracle.add(username);
 					//Window.alert("Suggestion - userId" + userId);
@@ -124,9 +126,6 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 				Window.alert("Failure: "+caught);
 			}
 		});
-		
-		
-
 
 				
 		sb = new SuggestBox(oracle);
@@ -138,19 +137,13 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 
 	           	//ausgewählten Value recieven        	
 	            String selectedProperty =   ((SuggestBox)event.getSource()).getValue(); 
-	        		  
-	            // Alle Zeichen nach der UserId löschen
-	            String sfinalProperty = selectedProperty.split(" ")[0];
+	            	        		  
+	            // Split, damit Emailadresse übrig bleibt
+	            String sfinalProperty = selectedProperty.split(" ")[2];
 	            
-	            // String in Integer umwandeln
-	            int ifinalProperty = Integer.parseInt(sfinalProperty);
+	            String mail = sfinalProperty;
 	            
-	            // userId zuweisen
-	            user.setId(ifinalProperty);
-	            userId = ifinalProperty;
-	            
-	            // UserObjekt befüllen
-	            notesAdministration.findUserById(userId, new AsyncCallback<User>() {
+	            notesAdministration.findUserByMail(mail, new AsyncCallback<User>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -161,11 +154,13 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 					@Override
 					public void onSuccess(User result) {
 						// TODO Auto-generated method stub
+						user.setId(result.getId());
 						user.setFirstName(result.getFirstName());
-						user.setLastName(result.getLastName());
+						user.setLastName(result.getLastName());						
 					}
 	            	
 	            });
+	            
 	            
 	        }
 	        
