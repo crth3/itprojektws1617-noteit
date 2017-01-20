@@ -497,7 +497,8 @@ public class ShowNote extends VerticalPanel {
 									public void onSuccess(Void result) {
 
 										// Noteliste aktualisieren
-										NoteitCellBrowser.deleteNote();
+										NoteitCellBrowser.updateNotes();
+										
 
 									}
 								});
@@ -587,6 +588,8 @@ public class ShowNote extends VerticalPanel {
 
 			if (note.getMaturityDate() == null) {
 				dateBox.setValue(null);
+			}else{
+				dateBox.setValue(currentNote.getMaturityDate());
 			}
 
 			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1

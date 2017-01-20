@@ -117,7 +117,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		
 		ArrayList<NotebookPermission> userNotebookPermissions = this.nbpMapper.findNotebookPermissionByUserId(user.getId());
 		ArrayList<NotePermission> userNotePermissions = this.npMapper.findNotePermissionByUserId(user.getId());
-		
+		ArrayList<Note> allNotesfromthisUser = this.nMapper.findNotesByUser(user.getId());
 		
 		//Notebooks permissions des Users löschen
 		for (NotebookPermission notebookPermission : userNotebookPermissions) {
@@ -127,6 +127,13 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		//Note permissions des Users löschen
 		for (NotePermission notePermission : userNotePermissions) {
 			this.npMapper.delete(notePermission);
+		}
+		
+		// notizen löschen die keine Freigabe enthalten
+		for (Note foundedNote : allNotesfromthisUser) {
+			if(npMapper.findNotePermissionByNoteId(foundedNote.getId()).size() == 0){
+				nMapper.delete(foundedNote);
+			}
 		}
 		
 		// Nutzer wird nicht gelöscht sondern nur seine E-mail
