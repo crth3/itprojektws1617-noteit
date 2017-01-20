@@ -91,21 +91,20 @@ public class Noteit implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	 private static Storage stockStore = null;
+	private static Storage stockStore = null;
+
 	public void onModuleLoad() {
 
-		 
-		  stockStore = Storage.getSessionStorageIfSupported();
-		  
-		  if (stockStore != null){
-			  if(value_URL != null){
-				  stockStore.setItem("url", value_URL);
-				  logger.log(Level.SEVERE, "URL in Storage geschrieben " + value_URL);
-			  }
-			  
-		  }
-		  
-		  
+		stockStore = Storage.getSessionStorageIfSupported();
+
+		if (stockStore != null) {
+			if (value_URL != null) {
+				stockStore.setItem("url", value_URL);
+				logger.log(Level.SEVERE, "URL in Storage geschrieben " + value_URL);
+			}
+
+		}
+
 		/**
 		 * Set the Style
 		 */
@@ -113,7 +112,7 @@ public class Noteit implements EntryPoint {
 		headlineLabel.setStylePrimaryName("headlineLabel");
 		logoutPanel.setStylePrimaryName("logoutPanel");
 		headlinePanel.setStylePrimaryName("headlinePanel");
-		
+
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
@@ -126,8 +125,6 @@ public class Noteit implements EntryPoint {
 		logoutPanel.add(btnLogOut);
 		logoutPanel.add(zurueckButton);
 		vpBasisPanel.add(loginPanel);
-		
-		
 
 		logger.log(Level.SEVERE, "URL Inhalt" + value_URL);
 		/**
@@ -184,7 +181,9 @@ public class Noteit implements EntryPoint {
 														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
-//												ImpressumPanel = new Impressum();
+
+												// ImpressumPanel = new
+												// Impressum();
 												RootPanel.get().add(HomepagePanel);
 
 											}
@@ -223,9 +222,8 @@ public class Noteit implements EntryPoint {
 
 	public static String getValue_URL() {
 		return stockStore.getItem(stockStore.key(0));
-		
-	}
 
+	}
 
 	public static void loadLogin() {
 		// Assemble login panel.
@@ -247,8 +245,8 @@ public class Noteit implements EntryPoint {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
 	}
-	
-	public static void deleteStorage(){
+
+	public static void deleteStorage() {
 		stockStore.clear();
 	}
 }

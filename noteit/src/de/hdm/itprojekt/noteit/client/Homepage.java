@@ -115,6 +115,8 @@ public class Homepage extends VerticalPanel {
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
 		((Impressum) impressum).run();
+		
+
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -414,6 +416,10 @@ public class Homepage extends VerticalPanel {
 			UrlView dialogBox = new UrlView(currentUser);
 			dialogBox.show();
 		}
+		
+		if(currentUser.getFirstName() == "null" || currentUser.getLastName() == "null" || currentUser.getFirstName()== "" || currentUser.getLastName()==""){			
+			settingsView();
+		};
 	}
 
 	/**
