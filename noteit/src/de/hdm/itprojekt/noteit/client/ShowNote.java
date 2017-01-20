@@ -176,10 +176,6 @@ public class ShowNote extends VerticalPanel {
 		hpNoteMaturity.add(dateBox);
 		hpNoteMaturity.setWidth("300px");
 
-		hpBackButton.add(btnSaveNote);
-		hpBackButton.add(btnDeleteNote);
-		hpBackButton.setWidth("300px");
-
 		vpNotePermission.add(lblNotePermission);
 		vpNotePermission.add(clUser);
 
@@ -187,6 +183,7 @@ public class ShowNote extends VerticalPanel {
 		hpBtnPanel.add(btnSaveNote);
 		hpBtnPanel.add(btnUnsubcribe);
 		hpBtnPanel.add(btnDeleteNote);
+
 		btnUnsubcribe.setVisible(false);
 		btnDeleteNote.setVisible(false);
 
@@ -233,31 +230,31 @@ public class ShowNote extends VerticalPanel {
 					permissionID = 3;
 				}
 				if (tbNoteShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-					if(Homepage.getCurrentUser().getMail() != tbNoteShareMail.getText()){
-					notesAdmin.setUserNotePermission(tbNoteShareMail.getText(), permissionID, currentNote.getId(),
-							new AsyncCallback<Boolean>() {
+					if (Homepage.getCurrentUser().getMail() != tbNoteShareMail.getText()) {
+						notesAdmin.setUserNotePermission(tbNoteShareMail.getText(), permissionID, currentNote.getId(),
+								new AsyncCallback<Boolean>() {
 
-								@Override
-								public void onSuccess(Boolean result) {
-									if (result == true) {
-										tbNoteShareMail.setText("");
-										tbNoteShareMail.getElement().setPropertyString("placeholder",
-												"nutzer@noteit.de");
-										rbRead.setValue(true);
-										getAllPermittedUsersbyNoteID(currentNote.getId());
-									} else {
-										Window.alert("Der Nutzer mit der E-Mail `" + tbNoteShareMail.getText()
-												+ "` wurde nicht gefunden");
+									@Override
+									public void onSuccess(Boolean result) {
+										if (result == true) {
+											tbNoteShareMail.setText("");
+											tbNoteShareMail.getElement().setPropertyString("placeholder",
+													"nutzer@noteit.de");
+											rbRead.setValue(true);
+											getAllPermittedUsersbyNoteID(currentNote.getId());
+										} else {
+											Window.alert("Der Nutzer mit der E-Mail `" + tbNoteShareMail.getText()
+													+ "` wurde nicht gefunden");
+										}
 									}
-								}
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-								}
-							});
-					}else{
+									}
+								});
+					} else {
 						Window.alert("Sie können sich nicht selbst freigeben!");
 					}
 				} else {
@@ -272,12 +269,12 @@ public class ShowNote extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
-				
+
 				if (tbNoteTitel.getText().length() > 0) {
 					Timestamp timestampe;
 					if (currentNote.getId() == 0) {
 						if (dateBox.getTextBox().getValue().length() > 0) {
-							
+
 							Date date = dateBox.getValue();
 							long time = date.getTime();
 							timestampe = new Timestamp(time);
@@ -533,107 +530,115 @@ public class ShowNote extends VerticalPanel {
 	public static void showNote(Note note) {
 
 		currentNote = note;
-
-		if (currentNote.getPermissionID() > 0) {
-			btnSaveNote.setVisible(true);
-			btnUnsubcribe.setVisible(true);
-			btnDeleteNote.setVisible(true);
-		} else {
-			btnSaveNote.setVisible(true);
-			btnUnsubcribe.setVisible(false);
-			btnDeleteNote.setVisible(true);
-		}
-
 		if (currentNote.getId() == 0) {
-			lblNoteShare.setVisible(false);
-			hpAddPermission.setVisible(false);
-			lblNoteShareRB.setVisible(false);
-			lblNotePermission.setVisible(false);
-			vpNotePermission.setVisible(false);
-			rbRead.setVisible(false);
-			rbWrite.setVisible(false);
-			rbDelete.setVisible(false);
-		} else {
-
-			lblNoteShare.setVisible(true);
-			hpAddPermission.setVisible(true);
-			lblNoteShareRB.setVisible(true);
-			lblNoteShareRB.setVisible(true);
-			lblNotePermission.setVisible(true);
-			vpNotePermission.setVisible(true);
-			rbRead.setVisible(true);
-			rbWrite.setVisible(true);
-			rbDelete.setVisible(true);
-		}
-
-		if (note.getModificationDate() == null) {
-			Timestamp ts = note.getCreationDate();
-			Date date = new Date(ts.getTime());
-			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-			lblNoteDate.setText("Erstellt am: " + sdfmt.format(date));
-			lblHeaderTitel.setText(note.getTitle());
+			btnDeleteNote.setVisible(false);
+			btnUnsubcribe.setVisible(false);
 
 		} else {
-			Timestamp ts = note.getModificationDate();
-			Date date = new Date(ts.getTime());
-			DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
-			lblNoteDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
-			lblHeaderTitel.setText(note.getTitle());
-		}
 
-		if (note.getMaturityDate() == null) {
-			dateBox.setValue(null);
-		}
+		
 
-		if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
-				|| currentNote.getPermissionID() == 1) {
+			if (currentNote.getPermissionID() > 0) {
+				btnSaveNote.setVisible(true);
+				btnUnsubcribe.setVisible(true);
+				btnDeleteNote.setVisible(true);
+			} else {
+				btnSaveNote.setVisible(true);
+				btnUnsubcribe.setVisible(false);
+				btnDeleteNote.setVisible(true);
+			}
 
-			btnSaveNote.setEnabled(false);
-			btnDeleteNote.setEnabled(false);
-			btnAddNotePermission.setEnabled(false);
-			btnDeletePermission.setEnabled(false);
-			lblPermissionInformationWrite.setVisible(false);
-			lblPermissionInformationDelete.setVisible(false);
-			lblPermissionInformationRead.setVisible(true);
-			btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
-			btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
-		} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
-				|| currentNote.getPermissionID() == 2) {
-
-			btnSaveNote.setEnabled(true);
-			btnDeleteNote.setEnabled(false);
-			btnAddNotePermission.setEnabled(true);
-			btnDeletePermission.setEnabled(true);
-			lblPermissionInformationWrite.setVisible(true);
-			lblPermissionInformationDelete.setVisible(false);
-			lblPermissionInformationRead.setVisible(false);
-			btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
-			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-		} else {
-			btnSaveNote.setEnabled(true);
-			btnDeleteNote.setEnabled(true);
-			btnAddNotePermission.setEnabled(true);
-			btnDeletePermission.setEnabled(true);
-			btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
-			btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-
-			if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
-					|| currentNote.getPermissionID() == 3) {
-
-				lblPermissionInformationWrite.setVisible(false);
-				lblPermissionInformationDelete.setVisible(true);
-				lblPermissionInformationRead.setVisible(false);
+			if (currentNote.getId() == 0) {
+				lblNoteShare.setVisible(false);
+				hpAddPermission.setVisible(false);
+				lblNoteShareRB.setVisible(false);
+				lblNotePermission.setVisible(false);
+				vpNotePermission.setVisible(false);
+				rbRead.setVisible(false);
+				rbWrite.setVisible(false);
+				rbDelete.setVisible(false);
 			} else {
 
+				lblNoteShare.setVisible(true);
+				hpAddPermission.setVisible(true);
+				lblNoteShareRB.setVisible(true);
+				lblNoteShareRB.setVisible(true);
+				lblNotePermission.setVisible(true);
+				vpNotePermission.setVisible(true);
+				rbRead.setVisible(true);
+				rbWrite.setVisible(true);
+				rbDelete.setVisible(true);
+			}
+
+			if (note.getModificationDate() == null) {
+				Timestamp ts = note.getCreationDate();
+				Date date = new Date(ts.getTime());
+				DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+				lblNoteDate.setText("Erstellt am: " + sdfmt.format(date));
+				lblHeaderTitel.setText(note.getTitle());
+
+			} else {
+				Timestamp ts = note.getModificationDate();
+				Date date = new Date(ts.getTime());
+				DateTimeFormat sdfmt = DateTimeFormat.getFormat("dd.MM.yyyy");
+				lblNoteDate.setText("Zuletzt bearbeitet am: " + sdfmt.format(date));
+				lblHeaderTitel.setText(note.getTitle());
+			}
+
+			if (note.getMaturityDate() == null) {
+				dateBox.setValue(null);
+			}
+
+			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
+					|| currentNote.getPermissionID() == 1) {
+
+				btnSaveNote.setEnabled(false);
+				btnDeleteNote.setEnabled(false);
+				btnAddNotePermission.setEnabled(false);
+				btnDeletePermission.setEnabled(false);
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(false);
-				lblPermissionInformationRead.setVisible(false);
-			}
-		}
-		tbNoteTitel.setText(note.getTitle());
-		tbNoteSubTitel.setText(note.getSubTitle());
-		content.setText(note.getText());
+				lblPermissionInformationRead.setVisible(true);
+				btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
+				btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
+			} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
+					|| currentNote.getPermissionID() == 2) {
 
+				btnSaveNote.setEnabled(true);
+				btnDeleteNote.setEnabled(false);
+				btnAddNotePermission.setEnabled(true);
+				btnDeletePermission.setEnabled(true);
+				lblPermissionInformationWrite.setVisible(true);
+				lblPermissionInformationDelete.setVisible(false);
+				lblPermissionInformationRead.setVisible(false);
+				btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
+				btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
+			} else {
+				btnSaveNote.setEnabled(true);
+				btnDeleteNote.setEnabled(true);
+				btnAddNotePermission.setEnabled(true);
+				btnDeletePermission.setEnabled(true);
+				btnAddNotePermission.setHTML("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
+				btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
+
+				if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
+						|| currentNote.getPermissionID() == 3) {
+
+					lblPermissionInformationWrite.setVisible(false);
+					lblPermissionInformationDelete.setVisible(true);
+					lblPermissionInformationRead.setVisible(false);
+				} else {
+
+					lblPermissionInformationWrite.setVisible(false);
+					lblPermissionInformationDelete.setVisible(false);
+					lblPermissionInformationRead.setVisible(false);
+				}
+			}
+			tbNoteTitel.setText(note.getTitle());
+			tbNoteSubTitel.setText(note.getSubTitle());
+			content.setText(note.getText());
+
+		}
 	}
 
 	public static void getAllPermittedUsersbyNoteID(int noteID) {
