@@ -82,8 +82,8 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	
 	final TextBox tbSearchNote = new TextBox();
 	final TextBox tbSearchNotebook = new TextBox();
-	private Button btnGenerate = new Button("Generate");
-	private Button btnReset = new Button("Reset");
+	private Button btnGenerate = new Button("Erstellen");
+	private Button btnReset = new Button("Leeren");
 	final User user = new User();
 	int userId;
 	String sKeywordNote; 

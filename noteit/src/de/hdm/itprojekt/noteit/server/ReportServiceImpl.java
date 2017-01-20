@@ -177,7 +177,7 @@ implements ReportService {
 		headline.addColumn(new Column("Inhalt"));
 		headline.addColumn(new Column("Fälligkeitsdatum"));
 		headline.addColumn(new Column("Erstelldatum"));
-		headline.addColumn(new Column("Modifikationsdatum"));
+		headline.addColumn(new Column("Änderungsdatum"));
 
 		result.addRow(headline);
 		

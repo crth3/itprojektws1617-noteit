@@ -54,10 +54,10 @@ Label lblSearchUser = new Label("Nutzersuche");
 Label lblPermission = new Label("Berechtigung");
 
 //TODO Label ersetzen
-Label lblGenerate = new Label("Suchen...");
+Label lblGenerate = new Label("Report");
 
-private Button btnGenerate = new Button("Generate");
-final User user = new User();
+private Button btnGenerate = new Button("Erstellen");
+User user;
 int userId;
 String sPermission;
 int permission;
@@ -129,6 +129,9 @@ public void onLoad() {
 					@Override
 					public void onSuccess(User result) {
 						// TODO Auto-generated method stub
+						
+						user = new User();
+						
 						user.setId(result.getId());
 						user.setFirstName(result.getFirstName());
 						user.setLastName(result.getLastName());						
@@ -142,7 +145,7 @@ public void onLoad() {
 	    });
 		 
 		// Setzen der Auswahl-Optionen
-		lbPermission.addItem("------");
+		lbPermission.addItem("Alle Berechtigungen");
 		lbPermission.addItem("Lesen");
 		lbPermission.addItem("Lesen / Bearbeiten");
 		lbPermission.addItem("Lesen / Bearbeiten / Löschen");
@@ -175,7 +178,7 @@ public void onLoad() {
 		public void onClick(ClickEvent event) {
 			
 			// Get ausgewählte Berechtigung
-			if (lbPermission.getSelectedItemText() == "------") {
+			if (lbPermission.getSelectedItemText() == "Alle Berechtigungen") {
 				permission = 0;
 			}else if (lbPermission.getSelectedItemText() == "Lesen"){
 				permission = 1;				
@@ -184,8 +187,9 @@ public void onLoad() {
 			}else if (lbPermission.getSelectedItemText() == "Lesen / Bearbeiten / Löschen"){
 				permission = 3;				
 			}
+						
+			if (user != null) {
 			
-							
 			reportService.createReportNotesSharingInformation(user, permission, new AsyncCallback<NotesSharingInformation>() {
 
 				@Override
@@ -201,7 +205,7 @@ public void onLoad() {
 					// TODO Auto-generated method stub
 	
 					vpReport.clear();
-					
+			
 					HTMLReportWriter writerreport = new HTMLReportWriter();
 					final	ReportSimple report = notesSharingInformation;
 					writerreport.process(report);
@@ -209,6 +213,11 @@ public void onLoad() {
 					
 				}
 			});
+			
+			}else {
+				Window.alert("Bitte wähle einen Nutzer aus!");
+				
+			}
 			
 			}
 		
