@@ -21,13 +21,11 @@ public class Welcome extends VerticalPanel {
 	static VerticalPanel vpWelcomePanel = new VerticalPanel();
 	private static Logger rootLogger = Logger.getLogger("");
 
-
 	User currentUser = new User();
 	Settings settings = new Settings();
 	Label lblWelcome = new Label();
-	String firstName="";
+	String firstName = "";
 	int userId;
-
 
 	/**
 	 * Create the Panel
@@ -37,65 +35,49 @@ public class Welcome extends VerticalPanel {
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
 
-
 	protected void run() {
 
 		this.setStyleName("vpLeft");
 		this.setWidth("600px");
-		
+
 		userId = Homepage.currentUser.getId();
-		rootLogger.log(Level.SEVERE, "userID vor RPC: "+userId);
+		rootLogger.log(Level.SEVERE, "userID vor RPC: " + userId);
 		firstName = Homepage.currentUser.getFirstName();
 
-		
-//		if(Homepage.currentUser.getFirstName() != settings.currentUser.getFirstName()) {
-//		
-//			firstName = settings.currentUser.getFirstName();
-//
-//		}else {
-//				
-//		firstName = Homepage.currentUser.getFirstName();
-//		}
-		
-		rootLogger.log(Level.SEVERE, "firstName vor RPC: "+firstName);
+		rootLogger.log(Level.SEVERE, "firstName vor RPC: " + firstName);
 
 		notesAdmin.findUserById(userId, new AsyncCallback<User>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void onSuccess(User result) {
 				// TODO Auto-generated method stub
-				rootLogger.log(Level.SEVERE, "result: "+result.getFirstName());
+				rootLogger.log(Level.SEVERE, "result: " + result.getFirstName());
 
-				
 				firstName = result.getFirstName();
-				
-				
+
 			}
 		});
-		
-		rootLogger.log(Level.SEVERE, "firstName nach RPC: "+firstName);
-		
-		lblWelcome.setText("Herzlich Willkommen, " +firstName+"!");
-		lblWelcome.setStyleName("lblWelcome");
 
+		rootLogger.log(Level.SEVERE, "firstName nach RPC: " + firstName);
+
+		lblWelcome.setText("Herzlich Willkommen, " + firstName + "!");
+		lblWelcome.setStyleName("lblWelcome");
 
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vDialog.add(hDialog);
-		
+
 		vDialog.add(lblWelcome);
-		
+
 		vpWelcomePanel.add(vDialog);
 
 		this.add(vpWelcomePanel);
-
-
 
 	}
 

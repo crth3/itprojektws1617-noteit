@@ -3,10 +3,8 @@ package de.hdm.itprojekt.noteit.client;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -18,14 +16,12 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -36,7 +32,6 @@ public class ShowNote extends VerticalPanel {
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 	static ArrayList<User> userList = new ArrayList<User>();
 	static CellList<User> clUser = new UserCellList().createUserCellList();
-	private static Logger rootLogger = Logger.getLogger("");
 
 	static HorizontalPanel hpShowNote = new HorizontalPanel();
 	static HorizontalPanel hpHeader = new HorizontalPanel();
@@ -93,12 +88,6 @@ public class ShowNote extends VerticalPanel {
 
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
-
-	// Timestamp maturity = new Timestamp();
-
-	// Date maturity = new Date();
-
-	// modificationdate
 
 	protected void run() {
 
@@ -533,8 +522,6 @@ public class ShowNote extends VerticalPanel {
 
 		} else {
 
-		
-
 			if (currentNote.getPermissionID() > 0) {
 				btnSaveNote.setVisible(true);
 				btnUnsubcribe.setVisible(true);
@@ -584,7 +571,7 @@ public class ShowNote extends VerticalPanel {
 
 			if (note.getMaturityDate() == null) {
 				dateBox.setValue(null);
-			}else{
+			} else {
 				dateBox.setValue(currentNote.getMaturityDate());
 			}
 

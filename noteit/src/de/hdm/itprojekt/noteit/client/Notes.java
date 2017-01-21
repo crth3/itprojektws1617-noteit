@@ -12,5 +12,4 @@ public class Notes extends HorizontalPanel {
 	final CellList<Note> noteCellList = new NoteCellList().createNoteCellList();
 	Note note = new Note();
 
-	
 }

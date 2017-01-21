@@ -89,15 +89,14 @@ public class Homepage extends VerticalPanel {
 	// --------- Cell List -----------//
 	final static CellList<Notebook> clNotebook = new NotebookCellList().createNotebookCellList();
 	final static CellList<Note> clNote = new NoteCellList().createNoteCellList();
-	
+
 	public Homepage(User cU) {
 		currentUser = cU;
 	}
 
 	@SuppressWarnings("deprecation")
 	public void onLoad() {
-		
-		
+
 		String url = Noteit.getValue_URL();
 
 		((EditNotebook) editNotebook).run();
@@ -105,9 +104,6 @@ public class Homepage extends VerticalPanel {
 		((Settings) settings).run();
 		((Impressum) impressum).run();
 		((Welcome) welcome).run();
-		
-		
-
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -119,13 +115,13 @@ public class Homepage extends VerticalPanel {
 
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
-		
+
 		if (Noteit.isNew() == true) {
-		settingsView();
+			settingsView();
 		}
-		
-		if(currentUser.getId() != 0 && Noteit.isNew() == false){
-			WelcomeView();			
+
+		if (currentUser.getId() != 0 && Noteit.isNew() == false) {
+			WelcomeView();
 		}
 
 		final ListBox listBox1 = new ListBox() {
@@ -172,12 +168,11 @@ public class Homepage extends VerticalPanel {
 			}
 		};
 
-		
 		btnRefresh.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-//				updateNotebookCellList(currentUser.getId());
+				// updateNotebookCellList(currentUser.getId());
 				NoteitCellBrowser.updateNotebooks();
 			}
 		});
@@ -240,8 +235,7 @@ public class Homepage extends VerticalPanel {
 		navLeft2Panel.add(lbSort);
 		navLeft3Panel.add(lblRefreshNotebooks);
 		navLeft3Panel.add(btnRefresh);
-		
-		
+
 		footerPanel.add(lblImpressum);
 		footerPanel.add(btnReportGen);
 		footerPanel.add(copyright);
@@ -396,13 +390,13 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		btnReportGen.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.open("http://1-dot-noteit-id.appspot.com/NoteitReport.html", "_blank", "");
-				
+
 			}
 		});
 
@@ -415,11 +409,13 @@ public class Homepage extends VerticalPanel {
 			UrlView dialogBox = new UrlView(currentUser);
 			dialogBox.show();
 		}
-	
-		if(currentUser.getFirstName() == "null" || currentUser.getLastName() == "null" || currentUser.getFirstName()== "" || currentUser.getLastName()==""){			
+
+		if (currentUser.getFirstName() == "null" || currentUser.getLastName() == "null"
+				|| currentUser.getFirstName() == "" || currentUser.getLastName() == "") {
 			settingsView();
-		};
-		
+		}
+		;
+
 	}
 
 	/**
@@ -532,8 +528,8 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void editNotebookView() {
-		
-		if(contentPanel.getWidgetCount() == 2){
+
+		if (contentPanel.getWidgetCount() == 2) {
 			contentPanel.remove(1);
 		}
 		// EditNotebook editNotebookView = new EditNotebook();
@@ -542,24 +538,24 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void settingsView() {
-		if(contentPanel.getWidgetCount() == 2){
+		if (contentPanel.getWidgetCount() == 2) {
 			contentPanel.remove(1);
 		}
 		contentPanel.add(settings);
 	}
 
 	public static void showNoteView() {
-		if(contentPanel.getWidgetCount() == 2){
+		if (contentPanel.getWidgetCount() == 2) {
 			contentPanel.remove(1);
 		}
-		contentPanel.add(showNote);		
+		contentPanel.add(showNote);
 
 	}
-	
+
 	public static void WelcomeView() {
 		contentPanel.remove(1);
 		contentPanel.add(welcome);
-		
+
 	}
 
 	public static void showHTML() {
@@ -601,8 +597,8 @@ public class Homepage extends VerticalPanel {
 		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
 
 	}
-	
-	public static void hideView(){
+
+	public static void hideView() {
 		contentPanel.remove(1);
 	}
 

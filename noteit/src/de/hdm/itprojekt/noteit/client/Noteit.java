@@ -62,7 +62,6 @@ public class Noteit implements EntryPoint {
 	 */
 
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-	// HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
@@ -79,7 +78,7 @@ public class Noteit implements EntryPoint {
 	 */
 	Button btnLogOut = new Button("Logout");
 	Button zurueckButton = new Button("Zurück");
-	
+
 	static boolean isNew = false;
 
 	/**
@@ -109,8 +108,6 @@ public class Noteit implements EntryPoint {
 
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-
-		// homepage.setStylePrimaryName("homepage");
 
 		/**
 		 * add the widgets
@@ -175,11 +172,9 @@ public class Noteit implements EntryPoint {
 														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
-												
+
 												isNew = true;
-												
-												// ImpressumPanel = new
-												// Impressum();
+
 												RootPanel.get().add(HomepagePanel);
 
 											}
@@ -229,19 +224,11 @@ public class Noteit implements EntryPoint {
 		RootPanel.get("content").add(loginPanel);
 	}
 
-	public static void setWelcomeName(String name) {
-		// welcomePanel.remove(welcomeLabel);
-		// x = name;
-		//
-		// welcomeLabel.setText("Wilkommen " + x);
-		// welcomePanel.add(welcomeLabel);
-	}
-
 	public static User getCurrentUser() {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
 	}
-	
+
 	public static boolean isNew() {
 		return isNew;
 	}

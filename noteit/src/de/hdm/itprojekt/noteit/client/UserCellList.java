@@ -21,9 +21,7 @@ public class UserCellList extends Widget {
 		// Create a KeyProvider.
 		ProvidesKey<User> userKeyProvider = new ProvidesKey<User>() {
 			public Object getKey(User item) {
-				return (item == null) ? null
-						: item.getFirstName() + item.getLastName()
-								+ item.getMail();
+				return (item == null) ? null : item.getFirstName() + item.getLastName() + item.getMail();
 			}
 		};
 
@@ -33,9 +31,6 @@ public class UserCellList extends Widget {
 		// Use the cell in a CellList.
 		userCellList = new CellList<User>(userCell, userKeyProvider);
 
-		// Set the width of the CellList.
-		// noteCellList.setWidth("230px");
-
 		// Stylen der CellList
 		userCellList.setStylePrimaryName("CellList");
 
@@ -44,25 +39,21 @@ public class UserCellList extends Widget {
 		// used to identify contacts when fields (such as the name and address)
 		// change.
 		userCellList.setPageSize(30);
-		userCellList
-				.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		userCellList.setKeyboardSelectionPolicy(
-				KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		userCellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		userCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
-		final NoSelectionModel<User> userSelectionModel = new NoSelectionModel<User>(
-				userKeyProvider);
+		final NoSelectionModel<User> userSelectionModel = new NoSelectionModel<User>(userKeyProvider);
 		userCellList.setSelectionModel(userSelectionModel);
-		userSelectionModel
-				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-					public void onSelectionChange(SelectionChangeEvent event) {
-						// contactForm.setContact(selectionModel.getSelectedObject());
-						
-						SelectedUser = userSelectionModel.getLastSelectedObject();
-						EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
-						ShowNote.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
-					}
-				});
+		userSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				// contactForm.setContact(selectionModel.getSelectedObject());
+
+				SelectedUser = userSelectionModel.getLastSelectedObject();
+				EditNotebook.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
+				ShowNote.setSelectedUserPermissionInTextbox(userSelectionModel.getLastSelectedObject());
+			}
+		});
 
 		return userCellList;
 

@@ -149,21 +149,8 @@ public class EditNotebook extends VerticalPanel {
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
 
-		/**
-		 * Create the Panel, Label and TextBox
-		 */
-
-		// hpNoteSubTitel.add(lblNotebookSubTitel);
-		// hpNoteSubTitel.add(tbNotebookSubTitel);
-
-		/**
-		 * Create the Panel, Label and TextBox
-		 */
-
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
-		// hpEditNotebook.add(vpNotebookPermission);
-		// hpEditNotebook.add(hpButtons);
 
 		this.add(hpHeader);
 		this.add(hpEditNotebook);
@@ -432,14 +419,6 @@ public class EditNotebook extends VerticalPanel {
 
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
 		tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
-		// btnAddPermission.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// setUserPermission(tbNotebookShareMail.getText());
-		//
-		// }
-		// });
 
 	}
 
