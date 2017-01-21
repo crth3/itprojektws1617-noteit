@@ -304,7 +304,6 @@ public class ShowNote extends VerticalPanel {
 								});
 					} else {
 						if (dateBox.getTextBox().getValue().length() > 0) {
-							Window.alert("update Note");
 							Date date = dateBox.getValue();
 							long time = date.getTime();
 							timestampe = new Timestamp(time);
@@ -400,8 +399,6 @@ public class ShowNote extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Noteid: " + NoteitCellBrowser.getSelectedNote().getId() + "userid "
-						+ Homepage.getCurrentUser().getId());
 
 				final DialogBox dlbQuestion = new DialogBox();
 
@@ -435,7 +432,6 @@ public class ShowNote extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-										Window.alert("success!");
 
 									}
 								});

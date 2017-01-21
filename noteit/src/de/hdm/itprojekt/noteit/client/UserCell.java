@@ -1,7 +1,6 @@
 package de.hdm.itprojekt.noteit.client;
 
 import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.itprojekt.noteit.shared.bo.*;
