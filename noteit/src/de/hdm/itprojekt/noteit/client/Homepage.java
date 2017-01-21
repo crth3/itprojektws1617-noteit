@@ -51,7 +51,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class Homepage extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	private static Logger rootLogger = Logger.getLogger("");
 

@@ -14,8 +14,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class Notes extends HorizontalPanel {
 
-	private final NotesAdministrationAsync notesAdmin = GWT
-			.create(NotesAdministration.class);
+	private final NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	final CellList<Note> noteCellList = new NoteCellList().createNoteCellList();
 	Note note = new Note();

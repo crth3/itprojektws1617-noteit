@@ -13,8 +13,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class Notebooks extends HorizontalPanel {
 
-	private final NotesAdministrationAsync notesAdmin = GWT
-			.create(NotesAdministration.class);
+	private final NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	final CellList<Notebook> notebookCellList = new NotebookCellList()
 			.createNotebookCellList();

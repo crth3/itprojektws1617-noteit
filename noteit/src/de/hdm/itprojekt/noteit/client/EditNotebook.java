@@ -36,7 +36,7 @@ import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class EditNotebook extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	static Notebook currentNotebook;
 	static ArrayList<User> userList = new ArrayList<User>();

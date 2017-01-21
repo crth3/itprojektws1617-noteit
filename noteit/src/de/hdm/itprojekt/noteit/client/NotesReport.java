@@ -34,7 +34,7 @@ public class NotesReport implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Report
 	 * service.
 	 */
-	private final ReportServiceAsync report = GWT.create(ReportService.class);
+	private final ReportServiceAsync report = ClientsideSettings.getReportService();
 	private NotesAdministrationAsync notesAdministration = null; 
 
 	//Logger

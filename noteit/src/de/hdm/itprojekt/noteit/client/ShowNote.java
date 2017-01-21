@@ -33,7 +33,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class ShowNote extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 	static ArrayList<User> userList = new ArrayList<User>();
 	static CellList<User> clUser = new UserCellList().createUserCellList();
 	private static Logger rootLogger = Logger.getLogger("");

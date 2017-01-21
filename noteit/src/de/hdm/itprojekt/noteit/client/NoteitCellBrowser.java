@@ -23,7 +23,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
  * The model that defines the nodes in the tree.
  */
 public class NoteitCellBrowser implements TreeViewModel {
-	private static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	private static ListDataProvider<Notebook> notebooksListDataProvider = new ListDataProvider<Notebook>();
 	public static ListDataProvider<Note> notesListDataProvider = new ListDataProvider<Note>();
