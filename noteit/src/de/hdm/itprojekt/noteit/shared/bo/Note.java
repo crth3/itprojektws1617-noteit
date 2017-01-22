@@ -3,6 +3,9 @@ package de.hdm.itprojekt.noteit.shared.bo;
 import java.sql.Timestamp;
 
 /**
+ * Umsetzung der Notizklasse. Als Attribute dienen ErstellerID, BerechtigungsID,
+ * Titel, Untertitel, Notiztext, Erstelldatum und Bearbeitungsdatum,
+ * Fälligkeitsdatum
  * 
  * @author maikzimmermann
  *
@@ -18,16 +21,13 @@ public class Note extends BusinessObjects {
 	private Timestamp creationDate;
 	private Timestamp modificationDate;
 	private Timestamp maturityDate;
-	private boolean visible = false;
-	public User creator;
-	private String source;
-	
-	
+	public User user;
+
 	/**
 	 * Fremschlüsselbeziehung zu User
 	 */
 	private int userId;
-	
+
 	/**
 	 * Fremdchlüsselbeziehung zu Notebook
 	 */
@@ -124,23 +124,6 @@ public class Note extends BusinessObjects {
 	}
 
 	/**
-	 * @return the visible
-	 */
-	public boolean isVisible() {
-		return visible;
-	}
-
-	/**
-	 * @param visible
-	 *            the visible to set
-	 */
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	
-
-	/**
 	 * 
 	 * @return notebookId
 	 */
@@ -155,7 +138,7 @@ public class Note extends BusinessObjects {
 	public void setNotebookId(int notebookId) {
 		this.notebookId = notebookId;
 	}
-	
+
 	/**
 	 * 
 	 * @return modificationTimestamp
@@ -163,7 +146,7 @@ public class Note extends BusinessObjects {
 	public Timestamp getModificationDate() {
 		return modificationDate;
 	}
-	
+
 	/**
 	 * 
 	 * @param modificationTimestamp
@@ -179,34 +162,39 @@ public class Note extends BusinessObjects {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+
 	/**
-	 * Ausgabe des Creator
+	 * Ausgabe des Nutzers
+	 * 
 	 * @return
 	 */
-	public User getCreator() {
-		return creator;
+	public User getUser() {
+		return user;
 	}
+
 	/**
-	 * Setzen des Creator
-	 * @param creator
+	 * Setzen des Nutzers
+	 * 
+	 * @param nutzer
 	 */
-	public void setCreator(User creator) {
-		this.creator = creator;
+	public void setCreator(User user) {
+		this.user = user;
 	}
 
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
+	/**
+	 * Berechtigung des Nutzers für diese Notiz holen
+	 * 
+	 * @return ID der Berechtigung
+	 */
 	public int getPermissionID() {
 		return permissionID;
 	}
 
+	/**
+	 * Setzen der Berechtigung des Nutzers für diese Notiz
+	 * 
+	 * @param permissionID
+	 */
 	public void setPermissionID(int permissionID) {
 		this.permissionID = permissionID;
 	}
