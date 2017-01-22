@@ -293,7 +293,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source,
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u,
 			int notebookID) throws IllegalArgumentException {
 
 		ts.setHours(0);
@@ -312,7 +312,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		note.setSubTitle(subtitle);
 		note.setText(text);
 		note.setMaturityDate(maturity);
-		note.setSource(source);
 		note.setUserId(u.getId());
 		note.setCreationDate(ts);
 		note.setNotebookId(notebookID);
@@ -321,7 +320,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
+	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID,
 			int notebookID, Note note) throws IllegalArgumentException {
 		System.out.println("ablaufdatum: " + maturity);
 
@@ -337,7 +336,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			note.setSubTitle(subtitle);
 			note.setText(text);
 			note.setMaturityDate(maturity);
-			note.setSource(source);
 			note.setModificationDate(ts);
 			note.setNotebookId(notebookID);
 			// note.setUserId(creator.getId());

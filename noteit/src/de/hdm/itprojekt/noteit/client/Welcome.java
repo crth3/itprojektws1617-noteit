@@ -40,13 +40,10 @@ public class Welcome extends VerticalPanel {
 		this.setStyleName("vpLeft");
 		this.setWidth("600px");
 
-		userId = Homepage.currentUser.getId();
-		rootLogger.log(Level.SEVERE, "userID vor RPC: " + userId);
 		firstName = Homepage.currentUser.getFirstName();
 
-		rootLogger.log(Level.SEVERE, "firstName vor RPC: " + firstName);
 
-		notesAdmin.findUserById(userId, new AsyncCallback<User>() {
+		notesAdmin.findUserByMail(Homepage.currentUser.getMail(), new AsyncCallback<User>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -64,7 +61,6 @@ public class Welcome extends VerticalPanel {
 			}
 		});
 
-		rootLogger.log(Level.SEVERE, "firstName nach RPC: " + firstName);
 
 		lblWelcome.setText("Herzlich Willkommen, " + firstName + "!");
 		lblWelcome.setStyleName("lblWelcome");

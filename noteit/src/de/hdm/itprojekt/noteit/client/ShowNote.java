@@ -271,7 +271,7 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser(), null, Homepage.selectedNotebook.getId(),
+								timestampe, Homepage.getCurrentUser(), Homepage.selectedNotebook.getId(),
 								new AsyncCallback<Note>() {
 
 									@Override
@@ -300,7 +300,7 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser().getId(), null, currentNote.getNotebookId(),
+								timestampe, Homepage.getCurrentUser().getId(), currentNote.getNotebookId(),
 								currentNote, new AsyncCallback<Void>() {
 
 									@Override
