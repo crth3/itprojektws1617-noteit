@@ -14,6 +14,7 @@ import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
  * Class for relevant client-side settings and services.
  * 
  * @author Thies
+ * @author Tobias Dahms
  * 
  */
 

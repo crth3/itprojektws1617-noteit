@@ -25,7 +25,11 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
-
+/**
+ * Diese Klasse generiert die DialogBox, welche aufgerufen wird sobald sich eine URL im Sessionstorage befindet
+ * @author Tobias Dahms
+ *
+ */
 public class UrlView extends DialogBox {
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
 

@@ -36,6 +36,11 @@ import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
+/**
+ * Diese Klasse verwaltet s�mtliche View-Zugriffe und instanziiert nach erfolgreichem Login s�mtliche Views
+ * @author Tobias Dahms
+ *
+ */
 public class Homepage extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
@@ -184,9 +189,7 @@ public class Homepage extends VerticalPanel {
 		MenuBar menu = new MenuBar();
 		final String image = "<img src='Images/user.png' height='20px' width='20px'/>";
 		SafeHtml addActivityImagePath = new SafeHtml() {
-			/**
-			 * 
-			 */
+		
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -201,7 +204,9 @@ public class Homepage extends VerticalPanel {
 		lbheadlineNotesLabel.setStylePrimaryName("headlineNotesLabel");
 		lbheadlineNoteit.setStyleName("lbheadlineNoteit");
 		copyright.setStyleName("lblCopyright");
-		// Style Names
+		/**
+		 *  Style Names
+		 */
 		headlinePanel.setStyleName("headlinePanel");
 		navLeftPanel.setStylePrimaryName("navLeftPanel");
 		navLeft2Panel.setStylePrimaryName("navLeftPanel");
@@ -215,9 +220,10 @@ public class Homepage extends VerticalPanel {
 		footerPanel.setStylePrimaryName("footerPanel");
 		lblImpressum.setStylePrimaryName("lblImpressum");
 		btnReportGen.setStylePrimaryName("lblImpressum");
-		// btnAddNewNotebookOrNoteButton.setStylePrimaryName("btnAddNewNotebookButton");
 
-		// Alignment
+		/**
+		 *  Alignment der Panels
+		 */
 		contentNotebookPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		contentNotesPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		navPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -230,7 +236,7 @@ public class Homepage extends VerticalPanel {
 		navLeftPanel.add(lblSearchTextIN);
 		navLeftPanel.add(listBox1);
 		navLeft2Panel.add(lbSortNotes);
-		// navLeftPanel.add(btnAddNewNotebookOrNoteButton);
+
 
 		navLeft2Panel.add(lbSort);
 		navLeft3Panel.add(lblRefreshNotebooks);
@@ -239,7 +245,7 @@ public class Homepage extends VerticalPanel {
 		footerPanel.add(lblImpressum);
 		footerPanel.add(btnReportGen);
 		footerPanel.add(copyright);
-		// TODO Sortierung in GUI implemntieren mit RPC
+
 		navRightPanel.add(menu);
 
 		navPanel.add(navLeftPanel);
@@ -563,41 +569,55 @@ public class Homepage extends VerticalPanel {
 				+ "<form action=\"input_button.htm\">\n<p>\n<input type=\"button\" name=\"Verweis\" value=\"NoteIt\"\n onClick=\"self.location.href='http://1-dot-noteit-id.appspot.com?url=' + self.location\">\n</p>\n</form>");
 	}
 
-	// absteigend sortieren nach Fälligkeitsdatum
+	/**
+	 *  absteigend sortieren nach Fälligkeitsdatum
+	 */
 	public void sortNotesMaturityDesc() {
 		NoteitCellBrowser.sortNotesMaturityDesc(selectedNotebook.getId());
 	}
 
-	// aufsteigend sortieren nach Fälligkeitsdatum
+	/**
+	 *  aufsteigend sortieren nach Fälligkeitsdatum
+	 */
 	public void sortNotesMaturityAsc() {
 		NoteitCellBrowser.sortNotesByMaturityAsc(selectedNotebook.getId());
 
 	}
 
-	// absteigend sortieren nach Erstelldatum
+	/**
+	 *  absteigend sortieren nach Erstelldatum
+	 */
 	public void sortNotesCreationDesc() {
 		NoteitCellBrowser.sortNotesCreationDateDesc(selectedNotebook.getId());
 
 	}
 
-	// aufsteigend sortieren nach Erstelldatum
+	/**
+	 *  aufsteigend sortieren nach Erstelldatum
+	 */
 	public void sortNotesCreationDateAsc() {
 		NoteitCellBrowser.sortNotesCreationDateAsc(selectedNotebook.getId());
 
 	}
 
-	// absteigend sortieren nach Änderungsdatum
+	/**
+	 *  absteigend sortieren nach Änderungsdatum
+	 */
 	public void sortNotesModificationDateDesc() {
 		NoteitCellBrowser.sortNotesModificationDateDesc(selectedNotebook.getId());
 
 	}
 
-	// aufsteigend sortieren nach Änderungsdatum
+	/**
+	 *  aufsteigend sortieren nach Änderungsdatum
+	 */
 	public void sortNotesModificationDateAsc() {
 		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
 
 	}
-
+/**
+ * entfernt das rechte Widget (Settings, Note oder Notebook View) aus dem contentPanel
+ */
 	public static void hideView() {
 		contentPanel.remove(1);
 	}

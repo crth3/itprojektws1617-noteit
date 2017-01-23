@@ -20,7 +20,11 @@ import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 /**
- * The model that defines the nodes in the tree.
+ * diese Klasse stellt eine durchsuchbare Ansicht von Notizbüchern und deren Notizen dar, in dem nur ein einzelner Knoten
+ * pro Ebene gleichzeitig geöffnet sein kann
+ * 
+ * @author Tobias Dahms
+ * @author Maik Zimmermann
  */
 public class NoteitCellBrowser implements TreeViewModel {
 	private static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
@@ -41,8 +45,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static Logger rootLogger = Logger.getLogger("");
 
 	/**
-	 * Get the {@link NodeInfo} that provides the children of the specified
-	 * value.
+	 * Gibt das Objekt NodeInfo {@link NodeInfo} zurück, welches die Inhalte für einen Knoten darstellt
 	 */
 
 	public <T> NodeInfo<?> getNodeInfo(T value) {
@@ -148,8 +151,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 	}
 
 	/**
-	 * Check if the specified value represents a leaf node. Leaf nodes cannot be
-	 * opened.
+	 * Prüft ob die Selektion ein Blattknoten darstellt
 	 */
 	public boolean isLeaf(Object value) {
 		// The leaf nodes are the songs, which are Strings.
@@ -158,6 +160,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 		}
 		return false;
 	}
+	
+	/**
+	 * Sucht ein Notizbuch anhand eines Suchbegriffs
+	 * @param userID
+	 * @param keyword
+	 */
 
 	public static void searchNotebookByKeyword(int userID, String keyword) {
 
@@ -177,7 +185,11 @@ public class NoteitCellBrowser implements TreeViewModel {
 		}
 
 	}
-
+/**
+ * Sucht eine Notiz anhand eines Suchbegriffs
+ * @param userID
+ * @param keyword
+ */
 	public static void searchNoteByKeyword(int userID, String keyword) {
 		rootLogger.log(Level.SEVERE,
 				"userid: " + userID + "searchtext: " + keyword + "notebook: " + selectedNotebook.getTitle());
@@ -209,7 +221,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 		// }
 		// });
 	}
-
+/**
+ * Diese Methode löscht ein Notizbuch aus dem CellBrowser
+ */
 	public static void deleteNotebook() {
 		int newID = selectedNotebook.getId();
 		newID--;
@@ -218,7 +232,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 		selectedNotebook.setId(newID);
 		selectionModelNotebook.setSelected(selectedNotebook, true);
 	}
-
+/**
+ * Diese Methode löscht eine Notiz aus dem CellBrowser
+ */
 	public static void deleteNote() {
 		int newId = selectedNote.getId();
 		newId--;
@@ -228,13 +244,19 @@ public class NoteitCellBrowser implements TreeViewModel {
 		selectionModelNote.setSelected(selectedNote, true);
 
 	}
-
+/**
+ * Diese Methode fügt ein Notizbuch dem Listdataprovider hinzu
+ * @param notebook
+ */
 	public static void getNotebookList(Notebook notebook) {
 		rootLogger.log(Level.SEVERE, "getNotebookList Methode");
 		notebooksListDataProvider.getList().add(notebook);
 		// notebooksListDataProvider.refresh();
 	}
-
+/**
+ * Diese Methode fügt eine Notiz dem Listdataprovider hinzu
+ * @param note
+ */
 	public static void getNoteList(Note note) {
 		notesListDataProvider.getList().add(note);
 
@@ -245,7 +267,10 @@ public class NoteitCellBrowser implements TreeViewModel {
 	//
 	//
 	// }
-
+/**
+ * Diese Methode fügt ein Array mit sortierten Notizen dem CellBrowser hinzu
+ * @param sortedNotes
+ */
 	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes) {
 
 		// addNote.setId(0);
@@ -253,11 +278,16 @@ public class NoteitCellBrowser implements TreeViewModel {
 		sortedNotes.add(0, addNote);
 		notesListDataProvider.setList(sortedNotes);
 	}
-
+/**
+ * Diese Methode gibt das aktuell ausgewählte Objekt zurück
+ * @return
+ */
 	public static Note getSelectedNote() {
 		return selectedNote;
 	}
-
+/**
+ * Diese Methode aktualisiert die Dataprovider Liste für Notizen
+ */
 	public static void updateNotes() {
 		notesListDataProvider.getList().clear();
 		notesAdmin.getAllNotesByNotebookID(selectedNotebook.getId(), currentUser.getId(),
@@ -277,7 +307,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 					}
 				});
 	}
-
+/**
+ * Diese Methode aktualisiert die Dataprovider Liste für Notizbücher
+ */
 	public static void updateNotebooks() {
 		notebooksListDataProvider.getList().clear();
 		notesAdmin.getAllNotebooksByUserID(currentUser.getId(), new AsyncCallback<ArrayList<Notebook>>() {
@@ -296,7 +328,9 @@ public class NoteitCellBrowser implements TreeViewModel {
 			}
 		});
 	}
-
+/**
+ * Diese Methode erzeugt den Erstellungsbutton für Notizbücher
+ */
 	public static void addCreateNewNotebookButton() {
 
 		addNotebook.setId(0);

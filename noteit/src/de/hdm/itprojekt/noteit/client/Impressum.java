@@ -4,9 +4,15 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Label;
-
+/**
+ * Diese Klasse erzeugt die Impressum View in einem VerticalPanel
+ * @author Tobias Dahms
+ *
+ */
 public class Impressum extends VerticalPanel {
-
+/**
+ * Diese Methode wird bei der Instanziierung ausgeführt
+ */
 	public void run() {
 		/**
 		 * Ãœberschrift der Seite

@@ -1,6 +1,7 @@
 package de.hdm.itprojekt.noteit.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -15,6 +16,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
+/**
+ * Diese Klasse erzeugt die SettingsView und deren Eventhandler
+ * @author Tobias Dahms
+ *
+ */
 public class Settings extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
@@ -60,7 +66,9 @@ public class Settings extends VerticalPanel {
 
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
-
+/**
+ * Diese Methode generiert die View und wird nach der Instanziierung aufgerufen
+ */
 	protected void run() {
 
 		hpSettings.setWidth("600px");

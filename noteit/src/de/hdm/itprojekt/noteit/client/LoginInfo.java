@@ -1,12 +1,13 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.io.Serializable;
-
+/**
+ * Diese Klasse stammt aus dem GWT Tutorial und bildet die Basis des Login Objekts
+ *
+ */
 public class LoginInfo implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private boolean loggedIn = false;
 	private String loginUrl;
