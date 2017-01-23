@@ -13,7 +13,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
-
+/**
+ * Diese Klasse generiert die Begrüßungsseite
+ * @author Tobias Dahms
+ *
+ */
 public class Welcome extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
