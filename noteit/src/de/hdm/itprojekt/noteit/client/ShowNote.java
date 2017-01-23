@@ -576,7 +576,7 @@ public class ShowNote extends VerticalPanel {
 			}
 
 			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
-					|| currentNote.getPermissionID() == 1) {
+					|| currentNote.getPermissionID() == 1 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 1) {
 
 				btnSaveNote.setEnabled(false);
 				btnDeleteNote.setEnabled(false);
@@ -588,7 +588,7 @@ public class ShowNote extends VerticalPanel {
 				btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 				btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
 			} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
-					|| currentNote.getPermissionID() == 2) {
+					|| currentNote.getPermissionID() == 2 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 2) {
 
 				btnSaveNote.setEnabled(true);
 				btnDeleteNote.setEnabled(false);
@@ -608,7 +608,7 @@ public class ShowNote extends VerticalPanel {
 				btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 
 				if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
-						|| currentNote.getPermissionID() == 3) {
+						|| currentNote.getPermissionID() == 3 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 3) {
 
 					lblPermissionInformationWrite.setVisible(false);
 					lblPermissionInformationDelete.setVisible(true);

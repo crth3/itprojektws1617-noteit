@@ -14,7 +14,7 @@ public class Note extends BusinessObjects {
 
 	private static final long serialVersionUID = 1L;
 	private int noteID = 0;
-	private int permissionID;
+	private int permissionID = 0;
 	private String title = "";
 	private String subTitle = "";
 	private String text = "";
