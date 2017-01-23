@@ -2,9 +2,9 @@ package de.hdm.itprojekt.noteit.shared.report;
 import java.io.Serializable;
 
 /**
- * Diese Klasse stellt einzelne Absätze dar. Der Absatzinhalt wird als String
+ * Diese Klasse stellt einzelne AbsÃ¤tze dar. Der Absatzinhalt wird als String
  * gespeichert. Der Anwender sollte in diesem Strinig keinerlei
- * Formatierungssymbole einfügen, da diese in der Regel zielformatspezifisch
+ * Formatierungssymbole einfÃ¼gen, da diese in der Regel zielformatspezifisch
  * sind.
  * 
  * @author Thies
@@ -24,7 +24,7 @@ public class ParagraphSimple extends Paragraph implements Serializable {
   /**
    * <p>
    * Serialisierbare Klassen, die mittels GWT-RPC transportiert werden sollen,
-   * müssen einen No-Argument-Konstruktor besitzen. Ist kein Konstruktor
+   * mÃ¼ssen einen No-Argument-Konstruktor besitzen. Ist kein Konstruktor
    * explizit angegeben, so existiert ini Java-Klassen implizit der
    * Default-Konstruktor, der dem No-Argument-Konstruktor entspricht.
    * </p>
@@ -32,7 +32,7 @@ public class ParagraphSimple extends Paragraph implements Serializable {
    * Besitzt eine Klasse mind. einen explizit implementierten Konstruktor, so
    * gelten nur diese explizit implementierten Konstruktoren. Der
    * Default-Konstruktor gilt dann nicht. Wenn wir in einer solchen Situation
-   * aber dennoch einen No-Argument-Konstruktor benötigen, müssen wir diesen wie
+   * aber dennoch einen No-Argument-Konstruktor benÃ¶tigen, mÃ¼ssen wir diesen wie
    * in diesem Beispiel explizit implementieren.
    * </p>
    * 
@@ -42,8 +42,8 @@ public class ParagraphSimple extends Paragraph implements Serializable {
   }
 
   /**
-   * Dieser Konstruktor ermöglicht es, bereits bei Instantiierung von
-   * <code>ParagraphSimple</code>-Objekten deren Inhalt angeben zu können.
+   * Dieser Konstruktor ermÃ¶glicht es, bereits bei Instantiierung von
+   * <code>ParagraphSimple</code>-Objekten deren Inhalt angeben zu kÃ¶nnen.
    * 
    * @param value der Inhalt des Absatzes
    * @see #ParagraphSimple()
@@ -62,7 +62,7 @@ public class ParagraphSimple extends Paragraph implements Serializable {
   }
 
   /**
-   * Überschreiben des Inhalts.
+   * Ã¼berschreiben des Inhalts.
    * 
    * @param text der neue Inhalt des Absatzes.
    */
