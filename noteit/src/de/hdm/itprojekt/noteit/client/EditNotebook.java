@@ -58,7 +58,7 @@ public class EditNotebook extends VerticalPanel {
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
 	static Label lblNotebookPermission = new Label("Freigegeben an:");
-	static Label lblNotebookShare = new Label("Notizbuch Teilen mit:");
+	static Label lblNotebookShare = new Label("Notizbuch teilen mit:");
 	static Label lblNotebookShareRB = new Label("Berechtigung festlegen:");
 	static Label lblNotebookDate = new Label();
 	static Label lblPermissionInformationRead = new Label(

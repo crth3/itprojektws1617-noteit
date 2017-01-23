@@ -326,14 +326,14 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID,
 			int notebookID, Note note) throws IllegalArgumentException {
 		System.out.println("ablaufdatum: " + maturity);
-
+		System.out.println("berechtigung: " + note.getPermissionID());
 		ts.setHours(0);
 		ts.setMinutes(0);
 		ts.setSeconds(0);
 		ts.setNanos(0);
 
 		// note.setCreator(creatorID); //Int oder Objekt?
-		if (note.getPermissionID() < 2) {
+		if (note.getPermissionID() > 1) {
 
 			note.setTitle(title);
 			note.setSubTitle(subtitle);

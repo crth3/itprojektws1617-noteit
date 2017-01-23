@@ -84,7 +84,7 @@ public class UrlView extends DialogBox {
 				} else {
 					tsMaturity = null;
 				}
-				notesAdmin.createNote(tbNoteTitel.getText(), "", url.getText(),
+				notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), url.getText(),
 						tsMaturity, Homepage.getCurrentUser(), getNotebookId(lbNotebook.getSelectedIndex()),
 						new AsyncCallback<Note>() {
 
