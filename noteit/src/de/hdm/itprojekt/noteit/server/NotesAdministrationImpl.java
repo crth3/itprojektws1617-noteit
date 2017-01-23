@@ -196,9 +196,12 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 */
 	@Override
 	public void updateNotebook(String title, Notebook nb, int userId) throws IllegalArgumentException {
-
-		if (nb.getPermissionID() < 2) {
-
+		if (nb.getPermissionID() > 1) {
+			ts.setHours(0);
+			ts.setMinutes(0);
+			ts.setSeconds(0);
+			ts.setNanos(0);
+			nb.setModificationDate(ts);
 			nb.setTitle(title);
 			nb.setModificationDate(ts);
 			this.nbMapper.edit(nb);

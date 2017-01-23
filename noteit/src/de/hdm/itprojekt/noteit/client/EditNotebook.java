@@ -13,8 +13,6 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -24,6 +22,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
+/**
+ * Die EditNotebook Klasse stellt die View zu Verfügung um ein Notizbuch
+ * verwalten zu können. EditNotebooke ist ein VerticalPanel und lässt sich somit
+ * unter GWT entsprechend anordnen.
+ * 
+ * @author maikzimmermann
+ * @author Tobias Dahms
+ *
+ */
 public class EditNotebook extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
@@ -36,7 +43,6 @@ public class EditNotebook extends VerticalPanel {
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
 	static HorizontalPanel hpButtons = new HorizontalPanel();
 	static HorizontalPanel hpAddPermission = new HorizontalPanel();
-	HorizontalPanel hDialog = new HorizontalPanel();
 
 	static VerticalPanel vpLeft = new VerticalPanel();
 	static VerticalPanel vpRight = new VerticalPanel();
@@ -44,7 +50,7 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel vpNotebookShare = new VerticalPanel();
 	static VerticalPanel vpNotebookPermission = new VerticalPanel();
 	static VerticalPanel vpBackButton = new VerticalPanel();
-	VerticalPanel vDialog = new VerticalPanel();
+
 
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
@@ -66,8 +72,6 @@ public class EditNotebook extends VerticalPanel {
 	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
-	static Button btnNo = new Button("Nein");
-	static Button btnYes = new Button("Ja");
 
 	static CellList<User> clUser = new UserCellList().createUserCellList();
 
@@ -75,14 +79,11 @@ public class EditNotebook extends VerticalPanel {
 	static RadioButton rbWrite = new RadioButton("permission", "bearbeiten");
 	static RadioButton rbDelete = new RadioButton("permission", "bearbeiten & löschen");
 
-	// Timestamp maturity = new Timestamp();
-
-	// Date maturity = new Date();
-
-	// modificationdate
-
+	/**
+	 * Jedes GWT Widget wird mit der run- Methode aufgerufen. Sie gibt an, was
+	 * geschehen soll, wenn eine Widget-Instanz zur Anzeige gebracht wird.
+	 */
 	protected void run() {
-		rootLogger.log(Level.SEVERE, "EditNotebook KLASSE");
 
 		hpEditNotebook.setWidth("600px");
 		hpButtons.setWidth("300px");
@@ -143,12 +144,6 @@ public class EditNotebook extends VerticalPanel {
 		vpRight.add(rbDelete);
 		vpRight.add(vpNotebookPermission);
 
-		vDialog.setSpacing(10);
-		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		vDialog.add(hDialog);
-		hDialog.add(btnYes);
-		hDialog.add(btnNo);
-
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
 
@@ -156,9 +151,18 @@ public class EditNotebook extends VerticalPanel {
 		this.add(hpEditNotebook);
 
 		/**
-		 * Erstellen oder bearbeiten von Freigaben RPC
+		 * Erstellen oder Bearbeiten von Freigaben für ein Notizbuch Über die
+		 * Radiobuttons kann die gewünschte Freigabe gewählt werden
+		 * 
+		 * Die Textbox muss eine valide Emailadresse enthalten damit die Methode
+		 * überhaupt ausgeführt werden kann Wird die Email in den Berechtigungen
+		 * für dieses Notizbuch schon gefunden, wird sie geupdated andernfalls
+		 * wird sie neue angelegt.
+		 * 
+		 * Die Berechtigung für den Nutzer wird übergeben, damit geprüft werden
+		 * kann ob dieser überhaupt eine entsprechtende Berechtigung besitzt um
+		 * eine Freigabe hinzuzufügen
 		 */
-
 		btnAddPermission.addClickHandler(new ClickHandler() {
 
 			@SuppressWarnings("deprecation")
@@ -194,7 +198,6 @@ public class EditNotebook extends VerticalPanel {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
 
 									}
 								});
@@ -209,28 +212,36 @@ public class EditNotebook extends VerticalPanel {
 			}
 		});
 
+		/**
+		 * Entfernen von Freigaben für ein Notizbuch
+		 * 
+		 * Die Textbox muss eine valide Emailadresse enthalten damit die Methode
+		 * überhaupt ausgeführt werden kann Die Berechtigung für den Nutzer wird
+		 * übergeben, damit geprüft werden kann ob dieser überhaupt eine
+		 * entsprechtende Berechtigung besitzt um eine Freigabe zu entfernen
+		 */
 		btnDeletePermission.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-					Window.alert("Abfrage ob die Freigabe wirklich gelöscht werden soll");
-					notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
-							Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
-							new AsyncCallback<Void>() {
+					if (Window.confirm("Sind sie sicher, dass Sie dem Nutzer die Freigabe entziehen möchten?")) {
 
-								@Override
-								public void onSuccess(Void result) {
-									Window.alert("Nuter wurde gelöscht");
-									getAllPermittedUsersbyNotebookID(currentNotebook.getId());
-								}
+						notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
+								Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
+								new AsyncCallback<Void>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+									@Override
+									public void onSuccess(Void result) {
+										getAllPermittedUsersbyNotebookID(currentNotebook.getId());
+									}
 
-								}
-							});
+									@Override
+									public void onFailure(Throwable caught) {
+
+									}
+								});
+					}
 				} else {
 					Window.alert("Bitte wähle eine bestehende Freigabe aus die du löschen möchtest!");
 				}
@@ -238,21 +249,22 @@ public class EditNotebook extends VerticalPanel {
 			}
 		});
 
+		/**
+		 * Notiz Speichern Hier werden Notizbücher entweder neu erstellt oder
+		 * eine bestehendes Notizbuch wird geupdated
+		 */
 		btnNotebookSave.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				rootLogger.log(Level.SEVERE, "Button Event");
 
 				if (tbNotebookTitel.getText().length() > 0) {
-					rootLogger.log(Level.SEVERE, "Button Event11");
 					if (currentNotebook.getId() == 0) {
 						notesAdmin.createNotebook(tbNotebookTitel.getText(), Homepage.getCurrentUser(),
 								new AsyncCallback<Notebook>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
 
 									}
 
@@ -260,7 +272,6 @@ public class EditNotebook extends VerticalPanel {
 									public void onSuccess(Notebook result) {
 										// TODO get all notebooks by user ID
 
-										rootLogger.log(Level.SEVERE, "NB Speicher Button");
 										NoteitCellBrowser.getNotebookList(result);
 
 									}
@@ -294,124 +305,71 @@ public class EditNotebook extends VerticalPanel {
 			}
 		});
 
+		/**
+		 * Notizbücher für die eine Nutzer eine freigabe erhalten hat, können
+		 * von dem Nutzer über den Deabonieren Button wieder deabonniert werden.
+		 * Hierfür wird zusätzlich noch eine Abfrage getätigt ober er sich
+		 * sicher ist, dass Notizbuch zu deabonnieren
+		 */
 		btnUnsubcribe.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if (Window.confirm("Sind sie sicher, dass Sie das ausgewählte Notizbuch deabonnieren möchten?")) {
+					notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(),
+							currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
 
-				final DialogBox dlbQuestion = new DialogBox();
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
 
-				dlbQuestion.setAnimationEnabled(true);
-				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch deabonnieren möchten?");
-				dlbQuestion.setWidth("300px");
-				dlbQuestion.setWidget(vDialog);
-				dlbQuestion.setModal(true);
-				dlbQuestion.setGlassEnabled(true);
-				dlbQuestion.center();
+								}
 
-				int width = Window.getClientWidth() / 2;
-				int height = Window.getClientHeight() / 2;
-				dlbQuestion.setPopupPosition(width, height);
-				dlbQuestion.show();
-
-				btnYes.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						// Methode zum löschen der Note aufrufen
-						notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(),
-								currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
-
-									}
-
-									@Override
-									public void onSuccess(Void result) {
-										// TODO Auto-generated method stub
-										NoteitCellBrowser.updateNotebooks();
-									}
-								});
-						// DialogBox ausblenden
-						dlbQuestion.hide();
-
-					}
-				});
-
-				btnNo.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						// DialogBox ausblenden
-						dlbQuestion.hide();
-
-					}
-				});
-
+								@Override
+								public void onSuccess(Void result) {
+									// TODO Auto-generated method stub
+									NoteitCellBrowser.updateNotebooks();
+								}
+							});
+				}
+				//
 			}
 		});
 
+		/**
+		 * Notizbücher für die eine Nutzer erstellt oder die Freigabe zum
+		 * löschen erhalten hat, können von dem Nutzer über den Löschen Button
+		 * gelöscht werden. Hierfür wird zusätzlich noch eine Abfrage getätigt
+		 * ober er sich sicher ist, dass Notizbuch zu deabonnieren Dabei werden
+		 * dann alle Berechtigungen die die dieses Notizbuch enthält, sowie alle
+		 * Notizen und Notizberechtigungen gelöscht
+		 */
 		btnNotebookDelete.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 
-				final DialogBox dlbQuestion = new DialogBox();
+				if (Window.confirm(
+						"Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten? Hierbei werden alle Berechtigungen und Notizen aus diesem Notizbuch gelöscht")) {
+					notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
+							new AsyncCallback<Void>() {
 
-				dlbQuestion.setAnimationEnabled(true);
-				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten?");
-				dlbQuestion.setWidth("300px");
-				dlbQuestion.setWidget(vDialog);
-				dlbQuestion.setModal(true);
-				dlbQuestion.setGlassEnabled(true);
-				dlbQuestion.show();
-				dlbQuestion.center();
+								@Override
+								public void onSuccess(Void result) {
+									// Notebook Liste aktualisieren
+									NoteitCellBrowser.updateNotebooks();
 
-				int width = Window.getClientWidth() / 2;
-				int height = Window.getClientHeight() / 2;
-				dlbQuestion.setPopupPosition(width, height);
-				dlbQuestion.show();
+									// DialogBox ausblenden
+									Homepage.hideView();
 
-				btnYes.addClickHandler(new ClickHandler() {
+								}
 
-					@Override
-					public void onClick(ClickEvent event) {
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
 
-						notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
-								new AsyncCallback<Void>() {
-
-									@Override
-									public void onSuccess(Void result) {
-										// Notebook Liste aktualisieren
-										NoteitCellBrowser.updateNotebooks();
-
-										// DialogBox ausblenden
-										dlbQuestion.hide();
-										Homepage.hideView();
-
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
-
-									}
-								});
-
-					}
-
-				});
-
-				btnNo.addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						// DialogBox ausblenden
-						dlbQuestion.hide();
-
-					}
-				});
+								}
+							});
+				}
 
 			}
 
@@ -422,6 +380,18 @@ public class EditNotebook extends VerticalPanel {
 
 	}
 
+	/**
+	 * Diese Mothode wird vom NoteitCellbrowser aufgerufen und setzt das
+	 * gewählte Notebook-Objekt.
+	 * 
+	 * Enthält das übergebene Notebook-Objekt die ID 0 so werden die Views und
+	 * Widgets für die Freigabe ausgeblendet, und er kann ledglich den Titel des
+	 * Notizbuches eintragen und Speichern Je nach Berechtigung werden Button
+	 * angezeigt oder ausgegraunt, um es dem Nutzer kenntlich zu machen, dass er
+	 * für diese Notiz nur folgende Berechtiung hat
+	 * 
+	 * @param notebook
+	 */
 	public static void setNotebook(Notebook notebook) {
 		currentNotebook = notebook;
 		if (currentNotebook.getPermissionID() > 0 && currentNotebook.getId() != 0) {
@@ -541,6 +511,12 @@ public class EditNotebook extends VerticalPanel {
 
 	}
 
+	/**
+	 * Diese Methode setzte die Liste von Benutzern, die für dieses Notizbuch
+	 * freigeben sind und zeigt die entsprechende Berechtigung an
+	 * 
+	 * @param notebookID
+	 */
 	public static void getAllPermittedUsersbyNotebookID(int notebookID) {
 
 		notesAdmin.getAllPermittedUsersByNotebookID(notebookID, new AsyncCallback<ArrayList<User>>() {
@@ -562,23 +538,12 @@ public class EditNotebook extends VerticalPanel {
 		});
 	}
 
-	public void setUserPermission(String mail) {
-		notesAdmin.findUserByMail(mail, new AsyncCallback<User>() {
-
-			@Override
-			public void onSuccess(User result) {
-				userList.add(result);
-				clUser.setRowData(userList);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Dieser Nutzer wurde nicht gefunden");
-
-			}
-		});
-	}
-
+	/**
+	 * Wenn ein Nutzer in der Freigabenliste ausgwählt wurde, dann wird der
+	 * dazugehörige RadioButton mit der enthaltenen Berechtigung ausgewählt
+	 * 
+	 * @param user
+	 */
 	public static void setSelectedUserPermissionInTextbox(User user) {
 		tbNotebookShareMail.setText(user.getMail());
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "");
