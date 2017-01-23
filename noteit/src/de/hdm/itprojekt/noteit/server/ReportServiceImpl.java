@@ -3,16 +3,11 @@ package de.hdm.itprojekt.noteit.server;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.ibm.icu.text.DateFormat;
-import com.ibm.icu.util.BytesTrie.Iterator;
-
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
@@ -27,17 +22,11 @@ import de.hdm.itprojekt.noteit.shared.report.ParagraphSimple;
 import de.hdm.itprojekt.noteit.shared.report.Report;
 import de.hdm.itprojekt.noteit.shared.report.Row;
 
-/**
- * 
- * @author maikzimmermann
- *
- */
 public class ReportServiceImpl extends RemoteServiceServlet 
 implements ReportService {
 	
 	private NotesAdministration notesAdministration = null;
 	private static final long serialVersionUID = 1L;
-	
 	private String sPermission = null;
 	private String sPermissionRead = "Lesen";
 	private String sPermissionReadWrite = "Lesen & Schreiben";
@@ -99,7 +88,11 @@ implements ReportService {
 		r.setImprint(imprint);
 	}
 		
-	
+	/**
+	 * Method to convert Date to Timestamp
+	 * @param date
+	 * @return
+	 */
 	public static Timestamp getTimestamp(Date date) { 
 		return date == null ? null : new java.sql.Timestamp(date.getTime()); 
 		}
@@ -444,7 +437,8 @@ implements ReportService {
 
 	
 	/**
-	 * Report of all Notes based on Permissions and User
+	 * Method to get a <code>Report</code> Object of all Notes based on 
+	 * User and Permission
 	 */
 	@Override
 	public NotesSharingInformation createReportNotesSharingInformation(User u, int permission) 
