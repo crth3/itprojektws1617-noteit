@@ -27,12 +27,6 @@ import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
-/**
- * Diese Klasse generiert die NotizView
- * 
- * @author Tobias Dahms
- *
- */
 public class ShowNote extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
@@ -306,8 +300,8 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser().getId(), currentNote.getNotebookId(), currentNote,
-								new AsyncCallback<Void>() {
+								timestampe, Homepage.getCurrentUser().getId(), currentNote.getNotebookId(),
+								currentNote, new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -335,35 +329,64 @@ public class ShowNote extends VerticalPanel {
 
 		btnDeletePermission.addClickHandler(new ClickHandler() {
 
-	@Override
+			@Override
 			public void onClick(ClickEvent event) {
+				final DialogBox dlbQuestion = new DialogBox();
 
-				if (Window.confirm(
-						"Soll die ausgewählte Berechtigung gelöscht werden?")) {
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie die Freigabe lÃ¶schen mÃ¶chten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.center();
 
-					notesAdmin.deleteUserNotePermission(tbNoteShareMail.getText(), currentNote.getPermissionID(),
-							currentNote.getId(), new AsyncCallback<Void>() {
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
 
-								@Override
-								public void onSuccess(Void result) {
-									getAllPermittedUsersbyNoteID(currentNote.getId());
+				btnYes.addClickHandler(new ClickHandler() {
 
-								}
+					public void onClick(ClickEvent event) {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+						notesAdmin.deleteUserNotePermission(tbNoteShareMail.getText(), currentNote.getPermissionID(),
+								currentNote.getId(), new AsyncCallback<Void>() {
 
-								}
-							});
-				}
-				;
+									@Override
+									public void onSuccess(Void result) {
+										getAllPermittedUsersbyNoteID(currentNote.getId());
+
+									}
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
 			}
 		});
 
 		btnUnsubcribe.addClickHandler(new ClickHandler() {
 
-	@Override
+			@Override
 			public void onClick(ClickEvent event) {
 
 				final DialogBox dlbQuestion = new DialogBox();
@@ -422,12 +445,29 @@ public class ShowNote extends VerticalPanel {
 
 		btnDeleteNote.addClickHandler(new ClickHandler() {
 
-	public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event) {
 				currentNote = NoteitCellBrowser.getSelectedNote();
 
-				
-				if(Window.confirm("Sind sie sicher, dass Sie die ausgewählte Notiz löschen möchten? Hierbei werden alle Freigaben gelöscht")){
-			
+				final DialogBox dlbQuestion = new DialogBox();
+
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie die ausgewÃ¤hlte Notiz lÃ¶schen mÃ¶chten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.show();
+				dlbQuestion.center();
+
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
+
+				btnYes.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
 						// Methode zum lÃ¶schen der Note aufrufen
 						notesAdmin.deleteNote(currentNote.getId(), Homepage.getCurrentUser().getId(),
 								new AsyncCallback<Void>() {
@@ -448,12 +488,28 @@ public class ShowNote extends VerticalPanel {
 									}
 								});
 						// DialogBox ausblenden
-				}}
+						dlbQuestion.hide();
 
-			
-	});
+					}
+				});
 
-	this.add(hpHeader);this.add(hpShowNote);
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
+			}
+		}
+
+		);
+
+		this.add(hpHeader);
+		this.add(hpShowNote);
 
 	}
 
@@ -520,8 +576,7 @@ public class ShowNote extends VerticalPanel {
 			}
 
 			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
-					|| currentNote.getPermissionID() == 1
-					|| currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 1) {
+					|| currentNote.getPermissionID() == 1 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 1) {
 
 				btnSaveNote.setEnabled(false);
 				btnDeleteNote.setEnabled(false);
@@ -533,8 +588,7 @@ public class ShowNote extends VerticalPanel {
 				btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 				btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
 			} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
-					|| currentNote.getPermissionID() == 2
-					|| currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 2) {
+					|| currentNote.getPermissionID() == 2 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 2) {
 
 				btnSaveNote.setEnabled(true);
 				btnDeleteNote.setEnabled(false);
@@ -554,8 +608,7 @@ public class ShowNote extends VerticalPanel {
 				btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 
 				if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
-						|| currentNote.getPermissionID() == 3
-						|| currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 3) {
+						|| currentNote.getPermissionID() == 3 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 3) {
 
 					lblPermissionInformationWrite.setVisible(false);
 					lblPermissionInformationDelete.setVisible(true);
