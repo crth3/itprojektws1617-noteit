@@ -1,6 +1,8 @@
 package de.hdm.itprojekt.noteit.client;
 
 import de.hdm.itprojekt.noteit.client.LoginInfo;
+import de.hdm.itprojekt.noteit.shared.LoginService;
+import de.hdm.itprojekt.noteit.shared.LoginServiceAsync;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;

@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.itprojekt.noteit.shared.LoginService;
+import de.hdm.itprojekt.noteit.shared.LoginServiceAsync;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.ReportService;
