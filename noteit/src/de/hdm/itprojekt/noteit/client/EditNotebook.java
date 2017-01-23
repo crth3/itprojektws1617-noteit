@@ -13,6 +13,8 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -43,6 +45,7 @@ public class EditNotebook extends VerticalPanel {
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();
 	static HorizontalPanel hpButtons = new HorizontalPanel();
 	static HorizontalPanel hpAddPermission = new HorizontalPanel();
+	HorizontalPanel hDialog = new HorizontalPanel();
 
 	static VerticalPanel vpLeft = new VerticalPanel();
 	static VerticalPanel vpRight = new VerticalPanel();
@@ -50,7 +53,7 @@ public class EditNotebook extends VerticalPanel {
 	static VerticalPanel vpNotebookShare = new VerticalPanel();
 	static VerticalPanel vpNotebookPermission = new VerticalPanel();
 	static VerticalPanel vpBackButton = new VerticalPanel();
-
+	VerticalPanel vDialog = new VerticalPanel();
 
 	static Label lblHeaderTitel = new Label();
 	static Label lblNotebookTitel = new Label("Titel");
@@ -72,6 +75,8 @@ public class EditNotebook extends VerticalPanel {
 	static Button btnNotebookDelete = new Button("Löschen");
 	static Button btnAddPermission = new Button("<img src='Images/check.png'/ width=\"10\" height=\"10\">");
 	static Button btnDeletePermission = new Button("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
+	static Button btnNo = new Button("Nein");
+	static Button btnYes = new Button("Ja");
 
 	static CellList<User> clUser = new UserCellList().createUserCellList();
 
@@ -143,6 +148,12 @@ public class EditNotebook extends VerticalPanel {
 		vpRight.add(rbWrite);
 		vpRight.add(rbDelete);
 		vpRight.add(vpNotebookPermission);
+
+		vDialog.setSpacing(10);
+		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		vDialog.add(hDialog);
+		hDialog.add(btnYes);
+		hDialog.add(btnNo);
 
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
@@ -225,23 +236,58 @@ public class EditNotebook extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (tbNotebookShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-					if (Window.confirm("Sind sie sicher, dass Sie dem Nutzer die Freigabe entziehen möchten?")) {
+					final DialogBox dlbQuestion = new DialogBox();
 
-						notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
-								Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
-								new AsyncCallback<Void>() {
+					dlbQuestion.setAnimationEnabled(true);
+					dlbQuestion.setText("Sind sie sicher, dass Sie dem Nutzer die Freigabe entziehen möchten?");
+					dlbQuestion.setWidth("300px");
+					dlbQuestion.setWidget(vDialog);
+					dlbQuestion.setModal(true);
+					dlbQuestion.setGlassEnabled(true);
+					dlbQuestion.center();
 
-									@Override
-									public void onSuccess(Void result) {
-										getAllPermittedUsersbyNotebookID(currentNotebook.getId());
-									}
+					int width = Window.getClientWidth() / 2;
+					int height = Window.getClientHeight() / 2;
+					dlbQuestion.setPopupPosition(width, height);
+					dlbQuestion.show();
 
-									@Override
-									public void onFailure(Throwable caught) {
+					btnYes.addClickHandler(new ClickHandler() {
 
-									}
-								});
-					}
+						public void onClick(ClickEvent event) {
+
+							
+							notesAdmin.deleteUserNotebookPermission(tbNotebookShareMail.getText(),
+									Homepage.getCurrentUser().getPermissionID(), currentNotebook.getId(),
+									new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											// TODO Auto-generated method stub
+
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											// TODO Auto-generated method stub
+											getAllPermittedUsersbyNotebookID(currentNotebook.getId());
+										}
+									});
+							
+							// DialogBox ausblenden
+							dlbQuestion.hide();
+
+						}
+					});
+
+					btnNo.addClickHandler(new ClickHandler() {
+
+						public void onClick(ClickEvent event) {
+
+							// DialogBox ausblenden
+							dlbQuestion.hide();
+						}
+					});
+
 				} else {
 					Window.alert("Bitte wähle eine bestehende Freigabe aus die du löschen möchtest!");
 				}
@@ -315,24 +361,57 @@ public class EditNotebook extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (Window.confirm("Sind sie sicher, dass Sie das ausgewählte Notizbuch deabonnieren möchten?")) {
-					notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(),
-							currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+				final DialogBox dlbQuestion = new DialogBox();
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText("Sind sie sicher, dass Sie das ausgewählte Notizbuch deabonnieren möchten?");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.center();
 
-								}
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
 
-								@Override
-								public void onSuccess(Void result) {
-									// TODO Auto-generated method stub
-									NoteitCellBrowser.updateNotebooks();
-								}
-							});
-				}
-				//
+				btnYes.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// Methode zum löschen der Note aufrufen
+						notesAdmin.deleteUserNotebookPermission(Homepage.getCurrentUser().getMail(),
+								currentNotebook.getPermissionID(), currentNotebook.getId(), new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										// TODO Auto-generated method stub
+										NoteitCellBrowser.updateNotebooks();
+									}
+								});
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+
+					}
+				});
+
+				btnNo.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+					}
+
+				});
+
 			}
 		});
 
@@ -348,28 +427,60 @@ public class EditNotebook extends VerticalPanel {
 
 			public void onClick(ClickEvent event) {
 
-				if (Window.confirm(
-						"Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten? Hierbei werden alle Berechtigungen und Notizen aus diesem Notizbuch gelöscht")) {
-					notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
-							new AsyncCallback<Void>() {
+				final DialogBox dlbQuestion = new DialogBox();
 
-								@Override
-								public void onSuccess(Void result) {
-									// Notebook Liste aktualisieren
-									NoteitCellBrowser.updateNotebooks();
+				dlbQuestion.setAnimationEnabled(true);
+				dlbQuestion.setText(
+						"Sind sie sicher, dass Sie das ausgewählte Notizbuch löschen möchten? Hierbei werden alle Berechtigungen und Notizen aus diesem Notizbuch gelöscht");
+				dlbQuestion.setWidth("300px");
+				dlbQuestion.setWidget(vDialog);
+				dlbQuestion.setModal(true);
+				dlbQuestion.setGlassEnabled(true);
+				dlbQuestion.show();
+				dlbQuestion.center();
 
-									// DialogBox ausblenden
-									Homepage.hideView();
+				int width = Window.getClientWidth() / 2;
+				int height = Window.getClientHeight() / 2;
+				dlbQuestion.setPopupPosition(width, height);
+				dlbQuestion.show();
 
-								}
+				btnYes.addClickHandler(new ClickHandler() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
+					@Override
+					public void onClick(ClickEvent event) {
 
-								}
-							});
-				}
+						notesAdmin.deleteNotebook(currentNotebook.getId(), Homepage.currentUser.getId(),
+								new AsyncCallback<Void>() {
+
+									@Override
+									public void onSuccess(Void result) {
+										// Notebook Liste aktualisieren
+										NoteitCellBrowser.updateNotebooks();
+
+										// DialogBox ausblenden
+										dlbQuestion.hide();
+										Homepage.hideView();
+
+									}
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+
+					}
+				});
+
+				btnNo.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						// DialogBox ausblenden
+						dlbQuestion.hide();
+					}
+				});
 
 			}
 
