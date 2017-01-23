@@ -11,10 +11,9 @@ import com.google.gwt.user.client.Window;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
 /**
- * 
- * 
- * 
- * 
+ * generiert den Inhalt einer Notizzelle mit HTML
+ * @author Tobias Dahms
+ *
  */
 
 public class NoteCell extends AbstractCell<Note> {

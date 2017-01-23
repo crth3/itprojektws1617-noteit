@@ -39,7 +39,7 @@ public class Noteit implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final NotesAdministrationAsync notesAdministrationService = GWT.create(NotesAdministration.class);
+	private final NotesAdministrationAsync notesAdministrationService = ClientsideSettings.getAdministrationService();
 
 	/**
 	 * Login-Widgets
@@ -80,11 +80,11 @@ public class Noteit implements EntryPoint {
 	Button zurueckButton = new Button("ZurÃ¼ck");
 
 	static boolean isNew = false;
+	private static Storage stockStore = null;
 
 	/**
 	 * This is the entry point method.
 	 */
-	private static Storage stockStore = null;
 
 	public void onModuleLoad() {
 
@@ -210,12 +210,17 @@ public class Noteit implements EntryPoint {
 		});
 
 	}
-
+/**
+ * Diese Methode liest die URL aus dem Sessionstorage aus und gibt diese zurück
+ * @return
+ */
 	public static String getValue_URL() {
 		return stockStore.getItem(stockStore.key(0));
 
 	}
-
+/**
+ * diese Methode lädt die LoginView
+ */
 	public static void loadLogin() {
 		// Assemble login panel.
 		signInLink.setHref(loginInfo.getLoginUrl());
@@ -223,7 +228,10 @@ public class Noteit implements EntryPoint {
 		loginPanel.add(signInLink);
 		RootPanel.get("content").add(loginPanel);
 	}
-
+/**
+ * Diese Methode gibt den aktuell angemeldeten Nutzer zurück
+ * @return
+ */
 	public static User getCurrentUser() {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
@@ -232,7 +240,9 @@ public class Noteit implements EntryPoint {
 	public static boolean isNew() {
 		return isNew;
 	}
-
+/**
+ * Diese Methode löscht den beschriebenen Sessionstorage
+ */
 	public static void deleteStorage() {
 		stockStore.clear();
 	}
