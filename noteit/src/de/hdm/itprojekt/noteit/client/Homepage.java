@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.appengine.api.search.query.QueryParser.value_return;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,10 +11,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.cellview.client.CellBrowser;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
@@ -27,7 +19,6 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -36,14 +27,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.TreeViewModel;
-import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -51,7 +38,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class Homepage extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	private static Logger rootLogger = Logger.getLogger("");
 
@@ -67,6 +54,7 @@ public class Homepage extends VerticalPanel {
 	final static VerticalPanel showNote = new ShowNote();
 	VerticalPanel impressum = new Impressum();
 
+	static VerticalPanel welcome = new Welcome();
 	static VerticalPanel editNotebook = new EditNotebook();
 	static Settings settings = new Settings();
 
@@ -115,8 +103,7 @@ public class Homepage extends VerticalPanel {
 		((ShowNote) showNote).run();
 		((Settings) settings).run();
 		((Impressum) impressum).run();
-		
-
+		((Welcome) welcome).run();
 
 		// CellBrowser
 		TreeViewModel model = new NoteitCellBrowser();
@@ -128,6 +115,14 @@ public class Homepage extends VerticalPanel {
 
 		contentPanel.add(cellBrowser);
 		contentPanel.add(editNotebook);
+
+		if (Noteit.isNew() == true) {
+			settingsView();
+		}
+
+		if (currentUser.getId() != 0 && Noteit.isNew() == false) {
+			WelcomeView();
+		}
 
 		final ListBox listBox1 = new ListBox() {
 			@Override
@@ -173,12 +168,11 @@ public class Homepage extends VerticalPanel {
 			}
 		};
 
-		
 		btnRefresh.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-//				updateNotebookCellList(currentUser.getId());
+				// updateNotebookCellList(currentUser.getId());
 				NoteitCellBrowser.updateNotebooks();
 			}
 		});
@@ -241,8 +235,7 @@ public class Homepage extends VerticalPanel {
 		navLeft2Panel.add(lbSort);
 		navLeft3Panel.add(lblRefreshNotebooks);
 		navLeft3Panel.add(btnRefresh);
-		
-		
+
 		footerPanel.add(lblImpressum);
 		footerPanel.add(btnReportGen);
 		footerPanel.add(copyright);
@@ -397,13 +390,13 @@ public class Homepage extends VerticalPanel {
 
 			}
 		});
-		
+
 		btnReportGen.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.open("http://1-dot-noteit-id.appspot.com/NoteitReport.html", "_blank", "");
-				
+
 			}
 		});
 
@@ -416,10 +409,13 @@ public class Homepage extends VerticalPanel {
 			UrlView dialogBox = new UrlView(currentUser);
 			dialogBox.show();
 		}
-		
-		if(currentUser.getFirstName() == "null" || currentUser.getLastName() == "null" || currentUser.getFirstName()== "" || currentUser.getLastName()==""){			
+
+		if (currentUser.getFirstName() == "null" || currentUser.getLastName() == "null"
+				|| currentUser.getFirstName() == "" || currentUser.getLastName() == "") {
 			settingsView();
-		};
+		}
+		;
+
 	}
 
 	/**
@@ -491,7 +487,6 @@ public class Homepage extends VerticalPanel {
 			@Override
 			public void onSuccess(ArrayList<Notebook> result) {
 				clNotebook.setRowData(result);
-				Window.alert("update");
 			}
 
 			@Override
@@ -533,20 +528,33 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public static void editNotebookView() {
-		contentPanel.remove(1);
+
+		if (contentPanel.getWidgetCount() == 2) {
+			contentPanel.remove(1);
+		}
 		// EditNotebook editNotebookView = new EditNotebook();
 		contentPanel.add(editNotebook);
 
 	}
 
 	public static void settingsView() {
-		contentPanel.remove(1);
+		if (contentPanel.getWidgetCount() == 2) {
+			contentPanel.remove(1);
+		}
 		contentPanel.add(settings);
 	}
 
 	public static void showNoteView() {
-		contentPanel.remove(1);
+		if (contentPanel.getWidgetCount() == 2) {
+			contentPanel.remove(1);
+		}
 		contentPanel.add(showNote);
+
+	}
+
+	public static void WelcomeView() {
+		contentPanel.remove(1);
+		contentPanel.add(welcome);
 
 	}
 
@@ -588,6 +596,10 @@ public class Homepage extends VerticalPanel {
 	public void sortNotesModificationDateAsc() {
 		NoteitCellBrowser.sortNotesModificationDateAsc(selectedNotebook.getId());
 
+	}
+
+	public static void hideView() {
+		contentPanel.remove(1);
 	}
 
 }

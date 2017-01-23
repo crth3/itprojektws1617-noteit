@@ -3,10 +3,8 @@ package de.hdm.itprojekt.noteit.client;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -18,14 +16,12 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -33,10 +29,9 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class ShowNote extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 	static ArrayList<User> userList = new ArrayList<User>();
 	static CellList<User> clUser = new UserCellList().createUserCellList();
-	private static Logger rootLogger = Logger.getLogger("");
 
 	static HorizontalPanel hpShowNote = new HorizontalPanel();
 	static HorizontalPanel hpHeader = new HorizontalPanel();
@@ -93,12 +88,6 @@ public class ShowNote extends VerticalPanel {
 
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
-
-	// Timestamp maturity = new Timestamp();
-
-	// Date maturity = new Date();
-
-	// modificationdate
 
 	protected void run() {
 
@@ -282,7 +271,7 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.createNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser(), null, Homepage.selectedNotebook.getId(),
+								timestampe, Homepage.getCurrentUser(), Homepage.selectedNotebook.getId(),
 								new AsyncCallback<Note>() {
 
 									@Override
@@ -304,7 +293,6 @@ public class ShowNote extends VerticalPanel {
 								});
 					} else {
 						if (dateBox.getTextBox().getValue().length() > 0) {
-							Window.alert("update Note");
 							Date date = dateBox.getValue();
 							long time = date.getTime();
 							timestampe = new Timestamp(time);
@@ -312,7 +300,7 @@ public class ShowNote extends VerticalPanel {
 							timestampe = null;
 						}
 						notesAdmin.updateNote(tbNoteTitel.getText(), tbNoteSubTitel.getText(), content.getText(),
-								timestampe, Homepage.getCurrentUser().getId(), null, currentNote.getNotebookId(),
+								timestampe, Homepage.getCurrentUser().getId(), currentNote.getNotebookId(),
 								currentNote, new AsyncCallback<Void>() {
 
 									@Override
@@ -400,8 +388,6 @@ public class ShowNote extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Noteid: " + NoteitCellBrowser.getSelectedNote().getId() + "userid "
-						+ Homepage.getCurrentUser().getId());
 
 				final DialogBox dlbQuestion = new DialogBox();
 
@@ -435,7 +421,6 @@ public class ShowNote extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-										Window.alert("success!");
 
 									}
 								});
@@ -497,7 +482,8 @@ public class ShowNote extends VerticalPanel {
 									public void onSuccess(Void result) {
 
 										// Noteliste aktualisieren
-										NoteitCellBrowser.deleteNote();
+										NoteitCellBrowser.updateNotes();
+										Homepage.hideView();
 
 									}
 								});
@@ -535,8 +521,6 @@ public class ShowNote extends VerticalPanel {
 			btnUnsubcribe.setVisible(false);
 
 		} else {
-
-		
 
 			if (currentNote.getPermissionID() > 0) {
 				btnSaveNote.setVisible(true);
@@ -587,10 +571,12 @@ public class ShowNote extends VerticalPanel {
 
 			if (note.getMaturityDate() == null) {
 				dateBox.setValue(null);
+			} else {
+				dateBox.setValue(currentNote.getMaturityDate());
 			}
 
 			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
-					|| currentNote.getPermissionID() == 1) {
+					|| currentNote.getPermissionID() == 1 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 1) {
 
 				btnSaveNote.setEnabled(false);
 				btnDeleteNote.setEnabled(false);
@@ -602,7 +588,7 @@ public class ShowNote extends VerticalPanel {
 				btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 				btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
 			} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
-					|| currentNote.getPermissionID() == 2) {
+					|| currentNote.getPermissionID() == 2 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 2) {
 
 				btnSaveNote.setEnabled(true);
 				btnDeleteNote.setEnabled(false);
@@ -622,7 +608,7 @@ public class ShowNote extends VerticalPanel {
 				btnDeletePermission.setHTML("<img src='Images/cancle.png'/ width=\"10\" height=\"10\">");
 
 				if (currentNote.getPermissionID() == 3 && currentNotebook.getPermissionID() == 3
-						|| currentNote.getPermissionID() == 3) {
+						|| currentNote.getPermissionID() == 3 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 3) {
 
 					lblPermissionInformationWrite.setVisible(false);
 					lblPermissionInformationDelete.setVisible(true);

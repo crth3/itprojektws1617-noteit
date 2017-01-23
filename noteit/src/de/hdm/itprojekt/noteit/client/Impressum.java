@@ -1,18 +1,12 @@
 package de.hdm.itprojekt.noteit.client;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 
 public class Impressum extends VerticalPanel {
-	
-	
+
 	public void run() {
 		/**
 		 * Überschrift der Seite
@@ -35,8 +29,7 @@ public class Impressum extends VerticalPanel {
 		Label lblheadline = new Label("Impressum");
 		impressumPanel.add(lblheadline);
 		lblheadline.setStyleName("impressumHeadline");
-		Label gesetzLabel = new Label(
-				"Angaben gemäß § 5 Telemediengesetz (TMG)");
+		Label gesetzLabel = new Label("Angaben gemäß § 5 Telemediengesetz (TMG)");
 		gesetzLabel.setStyleName("gesetzLabel");
 		impressumPanel.add(gesetzLabel);
 
@@ -112,7 +105,7 @@ public class Impressum extends VerticalPanel {
 		 * wurde, die Grid Tabelle hinzugefügt.
 		 */
 		impressumPanel.add(impressumGrid);
-	
+
 	}
 
 }

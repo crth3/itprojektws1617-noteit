@@ -8,21 +8,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
-import com.ibm.icu.impl.CalendarAstronomer.Horizon;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
@@ -85,7 +81,7 @@ public class UrlView extends DialogBox {
 					tsMaturity = null;
 				}
 				notesAdmin.createNote(tbNoteTitel.getText(), "", url.getText(),
-						tsMaturity, Homepage.getCurrentUser(), null, getNotebookId(lbNotebook.getSelectedIndex()),
+						tsMaturity, Homepage.getCurrentUser(), getNotebookId(lbNotebook.getSelectedIndex()),
 						new AsyncCallback<Note>() {
 
 							@Override
@@ -163,7 +159,7 @@ public class UrlView extends DialogBox {
 		dateBox.getElement().setPropertyString("placeholder", "FÃ¤lligkeitsdatum");
 		
 		/**
-		 * Widgets dem Panel hinzufügen
+		 * Widgets dem Panel hinzufï¿½gen
 		 */
 
 		

@@ -1,18 +1,10 @@
 package de.hdm.itprojekt.noteit.server;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.lang3.time.DateUtils;
-
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.ibm.icu.text.SimpleDateFormat;
 
 import de.hdm.itprojekt.noteit.server.db.NoteMapper;
 import de.hdm.itprojekt.noteit.server.db.NotePermissionMapper;
@@ -117,7 +109,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		
 		ArrayList<NotebookPermission> userNotebookPermissions = this.nbpMapper.findNotebookPermissionByUserId(user.getId());
 		ArrayList<NotePermission> userNotePermissions = this.npMapper.findNotePermissionByUserId(user.getId());
-		
+		ArrayList<Note> allNotesfromthisUser = this.nMapper.findNotesByUser(user.getId());
 		
 		//Notebooks permissions des Users löschen
 		for (NotebookPermission notebookPermission : userNotebookPermissions) {
@@ -127,6 +119,13 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		//Note permissions des Users löschen
 		for (NotePermission notePermission : userNotePermissions) {
 			this.npMapper.delete(notePermission);
+		}
+		
+		// notizen löschen die keine Freigabe enthalten
+		for (Note foundedNote : allNotesfromthisUser) {
+			if(npMapper.findNotePermissionByNoteId(foundedNote.getId()).size() == 0){
+				nMapper.delete(foundedNote);
+			}
 		}
 		
 		// Nutzer wird nicht gelöscht sondern nur seine E-mail
@@ -294,7 +293,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u, String source,
+	public Note createNote(String title, String subtitle, String text, Timestamp maturity, User u,
 			int notebookID) throws IllegalArgumentException {
 
 		ts.setHours(0);
@@ -313,7 +312,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		note.setSubTitle(subtitle);
 		note.setText(text);
 		note.setMaturityDate(maturity);
-		note.setSource(source);
 		note.setUserId(u.getId());
 		note.setCreationDate(ts);
 		note.setNotebookId(notebookID);
@@ -322,7 +320,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	}
 
 	@Override
-	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,
+	public void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID,
 			int notebookID, Note note) throws IllegalArgumentException {
 		System.out.println("ablaufdatum: " + maturity);
 
@@ -338,7 +336,6 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 			note.setSubTitle(subtitle);
 			note.setText(text);
 			note.setMaturityDate(maturity);
-			note.setSource(source);
 			note.setModificationDate(ts);
 			note.setNotebookId(notebookID);
 			// note.setUserId(creator.getId());

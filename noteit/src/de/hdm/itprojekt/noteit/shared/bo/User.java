@@ -25,7 +25,7 @@ public class User extends BusinessObjects {
 	 * Email Adresse des Nutzers
 	 */
 	private String mail = "";
-	
+
 	/**
 	 * Freigabe des nutzers
 	 */
@@ -33,6 +33,8 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Ausgabe des Vornamens des Nutzers
+	 * 
+	 * @return
 	 */
 	public String getFirstName() {
 		return firstName;
@@ -40,6 +42,8 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Setzen des Vornamens des Nutzers
+	 * 
+	 * @param firstName
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -47,6 +51,8 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Ausgabe des Nachnamens des Nutzers
+	 * 
+	 * @return
 	 */
 	public String getLastName() {
 		return lastName;
@@ -54,6 +60,8 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Setzen des Nachnamens des Nutzers
+	 * 
+	 * @param lastName
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -61,6 +69,8 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Ausgabe der Email Adresse des Nutzers
+	 * 
+	 * @return
 	 */
 	public String getMail() {
 		return mail;
@@ -68,15 +78,27 @@ public class User extends BusinessObjects {
 
 	/**
 	 * Setzen der Email Adresse des Nutzers
+	 * 
+	 * @param mail
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
+	/**
+	 * BerechtigungsID des Nutzers holen
+	 * 
+	 * @return
+	 */
 	public int getPermissionID() {
 		return permissionID;
 	}
 
+	/**
+	 * BerechtigungsID des Nutzers setzen
+	 * 
+	 * @param permissionID
+	 */
 	public void setPermissionID(int permissionID) {
 		this.permissionID = permissionID;
 	}

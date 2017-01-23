@@ -18,7 +18,7 @@ public interface NotesAdministrationAsync {
 
 	void updateUser(int userID, String mail, String firstName, String lastName, AsyncCallback<Void> callback);
 
-	void createNote(String title, String subtitle, String text, Timestamp date, User u, String source,
+	void createNote(String title, String subtitle, String text, Timestamp date, User u,
 			int notebookID, AsyncCallback<Note> callback);
 
 	void createNotebook(String title, User creator, AsyncCallback<Notebook> callback);
@@ -39,7 +39,7 @@ public interface NotesAdministrationAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void updateNote(String title, String subtitle, String text, Timestamp maturity, int editorID, String source,int notebookID, Note currentNote,
+	void updateNote(String title, String subtitle, String text, Timestamp maturity, int userID, int notebookID, Note currentNote,
 			AsyncCallback<Void> callback);
 
 	void updateNotebook(String title, Notebook currentNotebook, int userId, AsyncCallback<Void> callback);

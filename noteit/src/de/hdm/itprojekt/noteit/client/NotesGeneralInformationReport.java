@@ -99,7 +99,7 @@ public class NotesGeneralInformationReport extends VerticalPanel{
 	public NotesGeneralInformationReport() {
 		
 		oracle = new MultiWordSuggestOracle();
-		reportService = GWT.create(ReportService.class);
+		reportService =ClientsideSettings.getReportService();
 
 		
 		notesAdministration.findAllUser(new AsyncCallback<ArrayList<User>>() {

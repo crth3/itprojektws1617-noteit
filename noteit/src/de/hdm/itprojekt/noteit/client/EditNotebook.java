@@ -6,9 +6,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.tools.ant.taskdefs.Delete;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -19,24 +16,17 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
 public class EditNotebook extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	static Notebook currentNotebook;
 	static ArrayList<User> userList = new ArrayList<User>();
@@ -159,21 +149,8 @@ public class EditNotebook extends VerticalPanel {
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
 
-		/**
-		 * Create the Panel, Label and TextBox
-		 */
-
-		// hpNoteSubTitel.add(lblNotebookSubTitel);
-		// hpNoteSubTitel.add(tbNotebookSubTitel);
-
-		/**
-		 * Create the Panel, Label and TextBox
-		 */
-
 		hpEditNotebook.add(vpLeft);
 		hpEditNotebook.add(vpRight);
-		// hpEditNotebook.add(vpNotebookPermission);
-		// hpEditNotebook.add(hpButtons);
 
 		this.add(hpHeader);
 		this.add(hpEditNotebook);
@@ -407,10 +384,11 @@ public class EditNotebook extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										// Notebook Liste aktualisieren
-										NoteitCellBrowser.deleteNotebook();
+										NoteitCellBrowser.updateNotebooks();
 
 										// DialogBox ausblenden
 										dlbQuestion.hide();
+										Homepage.hideView();
 
 									}
 
@@ -441,14 +419,6 @@ public class EditNotebook extends VerticalPanel {
 
 		tbNotebookShareMail.getElement().setPropertyString("placeholder", "nutzer@noteit.de");
 		tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
-		// btnAddPermission.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// setUserPermission(tbNotebookShareMail.getText());
-		//
-		// }
-		// });
 
 	}
 
@@ -480,6 +450,7 @@ public class EditNotebook extends VerticalPanel {
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(true);
 			lblHeaderTitel.setText("Neues Notizbuch");
+			tbNotebookTitel.setReadOnly(false);
 			tbNotebookTitel.getElement().setPropertyString("placeholder", "Dein Titel");
 		} else if (currentNotebook.getId() == -1) {
 			vpNotebookShare.setVisible(false);
@@ -494,6 +465,7 @@ public class EditNotebook extends VerticalPanel {
 			lblNotebookDate.setVisible(false);
 			btnNotebookDelete.setVisible(false);
 			btnNotebookSave.setVisible(false);
+			tbNotebookTitel.setReadOnly(true);
 		} else {
 			vpNotebookShare.setVisible(true);
 			vpNotebookPermission.setVisible(true);
@@ -508,6 +480,7 @@ public class EditNotebook extends VerticalPanel {
 			lblNotebookDate.setVisible(true);
 			btnNotebookDelete.setVisible(true);
 			btnNotebookSave.setVisible(true);
+			tbNotebookTitel.setReadOnly(false);
 		}
 
 		if (currentNotebook.getModificationDate() == null) {

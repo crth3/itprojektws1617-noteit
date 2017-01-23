@@ -3,6 +3,8 @@ package de.hdm.itprojekt.noteit.shared.bo;
 import java.sql.Timestamp;
 
 /**
+ * Umsetzung der Notizbuchklasse. Als Attribute dienen ErstellerID,
+ * BerechtigungsID, Titel, Erstelldatum und Bearbeitungsdatum
  * 
  * @author maikzimmermann
  *
@@ -15,16 +17,17 @@ public class Notebook extends BusinessObjects {
 	private String title = "";
 	private Timestamp creationDate;
 	private Timestamp modificationDate;
-	private boolean visible = false;
 	public User creator;
 	public Note note;
-	
+
 	/**
 	 * Fremdschlüsselbeziehung zu userId
 	 */
 	private int userId;
 
 	/**
+	 * Titel des Notizbuches holen
+	 * 
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -32,15 +35,17 @@ public class Notebook extends BusinessObjects {
 	}
 
 	/**
+	 * Titel des Notizbuches setzen
+	 * 
 	 * @param title
-	 *            the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
 	/**
+	 * Erstelldatum holen
+	 * 
 	 * @return the creationTimestamp
 	 */
 	public Timestamp getCreationDate() {
@@ -48,42 +53,31 @@ public class Notebook extends BusinessObjects {
 	}
 
 	/**
+	 * Erstelldatum setzen
+	 * 
 	 * @param creationTimestamp
-	 *            the creationTimestamp to set
+	 * 
 	 */
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
-	
+
 	/**
+	 * Modifikationdatum für das Notizbuch holen
 	 * 
 	 * @return modificationTimestamp
 	 */
 	public Timestamp getModificationDate() {
 		return modificationDate;
 	}
-	
+
 	/**
+	 * Modifikationdatum für das Notizbuch setzen
 	 * 
 	 * @param modificationTimestamp
 	 */
 	public void setModificationDate(Timestamp modificationDate) {
 		this.modificationDate = modificationDate;
-	}
-
-	/**
-	 * @return the visible
-	 */
-	public boolean isVisible() {
-		return visible;
-	}
-
-	/**
-	 * @param visible
-	 *            the visible to set
-	 */
-	public void setVisible(boolean visible) {
-		this.visible = visible;
 	}
 
 	/**
@@ -93,7 +87,7 @@ public class Notebook extends BusinessObjects {
 	public int getUserId() {
 		return userId;
 	}
-	
+
 	/**
 	 * 
 	 * @param userId
@@ -101,32 +95,19 @@ public class Notebook extends BusinessObjects {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-//	/**
-//	 * Ausgabe des Creator
-//	 * @return
-//	 */
-//	public int getCreatorID() {
-//		return creatorID;
-//	}
-//	
-//	/**
-//	 * 
-//	 * @param creatorID
-//	 */
-//	public void setCreatorID(int creatorID) {
-//		this.creatorID = creatorID;
-//	}
-	
+
 	/**
 	 * Ausgabe der Note
+	 * 
 	 * @return
 	 */
 	public Note getNote() {
 		return note;
 	}
+
 	/**
 	 * Setzen des Note
+	 * 
 	 * @param creator
 	 */
 	public void setNote(Note note) {
@@ -135,6 +116,7 @@ public class Notebook extends BusinessObjects {
 
 	/**
 	 * Ausgabe der Berechtigung für dieses Notizbuch
+	 * 
 	 * @return
 	 */
 	public int getPermissionID() {
@@ -143,6 +125,7 @@ public class Notebook extends BusinessObjects {
 
 	/**
 	 * Setzen der Berechtigung für dieses Notizbuch
+	 * 
 	 * @param permissionID
 	 */
 	public void setPermissionID(int permissionID) {

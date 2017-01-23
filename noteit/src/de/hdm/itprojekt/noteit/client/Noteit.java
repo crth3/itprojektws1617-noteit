@@ -1,12 +1,10 @@
 package de.hdm.itprojekt.noteit.client;
 
-import de.hdm.itprojekt.noteit.client.Impressum;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,20 +13,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.storage.client.Storage;
-import com.google.gwt.user.cellview.client.CellBrowser;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.user.client.ui.Anchor;
 
 /**
@@ -70,7 +62,6 @@ public class Noteit implements EntryPoint {
 	 */
 
 	VerticalPanel vpBasisPanel = new VerticalPanel();
-	// HorizontalPanel headerPanel = new HorizontalPanel();
 	final static HorizontalPanel welcomePanel = new HorizontalPanel();
 	final HorizontalPanel headlinePanel = new HorizontalPanel();
 	final HorizontalPanel content = new HorizontalPanel();
@@ -87,6 +78,8 @@ public class Noteit implements EntryPoint {
 	 */
 	Button btnLogOut = new Button("Logout");
 	Button zurueckButton = new Button("Zurück");
+
+	static boolean isNew = false;
 
 	/**
 	 * This is the entry point method.
@@ -115,8 +108,6 @@ public class Noteit implements EntryPoint {
 
 		welcomePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		logoutPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-
-		// homepage.setStylePrimaryName("homepage");
 
 		/**
 		 * add the widgets
@@ -182,8 +173,8 @@ public class Noteit implements EntryPoint {
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
 
-												// ImpressumPanel = new
-												// Impressum();
+												isNew = true;
+
 												RootPanel.get().add(HomepagePanel);
 
 											}
@@ -233,17 +224,13 @@ public class Noteit implements EntryPoint {
 		RootPanel.get("content").add(loginPanel);
 	}
 
-	public static void setWelcomeName(String name) {
-		// welcomePanel.remove(welcomeLabel);
-		// x = name;
-		//
-		// welcomeLabel.setText("Wilkommen " + x);
-		// welcomePanel.add(welcomeLabel);
-	}
-
 	public static User getCurrentUser() {
 		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
+	}
+
+	public static boolean isNew() {
+		return isNew;
 	}
 
 	public static void deleteStorage() {

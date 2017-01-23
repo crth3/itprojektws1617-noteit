@@ -28,7 +28,7 @@ public class ShowReport extends Composite  {
 	 * Create a remote service proxy to talk to the server-side Report
 	 * service.
 	 */
-	private final ReportServiceAsync report = GWT.create(ReportService.class);
+	private final ReportServiceAsync report = ClientsideSettings.getReportService();
 	
 	//Logger
 	private static Logger logger = Logger.getLogger("");

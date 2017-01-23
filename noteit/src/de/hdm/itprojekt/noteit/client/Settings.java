@@ -1,6 +1,5 @@
 package de.hdm.itprojekt.noteit.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -10,21 +9,21 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 public class Settings extends VerticalPanel {
 
-	private final static NotesAdministrationAsync notesAdmin = GWT.create(NotesAdministration.class);
+	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
 
 	static VerticalPanel vpSettingsPanel = new VerticalPanel();
-
+	static HorizontalPanel hpHeader = new HorizontalPanel();
+	
 	User currentUser = new User();
+	public String userFirstName;
 
 	/**
 	 * Create the Label
@@ -44,9 +43,11 @@ public class Settings extends VerticalPanel {
 	 * Create the Panel
 	 */
 	HorizontalPanel hpButtonPanel = new HorizontalPanel();
+	static HorizontalPanel hpSettings = new HorizontalPanel();
 
 	VerticalPanel vDialog = new VerticalPanel();
 	HorizontalPanel hDialog = new HorizontalPanel();
+	static VerticalPanel vpRight = new VerticalPanel();
 
 	/**
 	 * Create the Button
@@ -54,24 +55,34 @@ public class Settings extends VerticalPanel {
 	Button btnAbrrechenButton = new Button("Abbrechen");
 	Button btnSichernButton = new Button("Speichern");
 	Button btnDeleteAccount = new Button("Profil löschen");
+	
+	static Label lblHeaderTitel = new Label("Profil Einstellungen");
 
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
 
 	protected void run() {
 
-		this.setStyleName("vpLeft");
-		this.setWidth("600px");
+		hpSettings.setWidth("600px");
+		vpSettingsPanel.setWidth("300px");
+		vpRight.setWidth("300px");
 
 		currentUser = Homepage.getCurrentUser();
-
+		hpHeader.setStyleName("headerDetailView");
+		hpSettings.setStyleName("showDetailContent");
+		lblHeaderTitel.setStyleName("lblHeaderTitel");
+		vpSettingsPanel.setStyleName("vpLeft");
+		vpRight.setStyleName("vpRight");
 		vDialog.setSpacing(10);
 		vDialog.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vDialog.add(hDialog);
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
-
+		
+		hpHeader.add(lblHeaderTitel);
+		
 		// currentUser.setFirstName("Kim");
+		
 		vpSettingsPanel.add(lbFirstName);
 		vpSettingsPanel.add(tbFirstName);
 		vpSettingsPanel.add(lbLastName);
@@ -83,6 +94,12 @@ public class Settings extends VerticalPanel {
 		hpButtonPanel.add(btnSichernButton);
 		hpButtonPanel.add(btnDeleteAccount);
 		vpSettingsPanel.add(hpButtonPanel);
+		hpSettings.add(vpSettingsPanel);
+		hpSettings.add(vpRight);
+		
+		tbFirstName.getElement().setPropertyString("placeholder","Vorname");
+		tbLastName.getElement().setPropertyString("placeholder","Nachname");
+		
 
 		
 			if (currentUser.getFirstName() == "null") {
@@ -100,7 +117,6 @@ public class Settings extends VerticalPanel {
 		
 			
 
-		this.add(vpSettingsPanel);
 
 		// Wenn ich nur das ButtonPanel add, sind die Buttons nachher im Browser
 		// nach Rechts verzogen. Hier müsste man dann es dann durch css
@@ -115,7 +131,7 @@ public class Settings extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				// Homepage homepage = new Homepage();
 
-				Homepage.showNoteView();
+				Homepage.hideView();
 
 				// Hier muss rein, dass die Homepage Klasse wieder geladen wird.
 
@@ -141,7 +157,10 @@ public class Settings extends VerticalPanel {
 							public void onSuccess(Void result) {
 								// VerticalPanel homepage = new Homepage();
 								Window.alert("Eingaben erfolgreich gespeichert");
-								Homepage.showNoteView();
+								//Homepage.showNoteView();
+								
+								Homepage.hideView();
+
 							}
 
 							@Override
@@ -150,6 +169,7 @@ public class Settings extends VerticalPanel {
 
 							}
 						});
+
 			}
 		});
 
@@ -214,7 +234,10 @@ public class Settings extends VerticalPanel {
 
 			}
 		});
+		this.add(hpHeader);
+		this.add(hpSettings);
 
 	}
+	
 
 }

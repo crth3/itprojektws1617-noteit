@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
+import de.hdm.itprojekt.noteit.shared.ReportService;
 import de.hdm.itprojekt.noteit.shared.ReportServiceAsync;
 
 /**
@@ -69,7 +70,7 @@ public class ClientsideSettings {
 	 */
 	public static ReportServiceAsync getReportService() {
 		if (reportService == null) {
-			reportService = GWT.create(ReportServiceAsync.class);
+			reportService = GWT.create(ReportService.class);
 		}
 
 		reportService.init(new AsyncCallback<Void>() {
