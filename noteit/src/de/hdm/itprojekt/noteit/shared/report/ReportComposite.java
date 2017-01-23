@@ -24,8 +24,8 @@ public abstract class ReportComposite
 	private Vector<Report> subReports = new Vector<Report>();
 
 	/**
-	 * Hinzufügen eines Teil-Reports.
-	 * @param r der hinzuzufügende Teil-Report.
+	 * HinzufÃ¼gen eines Teil-Reports.
+	 * @param r der hinzuzufÃ¼gende Teil-Report.
 	 */
 	public void addSubReport(Report r) {
 		this.subReports.addElement(r);
@@ -49,7 +49,7 @@ public abstract class ReportComposite
 
 	/**
 	 * Auslesen eines einzelnen Teil-Reports.
-	 * @param i Position des Teilreports. Bei n Elementen läuft der Index i von 0
+	 * @param i Position des Teilreports. Bei n Elementen lÃ¤uft der Index i von 0
 	 * bis n-1.
 	 * 
 	 * @return Position des Teil-Reports.

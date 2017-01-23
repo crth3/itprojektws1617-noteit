@@ -7,7 +7,7 @@ import de.hdm.itprojekt.noteit.shared.report.Report;
  * <p>
  * Ein einfacher Report, der neben den Informationen der Superklasse <code>
  * Report</code> eine Tabelle mit "Positionsdaten" aufweist. Die Tabelle greift
- * auf zwei Hilfsklassen namens <code>Row</code> und <code>Column</code> zurück.
+ * auf zwei Hilfsklassen namens <code>Row</code> und <code>Column</code> zurÃ¼ck.
  * </p>
  * <p>
  * Die Positionsdaten sind vergleichbar mit der Liste der Bestellpositionen
@@ -33,9 +33,9 @@ public abstract class ReportSimple extends Report {
   private Vector<Row> table = new Vector<Row>();
 
   /**
-   * Hinzufügen einer Zeile.
+   * HinzufÃ¼gen einer Zeile.
    * 
-   * @param r die hinzuzufügende Zeile
+   * @param r die hinzuzufÃ¼gende Zeile
    */
   public void addRow(Row r) {
     this.table.addElement(r);
@@ -51,7 +51,7 @@ public abstract class ReportSimple extends Report {
   }
 
   /**
-   * Auslesen sämtlicher Positionsdaten.
+   * Auslesen sÃ¤mtlicher Positionsdaten.
    * 
    * @return die Tabelle der Positionsdaten
    */
