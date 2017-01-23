@@ -37,7 +37,7 @@ import de.hdm.itprojekt.noteit.shared.bo.Notebook;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 
 /**
- * Diese Klasse verwaltet s‰mtliche View-Zugriffe und instanziiert nach erfolgreichem Login s‰mtliche Views
+ * Diese Klasse verwaltet s√§mtliche View-Zugriffe und instanziiert nach erfolgreichem Login s√§mtliche Views
  * @author Tobias Dahms
  *
  */
@@ -427,7 +427,7 @@ public class Homepage extends VerticalPanel {
 	/**
 	 * set all notes from selected notebook
 	 * 
-	 * @param notebook
+	 * @param notebook Notizbuch das ausgw√§hlt ist
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
