@@ -4,7 +4,8 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
-import de.hdm.itprojekt.noteit.client.LoginService;
+import de.hdm.itprojekt.noteit.shared.LoginService;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class LoginServiceImpl extends RemoteServiceServlet implements
