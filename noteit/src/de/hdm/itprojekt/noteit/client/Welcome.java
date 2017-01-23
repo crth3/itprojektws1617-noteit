@@ -14,7 +14,7 @@ import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.User;
 /**
- * Diese Klasse generiert die Begrüßungsseite
+ * Diese Klasse generiert die BegrÃ¼ÃŸungsseite
  * @author Tobias Dahms
  *
  */

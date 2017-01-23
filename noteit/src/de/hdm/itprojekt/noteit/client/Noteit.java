@@ -213,7 +213,7 @@ public class Noteit implements EntryPoint {
 
 	}
 /**
- * Diese Methode liest die URL aus dem Sessionstorage aus und gibt diese zurück
+ * Diese Methode liest die URL aus dem Sessionstorage aus und gibt diese zurÃ¼ck
  * @return
  */
 	public static String getValue_URL() {
@@ -221,7 +221,7 @@ public class Noteit implements EntryPoint {
 
 	}
 /**
- * diese Methode lädt die LoginView
+ * diese Methode lÃ¤dt die LoginView
  */
 	public static void loadLogin() {
 		// Assemble login panel.
@@ -231,7 +231,7 @@ public class Noteit implements EntryPoint {
 		RootPanel.get("content").add(loginPanel);
 	}
 /**
- * Diese Methode gibt den aktuell angemeldeten Nutzer zurück
+ * Diese Methode gibt den aktuell angemeldeten Nutzer zurÃ¼ck
  * @return
  */
 	public static User getCurrentUser() {
@@ -243,7 +243,7 @@ public class Noteit implements EntryPoint {
 		return isNew;
 	}
 /**
- * Diese Methode löscht den beschriebenen Sessionstorage
+ * Diese Methode lÃ¶scht den beschriebenen Sessionstorage
  */
 	public static void deleteStorage() {
 		stockStore.clear();

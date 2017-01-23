@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class Impressum extends VerticalPanel {
 /**
- * Diese Methode wird bei der Instanziierung ausgeführt
+ * Diese Methode wird bei der Instanziierung ausgefÃ¼hrt
  */
 	public void run() {
 		/**
