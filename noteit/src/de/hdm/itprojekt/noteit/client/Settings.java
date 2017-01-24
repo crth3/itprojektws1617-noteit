@@ -163,9 +163,6 @@ public class Settings extends VerticalPanel {
 							// noch genauso funktionieren?
 							@Override
 							public void onSuccess(Void result) {
-								// VerticalPanel homepage = new Homepage();
-								Window.alert("Eingaben erfolgreich gespeichert");
-								//Homepage.showNoteView();
 								
 								Homepage.hideView();
 

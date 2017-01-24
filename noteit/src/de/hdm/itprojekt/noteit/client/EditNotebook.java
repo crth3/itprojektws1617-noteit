@@ -3,8 +3,6 @@ package de.hdm.itprojekt.noteit.client;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -39,7 +37,6 @@ public class EditNotebook extends VerticalPanel {
 
 	static Notebook currentNotebook;
 	static ArrayList<User> userList = new ArrayList<User>();
-	private static Logger rootLogger = Logger.getLogger("");
 
 	static HorizontalPanel hpHeader = new HorizontalPanel();
 	static HorizontalPanel hpEditNotebook = new HorizontalPanel();

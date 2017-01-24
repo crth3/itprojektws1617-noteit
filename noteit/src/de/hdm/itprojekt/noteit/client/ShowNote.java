@@ -3,7 +3,6 @@ package de.hdm.itprojekt.noteit.client;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -581,7 +580,6 @@ public class ShowNote extends VerticalPanel {
 
 			if (currentNote.getPermissionID() == 1 && currentNotebook.getPermissionID() == 1
 					|| currentNote.getPermissionID() == 1 || currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() == 1) {
-				Window.alert("in permisssion id: " + currentNote.getPermissionID());
 				btnSaveNote.setEnabled(false);
 				btnDeleteNote.setEnabled(false);
 				btnAddNotePermission.setEnabled(false);

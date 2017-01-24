@@ -2,18 +2,12 @@ package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.Note;
 import de.hdm.itprojekt.noteit.shared.bo.Notebook;
@@ -42,7 +36,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 	private static final NoSelectionModel<Notebook> selectionModelNotebook = new NoSelectionModel<Notebook>();
 	private static final NoSelectionModel<Note> selectionModelNote = new NoSelectionModel<Note>();
 
-	private static Logger rootLogger = Logger.getLogger("");
 
 	/**
 	 * Gibt das Objekt NodeInfo {@link NodeInfo} zurück, welches die Inhalte für einen Knoten darstellt
@@ -247,7 +240,6 @@ public class NoteitCellBrowser implements TreeViewModel {
  * @param notebook
  */
 	public static void getNotebookList(Notebook notebook) {
-		rootLogger.log(Level.SEVERE, "getNotebookList Methode");
 		notebooksListDataProvider.getList().add(notebook);
 		// notebooksListDataProvider.refresh();
 	}
