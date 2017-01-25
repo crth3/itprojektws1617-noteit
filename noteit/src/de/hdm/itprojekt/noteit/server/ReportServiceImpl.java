@@ -34,7 +34,6 @@ implements ReportService {
 	private int noteId;
 	boolean bPermission;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private static Logger rootLogger = Logger.getLogger("");
 
 	
 	/**
@@ -110,7 +109,6 @@ implements ReportService {
 			return null;
 		
 		int userId = u.getId();
-		rootLogger.log(Level.SEVERE, "userId: " + userId);
 
 		
 		//-------------------- convert date to Timestamp ---------------------------
@@ -179,7 +177,6 @@ implements ReportService {
 		ArrayList<Note> allNotes = this.notesAdministration.getAllNotes();		
 		ArrayList<Notebook> allNotebooks = this.notesAdministration.getAllNotebooks();	
 		
-		rootLogger.log(Level.SEVERE, "Size of list: " + allNotes.size());
 
 		 
 			if (userId != 0) {
@@ -189,7 +186,6 @@ implements ReportService {
 					// Wenn das Objekt nicht der gesuchten UserId entspricht, löschen
 					if (userId != user.getUserId()) {
 						 iterator.remove();
-							rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 
 						}
 			 		}
@@ -204,9 +200,7 @@ implements ReportService {
 						String content = skn.getTitle();
 						
 						if (content.toLowerCase().indexOf(sKeywordNote.toLowerCase()) == -1) {
-							rootLogger.log(Level.SEVERE, "found content:" + content);
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 							}
 				 		}
 				}
@@ -221,9 +215,7 @@ implements ReportService {
 						String content = sknb.getTitle();
 						
 						if (content.toLowerCase().indexOf(sKeywordNotebook.toLowerCase()) == -1) {
-							rootLogger.log(Level.SEVERE, "found content:" + content);
 							 iterator.remove();
-							rootLogger.log(Level.SEVERE, "Size of Notebooklist after removed: " + allNotebooks.size());
 
 							}
 				 		}
@@ -238,12 +230,10 @@ implements ReportService {
 						// Wenn ein Objekt Wert null in der DB hat, Objekt löschen
 						if(m.getMaturityDate() == null) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
 						 // Wenn ein Objekt nicht der gesuchten getMaturityDate entspricht, löschen
 							else if (m.getMaturityDate().before(tFromMaturity)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
 				}
 			}
@@ -255,12 +245,10 @@ implements ReportService {
 						// Wenn ein Objekt Wert null in der DB hat, Objekt löschen
 						if(m.getMaturityDate() == null) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
 						 // Wenn ein Objekt nicht der gesuchten getMaturityDate entspricht, löschen
 							else if (m.getMaturityDate().after(tToMaturity) && !m.getMaturityDate().equals(tToMaturity)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						} 
 				}
 			}
@@ -274,7 +262,6 @@ implements ReportService {
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
 						if (c.getCreationDate().before(tFromCreationDate)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}	
 				}
 			}
@@ -288,7 +275,6 @@ implements ReportService {
 						// Wenn das Objekt nicht dem gesuchten creationDate entspricht, löschen
 						if (c.getCreationDate().after(tToCreationDate) && !c.getCreationDate().equals(tToCreationDate)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}	
 				}
 			}
@@ -302,11 +288,9 @@ implements ReportService {
 						//Null-Objekte löschen
 						if (mD.getModificationDate() == null) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
 						} else if (mD.getModificationDate().before(tFromModificationDate)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}
 				}
 			}
@@ -319,11 +303,9 @@ implements ReportService {
 						//Null-Objekte löschen
 						if (mD.getModificationDate() == null) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 								// Wenn das Objekt nicht dem gesuchten modificationDate entspricht, löschen
 						} else if (mD.getModificationDate().after(tToModificationDate) && !mD.getModificationDate().equals(tToModificationDate)) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed: " + allNotes.size());
 						}
 				}
 			}
@@ -342,7 +324,6 @@ implements ReportService {
 						 System.out.println("nb getNotebookId: " +n.getNotebookId());
 						if (n.getNotebookId() != foundedNotebook.getId() || allNotebooks.size() == 0) {
 							 iterator.remove();
-								rootLogger.log(Level.SEVERE, "Size of list after removed (Keyword-Search): " + allNotes.size());
 						}	
 				} 
 				 
