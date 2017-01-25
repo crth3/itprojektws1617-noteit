@@ -213,7 +213,7 @@ public class EditNotebook extends VerticalPanel {
 						Window.alert("Sie können sich nicht selbst freigeben!");
 					}
 				} else {
-					Window.alert("Bitte gebe eine E-Mail-Adresse an!");
+					Window.alert("Bitte geben Sie eine E-Mail-Adresse an!");
 					clUser.setRowData(userList);
 				}
 
@@ -286,7 +286,7 @@ public class EditNotebook extends VerticalPanel {
 					});
 
 				} else {
-					Window.alert("Bitte wähle eine bestehende Freigabe aus die du löschen möchtest!");
+					Window.alert("Bitte wählen Sie einen verfügbaren Nutzer aus, dessen Freigabe Sie löschen möchten!");
 				}
 
 			}
@@ -343,7 +343,7 @@ public class EditNotebook extends VerticalPanel {
 								});
 					}
 				} else {
-					Window.alert("Bitte vergebe einen Titel für dien Notizbuch");
+					Window.alert("Bitte vergeben Sie einen Titel für das Notizbuch.");
 				}
 			}
 		});
@@ -391,6 +391,7 @@ public class EditNotebook extends VerticalPanel {
 									public void onSuccess(Void result) {
 										// TODO Auto-generated method stub
 										NoteitCellBrowser.updateNotebooks();
+										Homepage.hideView();
 									}
 								});
 						// DialogBox ausblenden

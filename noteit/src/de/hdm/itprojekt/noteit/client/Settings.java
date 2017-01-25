@@ -18,6 +18,7 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 
 /**
  * Diese Klasse erzeugt die SettingsView und deren Eventhandler
+ * 
  * @author Tobias Dahms
  *
  */
@@ -27,7 +28,7 @@ public class Settings extends VerticalPanel {
 
 	static VerticalPanel vpSettingsPanel = new VerticalPanel();
 	static HorizontalPanel hpHeader = new HorizontalPanel();
-	
+
 	User currentUser = new User();
 	public String userFirstName;
 
@@ -36,8 +37,9 @@ public class Settings extends VerticalPanel {
 	 */
 	Label lbFirstName = new Label("Vorname");
 	Label lbLastName = new Label("Nachname");
-	Label lbEmail = new Label("Email");
+	Label lbEmail = new Label("E-Mail");
 	Label lbAusgabeEmail = new Label("");
+	Label lblInfoName = new Label("Bitte vervollständigen Sie Ihren Namen");
 
 	/**
 	 * Create the Textbox
@@ -61,14 +63,16 @@ public class Settings extends VerticalPanel {
 	Button btnAbrrechenButton = new Button("Abbrechen");
 	Button btnSichernButton = new Button("Speichern");
 	Button btnDeleteAccount = new Button("Profil löschen");
-	
+
 	static Label lblHeaderTitel = new Label("Profil Einstellungen");
 
 	static Button btnNo = new Button("Nein");
 	static Button btnYes = new Button("Ja");
-/**
- * Diese Methode generiert die View und wird nach der Instanziierung aufgerufen
- */
+
+	/**
+	 * Diese Methode generiert die View und wird nach der Instanziierung
+	 * aufgerufen
+	 */
 	protected void run() {
 
 		hpSettings.setWidth("600px");
@@ -78,6 +82,7 @@ public class Settings extends VerticalPanel {
 		currentUser = Homepage.getCurrentUser();
 		hpHeader.setStyleName("headerDetailView");
 		hpSettings.setStyleName("showDetailContent");
+		lblInfoName.setStyleName("lblInfoName");
 		lblHeaderTitel.setStyleName("lblHeaderTitel");
 		vpSettingsPanel.setStyleName("vpLeft");
 		vpRight.setStyleName("vpRight");
@@ -86,11 +91,11 @@ public class Settings extends VerticalPanel {
 		vDialog.add(hDialog);
 		hDialog.add(btnYes);
 		hDialog.add(btnNo);
-		
+
 		hpHeader.add(lblHeaderTitel);
-		
-		// currentUser.setFirstName("Kim");
-		
+
+		lblInfoName.setVisible(false);
+		vpSettingsPanel.add(lblInfoName);
 		vpSettingsPanel.add(lbFirstName);
 		vpSettingsPanel.add(tbFirstName);
 		vpSettingsPanel.add(lbLastName);
@@ -105,49 +110,36 @@ public class Settings extends VerticalPanel {
 		hpSettings.add(vpSettingsPanel);
 		hpSettings.add(vpRight);
 		
-		tbFirstName.getElement().setPropertyString("placeholder","Vorname");
-		tbLastName.getElement().setPropertyString("placeholder","Nachname");
 		
 
+		tbFirstName.getElement().setPropertyString("placeholder", "Vorname");
+		tbLastName.getElement().setPropertyString("placeholder", "Nachname");
+
+		if (currentUser.getFirstName() == "null") {
+			tbFirstName.setText("");
+		} else {
+			tbFirstName.setText(currentUser.getFirstName());
+		}
+		if (currentUser.getLastName() == "null") {
+			tbLastName.setText("");
+		} else {
+			tbLastName.setText(currentUser.getLastName());
+		}
 		
-			if (currentUser.getFirstName() == "null") {
-				tbFirstName.setText("");
-			}else{
-				tbFirstName.setText(currentUser.getFirstName());
-			}
-			if (currentUser.getLastName() == "null") {
-				tbLastName.setText("");
-			}else{
-				tbLastName.setText(currentUser.getLastName());
-			}
+		if(tbFirstName.getText() == "" || tbLastName.getText() == "" ){
+			lblInfoName.setVisible(true);
+		}else{
+			lblInfoName.setVisible(false);
+		}
 
-			lbAusgabeEmail.setText(currentUser.getMail());
-		
-			
-
-
-		// Wenn ich nur das ButtonPanel add, sind die Buttons nachher im Browser
-		// nach Rechts verzogen. Hier müsste man dann es dann durch css
-		// anpassen
-		// oder wir lassen die Buttons untereinander erscheinen.Wie möchtest du
-		// das haben?
-		// this.add(hpButtonPanel);
+		lbAusgabeEmail.setText(currentUser.getMail());
 
 		btnAbrrechenButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// Homepage homepage = new Homepage();
 
 				Homepage.hideView();
-
-				// Hier muss rein, dass die Homepage Klasse wieder geladen wird.
-
-				// wenn das mit drin ist, lädt er das das ContentPanel nicht
-				// mal
-				// mehr leer rein.
-				// Homepage.contentPanel.add(homepage);
-
 			}
 		});
 
@@ -155,17 +147,21 @@ public class Settings extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+
+				
+				
 				notesAdmin.updateUser(currentUser.getId(), currentUser.getMail(), tbFirstName.getText(),
 						tbLastName.getText(), new AsyncCallback<Void>() {
 
-							// Das hat damals noch geklappt als wir es an der
-							// HDM gecodet haben, Müsste das nicht eigentlich
-							// noch genauso funktionieren?
 							@Override
 							public void onSuccess(Void result) {
-								
-								Homepage.hideView();
 
+								Homepage.hideView();
+								if(tbFirstName.getText() == "" || tbLastName.getText() == "" ){
+									lblInfoName.setVisible(true);
+								}else{
+									lblInfoName.setVisible(false);
+								}
 							}
 
 							@Override
@@ -210,7 +206,7 @@ public class Settings extends VerticalPanel {
 
 								Noteit.loginInfo.getLogoutUrl();
 								Window.open(Noteit.loginInfo.getLogoutUrl(), "_self", "");
-								Window.alert("Ihr Profil wurde gelöscht");
+								Window.alert("Ihr Profil wurde gelöscht!");
 								Noteit.loadLogin();
 
 							}
@@ -243,6 +239,5 @@ public class Settings extends VerticalPanel {
 		this.add(hpSettings);
 
 	}
-	
 
 }

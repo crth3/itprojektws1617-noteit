@@ -19,6 +19,11 @@ table {
 	margin: 0 auto;
 }
 
+.lblInfoName{
+	color: red;
+	font-weight: bold;
+}
+
 
 td {
 	

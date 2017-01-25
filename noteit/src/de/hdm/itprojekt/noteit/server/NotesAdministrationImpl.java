@@ -196,7 +196,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 	 */
 	@Override
 	public void updateNotebook(String title, Notebook nb, int userId) throws IllegalArgumentException {
-		if (nb.getPermissionID() > 1) {
+		if (nb.getPermissionID() > 1 || userId == nb.getUserId()) {
 			ts.setHours(0);
 			ts.setMinutes(0);
 			ts.setSeconds(0);
@@ -333,7 +333,7 @@ public class NotesAdministrationImpl extends RemoteServiceServlet implements Not
 		ts.setNanos(0);
 
 		// note.setCreator(creatorID); //Int oder Objekt?
-		if (note.getPermissionID() > 1) {
+		if (note.getPermissionID() > 1 || editorID == note.getUserId()) {
 
 			note.setTitle(title);
 			note.setSubTitle(subtitle);

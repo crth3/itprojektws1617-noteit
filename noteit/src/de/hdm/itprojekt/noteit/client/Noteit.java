@@ -3,12 +3,8 @@ package de.hdm.itprojekt.noteit.client;
 import de.hdm.itprojekt.noteit.client.LoginInfo;
 import de.hdm.itprojekt.noteit.shared.LoginService;
 import de.hdm.itprojekt.noteit.shared.LoginServiceAsync;
-import de.hdm.itprojekt.noteit.shared.NotesAdministration;
 import de.hdm.itprojekt.noteit.shared.NotesAdministrationAsync;
 import de.hdm.itprojekt.noteit.shared.bo.*;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -31,13 +27,6 @@ import com.google.gwt.user.client.ui.Anchor;
 public class Noteit implements EntryPoint {
 
 	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network " + "connection and try again.";
-
-	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
@@ -54,8 +43,6 @@ public class Noteit implements EntryPoint {
 	// private Anchor signOutLink = new Anchor("Sign Out");
 
 	public static User currentUser = new User();
-
-	static Logger logger = Logger.getLogger("NameOfYourLogger");
 
 	private Homepage HomepagePanel;
 
@@ -95,7 +82,6 @@ public class Noteit implements EntryPoint {
 		if (stockStore != null) {
 			if (value_URL != null) {
 				stockStore.setItem("url", value_URL);
-				logger.log(Level.SEVERE, "URL in Storage geschrieben " + value_URL);
 			}
 
 		}
@@ -119,7 +105,6 @@ public class Noteit implements EntryPoint {
 		logoutPanel.add(zurueckButton);
 		vpBasisPanel.add(loginPanel);
 
-		logger.log(Level.SEVERE, "URL Inhalt" + value_URL);
 		/**
 		 * Login Status mit Login service überprüfen. Client-side proxy
 		 * erstellen.
@@ -129,7 +114,6 @@ public class Noteit implements EntryPoint {
 
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
-				logger.log(Level.SEVERE, "ERROR Login" + error);
 			}
 
 			public void onSuccess(LoginInfo result) {
@@ -140,38 +124,27 @@ public class Noteit implements EntryPoint {
 
 				if (loginInfo.isLoggedIn() == true) {
 
-					logger.log(Level.SEVERE, "bei Google eingeloggt: " + loginInfo.getEmailAddress());
-
 					notesAdministrationService.findUserByMail(mail, new AsyncCallback<User>() {
 
 						@Override
 						public void onSuccess(User result) {
 							if (result != null) {
-								logger.log(Level.SEVERE, "Nutzer gefunden: " + result);
 								currentUser = result;
 								HomepagePanel = new Homepage(result);
 								RootPanel.get().add(HomepagePanel);
 
 							} else if (mail != null) {
 
-								logger.log(Level.SEVERE,
-										"Neuen Nutzer anlegen-mail, vorname, nachname " + loginInfo.getEmailAddress()
-												+ loginInfo.getFirstName() + loginInfo.getLastName());
-
 								notesAdministrationService.createUser(mail, loginInfo.getFirstName(),
 										loginInfo.getLastName(), new AsyncCallback<User>() {
 
 											@Override
 											public void onFailure(Throwable caught) {
-												logger.log(Level.SEVERE, "RPC Fehler " + caught);
 
 											}
 
 											@Override
 											public void onSuccess(User result) {
-												currentUser = result;
-												logger.log(Level.SEVERE, "Neuen Nutzer angelegt "
-														+ currentUser.getMail() + " " + currentUser.getFirstName());
 												currentUser = result;
 												HomepagePanel = new Homepage(result);
 
@@ -188,13 +161,11 @@ public class Noteit implements EntryPoint {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							logger.log(Level.SEVERE, "Error Login: " + caught);
 
 						}
 					});
 
 				} else {
-					logger.log(Level.SEVERE, "LOAD Login");
 					loadLogin();
 				}
 
@@ -212,17 +183,21 @@ public class Noteit implements EntryPoint {
 		});
 
 	}
-/**
- * Diese Methode liest die URL aus dem Sessionstorage aus und gibt diese zurück
- * @return
- */
+
+	/**
+	 * Diese Methode liest die URL aus dem Sessionstorage aus und gibt diese
+	 * zurück
+	 * 
+	 * @return
+	 */
 	public static String getValue_URL() {
 		return stockStore.getItem(stockStore.key(0));
 
 	}
-/**
- * diese Methode lädt die LoginView
- */
+
+	/**
+	 * diese Methode lädt die LoginView
+	 */
 	public static void loadLogin() {
 		// Assemble login panel.
 		signInLink.setHref(loginInfo.getLoginUrl());
@@ -230,21 +205,23 @@ public class Noteit implements EntryPoint {
 		loginPanel.add(signInLink);
 		RootPanel.get("content").add(loginPanel);
 	}
-/**
- * Diese Methode gibt den aktuell angemeldeten Nutzer zurück
- * @return
- */
+
+	/**
+	 * Diese Methode gibt den aktuell angemeldeten Nutzer zurück
+	 * 
+	 * @return
+	 */
 	public static User getCurrentUser() {
-		logger.log(Level.SEVERE, "NUTZER WIRD GEHOLT" + currentUser.getMail());
 		return currentUser;
 	}
 
 	public static boolean isNew() {
 		return isNew;
 	}
-/**
- * Diese Methode löscht den beschriebenen Sessionstorage
- */
+
+	/**
+	 * Diese Methode löscht den beschriebenen Sessionstorage
+	 */
 	public static void deleteStorage() {
 		stockStore.clear();
 	}

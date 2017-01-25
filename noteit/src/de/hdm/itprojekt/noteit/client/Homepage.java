@@ -1,8 +1,6 @@
 package de.hdm.itprojekt.noteit.client;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -44,8 +42,6 @@ import de.hdm.itprojekt.noteit.shared.bo.User;
 public class Homepage extends VerticalPanel {
 
 	private final static NotesAdministrationAsync notesAdmin = ClientsideSettings.getAdministrationService();
-
-	private static Logger rootLogger = Logger.getLogger("");
 
 	// --------- Horizontal Panel -----------//
 	HorizontalPanel headlinePanel = new HorizontalPanel();
@@ -431,7 +427,6 @@ public class Homepage extends VerticalPanel {
 	 */
 	public static void setNotesWhenNotebookSelected(Notebook notebook) {
 		selectedNotebook = notebook;
-		rootLogger.log(Level.SEVERE, "ID" + notebook.getId() + "NotebookID" + notebook.getId());
 
 		notesAdmin.getAllNotesByNotebookID(notebook.getId(), getCurrentUser().getId(),
 				new AsyncCallback<ArrayList<Note>>() {
@@ -473,7 +468,6 @@ public class Homepage extends VerticalPanel {
 	}
 
 	public void searchNoteByKeyword(int userID, String keyword, int notebookID) {
-		rootLogger.log(Level.SEVERE, "userid: " + userID + "searchtext: " + keyword + "notebookID: " + notebookID);
 		notesAdmin.findNoteByKeyword(userID, keyword, notebookID, new AsyncCallback<ArrayList<Note>>() {
 
 			@Override
@@ -497,7 +491,6 @@ public class Homepage extends VerticalPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 			}
 		});
 	}

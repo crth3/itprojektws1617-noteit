@@ -3,6 +3,7 @@ package de.hdm.itprojekt.noteit.client;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.NoSelectionModel;
@@ -199,18 +200,6 @@ public class NoteitCellBrowser implements TreeViewModel {
 			updateNotes();
 		}
 
-		// notesAdmin.findNoteByKeyword(userID, keyword,
-		// selectedNotebook.getId(), new AsyncCallback<ArrayList<Note>>() {
-		//
-		// @Override
-		// public void onSuccess(ArrayList<Note> result) {
-		// notesListDataProvider.setList(result);
-		// }
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// }
-		// });
 	}
 /**
  * Diese Methode löscht ein Notizbuch aus dem CellBrowser
@@ -252,22 +241,7 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 	}
 
-	// public static void deleteNote() {
-	// notesListDataProvider.getList().remove(selectedNote.getId());
-	//
-	//
-	// }
-/**
- * Diese Methode fügt ein Array mit sortierten Notizen dem CellBrowser hinzu
- * @param sortedNotes
- */
-	public static void setNotesListDataProvider(ArrayList<Note> sortedNotes) {
 
-		// addNote.setId(0);
-		// addNote.setTitle("");
-		sortedNotes.add(0, addNote);
-		notesListDataProvider.setList(sortedNotes);
-	}
 /**
  * Diese Methode gibt das aktuell ausgewählte Objekt zurück
  * @return
@@ -285,7 +259,12 @@ public class NoteitCellBrowser implements TreeViewModel {
 
 					@Override
 					public void onSuccess(ArrayList<Note> result) {
+						
+						if(selectedNotebook.getId() != -1){
+							if(selectedNotebook.getPermissionID() != 1){
 						result.add(0, addNote);
+							}
+						}
 						notesListDataProvider.setList(result);
 
 					}

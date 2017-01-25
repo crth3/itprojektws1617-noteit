@@ -246,7 +246,7 @@ public class ShowNote extends VerticalPanel {
 						Window.alert("Sie können sich nicht selbst freigeben!");
 					}
 				} else {
-					Window.alert("Bitte gebe eine E-Mail-Adresse an!");
+					Window.alert("Bitte geben Sie eine E-Mail-Adresse an!");
 					// clUser.setRowData(userList);
 				}
 
@@ -321,7 +321,7 @@ public class ShowNote extends VerticalPanel {
 								});
 					}
 				} else {
-					Window.alert("Bitte vergebe einen Titel für deine Notiz");
+					Window.alert("Bitte vergeben Sie einen Titel für die Notiz.");
 				}
 
 			}
@@ -331,6 +331,7 @@ public class ShowNote extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if (tbNoteShareMail.getText().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
 				final DialogBox dlbQuestion = new DialogBox();
 
 				dlbQuestion.setAnimationEnabled(true);
@@ -381,7 +382,10 @@ public class ShowNote extends VerticalPanel {
 					}
 				});
 
+			}else{
+				Window.alert("Bitte wählen Sie einen verfügbaren Nutzer aus, dessen Freigabe Sie löschen möchten!");
 			}
+		}
 		});
 
 		btnUnsubcribe.addClickHandler(new ClickHandler() {
@@ -410,8 +414,8 @@ public class ShowNote extends VerticalPanel {
 
 						// Methode zum löschen der Note aufrufen
 						notesAdmin.deleteUserNotePermission(Homepage.getCurrentUser().getMail(),
-								NoteitCellBrowser.getSelectedNote().getPermissionID(),
-								NoteitCellBrowser.getSelectedNote().getId(), new AsyncCallback<Void>() {
+								currentNote.getPermissionID(),
+								currentNote.getId(), new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -421,7 +425,8 @@ public class ShowNote extends VerticalPanel {
 
 									@Override
 									public void onSuccess(Void result) {
-
+										NoteitCellBrowser.updateNotes();
+										Homepage.hideView();
 									}
 								});
 						// DialogBox ausblenden
@@ -514,24 +519,29 @@ public class ShowNote extends VerticalPanel {
 	}
 
 	public static void showNote(Note note) {
-
 		currentNote = note;
 		if(currentNote.getPermissionID() == 0 && currentNotebook.getPermissionID() > 0){
 			currentNote.setPermissionID(currentNotebook.getPermissionID());
 		}
+		
+		if(currentNotebook.getId()==-1){
+			btnUnsubcribe.setVisible(true);
+		}else{
+			btnUnsubcribe.setVisible(false);
+		}
 		if (currentNote.getId() == 0) {
 			btnDeleteNote.setVisible(false);
-			btnUnsubcribe.setVisible(false);
+//			btnUnsubcribe.setVisible(false);
 			btnSaveNote.setVisible(true);
 		} else {
 
 			if (currentNote.getPermissionID() > 0) {
 				btnSaveNote.setVisible(true);
-				btnUnsubcribe.setVisible(true);
+//				btnUnsubcribe.setVisible(true);
 				btnDeleteNote.setVisible(true);
 			} else {
 				btnSaveNote.setVisible(true);
-				btnUnsubcribe.setVisible(false);
+//				btnUnsubcribe.setVisible(false);
 				btnDeleteNote.setVisible(true);
 			}
 
@@ -587,7 +597,7 @@ public class ShowNote extends VerticalPanel {
 				lblPermissionInformationWrite.setVisible(false);
 				lblPermissionInformationDelete.setVisible(false);
 				lblPermissionInformationRead.setVisible(true);
-				btnUnsubcribe.setVisible(true);
+//				btnUnsubcribe.setVisible(true);
 				btnAddNotePermission.setHTML("<img src='Images/check_grey.png'/ width=\"10\" height=\"10\">");
 				btnDeletePermission.setHTML("<img src='Images/cancle_grey.png'/ width=\"10\" height=\"10\">");
 			} else if (currentNote.getPermissionID() == 2 && currentNotebook.getPermissionID() == 2
